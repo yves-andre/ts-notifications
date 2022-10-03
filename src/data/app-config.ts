@@ -6,4 +6,5 @@ export const APP_CONFIG: any = {
     placeholder: "",
   },
   THEME_FONTS: ["", ""],
+  BASE_URL: "mock/"
 };

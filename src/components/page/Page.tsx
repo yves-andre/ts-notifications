@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { APP_CONFIG } from "../../data/AppConfig";
+import { APP_CONFIG } from "../../data/app-config";
 import { Theme, Layout } from "@trading/energies-ui";
 import { Topbar } from "../../pages/topbar/Topbar";
 import { Sidebar } from "../../pages/sidebar/Sidebar";
