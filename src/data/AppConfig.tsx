@@ -5,8 +5,5 @@ export const APP_CONFIG: any = {
     icons: "",
     placeholder: "",
   },
-  THEME_FONTS: [
-    "",
-    "",
-  ]
-}
+  THEME_FONTS: ["", ""],
+};

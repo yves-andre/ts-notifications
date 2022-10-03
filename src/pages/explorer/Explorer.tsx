@@ -1,10 +1,15 @@
-import React from 'react';
-import './Explorer.scss';
+import React from "react";
+import { Table } from "./table/Table";
+
+import "./Explorer.scss";
 
 export const Explorer: React.FC = () => {
   return (
-    <h1>Explorer</h1>
+    <>
+      <input type="text" />
+      <Table />
+    </>
   );
-}
+};
 
 export default Explorer;
