@@ -1,0 +1,4 @@
+export enum CATEGORY {
+  ACTION_FEED = 1,
+  INFORMATION_FEED = 2
+}

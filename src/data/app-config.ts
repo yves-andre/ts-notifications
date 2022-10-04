@@ -6,5 +6,6 @@ export const APP_CONFIG: any = {
     placeholder: "",
   },
   THEME_FONTS: ["", ""],
-  BASE_URL: "mock/"
+  BASE_URL: "mock/",
+  WEBSOCKET_URL: "ws://127.0.0.1:8080"
 };
