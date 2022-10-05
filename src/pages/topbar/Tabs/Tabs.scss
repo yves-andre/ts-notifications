@@ -1,0 +1,14 @@
+.Tabs {
+  display: flex;
+
+  .Tab {
+    margin-inline-end: 10px;
+    border-radius: 30px;
+    padding: 10px;
+    cursor: pointer;
+
+    &-active {
+      background-color: #ffffff8f;
+    }
+  }
+}

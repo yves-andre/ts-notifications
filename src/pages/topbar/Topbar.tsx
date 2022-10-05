@@ -9,16 +9,20 @@ export const Topbar: React.FC = () => {
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
   );
+  
   const title =
     selectedCategory === CATEGORY.ACTION_FEED
       ? "ACTION FEED"
       : "INFORMATION FEED";
+
   return (
-    <>
+    <div className="Topbar">
       <h1>{title}</h1>
-      <Tabs />
-      <DelegationToggle />
-    </>
+      <div className="Topbar-actions">
+        <Tabs />
+        <DelegationToggle />
+      </div>
+    </div>
   );
 };
 

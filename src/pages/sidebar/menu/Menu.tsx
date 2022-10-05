@@ -46,7 +46,7 @@ export const Menu: React.FC<Props> = ({ applications }) => {
 
   const getMenuItemsByCategory = (category: number): JSX.Element[] | null => {
     const items = getAppsByCategory(category).map((app, i) => (
-      <MenuItem key={i} application={app} category={ACTION_FEED}></MenuItem>
+      <MenuItem key={i} application={app} category={category}></MenuItem>
     ));
 
     if (items.length > 0 && displayedCategories.includes(category)) {
