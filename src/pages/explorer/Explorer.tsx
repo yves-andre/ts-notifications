@@ -3,7 +3,7 @@ import Table from "./table/Table";
 import { useAppSelector } from "../../hooks/use-app-selector";
 
 import "./Explorer.scss";
-import Notification from "../../data/interfaces/notifications-interface";
+import Notification from "../../data/interfaces/notification";
 
 export const Explorer: React.FC = () => {
   const notifications: Notification[] = useAppSelector(

@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getApplications } from "../../services/application-service";
-import Application from "../../data/interfaces/application";
-import Menu from "./menu/Menu";
-
+import Application from "../../data/interfaces/application"
 import "./Sidebar.scss";
 
 export const Sidebar: React.FC = () => {
+  
   const [applications, setApplications] = useState<Application[]>();
 
-  // Load the applications
   useEffect(() => {
     (async () => {
       const applications: Application[] = await getApplications();
@@ -18,8 +16,9 @@ export const Sidebar: React.FC = () => {
 
   return (
     <>
-      {applications && <Menu applications={applications}/>}
-      {!applications && <p>Loading ...</p>}
+      {applications && applications.map((application, index) => 
+        <h1 key={index}>{application.title}</h1>
+      )}
     </>
   );
 };

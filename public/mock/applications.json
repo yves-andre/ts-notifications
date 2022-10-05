@@ -1,13 +1,13 @@
 [
   {
     "title": "Mission orders",
-    "match": "mission orders, mission-orders, missionorders",
+    "match": "mission-orders,mission orders,missionorders",
     "type": "workflow",
     "image": "dashboard"
   },
   {
     "title": "Absence notice",
-    "match": "absence notice, absence-notice, absencenotice",
+    "match": "absence notice,absence-notice,absencenotice",
     "type": "workflow",
     "image": "dashboard"
   },
@@ -19,13 +19,13 @@
   },
   {
     "title": "Requisition forms",
-    "match": "requisition forms, requisition-forms, requisitionforms",
+    "match": "requisition forms,requisition-forms,requisitionforms",
     "type": "workflow",
     "image": "dashboard"
   },
   {
     "title": "Network account",
-    "match": "network account, network-account, networkaccount",
+    "match": "network account,network-account,networkaccount",
     "type": "workflow",
     "image": "dashboard"
   },
@@ -37,13 +37,13 @@
   },
   {
     "title": "TS & News",
-    "match": "ts & news, ts&news, ts-&-news, ts and news, ts-and-news, tsandnews, ts news, ts-news, tsnews",
+    "match": "ts & news,ts&news,ts-&-news,ts and news,ts-and-news,tsandnews,ts news,ts-news,tsnews",
     "type": "socialflow",
     "image": "dashboard"
   },
   {
     "title": "Digital workplace",
-    "match": "digital workplace, digital-workplace, digitalworkplace",
+    "match": "digital workplace,digital-workplace,digitalworkplace",
     "type": "socialflow",
     "image": "dashboard"
   }

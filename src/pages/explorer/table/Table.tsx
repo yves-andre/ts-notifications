@@ -1,5 +1,5 @@
 import React from "react";
-import Notification from "../../../data/interfaces/notifications-interface";
+import Notification from "../../../data/interfaces/notification";
 
 import "./Table.scss";
 
