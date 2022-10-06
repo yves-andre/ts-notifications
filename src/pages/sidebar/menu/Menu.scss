@@ -1,0 +1,24 @@
+.Menu {
+  margin-inline-end: 20px;
+
+  &-toggle {
+    display: flex;
+
+    span {
+      align-self: center;
+    }
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    margin-inline-start: 5px;
+    margin-inline-end: 9px;
+    margin-block: 10px;
+    flex-grow: 1;
+
+    &-active {
+      background-color: #00000052;
+    }
+  }
+}

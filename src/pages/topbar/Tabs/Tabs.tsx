@@ -6,10 +6,14 @@ import { useAppSelector } from "../../../hooks/use-app-selector";
 import { filtersActions } from "../../../store/filters-slice";
 
 import "./Tabs.scss";
+import { CATEGORY } from "../../../data/constants/category";
 
 export const Tabs: React.FC = () => {
   const selectedStatus = useAppSelector(
     (state) => state.filters.selectedStatus
+  );
+  const selectedCategory = useAppSelector(
+    (state) => state.filters.selectedCategory
   );
   const dispatch = useAppDispatch();
 
@@ -26,7 +30,8 @@ export const Tabs: React.FC = () => {
           'Tab-active': selectedStatus === STATUS.TO_BE_TREATED,
         })}
       >
-        TO BE TREATED
+        {selectedCategory === CATEGORY.ACTION_FEED && "TO BE TREATED"}
+        {selectedCategory === CATEGORY.INFORMATION_FEED && "LAST RECEIVED"}
       </div>
 
       <div
@@ -36,7 +41,8 @@ export const Tabs: React.FC = () => {
           'Tab-active': selectedStatus === STATUS.TREATED,
         })}
       >
-        TREATED
+        {selectedCategory === CATEGORY.ACTION_FEED && "TREATED"}
+        {selectedCategory === CATEGORY.INFORMATION_FEED && "HISTORY"}
       </div>
     </div>
   );

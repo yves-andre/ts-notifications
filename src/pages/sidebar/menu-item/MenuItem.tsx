@@ -1,5 +1,6 @@
 import React from "react";
 import Application from "../../../data/interfaces/application";
+import classNames from "classnames";
 import { useAppDispatch } from "../../../hooks/use-app-dispatch";
 import { useAppSelector } from "../../../hooks/use-app-selector";
 import { filtersActions } from "../../../store/filters-slice";
@@ -15,9 +16,14 @@ export const MenuItem: React.FC<Props> = ({ application, category }) => {
   const notifications = useAppSelector(
     (state) => state.notifications.notificationItems
   );
+  const selectedApplication = useAppSelector(
+    (state) => state.filters.selectedApplication
+  );
 
   const selectAppHandler = (match: string) => {
-    dispatch(filtersActions.setSelectedApplication(match));
+    selectedApplication === match
+      ? dispatch(filtersActions.setSelectedApplication(""))
+      : dispatch(filtersActions.setSelectedApplication(match));
     dispatch(filtersActions.setSelectedCategory(category));
   };
 
@@ -26,11 +32,16 @@ export const MenuItem: React.FC<Props> = ({ application, category }) => {
   ).length;
 
   return (
-    <li onClick={() => selectAppHandler(application.match)}>
-      {application.title}
-      {applicationCount > 0 && applicationCount}
-    </li>
+    <div onClick={() => selectAppHandler(application.match)} 
+      className={classNames({
+        'Menu-item': true,
+        'Menu-item-active': selectedApplication === application.match,
+      })}>
+      <span>{application.title}</span>
+      <span>{applicationCount > 0 && applicationCount}</span>
+    </div>
   );
 };
 
 export default MenuItem;
+

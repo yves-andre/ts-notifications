@@ -20,7 +20,7 @@ export const Topbar: React.FC = () => {
       <h1>{title}</h1>
       <div className="Topbar-actions">
         <Tabs />
-        <DelegationToggle />
+        {/* <DelegationToggle /> */}
       </div>
     </div>
   );

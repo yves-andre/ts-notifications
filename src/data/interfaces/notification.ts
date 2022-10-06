@@ -3,7 +3,7 @@ export default interface Notification {
   methods: Methods;
   category: number;
   description: string;
-  date: Date;
+  date: string;
   status: number;
   isRead: boolean;
   isFavorite: boolean;

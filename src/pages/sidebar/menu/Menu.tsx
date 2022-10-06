@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import classNames from "classnames";
 import { CATEGORY } from "../../../data/constants/category";
 import Application from "../../../data/interfaces/application";
+import { useAppDispatch } from "../../../hooks/use-app-dispatch";
 import { useAppSelector } from "../../../hooks/use-app-selector";
+import { filtersActions } from "../../../store/filters-slice";
+
 import MenuItem from "../menu-item/MenuItem";
 
 import "./Menu.scss";
@@ -10,13 +14,19 @@ interface Props {
   applications: Application[];
 }
 
+const ACTION_FEED = CATEGORY.ACTION_FEED;
+const INFORMATION_FEED = CATEGORY.INFORMATION_FEED;
+
+const CATEGORIES = [ACTION_FEED, INFORMATION_FEED];
+
 export const Menu: React.FC<Props> = ({ applications }) => {
   const notifications = useAppSelector(
     (state) => state.notifications.notificationItems
   );
-
-  const ACTION_FEED = CATEGORY.ACTION_FEED;
-  const INFORMATION_FEED = CATEGORY.INFORMATION_FEED;
+  const selectedCategory = useAppSelector(
+    (state) => state.filters.selectedCategory
+  );
+  const dispatch = useAppDispatch();
 
   const [displayedCategories, setDisplayedCategories] = useState([
     ACTION_FEED,
@@ -39,8 +49,7 @@ export const Menu: React.FC<Props> = ({ applications }) => {
   };
 
   const getAppsByCategory = (category: number): Application[] => {
-    const filterValue =
-      category === CATEGORY.ACTION_FEED ? "workflow" : "socialflow";
+    const filterValue = category === ACTION_FEED ? "workflow" : "socialflow";
     return applications?.filter((app) => app.type === filterValue);
   };
 
@@ -65,19 +74,43 @@ export const Menu: React.FC<Props> = ({ applications }) => {
     return null;
   };
 
+  const selectCategoryHandler = (category: number): void => {
+    if (selectedCategory != category) {
+      dispatch(filtersActions.setSelectedCategory(category));
+      dispatch(filtersActions.setSelectedApplication(""));
+      // display the categories if they are not already displayed
+      displayedCategories.includes(category) || toggleMenuHandler(category);
+    }
+  };
+
   return (
     <>
-      <div onClick={() => toggleMenuHandler(ACTION_FEED)}>
-        <span>ACTION FEED</span>
-        {<span>{getAppCountByCategory(ACTION_FEED)}</span>}
-      </div>
-      {getMenuItemsByCategory(ACTION_FEED)}
-
-      <div onClick={() => toggleMenuHandler(INFORMATION_FEED)}>
-        <span>INFORMATION FEED</span>
-        <span>{getAppCountByCategory(INFORMATION_FEED)}</span>
-      </div>
-      {getMenuItemsByCategory(INFORMATION_FEED)}
+      {CATEGORIES.map((category) => {
+        return (
+          <div className="Menu" key={category}>
+            <div className="Menu-toggle">
+              <span onClick={() => toggleMenuHandler(category)}>
+                {displayedCategories.includes(category) && "⌄"}
+                {!displayedCategories.includes(category) && "^"}
+              </span>
+              <div
+                className={classNames({
+                  "Menu-header": true,
+                  "Menu-header-active": selectedCategory === category,
+                })}
+                onClick={() => selectCategoryHandler(category)}
+              >
+                {category === CATEGORY.ACTION_FEED && <span>ACTION FEED</span>}
+                {category === CATEGORY.INFORMATION_FEED && (
+                  <span>INFORMATION FEED</span>
+                )}
+                {<span>{getAppCountByCategory(category)}</span>}
+              </div>
+            </div>
+            {getMenuItemsByCategory(category)}
+          </div>
+        );
+      })}
     </>
   );
 };
