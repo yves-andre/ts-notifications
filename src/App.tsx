@@ -8,6 +8,7 @@ import { fetchNotifications } from "./store/notifications-slice";
 import { useAppDispatch } from "./hooks/use-app-dispatch";
 import { useAppSelector } from "./hooks/use-app-selector";
 import { filtersActions } from "./store/filters-slice";
+import { FILTER } from "./data/constants/filter";
 
 import "./App.scss";
 
@@ -45,23 +46,22 @@ export const App: React.FC = () => {
   useEffect(() => {
     searchParams.forEach((value, key) => {
       switch (key) {
-        case "selectedCategory":
+        case FILTER.SELECTED_CATEGORY:
           dispatch(filtersActions.setSelectedCategory(+value));
           break;
-        case "selectedStatus":
+        case FILTER.SELECTED_STATUS:
           dispatch(filtersActions.setSelectedStatus(+value));
           break;
-        case "selectedApplication":
-          console.log(value);
+        case FILTER.SELECTED_APPLICATION:
           dispatch(filtersActions.setSelectedApplication(value));
           break;
-        // case "showDelegations":
-        //   dispatch(filtersActions.toggleShowDelegations(value === "true"));
-        //   break;
-        case "searchFilter":
+        case FILTER.SHOW_DELEGATIONS:
+          dispatch(filtersActions.toggleShowDelegations(value === "true"));
+          break;
+        case FILTER.SEARCH_FILTER:
           dispatch(filtersActions.setSearchFilter(value));
           break;
-        case "sortFilter":
+        case FILTER.SORT_FILTER:
           dispatch(filtersActions.setSortFilter(JSON.parse(value)));
           break;
       }

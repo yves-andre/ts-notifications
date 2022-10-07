@@ -6,9 +6,9 @@ import Highlight from "../../../components/Highlight/Highlight";
 import { useAppSelector } from "../../../hooks/use-app-selector";
 import { useAppDispatch } from "../../../hooks/use-app-dispatch";
 import { filtersActions } from "../../../store/filters-slice";
+import { fetchNotifications, notificationActions } from "../../../store/notifications-slice";
 
 import "./Table.scss";
-import { fetchNotifications, notificationActions } from "../../../store/notifications-slice";
 
 interface Props {
   notifications: Notification[];
@@ -20,6 +20,9 @@ export const Table: React.FC<Props> = ({ notifications }) => {
   const dispatch = useAppDispatch();
 
   const sortColumnHandler = (fieldName: string) => {
+    // 1st click on column = order ascending, 
+    // 2nd click = order descending, 
+    // 3rd click = remove order
     if (sortFilter.field === fieldName) {
       sortFilter.asc
         ? dispatch(filtersActions.setSortFilter({ ...sortFilter, asc: false }))
@@ -35,6 +38,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
 
   const dismissNotificationHandler = (notification: Notification) => {
     alert("DISMISS " + notification.title);
+    //refresh the notifications
     dispatch(fetchNotifications())
   }
 

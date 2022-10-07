@@ -17,7 +17,6 @@ const notificationSlice = createSlice({
   }
 });
 
-
 export const fetchNotifications = () => {
   return async (dispatch: AppDispatch) => {
     try {
