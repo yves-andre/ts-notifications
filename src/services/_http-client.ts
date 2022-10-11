@@ -1,8 +1,8 @@
 import { APP_CONFIG } from "../data/app-config";
 
-export const httpGet = async (route: string) => {
+export const httpGet = async (route: string, config: object = {}) => {
   if (!route) throw new Error("a route must be provided");
-  const response = await fetch(APP_CONFIG.BASE_URL + route);
+  const response = await fetch(APP_CONFIG.BASE_URL + route, config)
   if (!response.ok) throw new Error(`could not fetch data for url ${route}`);
   return await response.json();
 };

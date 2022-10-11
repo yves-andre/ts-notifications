@@ -1,6 +1,6 @@
 import { getNotifications } from './../services/notification-service';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { AppDispatch, RootState } from './index';
+import type { AppDispatch } from './index';
 import Notification from '../data/interfaces/notification';
 
 const initialState = {
