@@ -21,12 +21,12 @@ export const App: React.FC = () => {
   const getSocketUrl = useCallback(() => {
     return new Promise((resolve) => {
       const login = getUserLogin().then((response) => {
-        resolve(APP_CONFIG.WEBSOCKET_URL.replace("{LOGIN}", response));
+        resolve((process.env.REACT_APP_WS_URL as string).replace("{LOGIN}", response));
       });
     });
   }, []) as () => Promise<string>;
 
-  // Opening the websocket connexion 
+  // Opening the websocket connexion
   // using an async socket url string resolution function
   const { lastMessage } = useWebSocket(getSocketUrl, {
     shouldReconnect: (closeEvent) => true,

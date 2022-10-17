@@ -5,7 +5,5 @@ export const APP_CONFIG: any = {
     icons: "",
     placeholder: "",
   },
-  THEME_FONTS: ["", ""],
-  BASE_URL: "",
-  WEBSOCKET_URL: "ws://dwpnotifier-dev.dts.corp.local/socket.io/?login={LOGIN}&EIO=3&transport=websocket"
+  THEME_FONTS: ["", ""]
 };

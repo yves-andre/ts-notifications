@@ -1,50 +1,54 @@
-[
-  {
-    "title": "Mission orders",
-    "match": "mission-orders,mission orders,missionorders",
-    "type": "workflow",
-    "image": "dashboard"
-  },
-  {
-    "title": "Absence notice",
-    "match": "absence notice,absence-notice,absencenotice",
-    "type": "workflow",
-    "image": "dashboard"
-  },
-  {
-    "title": "Limits",
-    "match": "limits",
-    "type": "workflow",
-    "image": "dashboard"
-  },
-  {
-    "title": "Requisition forms",
-    "match": "requisition forms,requisition-forms,requisitionforms",
-    "type": "workflow",
-    "image": "dashboard"
-  },
-  {
-    "title": "Network account",
-    "match": "network account,network-account,networkaccount",
-    "type": "workflow",
-    "image": "dashboard"
-  },
-  {
-    "title": "Expenses",
-    "match": "expenses",
-    "type": "workflow",
-    "image": "dashboard"
-  },
-  {
-    "title": "TS & News",
-    "match": "ts & news,ts&news,ts-&-news,ts and news,ts-and-news,tsandnews,ts news,ts-news,tsnews",
-    "type": "socialflow",
-    "image": "dashboard"
-  },
-  {
-    "title": "Digital workplace",
-    "match": "digital workplace,digital-workplace,digitalworkplace",
-    "type": "socialflow",
-    "image": "dashboard"
+{
+  "d": {
+    "results": [
+      {
+        "Title": "Mission orders",
+        "Match": "mission-orders,mission orders,missionorders",
+        "NotificationType": "workflow",
+        "image": "dashboard"
+      },
+      {
+        "Title": "Absence notice",
+        "Match": "absence notice,absence-notice,absencenotice",
+        "NotificationType": "workflow",
+        "image": "dashboard"
+      },
+      {
+        "Title": "Limits",
+        "Match": "limits",
+        "NotificationType": "workflow",
+        "image": "dashboard"
+      },
+      {
+        "Title": "Requisition forms",
+        "Match": "requisition forms,requisition-forms,requisitionforms",
+        "NotificationType": "workflow",
+        "image": "dashboard"
+      },
+      {
+        "Title": "Network account",
+        "Match": "network account,network-account,networkaccount",
+        "NotificationType": "workflow",
+        "image": "dashboard"
+      },
+      {
+        "Title": "Expenses",
+        "Match": "expenses",
+        "NotificationType": "workflow",
+        "image": "dashboard"
+      },
+      {
+        "Title": "TS & News",
+        "Match": "ts & news,ts&news,ts-&-news,ts and news,ts-and-news,tsandnews,ts news,ts-news,tsnews",
+        "NotificationType": "socialflow",
+        "image": "dashboard"
+      },
+      {
+        "Title": "Digital workplace",
+        "Match": "digital workplace,digital-workplace,digitalworkplace",
+        "NotificationType": "socialflow",
+        "image": "dashboard"
+      }
+    ]
   }
-]
+}

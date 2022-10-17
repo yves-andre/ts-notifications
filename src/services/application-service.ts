@@ -2,8 +2,8 @@ import Application from "../data/interfaces/application";
 import { httpGet } from "./_http-client";
 
 export const getApplications = async () => {
-  const applications: Application[] = await httpGet(
-    "http://home-dev.dts.corp.local/_api/web/lists/getByTitle('TSNotificationsMenuItems')/items?$select=Title,Match,NotificationType,image",
+  const applications = await httpGet(
+    process.env.REACT_APP_API_APPLICATIONS_URL as string,
     {
       headers: {
         Accept: "application/json;odata=verbose",
