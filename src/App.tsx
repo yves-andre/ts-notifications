@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Routes, Route, Navigate, useSearchParams } from "react-router-dom";
 import useWebSocket from "react-use-websocket";
 import Page from "./components/page/Page";
@@ -9,6 +9,7 @@ import { useAppDispatch } from "./hooks/use-app-dispatch";
 import { useAppSelector } from "./hooks/use-app-selector";
 import { filtersActions } from "./store/filters-slice";
 import { FILTER } from "./data/constants/filter";
+import { getUserLogin } from "./services/auth-service";
 
 import "./App.scss";
 
@@ -17,8 +18,17 @@ export const App: React.FC = () => {
   const filters = useAppSelector((state) => state.filters);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const getSocketUrl = useCallback(() => {
+    return new Promise((resolve) => {
+      const login = getUserLogin().then((response) => {
+        resolve((process.env.REACT_APP_WS_URL as string).replace("{LOGIN}", response));
+      });
+    });
+  }, []) as () => Promise<string>;
+
   // Opening the websocket connexion
-  const { lastMessage } = useWebSocket(APP_CONFIG.WEBSOCKET_URL, {
+  // using an async socket url string resolution function
+  const { lastMessage } = useWebSocket(getSocketUrl, {
     shouldReconnect: (closeEvent) => true,
   });
 
@@ -33,9 +43,10 @@ export const App: React.FC = () => {
     Object.keys(filters).map((filterKey) => {
       type filtersKey = keyof typeof filters;
       if (filters[filterKey as filtersKey] !== "") {
-        const paramValue = typeof filters[filterKey as filtersKey] !== "string" 
-          ? JSON.stringify(filters[filterKey as filtersKey])
-          : filters[filterKey as filtersKey]
+        const paramValue =
+          typeof filters[filterKey as filtersKey] !== "string"
+            ? JSON.stringify(filters[filterKey as filtersKey])
+            : filters[filterKey as filtersKey];
         searchParams[filterKey] = paramValue;
       }
     });
