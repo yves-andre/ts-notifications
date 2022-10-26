@@ -5,7 +5,6 @@ import Notification from "../../data/interfaces/notification";
 import Search from "./search/Search";
 import { includesString, sortArrayByDateStringField, sortArrayByStringField } from "../../utils/helpers";
 import { formatDate } from "../../utils/formatters";
-import { getUserLogin } from "../../services/auth-service";
 
 import "./Explorer.scss";
 
@@ -17,18 +16,10 @@ export const Explorer: React.FC = () => {
   const [filterNotifications, setFilterNotifications] = useState(
     [] as Notification[]
   );
-  const [userLogin, setUserLogin] = useState<string>();
-
-  useEffect(() => {
-    (async () => {
-      const login = await getUserLogin();
-      setUserLogin(login);
-    })();
-  }, []);
 
   useEffect(() => {
     setFilterNotifications(filterAndSortNotifications(notifications));
-  }, [notifications, filters, userLogin]);
+  }, [notifications, filters]);
 
   const filterAndSortNotifications = (notifications: Notification[]) => {
     let filterNotifications = notifications
@@ -42,7 +33,6 @@ export const Explorer: React.FC = () => {
       )
       .filter((n) => n.category === filters.selectedCategory)
       .filter((n) => n.status === filters.selectedStatus)
-      .filter((n) => filters.showDelegations || n.owner.login === userLogin)
       .filter((n) =>
         !filters.selectedApplication ||
         filters.selectedApplication
@@ -64,8 +54,7 @@ export const Explorer: React.FC = () => {
   return (
     <>
       <Search />
-      {userLogin && <Table notifications={filterNotifications} />}
-      {!userLogin && <p>Loading ...</p>}
+      <Table notifications={filterNotifications} />
     </>
   );
 };
