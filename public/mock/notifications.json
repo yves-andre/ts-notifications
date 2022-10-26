@@ -1,589 +1,592 @@
 [
   {
-      "owner":{
-          "login":"vbardo"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getUserNotificationsByStatus":"http:///server:port///notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":0,
-      "description":"Mission Order to validate",
-      "date":"2022-10-05T10:53:52.876Z",
-      "status":0,
-      "isRead":false,
-      "details":"Sent to : Armin",
-      "isFavorite":false,
-      "_id":"1",
-      "title":"MISSION ORDERS",
-      "sourceUrl":"http://les-petites-annonces.ch",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://les-petites-annonces.ch/gva/leasure"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "vbardo"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getUserNotificationsByStatus": "http:///server:port///notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 0,
+    "description": "Mission Order to validate",
+    "date": "2022-10-05T10:53:52.876Z",
+    "status": 0,
+    "isRead": false,
+    "details": "Sent to : Armin",
+    "isFavorite": false,
+    "_id": "1",
+    "title": "MISSION ORDERS",
+    "image": "missionOrder",
+    "sourceUrl": "http://les-petites-annonces.ch",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://les-petites-annonces.ch/gva/leasure"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"adervi"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getUserNotificationsByStatus":"http:///server:port///notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":0,
-      "description":"Expense to validate",
-      "date":"2020-02-02T10:53:52.876Z",
-      "status":0,
-      "details":"Sent to : Armin",
-      "isRead":false,
-      "isFavorite":false,
-      "_id":"2",
-      "title":"EXPENSES",
-      "sourceUrl":"http://les-petites-annonces.ch",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://les-petites-annonces.ch/gva/leasure"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "adervi"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getUserNotificationsByStatus": "http:///server:port///notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 0,
+    "description": "Expense to validate",
+    "date": "2020-02-02T10:53:52.876Z",
+    "status": 0,
+    "details": "Sent to : Armin",
+    "isRead": false,
+    "isFavorite": false,
+    "_id": "2",
+    "title": "EXPENSES",
+    "image": "expense",
+    "sourceUrl": "http://les-petites-annonces.ch",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://les-petites-annonces.ch/gva/leasure"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getUserNotificationsByStatus":"http:///server:port///notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":0,
-      "description":"Requisition form to complete",
-      "date":"2020-02-02T10:53:52.876Z",
-      "status":0,
-      "isRead":false,
-      "isFavorite":false,
-      "details":"Sent to : Armin",
-      "_id":"3",
-      "title":"REQUISITION FORMS",
-      "sourceUrl":"http://les-petites-annonces.ch",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://les-petites-annonces.ch/gva/leasure"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getUserNotificationsByStatus": "http:///server:port///notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 0,
+    "description": "Requisition form to complete",
+    "date": "2020-02-02T10:53:52.876Z",
+    "status": 0,
+    "isRead": false,
+    "isFavorite": false,
+    "details": "Sent to : Armin",
+    "_id": "3",
+    "title": "REQUISITION FORMS",
+    "image": "requisitionForms",
+    "sourceUrl": "http://les-petites-annonces.ch",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://les-petites-annonces.ch/gva/leasure"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given READ ONLY rights in: test share",
-      "subtitle":"Invited you to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:21:50.114Z",
-      "status":0,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"4",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=330"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given READ ONLY rights in: test share",
+    "subtitle": "Invited you to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:21:50.114Z",
+    "status": 0,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "4",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=330"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given READ ONLY rights in: Reports",
-      "subtitle":"Invited you to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:21:49.733Z",
-      "status":0,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"5",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=318"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given READ ONLY rights in: Reports",
+    "subtitle": "Invited you to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:21:49.733Z",
+    "status": 0,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "5",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=318"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given ADMIN rights in: Widget Links",
-      "subtitle":"Upgraded your rights to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:21:24.549Z",
-      "status":1,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"6",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=279"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given ADMIN rights in: Widget Links",
+    "subtitle": "Upgraded your rights to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:21:24.549Z",
+    "status": 1,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "6",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=279"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given READ ONLY rights in: Revamping file://",
-      "subtitle":"Invited you to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:21:20.621Z",
-      "status":0,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"7",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=299"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given READ ONLY rights in: Revamping file://",
+    "subtitle": "Invited you to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:21:20.621Z",
+    "status": 0,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "7",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=299"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given READ ONLY rights in: Widget Links",
-      "subtitle":"Invited you to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:21:09.932Z",
-      "status":0,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"8",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=279"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given READ ONLY rights in: Widget Links",
+    "subtitle": "Invited you to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:21:09.932Z",
+    "status": 0,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "8",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=279"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given ADMIN rights in: Widget Market",
-      "subtitle":"Upgraded your rights to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:20:59.326Z",
-      "status":1,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"9",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=278"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given ADMIN rights in: Widget Market",
+    "subtitle": "Upgraded your rights to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:20:59.326Z",
+    "status": 1,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "9",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=278"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given ADMIN rights in: Widget Communities",
-      "subtitle":"Upgraded your rights to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:20:58.570Z",
-      "status":1,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"10",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=275"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given ADMIN rights in: Widget Communities",
+    "subtitle": "Upgraded your rights to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:20:58.570Z",
+    "status": 1,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "10",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=275"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given ADMIN rights in: Widget External News",
-      "subtitle":"Upgraded your rights to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:20:58.503Z",
-      "status":1,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"11",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=277"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given ADMIN rights in: Widget External News",
+    "subtitle": "Upgraded your rights to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:20:58.503Z",
+    "status": 1,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "11",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=277"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given ADMIN rights in: Widget TS News",
-      "subtitle":"Upgraded your rights to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:20:57.612Z",
-      "status":1,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"12",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=274"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given ADMIN rights in: Widget TS News",
+    "subtitle": "Upgraded your rights to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:20:57.612Z",
+    "status": 1,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "12",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=274"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given READ ONLY rights in: Test admin",
-      "subtitle":"Invited you to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:20:52.531Z",
-      "status":1,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"13",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=293"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given READ ONLY rights in: Test admin",
+    "subtitle": "Invited you to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:20:52.531Z",
+    "status": 1,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "13",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=293"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given READ ONLY rights in: Widget Market",
-      "subtitle":"Invited you to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:20:49.858Z",
-      "status":1,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"14",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=278"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given READ ONLY rights in: Widget Market",
+    "subtitle": "Invited you to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:20:49.858Z",
+    "status": 1,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "14",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=278"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given READ ONLY rights in: Widget External News",
-      "subtitle":"Invited you to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:20:48.455Z",
-      "status":1,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"15",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=277"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given READ ONLY rights in: Widget External News",
+    "subtitle": "Invited you to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:20:48.455Z",
+    "status": 1,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "15",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=277"
+      }
+    ],
+    "__v": 0
   },
   {
-      "owner":{
-          "login":"yagiro"
-      },
-      "methods":{
-          "getAllUserNotifications":"http:///server:port//notifications/:userlogin",
-          "getNotificationsByReference":"http:///server:port//notifications/reference/:reference",
-          "getUserNotificationsByStatus":"http:///server:port//notifications/:userlogin/:status",
-          "countNewUserNotificationsByCategory":"http:///server:port//notifications/count/:userlogin/:category",
-          "postNotifications":"http:///server:port//notifications",
-          "updateUserNotificationStatus":"http:///server:port//notifications/:id"
-      },
-      "category":1,
-      "description":"You've been given READ ONLY rights in: Widget Communities",
-      "subtitle":"Invited you to a collaborative board",
-      "details":"Sent to : Armin",
-      "date":"2019-06-03T16:20:48.434Z",
-      "status":1,
-      "isReminder":false,
-      "isRead":false,
-      "isFavorite":false,
-      "isManual":false,
-      "_id":"16",
-      "title":"DIGITAL WORKPLACE",
-      "image":"dashboard",
-      "reference":"",
-      "sourceUrl":"http://home.empica.local/backup",
-      "sourceName":"dwp",
-      "actions":[
-          {
-              "isDefault":false,
-              "_id":"1",
-              "name":"read",
-              "url":"http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=275"
-          }
-      ],
-      "__v":0
+    "owner": {
+      "login": "yagiro"
+    },
+    "methods": {
+      "getAllUserNotifications": "http:///server:port//notifications/:userlogin",
+      "getNotificationsByReference": "http:///server:port//notifications/reference/:reference",
+      "getUserNotificationsByStatus": "http:///server:port//notifications/:userlogin/:status",
+      "countNewUserNotificationsByCategory": "http:///server:port//notifications/count/:userlogin/:category",
+      "postNotifications": "http:///server:port//notifications",
+      "updateUserNotificationStatus": "http:///server:port//notifications/:id"
+    },
+    "category": 1,
+    "description": "You've been given READ ONLY rights in: Widget Communities",
+    "subtitle": "Invited you to a collaborative board",
+    "details": "Sent to : Armin",
+    "date": "2019-06-03T16:20:48.434Z",
+    "status": 1,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isManual": false,
+    "_id": "16",
+    "title": "DIGITAL WORKPLACE",
+    "image": "dashboard",
+    "reference": "",
+    "sourceUrl": "http://home.empica.local/backup",
+    "sourceName": "dwp",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "1",
+        "name": "read",
+        "url": "http://home.empica.local/backup/Pages/DWP.aspx#!?displaySharedBoard=275"
+      }
+    ],
+    "__v": 0
   }
 ]

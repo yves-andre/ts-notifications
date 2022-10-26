@@ -5,13 +5,13 @@
         "Title": "Mission orders",
         "Match": "mission-orders,mission orders,missionorders",
         "NotificationType": "workflow",
-        "image": "dashboard"
+        "image": "missionOrder"
       },
       {
         "Title": "Absence notice",
         "Match": "absence notice,absence-notice,absencenotice",
         "NotificationType": "workflow",
-        "image": "dashboard"
+        "image": "absenceNotice"
       },
       {
         "Title": "Limits",
@@ -23,19 +23,19 @@
         "Title": "Requisition forms",
         "Match": "requisition forms,requisition-forms,requisitionforms",
         "NotificationType": "workflow",
-        "image": "dashboard"
+        "image": "requisitionForms"
       },
       {
         "Title": "Network account",
         "Match": "network account,network-account,networkaccount",
         "NotificationType": "workflow",
-        "image": "dashboard"
+        "image": "networkAccount"
       },
       {
         "Title": "Expenses",
         "Match": "expenses",
         "NotificationType": "workflow",
-        "image": "dashboard"
+        "image": "expense"
       },
       {
         "Title": "TS & News",
@@ -47,7 +47,7 @@
         "Title": "Digital workplace",
         "Match": "digital workplace,digital-workplace,digitalworkplace",
         "NotificationType": "socialflow",
-        "image": "dashboard"
+        "image": "dwp"
       }
     ]
   }

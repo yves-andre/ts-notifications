@@ -1,27 +1,35 @@
-import React, { ChangeEvent } from "react";
-import { useAppDispatch } from "../../../hooks/use-app-dispatch";
-import { useAppSelector } from "../../../hooks/use-app-selector";
-import { filtersActions } from "../../../store/filters-slice";
+import React, { ChangeEvent } from 'react'
+import { useAppDispatch } from '../../../hooks/use-app-dispatch'
+import { useAppSelector } from '../../../hooks/use-app-selector'
+import { filtersActions } from '../../../store/filters-slice'
 
-import "./Search.scss";
+import { Input } from '@trading/energies-ui'
+
+import './Search.scss'
 
 export const Search: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
-  const search = useAppSelector((state) => state.filters.searchFilter);
+  const search = useAppSelector((state) => state.filters.searchFilter)
 
-  const searchChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch(filtersActions.setSearchFilter(event.target.value));
-  };
+  const searchChangeHandler = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    dispatch(filtersActions.setSearchFilter(event.target.value))
+  }
 
   return (
-    <input
-      type="text"
-      value={search}
+    <Input
+      placeholder='Quick search ...'
+      type='search'
+      variant='translucide'
+      round
+      icon={{ name: 'search', position: 'before', color: 'white' }}
       onChange={searchChangeHandler}
-      placeholder="Quick search ..."
+      deleteBtn={true}
+      value={search}
     />
-  );
-};
+  )
+}
 
-export default Search;
+export default Search

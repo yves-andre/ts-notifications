@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import classNames from 'classnames'
+import React, { ReactNode } from 'react'
 import { CATEGORY } from '../../../data/constants/category'
 import Application from '../../../data/interfaces/application'
 import { useAppDispatch } from '../../../hooks/use-app-dispatch'
@@ -7,7 +6,6 @@ import { useAppSelector } from '../../../hooks/use-app-selector'
 import { filtersActions } from '../../../store/filters-slice'
 
 import { Nav } from '@trading/energies-ui'
-import MenuItem from '../menu-item/MenuItem'
 
 import './Menu.scss'
 
@@ -17,7 +15,6 @@ interface Props {
 
 const ACTION_FEED = CATEGORY.ACTION_FEED
 const INFORMATION_FEED = CATEGORY.INFORMATION_FEED
-
 const CATEGORIES = [ACTION_FEED, INFORMATION_FEED]
 
 export const Menu: React.FC<Props> = ({ applications }) => {
@@ -27,41 +24,21 @@ export const Menu: React.FC<Props> = ({ applications }) => {
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
   )
+  const selectedApplication = useAppSelector(
+    (state) => state.filters.selectedApplication
+  )
+
   const dispatch = useAppDispatch()
-
-  const [displayedCategories, setDisplayedCategories] = useState([
-    ACTION_FEED,
-    INFORMATION_FEED,
-  ])
-
-  // edit the displayedCategories array to show / hide submenu
-  const toggleMenuHandler = (category: number) => {
-    if (displayedCategories.includes(category)) {
-      const categoryIndex = displayedCategories.findIndex((c) => c === category)
-      setDisplayedCategories((c) =>
-        // return the array without the category
-        c.slice(0, categoryIndex).concat(c.slice(categoryIndex + 1, c.length))
-      )
-    } else {
-      setDisplayedCategories((c) => [...c, category])
-    }
-  }
 
   const getAppsByCategory = (category: number): Application[] => {
     const filterValue = category === ACTION_FEED ? 'workflow' : 'socialflow'
     return applications?.filter((app) => app.type === filterValue)
   }
 
-  const getMenuItemsByCategory = (category: number): JSX.Element[] | null => {
-    const items = getAppsByCategory(category).map((app, i) => (
-      <MenuItem key={i} application={app} category={category}></MenuItem>
-    ))
-
-    if (items.length > 0 && displayedCategories.includes(category)) {
-      return items
-    }
-    return null
-  }
+  const getAppCount = (application: Application) =>
+    notifications.filter((n) =>
+      application.match.split(',').includes(n.title.trim().toLowerCase())
+    ).length
 
   const getAppCountByCategory = (category: number): number | null => {
     const count = getAppsByCategory(category).reduce((count, application) => {
@@ -71,79 +48,66 @@ export const Menu: React.FC<Props> = ({ applications }) => {
     return null
   }
 
-  const getAppCount = (application: Application) =>
-    notifications.filter((n) =>
-      application.match.split(',').includes(n.title.trim().toLowerCase())
-    ).length
-
   const selectCategoryHandler = (category: number): void => {
-    if (selectedCategory != category) {
-      dispatch(filtersActions.setSelectedCategory(category))
-      dispatch(filtersActions.setSelectedApplication(''))
-      // display the categories if they are not already displayed
-      displayedCategories.includes(category) || toggleMenuHandler(category)
-    }
+    dispatch(filtersActions.setSelectedCategory(category))
+    dispatch(filtersActions.setSelectedApplication(''))
+  }
+  const selectAppHandler = (match: string, category: number) => {
+    dispatch(filtersActions.setSelectedCategory(category))
+    dispatch(filtersActions.setSelectedApplication(match))
   }
 
-  const getTitleByCategory = (category: number): string => {
+  const getTitleByCategory = (category: number): ReactNode => {
     switch (category) {
       case CATEGORY.ACTION_FEED:
-        return 'ACTION FEED'
+        return (
+          <>
+            <b>ACTION</b> FEED
+          </>
+        )
       case CATEGORY.INFORMATION_FEED:
-        return 'INFORMATION FEED'
+        return (
+          <>
+            <b>INFORMATION</b> FEED
+          </>
+        )
       default:
-        return ''
+        return <></>
+    }
+  }
+  const getIconByCategory = (category: number): string | undefined => {
+    switch (category) {
+      case CATEGORY.ACTION_FEED:
+        return 'validations'
+      case CATEGORY.INFORMATION_FEED:
+        return 'bellFeed'
+      default:
+        return undefined
     }
   }
 
   const navCategories = CATEGORIES.map((category) => ({
     isExpanded: true,
-    key: category.toString(),
+    key: category,
+    icon: getIconByCategory(category),
     title: getTitleByCategory(category),
     badge: getAppCountByCategory(category) || undefined,
     items: getAppsByCategory(category).map((app, i) => ({
-      key: app.title,
+      key: app.match,
       title: app.title,
       icon: app.image,
       badge: getAppCount(app) || undefined,
+      onClick: () => selectAppHandler(app.match, category),
     })),
   }))
 
   return (
-    <>
-      <Nav
-        onClick={(item) => selectCategoryHandler(parseInt(item.key))}
-        active={selectedCategory.toString()}
-        items={navCategories}
-      />
-
-      {CATEGORIES.map((category) => {
-        return (
-          <div className='Menu' key={category}>
-            <div className='Menu-toggle'>
-              <span onClick={() => toggleMenuHandler(category)}>
-                {displayedCategories.includes(category) && '⌄'}
-                {!displayedCategories.includes(category) && '^'}
-              </span>
-              <div
-                className={classNames({
-                  'Menu-header': true,
-                  'Menu-header-active': selectedCategory === category,
-                })}
-                onClick={() => selectCategoryHandler(category)}
-              >
-                {category === CATEGORY.ACTION_FEED && <span>ACTION FEED</span>}
-                {category === CATEGORY.INFORMATION_FEED && (
-                  <span>INFORMATION FEED</span>
-                )}
-                {<span>{getAppCountByCategory(category)}</span>}
-              </div>
-            </div>
-            {getMenuItemsByCategory(category)}
-          </div>
-        )
-      })}
-    </>
+    <Nav
+      onClick={(item: any) => selectCategoryHandler(item.key)}
+      active={selectedApplication || selectedCategory}
+      items={navCategories}
+      variant='secondary'
+    />
   )
 }
 
