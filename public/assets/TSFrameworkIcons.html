@@ -1,0 +1,2249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>TSFrameworkIcons</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+    <link rel="stylesheet" href="TSFrameworkIcons.css">
+    <style>
+      html{
+        /*background: #CCC;*/
+        background: #ECECEC;
+      }
+      html.isDoc{
+        background: none;
+      }
+      body{
+        padding:10px 40px 40px;
+        background-size: 16px 16px;
+        max-width: 1072px;
+        margin: 0 auto;
+      }
+      .isDoc body{
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+      h2{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 28px;
+        display: flex;
+        align-items: center;
+      }
+      .isDoc h2{
+        display: none;
+      }
+      h2 a{
+        text-decoration: none;
+        color:inherit;
+      }
+      h2 a:hover{
+        text-decoration: underline;
+      }
+      h2 em{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 15px;
+        vertical-align: middle;
+        display: inline-block;
+        background: #fff;
+        border-radius: 20px;
+        padding: 3px 8px;
+        line-height: 1.1;
+        margin-left: 10px;
+        font-family: monospace;
+        letter-spacing: -1px;
+      }
+      h3{
+        font-family: Arial, Helvetica, sans-serif;
+        width:100%;
+      }
+      h3:first-letter{
+        text-transform: uppercase;
+      }
+      .Size{
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center
+      }
+      .Size label{
+        cursor: pointer;
+        margin-right: 1px;
+      }
+      .isDoc .Size label{
+        display:none;
+      }
+      .Size input[type=radio]{
+        display: none;
+      }
+      .Size span{
+        display: inline-block;
+        background: #F5F5F5;
+        padding: 8px 15px;
+        transition: background-color 110ms ease-out, transform 110ms ease-out;
+        font-family: monospace;
+        font-size: 14px;
+      }
+      .Size span:active{
+        transform: scale(.95);
+      }
+      .Size label:hover span{
+        background: #FAFAFA;
+      }
+      .Size input:checked + span{
+        font-weight: bold;
+        background: #FFF;
+      }
+
+      .Search{
+        border-radius: 30px;
+        border: none;
+        outline: none;
+        padding: 7px 15px;
+        width: 267px;
+        margin-left: auto;
+        background: #FAFAFA;
+        transition: background-color 110ms ease-out;
+        font-size: 13px;
+        font-family: monospace;
+      }
+      .isDoc .Search{
+          margin-top: 1rem;
+          margin-left: 0;
+          font-size: 15px;
+          background: #FFF;
+        }
+
+      .Search:hover,
+      .Search:focus,
+      .Search:not(:placeholder-shown){
+        background: #FFF;
+      }
+
+
+      .Icons{
+        display: flex;
+        align-items: stretch;
+        flex-wrap: wrap;
+      }
+      .Icons > picture{
+        cursor: pointer;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        /*border: 1px solid #000;*/
+        padding:0 5px 10px;
+        margin:1px;
+        width: 122px;
+        min-height: 75px;
+        position: relative;
+        background-repeat: repeat;
+        background-position:  0 0;
+        /*background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect fill='%23bbb' fill-opacity='.5' width='8' height='8'/%3E%3Crect fill='%23bbb' fill-opacity='.5' width='8' height='8' x='8' y='8' /%3E%3Crect fill='%23ccc' width='8' height='8' x='8' fill-opacity='.4' /%3E%3Crect fill='%23ccc' width='8' height='8' y='8' fill-opacity='.4' /%3E%3C/svg%3E");*/
+        background-color: #F5F5F5;
+        transition: background-color 110ms ease-out, transform 110ms ease-out;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+      }
+      .isDoc .Icons > picture{
+        background-color: #FFF;
+      }
+
+      .Icons > picture:not([hidden]){
+        display: flex;
+      }
+      .Icons > picture:hover{
+        background-color:#fff;
+      }
+
+      .isDoc .Icons > picture:hover{
+        background-color:rgba(255,255,255,.4);
+      }
+
+      .Icons > picture:active{
+        transform: scale(.95);
+      }
+      .Icons > picture.isCopied::after{
+        content:'✓ Copied';
+        background: #000;
+        width: 60%;
+        height: 25px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%) scale(0);
+        font-family: Arial;
+        font-size: 11px;
+        animation-name: appear;
+        animation-duration:1800ms;
+        animation-fill-mode: both;
+        pointer-events: none;
+      }
+      .isCharacterMode .Icons > picture.isCopied::after{
+        content:'⌘ Character Copied' !important;
+        padding: 7px 10px;
+      }
+      @keyframes appear {
+          0% {
+            opacity: 0;
+            transform: translate(-50%,-50%) scale(0);
+          }
+          20% {
+            opacity: 1;
+            transform: translate(-50%,-50%) scale(1);
+          }
+          60% {
+            opacity: 1;
+            transform: translate(-50%,-50%) scale(1);
+          }
+          100% {
+            opacity: 0;
+            transform: translate(-50%,-50%) scale(0);
+          }
+        }
+
+      .Icons span{
+        word-wrap: break-word;
+        width: 100%;
+        margin-top: auto;
+        font-family: monospace;
+        font-size: 11px;
+        background: none;
+        border:none;
+        display: inline;
+        text-align: center;
+        padding: 3px 0;
+        outline: none;
+        pointer-events: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+      }
+      .Icon--medium span{
+        font-size: 12px;
+      }
+      .Icon--large span{
+        font-size: 13px;
+      }
+
+
+      .Icons--medium [class*='Icon--']:before{
+        font-size: 80px;
+      }
+      .Icons--large [class*='Icon--']:before{
+        font-size: 120px;
+      }
+      .Icons span em{
+        background: yellow;
+        font-style: normal;
+      }
+      .Icons input{
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+      }
+      .Icons picture::before{
+        margin-top: auto;
+      }
+      [type=search] {
+        -webkit-appearance: searchfield;
+      }
+      [type=search]::-webkit-search-cancel-button {
+        -webkit-appearance: searchfield-cancel-button;
+      }
+      .Add{
+        position: fixed;
+        right:25px;
+        bottom: 25px;
+        width:66px;
+        height: 66px;
+        outline:none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-radius: 50%;
+        cursor: pointer;
+        color:#fff;
+        background:#000;
+        border: none;
+        font-size: 40px;
+        line-height: 0;
+        vertical-align: middle;
+        font-family: monospace;
+        transition: transform 110ms, background-color 110ms, color  110ms, border 110ms ease-out;
+        transform-origin: 50% 50%;
+      }
+      .isDoc .Add{
+        display:none;
+      }
+      .Add:hover{
+        transform: scale(1.15);
+      }
+      .Add:active {
+        transform: scale(.9);
+      }
+
+
+    </style>
+<script>
+if (location.search.indexOf("doc") >= 0) {
+  document.documentElement.classList.add("isDoc");
+}
+document.addEventListener("DOMContentLoaded", function(event) {
+  var $Pictures = document.querySelectorAll(".Icons picture");
+  var categoryPrev = "icons";
+  $Pictures.forEach(function(picture) {
+    var category = picture.getAttribute("data-category");
+
+    if (categoryPrev != category) {
+      picture.insertAdjacentHTML(
+        "beforebegin",
+        '<h3 class="Icons-category" data-category="' +
+          category +
+          '">' +
+          category +
+          "</h3>"
+      );
+      categoryPrev = category;
+    }
+
+    picture.addEventListener("click", function(event) {
+      var input = picture.querySelector("input");
+      if (event.altKey) {
+        input.value = picture.getAttribute("data-character");
+        document.body.classList.add("isCharacterMode");
+      } else {
+        input.value = picture.getAttribute("data-icon");
+        document.body.classList.remove("isCharacterMode");
+      }
+      input.select();
+      document.execCommand("copy");
+      console.log("you have copied: " + input.value);
+      picture.classList.add("isCopied");
+      setTimeout(function() {
+        picture.classList.remove("isCopied");
+      }, 1800);
+    });
+  });
+
+  var $Sizes = document.querySelectorAll('input[name="size"]');
+  $Sizes.forEach(function(size) {
+    size.addEventListener("click", function(event) {
+      var sizeValue = document.querySelector('input[name="size"]:checked')
+        .value;
+      updateIcons(sizeValue);
+    });
+  });
+
+  var $Search = document.querySelector(".Search");
+  $Search.addEventListener("input", function(event) {
+    search(this.value);
+  });
+
+  function updateIcons(sizeValue) {
+    var $Icons = document.querySelector(".Icons");
+    console.log($Icons);
+    $Icons.className = "Icons";
+    if (sizeValue != "") {
+      $Icons.classList.add("Icons--" + sizeValue);
+    }
+  }
+  function search(value) {
+    $categories = document.querySelectorAll(".Icons-category");
+
+    if (value.length >= 2) {
+      var resultsArray = Array.from(
+        document.querySelectorAll(
+          '.Icons picture[data-icon*="' + value + '" i]'
+        )
+      );
+      //console.log(this.value, resultsArray);
+      $categories.forEach(function(cat) {
+        cat.hidden = true;
+      });
+
+      $Pictures.forEach(function(picture) {
+        var span = picture.querySelector("span");
+        var icon = picture.getAttribute("data-icon");
+        var category = picture.getAttribute("data-category");
+
+        span.innerHTML = icon;
+
+        if (!isInArray(picture, resultsArray)) {
+          picture.hidden = true;
+          var categoryTitle = document.querySelector(
+            '.Icons-category[data-category="' + category + '"]'
+          );
+          if (categoryTitle && !picture.hidden) {
+            categoryTitle.hidden = true;
+          }
+        } else {
+          picture.removeAttribute("hidden");
+          var categoryTitle = document.querySelector(
+            '.Icons-category[data-category="' + category + '"]'
+          );
+          if (categoryTitle) {
+            categoryTitle.removeAttribute("hidden");
+          }
+
+          var innerHTML = span.innerHTML;
+          var index = innerHTML.toLowerCase().indexOf(value.toLowerCase());
+
+          if (index >= 0) {
+            innerHTML =
+              innerHTML.substring(0, index) +
+              "<em>" +
+              innerHTML.substring(index, index + value.length) +
+              "</em>" +
+              innerHTML.substring(index + value.length);
+            span.innerHTML = innerHTML;
+          }
+        }
+      });
+    } else {
+      $Pictures.forEach(function(picture) {
+        picture.removeAttribute("hidden");
+        var span = picture.querySelector("span");
+        span.textContent = picture.getAttribute("data-icon");
+      });
+      $categories.forEach(function(cat) {
+        cat.removeAttribute("hidden");
+      });
+    }
+  }
+
+  function isInArray(value, array) {
+    return array.indexOf(value) > -1;
+  }
+});
+</script>
+</head>
+<body>
+
+  <h2><a title="Download TSFrameworkIcons.ttf" href="TSFrameworkIcons.ttf" download>TSFrameworkIcons</a> <em>359</em></h2>
+
+  <div class="Size">
+    <label><input type="radio" name="size" value=""/> <span>Normal</span></label>
+    <label><input type="radio" name="size" value="medium" checked  /> <span>Medium</span></label>
+    <label><input type="radio" name="size" value="large" /> <span>Large</span></label>
+
+    <input class="Search" type="search" placeholder="Search" />
+  </div>
+
+  <div class="Icons Icons--medium">
+    
+      <picture class="Icon--accounting" data-icon="accounting" data-category="icons" data-character="">
+          <span>accounting</span>
+          <input type="text" value="TSFrameworkIcons-accounting" />
+      </picture>
+    
+      <picture class="Icon--allChecked40" data-icon="allChecked40" data-category="icons" data-character="">
+          <span>allChecked40</span>
+          <input type="text" value="TSFrameworkIcons-allChecked40" />
+      </picture>
+    
+      <picture class="Icon--allChecked50" data-icon="allChecked50" data-category="icons" data-character="">
+          <span>allChecked50</span>
+          <input type="text" value="TSFrameworkIcons-allChecked50" />
+      </picture>
+    
+      <picture class="Icon--appElements" data-icon="appElements" data-category="icons" data-character="">
+          <span>appElements</span>
+          <input type="text" value="TSFrameworkIcons-appElements" />
+      </picture>
+    
+      <picture class="Icon--appFeedbacks" data-icon="appFeedbacks" data-category="icons" data-character="">
+          <span>appFeedbacks</span>
+          <input type="text" value="TSFrameworkIcons-appFeedbacks" />
+      </picture>
+    
+      <picture class="Icon--appHierarchy" data-icon="appHierarchy" data-category="icons" data-character="">
+          <span>appHierarchy</span>
+          <input type="text" value="TSFrameworkIcons-appHierarchy" />
+      </picture>
+    
+      <picture class="Icon--appLayout" data-icon="appLayout" data-category="icons" data-character="">
+          <span>appLayout</span>
+          <input type="text" value="TSFrameworkIcons-appLayout" />
+      </picture>
+    
+      <picture class="Icon--appointments50" data-icon="appointments50" data-category="icons" data-character="">
+          <span>appointments50</span>
+          <input type="text" value="TSFrameworkIcons-appointments50" />
+      </picture>
+    
+      <picture class="Icon--archives" data-icon="archives" data-category="icons" data-character="">
+          <span>archives</span>
+          <input type="text" value="TSFrameworkIcons-archives" />
+      </picture>
+    
+      <picture class="Icon--attachment" data-icon="attachment" data-category="icons" data-character="">
+          <span>attachment</span>
+          <input type="text" value="TSFrameworkIcons-attachment" />
+      </picture>
+    
+      <picture class="Icon--back" data-icon="back" data-category="icons" data-character="">
+          <span>back</span>
+          <input type="text" value="TSFrameworkIcons-back" />
+      </picture>
+    
+      <picture class="Icon--bell" data-icon="bell" data-category="icons" data-character="">
+          <span>bell</span>
+          <input type="text" value="TSFrameworkIcons-bell" />
+      </picture>
+    
+      <picture class="Icon--bellFeed" data-icon="bellFeed" data-category="icons" data-character="">
+          <span>bellFeed</span>
+          <input type="text" value="TSFrameworkIcons-bellFeed" />
+      </picture>
+    
+      <picture class="Icon--bellSend" data-icon="bellSend" data-category="icons" data-character="">
+          <span>bellSend</span>
+          <input type="text" value="TSFrameworkIcons-bellSend" />
+      </picture>
+    
+      <picture class="Icon--board" data-icon="board" data-category="icons" data-character="">
+          <span>board</span>
+          <input type="text" value="TSFrameworkIcons-board" />
+      </picture>
+    
+      <picture class="Icon--burger" data-icon="burger" data-category="icons" data-character="">
+          <span>burger</span>
+          <input type="text" value="TSFrameworkIcons-burger" />
+      </picture>
+    
+      <picture class="Icon--burger50" data-icon="burger50" data-category="icons" data-character="">
+          <span>burger50</span>
+          <input type="text" value="TSFrameworkIcons-burger50" />
+      </picture>
+    
+      <picture class="Icon--calendar" data-icon="calendar" data-category="icons" data-character="">
+          <span>calendar</span>
+          <input type="text" value="TSFrameworkIcons-calendar" />
+      </picture>
+    
+      <picture class="Icon--camera40" data-icon="camera40" data-category="icons" data-character="">
+          <span>camera40</span>
+          <input type="text" value="TSFrameworkIcons-camera40" />
+      </picture>
+    
+      <picture class="Icon--camera50" data-icon="camera50" data-category="icons" data-character="">
+          <span>camera50</span>
+          <input type="text" value="TSFrameworkIcons-camera50" />
+      </picture>
+    
+      <picture class="Icon--cancel" data-icon="cancel" data-category="icons" data-character="">
+          <span>cancel</span>
+          <input type="text" value="TSFrameworkIcons-cancel" />
+      </picture>
+    
+      <picture class="Icon--chat40" data-icon="chat40" data-category="icons" data-character="">
+          <span>chat40</span>
+          <input type="text" value="TSFrameworkIcons-chat40" />
+      </picture>
+    
+      <picture class="Icon--chat50" data-icon="chat50" data-category="icons" data-character="">
+          <span>chat50</span>
+          <input type="text" value="TSFrameworkIcons-chat50" />
+      </picture>
+    
+      <picture class="Icon--close" data-icon="close" data-category="icons" data-character="">
+          <span>close</span>
+          <input type="text" value="TSFrameworkIcons-close" />
+      </picture>
+    
+      <picture class="Icon--closeMedium" data-icon="closeMedium" data-category="icons" data-character="">
+          <span>closeMedium</span>
+          <input type="text" value="TSFrameworkIcons-closeMedium" />
+      </picture>
+    
+      <picture class="Icon--closeStandard" data-icon="closeStandard" data-category="icons" data-character="">
+          <span>closeStandard</span>
+          <input type="text" value="TSFrameworkIcons-closeStandard" />
+      </picture>
+    
+      <picture class="Icon--compliance" data-icon="compliance" data-category="icons" data-character="">
+          <span>compliance</span>
+          <input type="text" value="TSFrameworkIcons-compliance" />
+      </picture>
+    
+      <picture class="Icon--copy" data-icon="copy" data-category="icons" data-character="">
+          <span>copy</span>
+          <input type="text" value="TSFrameworkIcons-copy" />
+      </picture>
+    
+      <picture class="Icon--copy2" data-icon="copy2" data-category="icons" data-character="">
+          <span>copy2</span>
+          <input type="text" value="TSFrameworkIcons-copy2" />
+      </picture>
+    
+      <picture class="Icon--counterpart" data-icon="counterpart" data-category="icons" data-character="">
+          <span>counterpart</span>
+          <input type="text" value="TSFrameworkIcons-counterpart" />
+      </picture>
+    
+      <picture class="Icon--crude" data-icon="crude" data-category="icons" data-character="">
+          <span>crude</span>
+          <input type="text" value="TSFrameworkIcons-crude" />
+      </picture>
+    
+      <picture class="Icon--dashboard" data-icon="dashboard" data-category="icons" data-character="">
+          <span>dashboard</span>
+          <input type="text" value="TSFrameworkIcons-dashboard" />
+      </picture>
+    
+      <picture class="Icon--departments" data-icon="departments" data-category="icons" data-character="">
+          <span>departments</span>
+          <input type="text" value="TSFrameworkIcons-departments" />
+      </picture>
+    
+      <picture class="Icon--dollar" data-icon="dollar" data-category="icons" data-character="">
+          <span>dollar</span>
+          <input type="text" value="TSFrameworkIcons-dollar" />
+      </picture>
+    
+      <picture class="Icon--dollarBill" data-icon="dollarBill" data-category="icons" data-character="">
+          <span>dollarBill</span>
+          <input type="text" value="TSFrameworkIcons-dollarBill" />
+      </picture>
+    
+      <picture class="Icon--dollarSend" data-icon="dollarSend" data-category="icons" data-character="">
+          <span>dollarSend</span>
+          <input type="text" value="TSFrameworkIcons-dollarSend" />
+      </picture>
+    
+      <picture class="Icon--dollarTick" data-icon="dollarTick" data-category="icons" data-character="">
+          <span>dollarTick</span>
+          <input type="text" value="TSFrameworkIcons-dollarTick" />
+      </picture>
+    
+      <picture class="Icon--dots" data-icon="dots" data-category="icons" data-character="">
+          <span>dots</span>
+          <input type="text" value="TSFrameworkIcons-dots" />
+      </picture>
+    
+      <picture class="Icon--dotsVertical" data-icon="dotsVertical" data-category="icons" data-character="">
+          <span>dotsVertical</span>
+          <input type="text" value="TSFrameworkIcons-dotsVertical" />
+      </picture>
+    
+      <picture class="Icon--doubleTick" data-icon="doubleTick" data-category="icons" data-character="">
+          <span>doubleTick</span>
+          <input type="text" value="TSFrameworkIcons-doubleTick" />
+      </picture>
+    
+      <picture class="Icon--download" data-icon="download" data-category="icons" data-character="">
+          <span>download</span>
+          <input type="text" value="TSFrameworkIcons-download" />
+      </picture>
+    
+      <picture class="Icon--edit" data-icon="edit" data-category="icons" data-character="">
+          <span>edit</span>
+          <input type="text" value="TSFrameworkIcons-edit" />
+      </picture>
+    
+      <picture class="Icon--equal" data-icon="equal" data-category="icons" data-character="">
+          <span>equal</span>
+          <input type="text" value="TSFrameworkIcons-equal" />
+      </picture>
+    
+      <picture class="Icon--exclamationPoint" data-icon="exclamationPoint" data-category="icons" data-character="">
+          <span>exclamationPoint</span>
+          <input type="text" value="TSFrameworkIcons-exclamationPoint" />
+      </picture>
+    
+      <picture class="Icon--expand30" data-icon="expand30" data-category="icons" data-character="">
+          <span>expand30</span>
+          <input type="text" value="TSFrameworkIcons-expand30" />
+      </picture>
+    
+      <picture class="Icon--export" data-icon="export" data-category="icons" data-character="">
+          <span>export</span>
+          <input type="text" value="TSFrameworkIcons-export" />
+      </picture>
+    
+      <picture class="Icon--expressValidation" data-icon="expressValidation" data-category="icons" data-character="">
+          <span>expressValidation</span>
+          <input type="text" value="TSFrameworkIcons-expressValidation" />
+      </picture>
+    
+      <picture class="Icon--extend" data-icon="extend" data-category="icons" data-character="">
+          <span>extend</span>
+          <input type="text" value="TSFrameworkIcons-extend" />
+      </picture>
+    
+      <picture class="Icon--favorite" data-icon="favorite" data-category="icons" data-character="">
+          <span>favorite</span>
+          <input type="text" value="TSFrameworkIcons-favorite" />
+      </picture>
+    
+      <picture class="Icon--favoriteAlt" data-icon="favoriteAlt" data-category="icons" data-character="">
+          <span>favoriteAlt</span>
+          <input type="text" value="TSFrameworkIcons-favoriteAlt" />
+      </picture>
+    
+      <picture class="Icon--filters" data-icon="filters" data-category="icons" data-character="">
+          <span>filters</span>
+          <input type="text" value="TSFrameworkIcons-filters" />
+      </picture>
+    
+      <picture class="Icon--flag" data-icon="flag" data-category="icons" data-character="">
+          <span>flag</span>
+          <input type="text" value="TSFrameworkIcons-flag" />
+      </picture>
+    
+      <picture class="Icon--flagOutline" data-icon="flagOutline" data-category="icons" data-character="">
+          <span>flagOutline</span>
+          <input type="text" value="TSFrameworkIcons-flagOutline" />
+      </picture>
+    
+      <picture class="Icon--flash" data-icon="flash" data-category="icons" data-character="">
+          <span>flash</span>
+          <input type="text" value="TSFrameworkIcons-flash" />
+      </picture>
+    
+      <picture class="Icon--focus" data-icon="focus" data-category="icons" data-character="">
+          <span>focus</span>
+          <input type="text" value="TSFrameworkIcons-focus" />
+      </picture>
+    
+      <picture class="Icon--folder40" data-icon="folder40" data-category="icons" data-character="">
+          <span>folder40</span>
+          <input type="text" value="TSFrameworkIcons-folder40" />
+      </picture>
+    
+      <picture class="Icon--folder50" data-icon="folder50" data-category="icons" data-character="">
+          <span>folder50</span>
+          <input type="text" value="TSFrameworkIcons-folder50" />
+      </picture>
+    
+      <picture class="Icon--folderExplore50" data-icon="folderExplore50" data-category="icons" data-character="">
+          <span>folderExplore50</span>
+          <input type="text" value="TSFrameworkIcons-folderExplore50" />
+      </picture>
+    
+      <picture class="Icon--folderMove30" data-icon="folderMove30" data-category="icons" data-character="">
+          <span>folderMove30</span>
+          <input type="text" value="TSFrameworkIcons-folderMove30" />
+      </picture>
+    
+      <picture class="Icon--fullscreenOff" data-icon="fullscreenOff" data-category="icons" data-character="">
+          <span>fullscreenOff</span>
+          <input type="text" value="TSFrameworkIcons-fullscreenOff" />
+      </picture>
+    
+      <picture class="Icon--fullscreenOn" data-icon="fullscreenOn" data-category="icons" data-character="">
+          <span>fullscreenOn</span>
+          <input type="text" value="TSFrameworkIcons-fullscreenOn" />
+      </picture>
+    
+      <picture class="Icon--gift" data-icon="gift" data-category="icons" data-character="">
+          <span>gift</span>
+          <input type="text" value="TSFrameworkIcons-gift" />
+      </picture>
+    
+      <picture class="Icon--hat" data-icon="hat" data-category="icons" data-character="">
+          <span>hat</span>
+          <input type="text" value="TSFrameworkIcons-hat" />
+      </picture>
+    
+      <picture class="Icon--healthCross" data-icon="healthCross" data-category="icons" data-character="">
+          <span>healthCross</span>
+          <input type="text" value="TSFrameworkIcons-healthCross" />
+      </picture>
+    
+      <picture class="Icon--homeApps50" data-icon="homeApps50" data-category="icons" data-character="">
+          <span>homeApps50</span>
+          <input type="text" value="TSFrameworkIcons-homeApps50" />
+      </picture>
+    
+      <picture class="Icon--launcher" data-icon="launcher" data-category="icons" data-character="">
+          <span>launcher</span>
+          <input type="text" value="TSFrameworkIcons-launcher" />
+      </picture>
+    
+      <picture class="Icon--leaving" data-icon="leaving" data-category="icons" data-character="">
+          <span>leaving</span>
+          <input type="text" value="TSFrameworkIcons-leaving" />
+      </picture>
+    
+      <picture class="Icon--lightBulb" data-icon="lightBulb" data-category="icons" data-character="">
+          <span>lightBulb</span>
+          <input type="text" value="TSFrameworkIcons-lightBulb" />
+      </picture>
+    
+      <picture class="Icon--location30" data-icon="location30" data-category="icons" data-character="">
+          <span>location30</span>
+          <input type="text" value="TSFrameworkIcons-location30" />
+      </picture>
+    
+      <picture class="Icon--location50" data-icon="location50" data-category="icons" data-character="">
+          <span>location50</span>
+          <input type="text" value="TSFrameworkIcons-location50" />
+      </picture>
+    
+      <picture class="Icon--lock" data-icon="lock" data-category="icons" data-character="">
+          <span>lock</span>
+          <input type="text" value="TSFrameworkIcons-lock" />
+      </picture>
+    
+      <picture class="Icon--mail" data-icon="mail" data-category="icons" data-character="">
+          <span>mail</span>
+          <input type="text" value="TSFrameworkIcons-mail" />
+      </picture>
+    
+      <picture class="Icon--mail40" data-icon="mail40" data-category="icons" data-character="">
+          <span>mail40</span>
+          <input type="text" value="TSFrameworkIcons-mail40" />
+      </picture>
+    
+      <picture class="Icon--mail50" data-icon="mail50" data-category="icons" data-character="">
+          <span>mail50</span>
+          <input type="text" value="TSFrameworkIcons-mail50" />
+      </picture>
+    
+      <picture class="Icon--mailDollar" data-icon="mailDollar" data-category="icons" data-character="">
+          <span>mailDollar</span>
+          <input type="text" value="TSFrameworkIcons-mailDollar" />
+      </picture>
+    
+      <picture class="Icon--mailSend" data-icon="mailSend" data-category="icons" data-character="">
+          <span>mailSend</span>
+          <input type="text" value="TSFrameworkIcons-mailSend" />
+      </picture>
+    
+      <picture class="Icon--mailTo" data-icon="mailTo" data-category="icons" data-character="">
+          <span>mailTo</span>
+          <input type="text" value="TSFrameworkIcons-mailTo" />
+      </picture>
+    
+      <picture class="Icon--market" data-icon="market" data-category="icons" data-character="">
+          <span>market</span>
+          <input type="text" value="TSFrameworkIcons-market" />
+      </picture>
+    
+      <picture class="Icon--minus" data-icon="minus" data-category="icons" data-character="">
+          <span>minus</span>
+          <input type="text" value="TSFrameworkIcons-minus" />
+      </picture>
+    
+      <picture class="Icon--numbers" data-icon="numbers" data-category="icons" data-character="">
+          <span>numbers</span>
+          <input type="text" value="TSFrameworkIcons-numbers" />
+      </picture>
+    
+      <picture class="Icon--openAll" data-icon="openAll" data-category="icons" data-character="">
+          <span>openAll</span>
+          <input type="text" value="TSFrameworkIcons-openAll" />
+      </picture>
+    
+      <picture class="Icon--order" data-icon="order" data-category="icons" data-character="">
+          <span>order</span>
+          <input type="text" value="TSFrameworkIcons-order" />
+      </picture>
+    
+      <picture class="Icon--orderAz" data-icon="orderAz" data-category="icons" data-character="">
+          <span>orderAz</span>
+          <input type="text" value="TSFrameworkIcons-orderAz" />
+      </picture>
+    
+      <picture class="Icon--paint" data-icon="paint" data-category="icons" data-character="">
+          <span>paint</span>
+          <input type="text" value="TSFrameworkIcons-paint" />
+      </picture>
+    
+      <picture class="Icon--phoneBook" data-icon="phoneBook" data-category="icons" data-character="">
+          <span>phoneBook</span>
+          <input type="text" value="TSFrameworkIcons-phoneBook" />
+      </picture>
+    
+      <picture class="Icon--pinDnd" data-icon="pinDnd" data-category="icons" data-character="">
+          <span>pinDnd</span>
+          <input type="text" value="TSFrameworkIcons-pinDnd" />
+      </picture>
+    
+      <picture class="Icon--plus" data-icon="plus" data-category="icons" data-character="">
+          <span>plus</span>
+          <input type="text" value="TSFrameworkIcons-plus" />
+      </picture>
+    
+      <picture class="Icon--press" data-icon="press" data-category="icons" data-character="">
+          <span>press</span>
+          <input type="text" value="TSFrameworkIcons-press" />
+      </picture>
+    
+      <picture class="Icon--preview" data-icon="preview" data-category="icons" data-character="">
+          <span>preview</span>
+          <input type="text" value="TSFrameworkIcons-preview" />
+      </picture>
+    
+      <picture class="Icon--preview-50" data-icon="preview-50" data-category="icons" data-character="">
+          <span>preview-50</span>
+          <input type="text" value="TSFrameworkIcons-preview-50" />
+      </picture>
+    
+      <picture class="Icon--print" data-icon="print" data-category="icons" data-character="">
+          <span>print</span>
+          <input type="text" value="TSFrameworkIcons-print" />
+      </picture>
+    
+      <picture class="Icon--questionMark" data-icon="questionMark" data-category="icons" data-character="">
+          <span>questionMark</span>
+          <input type="text" value="TSFrameworkIcons-questionMark" />
+      </picture>
+    
+      <picture class="Icon--redo" data-icon="redo" data-category="icons" data-character="">
+          <span>redo</span>
+          <input type="text" value="TSFrameworkIcons-redo" />
+      </picture>
+    
+      <picture class="Icon--refresh" data-icon="refresh" data-category="icons" data-character="">
+          <span>refresh</span>
+          <input type="text" value="TSFrameworkIcons-refresh" />
+      </picture>
+    
+      <picture class="Icon--reorder" data-icon="reorder" data-category="icons" data-character="">
+          <span>reorder</span>
+          <input type="text" value="TSFrameworkIcons-reorder" />
+      </picture>
+    
+      <picture class="Icon--reorderAlt30" data-icon="reorderAlt30" data-category="icons" data-character="">
+          <span>reorderAlt30</span>
+          <input type="text" value="TSFrameworkIcons-reorderAlt30" />
+      </picture>
+    
+      <picture class="Icon--reply" data-icon="reply" data-category="icons" data-character="">
+          <span>reply</span>
+          <input type="text" value="TSFrameworkIcons-reply" />
+      </picture>
+    
+      <picture class="Icon--resize" data-icon="resize" data-category="icons" data-character="">
+          <span>resize</span>
+          <input type="text" value="TSFrameworkIcons-resize" />
+      </picture>
+    
+      <picture class="Icon--rocket" data-icon="rocket" data-category="icons" data-character="">
+          <span>rocket</span>
+          <input type="text" value="TSFrameworkIcons-rocket" />
+      </picture>
+    
+      <picture class="Icon--roundClose" data-icon="roundClose" data-category="icons" data-character="">
+          <span>roundClose</span>
+          <input type="text" value="TSFrameworkIcons-roundClose" />
+      </picture>
+    
+      <picture class="Icon--save" data-icon="save" data-category="icons" data-character="">
+          <span>save</span>
+          <input type="text" value="TSFrameworkIcons-save" />
+      </picture>
+    
+      <picture class="Icon--savePlus" data-icon="savePlus" data-category="icons" data-character="">
+          <span>savePlus</span>
+          <input type="text" value="TSFrameworkIcons-savePlus" />
+      </picture>
+    
+      <picture class="Icon--search" data-icon="search" data-category="icons" data-character="">
+          <span>search</span>
+          <input type="text" value="TSFrameworkIcons-search" />
+      </picture>
+    
+      <picture class="Icon--settings" data-icon="settings" data-category="icons" data-character="">
+          <span>settings</span>
+          <input type="text" value="TSFrameworkIcons-settings" />
+      </picture>
+    
+      <picture class="Icon--shieldCheck" data-icon="shieldCheck" data-category="icons" data-character="">
+          <span>shieldCheck</span>
+          <input type="text" value="TSFrameworkIcons-shieldCheck" />
+      </picture>
+    
+      <picture class="Icon--sort30" data-icon="sort30" data-category="icons" data-character="">
+          <span>sort30</span>
+          <input type="text" value="TSFrameworkIcons-sort30" />
+      </picture>
+    
+      <picture class="Icon--sortDown30" data-icon="sortDown30" data-category="icons" data-character="">
+          <span>sortDown30</span>
+          <input type="text" value="TSFrameworkIcons-sortDown30" />
+      </picture>
+    
+      <picture class="Icon--sortUp30" data-icon="sortUp30" data-category="icons" data-character="">
+          <span>sortUp30</span>
+          <input type="text" value="TSFrameworkIcons-sortUp30" />
+      </picture>
+    
+      <picture class="Icon--stop" data-icon="stop" data-category="icons" data-character="">
+          <span>stop</span>
+          <input type="text" value="TSFrameworkIcons-stop" />
+      </picture>
+    
+      <picture class="Icon--tab" data-icon="tab" data-category="icons" data-character="">
+          <span>tab</span>
+          <input type="text" value="TSFrameworkIcons-tab" />
+      </picture>
+    
+      <picture class="Icon--tableEdit" data-icon="tableEdit" data-category="icons" data-character="">
+          <span>tableEdit</span>
+          <input type="text" value="TSFrameworkIcons-tableEdit" />
+      </picture>
+    
+      <picture class="Icon--telephone40" data-icon="telephone40" data-category="icons" data-character="">
+          <span>telephone40</span>
+          <input type="text" value="TSFrameworkIcons-telephone40" />
+      </picture>
+    
+      <picture class="Icon--telephone50" data-icon="telephone50" data-category="icons" data-character="">
+          <span>telephone50</span>
+          <input type="text" value="TSFrameworkIcons-telephone50" />
+      </picture>
+    
+      <picture class="Icon--textSizeMinus" data-icon="textSizeMinus" data-category="icons" data-character="">
+          <span>textSizeMinus</span>
+          <input type="text" value="TSFrameworkIcons-textSizeMinus" />
+      </picture>
+    
+      <picture class="Icon--textSizePlus" data-icon="textSizePlus" data-category="icons" data-character="">
+          <span>textSizePlus</span>
+          <input type="text" value="TSFrameworkIcons-textSizePlus" />
+      </picture>
+    
+      <picture class="Icon--textSizeReset" data-icon="textSizeReset" data-category="icons" data-character="">
+          <span>textSizeReset</span>
+          <input type="text" value="TSFrameworkIcons-textSizeReset" />
+      </picture>
+    
+      <picture class="Icon--tick" data-icon="tick" data-category="icons" data-character="">
+          <span>tick</span>
+          <input type="text" value="TSFrameworkIcons-tick" />
+      </picture>
+    
+      <picture class="Icon--tickStandard" data-icon="tickStandard" data-category="icons" data-character="">
+          <span>tickStandard</span>
+          <input type="text" value="TSFrameworkIcons-tickStandard" />
+      </picture>
+    
+      <picture class="Icon--trash" data-icon="trash" data-category="icons" data-character="">
+          <span>trash</span>
+          <input type="text" value="TSFrameworkIcons-trash" />
+      </picture>
+    
+      <picture class="Icon--trash30" data-icon="trash30" data-category="icons" data-character="">
+          <span>trash30</span>
+          <input type="text" value="TSFrameworkIcons-trash30" />
+      </picture>
+    
+      <picture class="Icon--undo" data-icon="undo" data-category="icons" data-character="">
+          <span>undo</span>
+          <input type="text" value="TSFrameworkIcons-undo" />
+      </picture>
+    
+      <picture class="Icon--unlock" data-icon="unlock" data-category="icons" data-character="">
+          <span>unlock</span>
+          <input type="text" value="TSFrameworkIcons-unlock" />
+      </picture>
+    
+      <picture class="Icon--untrash" data-icon="untrash" data-category="icons" data-character="">
+          <span>untrash</span>
+          <input type="text" value="TSFrameworkIcons-untrash" />
+      </picture>
+    
+      <picture class="Icon--upload" data-icon="upload" data-category="icons" data-character="">
+          <span>upload</span>
+          <input type="text" value="TSFrameworkIcons-upload" />
+      </picture>
+    
+      <picture class="Icon--validations" data-icon="validations" data-category="icons" data-character="">
+          <span>validations</span>
+          <input type="text" value="TSFrameworkIcons-validations" />
+      </picture>
+    
+      <picture class="Icon--video" data-icon="video" data-category="icons" data-character="">
+          <span>video</span>
+          <input type="text" value="TSFrameworkIcons-video" />
+      </picture>
+    
+      <picture class="Icon--view" data-icon="view" data-category="icons" data-character="">
+          <span>view</span>
+          <input type="text" value="TSFrameworkIcons-view" />
+      </picture>
+    
+      <picture class="Icon--voice" data-icon="voice" data-category="icons" data-character="">
+          <span>voice</span>
+          <input type="text" value="TSFrameworkIcons-voice" />
+      </picture>
+    
+      <picture class="Icon--warning" data-icon="warning" data-category="icons" data-character="">
+          <span>warning</span>
+          <input type="text" value="TSFrameworkIcons-warning" />
+      </picture>
+    
+      <picture class="Icon--weather" data-icon="weather" data-category="icons" data-character="">
+          <span>weather</span>
+          <input type="text" value="TSFrameworkIcons-weather" />
+      </picture>
+    
+      <picture class="Icon--window" data-icon="window" data-category="icons" data-character="">
+          <span>window</span>
+          <input type="text" value="TSFrameworkIcons-window" />
+      </picture>
+    
+      <picture class="Icon--absenceNotice" data-icon="absenceNotice" data-category="app" data-character="">
+          <span>absenceNotice</span>
+          <input type="text" value="TSFrameworkIcons-absenceNotice" />
+      </picture>
+    
+      <picture class="Icon--expense" data-icon="expense" data-category="app" data-character="">
+          <span>expense</span>
+          <input type="text" value="TSFrameworkIcons-expense" />
+      </picture>
+    
+      <picture class="Icon--groupCalendar" data-icon="groupCalendar" data-category="app" data-character="">
+          <span>groupCalendar</span>
+          <input type="text" value="TSFrameworkIcons-groupCalendar" />
+      </picture>
+    
+      <picture class="Icon--missionOrder" data-icon="missionOrder" data-category="app" data-character="">
+          <span>missionOrder</span>
+          <input type="text" value="TSFrameworkIcons-missionOrder" />
+      </picture>
+    
+      <picture class="Icon--networkAccount" data-icon="networkAccount" data-category="app" data-character="">
+          <span>networkAccount</span>
+          <input type="text" value="TSFrameworkIcons-networkAccount" />
+      </picture>
+    
+      <picture class="Icon--reports" data-icon="reports" data-category="app" data-character="">
+          <span>reports</span>
+          <input type="text" value="TSFrameworkIcons-reports" />
+      </picture>
+    
+      <picture class="Icon--requisitionForms" data-icon="requisitionForms" data-category="app" data-character="">
+          <span>requisitionForms</span>
+          <input type="text" value="TSFrameworkIcons-requisitionForms" />
+      </picture>
+    
+      <picture class="Icon--dwp" data-icon="dwp" data-category="app" data-character="">
+          <span>dwp</span>
+          <input type="text" value="TSFrameworkIcons-dwp" />
+      </picture>
+    
+      <picture class="Icon--outlook" data-icon="outlook" data-category="app" data-character="">
+          <span>outlook</span>
+          <input type="text" value="TSFrameworkIcons-outlook" />
+      </picture>
+    
+      <picture class="Icon--sharepoint" data-icon="sharepoint" data-category="app" data-character="">
+          <span>sharepoint</span>
+          <input type="text" value="TSFrameworkIcons-sharepoint" />
+      </picture>
+    
+      <picture class="Icon--skype" data-icon="skype" data-category="app" data-character="">
+          <span>skype</span>
+          <input type="text" value="TSFrameworkIcons-skype" />
+      </picture>
+    
+      <picture class="Icon--windows" data-icon="windows" data-category="app" data-character="">
+          <span>windows</span>
+          <input type="text" value="TSFrameworkIcons-windows" />
+      </picture>
+    
+      <picture class="Icon--tsf" data-icon="tsf" data-category="app" data-character="">
+          <span>tsf</span>
+          <input type="text" value="TSFrameworkIcons-tsf" />
+      </picture>
+    
+      <picture class="Icon--medecoWeb50" data-icon="medecoWeb50" data-category="app" data-character="">
+          <span>medecoWeb50</span>
+          <input type="text" value="TSFrameworkIcons-medecoWeb50" />
+      </picture>
+    
+      <picture class="Icon--peopleMoves" data-icon="peopleMoves" data-category="app" data-character="">
+          <span>peopleMoves</span>
+          <input type="text" value="TSFrameworkIcons-peopleMoves" />
+      </picture>
+    
+      <picture class="Icon--chrome" data-icon="chrome" data-category="app" data-character="">
+          <span>chrome</span>
+          <input type="text" value="TSFrameworkIcons-chrome" />
+      </picture>
+    
+      <picture class="Icon--internetExplorer" data-icon="internetExplorer" data-category="app" data-character="">
+          <span>internetExplorer</span>
+          <input type="text" value="TSFrameworkIcons-internetExplorer" />
+      </picture>
+    
+      <picture class="Icon--openInSharepoint" data-icon="openInSharepoint" data-category="app" data-character="">
+          <span>openInSharepoint</span>
+          <input type="text" value="TSFrameworkIcons-openInSharepoint" />
+      </picture>
+    
+      <picture class="Icon--arrowDown" data-icon="arrowDown" data-category="arrow" data-character="">
+          <span>arrowDown</span>
+          <input type="text" value="TSFrameworkIcons-arrowDown" />
+      </picture>
+    
+      <picture class="Icon--arrowLeft" data-icon="arrowLeft" data-category="arrow" data-character="">
+          <span>arrowLeft</span>
+          <input type="text" value="TSFrameworkIcons-arrowLeft" />
+      </picture>
+    
+      <picture class="Icon--arrowRight" data-icon="arrowRight" data-category="arrow" data-character="">
+          <span>arrowRight</span>
+          <input type="text" value="TSFrameworkIcons-arrowRight" />
+      </picture>
+    
+      <picture class="Icon--arrowUp" data-icon="arrowUp" data-category="arrow" data-character="">
+          <span>arrowUp</span>
+          <input type="text" value="TSFrameworkIcons-arrowUp" />
+      </picture>
+    
+      <picture class="Icon--caretDown" data-icon="caretDown" data-category="arrow" data-character="">
+          <span>caretDown</span>
+          <input type="text" value="TSFrameworkIcons-caretDown" />
+      </picture>
+    
+      <picture class="Icon--caretLeft" data-icon="caretLeft" data-category="arrow" data-character="">
+          <span>caretLeft</span>
+          <input type="text" value="TSFrameworkIcons-caretLeft" />
+      </picture>
+    
+      <picture class="Icon--caretRight" data-icon="caretRight" data-category="arrow" data-character="">
+          <span>caretRight</span>
+          <input type="text" value="TSFrameworkIcons-caretRight" />
+      </picture>
+    
+      <picture class="Icon--caretUp" data-icon="caretUp" data-category="arrow" data-character="">
+          <span>caretUp</span>
+          <input type="text" value="TSFrameworkIcons-caretUp" />
+      </picture>
+    
+      <picture class="Icon--chevronDoubleDown" data-icon="chevronDoubleDown" data-category="arrow" data-character="">
+          <span>chevronDoubleDown</span>
+          <input type="text" value="TSFrameworkIcons-chevronDoubleDown" />
+      </picture>
+    
+      <picture class="Icon--chevronDoubleUp" data-icon="chevronDoubleUp" data-category="arrow" data-character="">
+          <span>chevronDoubleUp</span>
+          <input type="text" value="TSFrameworkIcons-chevronDoubleUp" />
+      </picture>
+    
+      <picture class="Icon--chevronDown" data-icon="chevronDown" data-category="arrow" data-character="">
+          <span>chevronDown</span>
+          <input type="text" value="TSFrameworkIcons-chevronDown" />
+      </picture>
+    
+      <picture class="Icon--chevronLeft" data-icon="chevronLeft" data-category="arrow" data-character="">
+          <span>chevronLeft</span>
+          <input type="text" value="TSFrameworkIcons-chevronLeft" />
+      </picture>
+    
+      <picture class="Icon--chevronRight" data-icon="chevronRight" data-category="arrow" data-character="">
+          <span>chevronRight</span>
+          <input type="text" value="TSFrameworkIcons-chevronRight" />
+      </picture>
+    
+      <picture class="Icon--chevronUp" data-icon="chevronUp" data-category="arrow" data-character="">
+          <span>chevronUp</span>
+          <input type="text" value="TSFrameworkIcons-chevronUp" />
+      </picture>
+    
+      <picture class="Icon--chevronDoubleLeft" data-icon="chevronDoubleLeft" data-category="arrow" data-character="">
+          <span>chevronDoubleLeft</span>
+          <input type="text" value="TSFrameworkIcons-chevronDoubleLeft" />
+      </picture>
+    
+      <picture class="Icon--chevronDoubleRight" data-icon="chevronDoubleRight" data-category="arrow" data-character="">
+          <span>chevronDoubleRight</span>
+          <input type="text" value="TSFrameworkIcons-chevronDoubleRight" />
+      </picture>
+    
+      <picture class="Icon--caretDWP" data-icon="caretDWP" data-category="arrow" data-character="">
+          <span>caretDWP</span>
+          <input type="text" value="TSFrameworkIcons-caretDWP" />
+      </picture>
+    
+      <picture class="Icon--arrowPullLeft" data-icon="arrowPullLeft" data-category="arrow" data-character="">
+          <span>arrowPullLeft</span>
+          <input type="text" value="TSFrameworkIcons-arrowPullLeft" />
+      </picture>
+    
+      <picture class="Icon--arrowPullRight" data-icon="arrowPullRight" data-category="arrow" data-character="">
+          <span>arrowPullRight</span>
+          <input type="text" value="TSFrameworkIcons-arrowPullRight" />
+      </picture>
+    
+      <picture class="Icon--caretRoundedDown" data-icon="caretRoundedDown" data-category="arrow" data-character="">
+          <span>caretRoundedDown</span>
+          <input type="text" value="TSFrameworkIcons-caretRoundedDown" />
+      </picture>
+    
+      <picture class="Icon--caretRoundedUp" data-icon="caretRoundedUp" data-category="arrow" data-character="">
+          <span>caretRoundedUp</span>
+          <input type="text" value="TSFrameworkIcons-caretRoundedUp" />
+      </picture>
+    
+      <picture class="Icon--caretRoundedDown40" data-icon="caretRoundedDown40" data-category="arrow" data-character="">
+          <span>caretRoundedDown40</span>
+          <input type="text" value="TSFrameworkIcons-caretRoundedDown40" />
+      </picture>
+    
+      <picture class="Icon--caretRoundedLeft40" data-icon="caretRoundedLeft40" data-category="arrow" data-character="">
+          <span>caretRoundedLeft40</span>
+          <input type="text" value="TSFrameworkIcons-caretRoundedLeft40" />
+      </picture>
+    
+      <picture class="Icon--caretRoundedRight40" data-icon="caretRoundedRight40" data-category="arrow" data-character="">
+          <span>caretRoundedRight40</span>
+          <input type="text" value="TSFrameworkIcons-caretRoundedRight40" />
+      </picture>
+    
+      <picture class="Icon--caretRoundedUp40" data-icon="caretRoundedUp40" data-category="arrow" data-character="">
+          <span>caretRoundedUp40</span>
+          <input type="text" value="TSFrameworkIcons-caretRoundedUp40" />
+      </picture>
+    
+      <picture class="Icon--calendarDay" data-icon="calendarDay" data-category="calendar" data-character="">
+          <span>calendarDay</span>
+          <input type="text" value="TSFrameworkIcons-calendarDay" />
+      </picture>
+    
+      <picture class="Icon--calendarTeam" data-icon="calendarTeam" data-category="calendar" data-character="">
+          <span>calendarTeam</span>
+          <input type="text" value="TSFrameworkIcons-calendarTeam" />
+      </picture>
+    
+      <picture class="Icon--calendarWeek" data-icon="calendarWeek" data-category="calendar" data-character="">
+          <span>calendarWeek</span>
+          <input type="text" value="TSFrameworkIcons-calendarWeek" />
+      </picture>
+    
+      <picture class="Icon--chartLine" data-icon="chartLine" data-category="chart" data-character="">
+          <span>chartLine</span>
+          <input type="text" value="TSFrameworkIcons-chartLine" />
+      </picture>
+    
+      <picture class="Icon--abidjan" data-icon="abidjan" data-category="cities" data-character="">
+          <span>abidjan</span>
+          <input type="text" value="TSFrameworkIcons-abidjan" />
+      </picture>
+    
+      <picture class="Icon--yyc" data-icon="yyc" data-category="cities" data-character="">
+          <span>yyc</span>
+          <input type="text" value="TSFrameworkIcons-yyc" />
+      </picture>
+    
+      <picture class="Icon--dbx" data-icon="dbx" data-category="cities" data-character="">
+          <span>dbx</span>
+          <input type="text" value="TSFrameworkIcons-dbx" />
+      </picture>
+    
+      <picture class="Icon--gva" data-icon="gva" data-category="cities" data-character="">
+          <span>gva</span>
+          <input type="text" value="TSFrameworkIcons-gva" />
+      </picture>
+    
+      <picture class="Icon--hou" data-icon="hou" data-category="cities" data-character="">
+          <span>hou</span>
+          <input type="text" value="TSFrameworkIcons-hou" />
+      </picture>
+    
+      <picture class="Icon--mow" data-icon="mow" data-category="cities" data-character="">
+          <span>mow</span>
+          <input type="text" value="TSFrameworkIcons-mow" />
+      </picture>
+    
+      <picture class="Icon--par" data-icon="par" data-category="cities" data-character="">
+          <span>par</span>
+          <input type="text" value="TSFrameworkIcons-par" />
+      </picture>
+    
+      <picture class="Icon--sin" data-icon="sin" data-category="cities" data-character="">
+          <span>sin</span>
+          <input type="text" value="TSFrameworkIcons-sin" />
+      </picture>
+    
+      <picture class="Icon--astana" data-icon="astana" data-category="cities" data-character="">
+          <span>astana</span>
+          <input type="text" value="TSFrameworkIcons-astana" />
+      </picture>
+    
+      <picture class="Icon--bak" data-icon="bak" data-category="cities" data-character="">
+          <span>bak</span>
+          <input type="text" value="TSFrameworkIcons-bak" />
+      </picture>
+    
+      <picture class="Icon--baku" data-icon="baku" data-category="cities" data-character="">
+          <span>baku</span>
+          <input type="text" value="TSFrameworkIcons-baku" />
+      </picture>
+    
+      <picture class="Icon--bru" data-icon="bru" data-category="cities" data-character="">
+          <span>bru</span>
+          <input type="text" value="TSFrameworkIcons-bru" />
+      </picture>
+    
+      <picture class="Icon--brussels" data-icon="brussels" data-category="cities" data-character="">
+          <span>brussels</span>
+          <input type="text" value="TSFrameworkIcons-brussels" />
+      </picture>
+    
+      <picture class="Icon--cal" data-icon="cal" data-category="cities" data-character="">
+          <span>cal</span>
+          <input type="text" value="TSFrameworkIcons-cal" />
+      </picture>
+    
+      <picture class="Icon--calgary" data-icon="calgary" data-category="cities" data-character="">
+          <span>calgary</span>
+          <input type="text" value="TSFrameworkIcons-calgary" />
+      </picture>
+    
+      <picture class="Icon--copenhagen" data-icon="copenhagen" data-category="cities" data-character="">
+          <span>copenhagen</span>
+          <input type="text" value="TSFrameworkIcons-copenhagen" />
+      </picture>
+    
+      <picture class="Icon--cph" data-icon="cph" data-category="cities" data-character="">
+          <span>cph</span>
+          <input type="text" value="TSFrameworkIcons-cph" />
+      </picture>
+    
+      <picture class="Icon--dubai" data-icon="dubai" data-category="cities" data-character="">
+          <span>dubai</span>
+          <input type="text" value="TSFrameworkIcons-dubai" />
+      </picture>
+    
+      <picture class="Icon--geneva" data-icon="geneva" data-category="cities" data-character="">
+          <span>geneva</span>
+          <input type="text" value="TSFrameworkIcons-geneva" />
+      </picture>
+    
+      <picture class="Icon--houston" data-icon="houston" data-category="cities" data-character="">
+          <span>houston</span>
+          <input type="text" value="TSFrameworkIcons-houston" />
+      </picture>
+    
+      <picture class="Icon--jnb" data-icon="jnb" data-category="cities" data-character="">
+          <span>jnb</span>
+          <input type="text" value="TSFrameworkIcons-jnb" />
+      </picture>
+    
+      <picture class="Icon--johannesburg" data-icon="johannesburg" data-category="cities" data-character="">
+          <span>johannesburg</span>
+          <input type="text" value="TSFrameworkIcons-johannesburg" />
+      </picture>
+    
+      <picture class="Icon--moscow" data-icon="moscow" data-category="cities" data-character="">
+          <span>moscow</span>
+          <input type="text" value="TSFrameworkIcons-moscow" />
+      </picture>
+    
+      <picture class="Icon--paris" data-icon="paris" data-category="cities" data-character="">
+          <span>paris</span>
+          <input type="text" value="TSFrameworkIcons-paris" />
+      </picture>
+    
+      <picture class="Icon--singapore" data-icon="singapore" data-category="cities" data-character="">
+          <span>singapore</span>
+          <input type="text" value="TSFrameworkIcons-singapore" />
+      </picture>
+    
+      <picture class="Icon--tse" data-icon="tse" data-category="cities" data-character="">
+          <span>tse</span>
+          <input type="text" value="TSFrameworkIcons-tse" />
+      </picture>
+    
+      <picture class="Icon--abj" data-icon="abj" data-category="cities" data-character="">
+          <span>abj</span>
+          <input type="text" value="TSFrameworkIcons-abj" />
+      </picture>
+    
+      <picture class="Icon--blockText" data-icon="blockText" data-category="content" data-character="">
+          <span>blockText</span>
+          <input type="text" value="TSFrameworkIcons-blockText" />
+      </picture>
+    
+      <picture class="Icon--blockVideo" data-icon="blockVideo" data-category="content" data-character="">
+          <span>blockVideo</span>
+          <input type="text" value="TSFrameworkIcons-blockVideo" />
+      </picture>
+    
+      <picture class="Icon--textBold" data-icon="textBold" data-category="content" data-character="">
+          <span>textBold</span>
+          <input type="text" value="TSFrameworkIcons-textBold" />
+      </picture>
+    
+      <picture class="Icon--textBulletList" data-icon="textBulletList" data-category="content" data-character="">
+          <span>textBulletList</span>
+          <input type="text" value="TSFrameworkIcons-textBulletList" />
+      </picture>
+    
+      <picture class="Icon--textItalic" data-icon="textItalic" data-category="content" data-character="">
+          <span>textItalic</span>
+          <input type="text" value="TSFrameworkIcons-textItalic" />
+      </picture>
+    
+      <picture class="Icon--textLink" data-icon="textLink" data-category="content" data-character="">
+          <span>textLink</span>
+          <input type="text" value="TSFrameworkIcons-textLink" />
+      </picture>
+    
+      <picture class="Icon--textOrderedList" data-icon="textOrderedList" data-category="content" data-character="">
+          <span>textOrderedList</span>
+          <input type="text" value="TSFrameworkIcons-textOrderedList" />
+      </picture>
+    
+      <picture class="Icon--textUnderline" data-icon="textUnderline" data-category="content" data-character="">
+          <span>textUnderline</span>
+          <input type="text" value="TSFrameworkIcons-textUnderline" />
+      </picture>
+    
+      <picture class="Icon--desktopQuestion" data-icon="desktopQuestion" data-category="device" data-character="">
+          <span>desktopQuestion</span>
+          <input type="text" value="TSFrameworkIcons-desktopQuestion" />
+      </picture>
+    
+      <picture class="Icon--mobileNotSupported" data-icon="mobileNotSupported" data-category="device" data-character="">
+          <span>mobileNotSupported</span>
+          <input type="text" value="TSFrameworkIcons-mobileNotSupported" />
+      </picture>
+    
+      <picture class="Icon--mobileDisabled" data-icon="mobileDisabled" data-category="device" data-character="">
+          <span>mobileDisabled</span>
+          <input type="text" value="TSFrameworkIcons-mobileDisabled" />
+      </picture>
+    
+      <picture class="Icon--displayGrid" data-icon="displayGrid" data-category="display" data-character="">
+          <span>displayGrid</span>
+          <input type="text" value="TSFrameworkIcons-displayGrid" />
+      </picture>
+    
+      <picture class="Icon--displayList" data-icon="displayList" data-category="display" data-character="">
+          <span>displayList</span>
+          <input type="text" value="TSFrameworkIcons-displayList" />
+      </picture>
+    
+      <picture class="Icon--displayNewsSmall" data-icon="displayNewsSmall" data-category="display" data-character="">
+          <span>displayNewsSmall</span>
+          <input type="text" value="TSFrameworkIcons-displayNewsSmall" />
+      </picture>
+    
+      <picture class="Icon--displayTile" data-icon="displayTile" data-category="display" data-character="">
+          <span>displayTile</span>
+          <input type="text" value="TSFrameworkIcons-displayTile" />
+      </picture>
+    
+      <picture class="Icon--displayTileSmall" data-icon="displayTileSmall" data-category="display" data-character="">
+          <span>displayTileSmall</span>
+          <input type="text" value="TSFrameworkIcons-displayTileSmall" />
+      </picture>
+    
+      <picture class="Icon--displayTable" data-icon="displayTable" data-category="display" data-character="">
+          <span>displayTable</span>
+          <input type="text" value="TSFrameworkIcons-displayTable" />
+      </picture>
+    
+      <picture class="Icon--displayListSmall" data-icon="displayListSmall" data-category="display" data-character="">
+          <span>displayListSmall</span>
+          <input type="text" value="TSFrameworkIcons-displayListSmall" />
+      </picture>
+    
+      <picture class="Icon--doc" data-icon="doc" data-category="doc" data-character="">
+          <span>doc</span>
+          <input type="text" value="TSFrameworkIcons-doc" />
+      </picture>
+    
+      <picture class="Icon--docLegal" data-icon="docLegal" data-category="doc" data-character="">
+          <span>docLegal</span>
+          <input type="text" value="TSFrameworkIcons-docLegal" />
+      </picture>
+    
+      <picture class="Icon--docReport" data-icon="docReport" data-category="doc" data-character="">
+          <span>docReport</span>
+          <input type="text" value="TSFrameworkIcons-docReport" />
+      </picture>
+    
+      <picture class="Icon--docValidate" data-icon="docValidate" data-category="doc" data-character="">
+          <span>docValidate</span>
+          <input type="text" value="TSFrameworkIcons-docValidate" />
+      </picture>
+    
+      <picture class="Icon--docExcel" data-icon="docExcel" data-category="doc" data-character="">
+          <span>docExcel</span>
+          <input type="text" value="TSFrameworkIcons-docExcel" />
+      </picture>
+    
+      <picture class="Icon--event" data-icon="event" data-category="event" data-character="">
+          <span>event</span>
+          <input type="text" value="TSFrameworkIcons-event" />
+      </picture>
+    
+      <picture class="Icon--absenceOvertime" data-icon="absenceOvertime" data-category="event" data-character="">
+          <span>absenceOvertime</span>
+          <input type="text" value="TSFrameworkIcons-absenceOvertime" />
+      </picture>
+    
+      <picture class="Icon--absencePlus" data-icon="absencePlus" data-category="event" data-character="">
+          <span>absencePlus</span>
+          <input type="text" value="TSFrameworkIcons-absencePlus" />
+      </picture>
+    
+      <picture class="Icon--holiday" data-icon="holiday" data-category="event" data-character="">
+          <span>holiday</span>
+          <input type="text" value="TSFrameworkIcons-holiday" />
+      </picture>
+    
+      <picture class="Icon--info" data-icon="info" data-category="event" data-character="">
+          <span>info</span>
+          <input type="text" value="TSFrameworkIcons-info" />
+      </picture>
+    
+      <picture class="Icon--mission" data-icon="mission" data-category="event" data-character="">
+          <span>mission</span>
+          <input type="text" value="TSFrameworkIcons-mission" />
+      </picture>
+    
+      <picture class="Icon--onCallDuty" data-icon="onCallDuty" data-category="event" data-character="">
+          <span>onCallDuty</span>
+          <input type="text" value="TSFrameworkIcons-onCallDuty" />
+      </picture>
+    
+      <picture class="Icon--overtime" data-icon="overtime" data-category="event" data-character="">
+          <span>overtime</span>
+          <input type="text" value="TSFrameworkIcons-overtime" />
+      </picture>
+    
+      <picture class="Icon--overtimePlus" data-icon="overtimePlus" data-category="event" data-character="">
+          <span>overtimePlus</span>
+          <input type="text" value="TSFrameworkIcons-overtimePlus" />
+      </picture>
+    
+      <picture class="Icon--training" data-icon="training" data-category="event" data-character="">
+          <span>training</span>
+          <input type="text" value="TSFrameworkIcons-training" />
+      </picture>
+    
+      <picture class="Icon--meeting" data-icon="meeting" data-category="event" data-character="">
+          <span>meeting</span>
+          <input type="text" value="TSFrameworkIcons-meeting" />
+      </picture>
+    
+      <picture class="Icon--absenceSettings" data-icon="absenceSettings" data-category="event" data-character="">
+          <span>absenceSettings</span>
+          <input type="text" value="TSFrameworkIcons-absenceSettings" />
+      </picture>
+    
+      <picture class="Icon--birthday" data-icon="birthday" data-category="event" data-character="">
+          <span>birthday</span>
+          <input type="text" value="TSFrameworkIcons-birthday" />
+      </picture>
+    
+      <picture class="Icon--overtimeSpecificDay" data-icon="overtimeSpecificDay" data-category="event" data-character="">
+          <span>overtimeSpecificDay</span>
+          <input type="text" value="TSFrameworkIcons-overtimeSpecificDay" />
+      </picture>
+    
+      <picture class="Icon--telework" data-icon="telework" data-category="event" data-character="">
+          <span>telework</span>
+          <input type="text" value="TSFrameworkIcons-telework" />
+      </picture>
+    
+      <picture class="Icon--fileAudio" data-icon="fileAudio" data-category="file" data-character="">
+          <span>fileAudio</span>
+          <input type="text" value="TSFrameworkIcons-fileAudio" />
+      </picture>
+    
+      <picture class="Icon--fileCompressed" data-icon="fileCompressed" data-category="file" data-character="">
+          <span>fileCompressed</span>
+          <input type="text" value="TSFrameworkIcons-fileCompressed" />
+      </picture>
+    
+      <picture class="Icon--fileImage" data-icon="fileImage" data-category="file" data-character="">
+          <span>fileImage</span>
+          <input type="text" value="TSFrameworkIcons-fileImage" />
+      </picture>
+    
+      <picture class="Icon--filePdf" data-icon="filePdf" data-category="file" data-character="">
+          <span>filePdf</span>
+          <input type="text" value="TSFrameworkIcons-filePdf" />
+      </picture>
+    
+      <picture class="Icon--filePresentation" data-icon="filePresentation" data-category="file" data-character="">
+          <span>filePresentation</span>
+          <input type="text" value="TSFrameworkIcons-filePresentation" />
+      </picture>
+    
+      <picture class="Icon--fileSpreadsheet" data-icon="fileSpreadsheet" data-category="file" data-character="">
+          <span>fileSpreadsheet</span>
+          <input type="text" value="TSFrameworkIcons-fileSpreadsheet" />
+      </picture>
+    
+      <picture class="Icon--fileText" data-icon="fileText" data-category="file" data-character="">
+          <span>fileText</span>
+          <input type="text" value="TSFrameworkIcons-fileText" />
+      </picture>
+    
+      <picture class="Icon--fileVideo" data-icon="fileVideo" data-category="file" data-character="">
+          <span>fileVideo</span>
+          <input type="text" value="TSFrameworkIcons-fileVideo" />
+      </picture>
+    
+      <picture class="Icon--fileNote" data-icon="fileNote" data-category="file" data-character="">
+          <span>fileNote</span>
+          <input type="text" value="TSFrameworkIcons-fileNote" />
+      </picture>
+    
+      <picture class="Icon--widgetApps" data-icon="widgetApps" data-category="home" data-character="">
+          <span>widgetApps</span>
+          <input type="text" value="TSFrameworkIcons-widgetApps" />
+      </picture>
+    
+      <picture class="Icon--widgetCommunities" data-icon="widgetCommunities" data-category="home" data-character="">
+          <span>widgetCommunities</span>
+          <input type="text" value="TSFrameworkIcons-widgetCommunities" />
+      </picture>
+    
+      <picture class="Icon--widgetDocs" data-icon="widgetDocs" data-category="home" data-character="">
+          <span>widgetDocs</span>
+          <input type="text" value="TSFrameworkIcons-widgetDocs" />
+      </picture>
+    
+      <picture class="Icon--widgetLinks" data-icon="widgetLinks" data-category="home" data-character="">
+          <span>widgetLinks</span>
+          <input type="text" value="TSFrameworkIcons-widgetLinks" />
+      </picture>
+    
+      <picture class="Icon--widgetMarket" data-icon="widgetMarket" data-category="home" data-character="">
+          <span>widgetMarket</span>
+          <input type="text" value="TSFrameworkIcons-widgetMarket" />
+      </picture>
+    
+      <picture class="Icon--widgetNews" data-icon="widgetNews" data-category="home" data-character="">
+          <span>widgetNews</span>
+          <input type="text" value="TSFrameworkIcons-widgetNews" />
+      </picture>
+    
+      <picture class="Icon--copyAlt" data-icon="copyAlt" data-category="home" data-character="">
+          <span>copyAlt</span>
+          <input type="text" value="TSFrameworkIcons-copyAlt" />
+      </picture>
+    
+      <picture class="Icon--hide" data-icon="hide" data-category="home" data-character="">
+          <span>hide</span>
+          <input type="text" value="TSFrameworkIcons-hide" />
+      </picture>
+    
+      <picture class="Icon--image" data-icon="image" data-category="home" data-character="">
+          <span>image</span>
+          <input type="text" value="TSFrameworkIcons-image" />
+      </picture>
+    
+      <picture class="Icon--infoAlt" data-icon="infoAlt" data-category="home" data-character="">
+          <span>infoAlt</span>
+          <input type="text" value="TSFrameworkIcons-infoAlt" />
+      </picture>
+    
+      <picture class="Icon--lockAlt" data-icon="lockAlt" data-category="home" data-character="">
+          <span>lockAlt</span>
+          <input type="text" value="TSFrameworkIcons-lockAlt" />
+      </picture>
+    
+      <picture class="Icon--shareAlt" data-icon="shareAlt" data-category="home" data-character="">
+          <span>shareAlt</span>
+          <input type="text" value="TSFrameworkIcons-shareAlt" />
+      </picture>
+    
+      <picture class="Icon--widgetPlus" data-icon="widgetPlus" data-category="home" data-character="">
+          <span>widgetPlus</span>
+          <input type="text" value="TSFrameworkIcons-widgetPlus" />
+      </picture>
+    
+      <picture class="Icon--boardsManage" data-icon="boardsManage" data-category="home" data-character="">
+          <span>boardsManage</span>
+          <input type="text" value="TSFrameworkIcons-boardsManage" />
+      </picture>
+    
+      <picture class="Icon--homeDoc" data-icon="homeDoc" data-category="home" data-character="">
+          <span>homeDoc</span>
+          <input type="text" value="TSFrameworkIcons-homeDoc" />
+      </picture>
+    
+      <picture class="Icon--homeCommunities" data-icon="homeCommunities" data-category="home" data-character="">
+          <span>homeCommunities</span>
+          <input type="text" value="TSFrameworkIcons-homeCommunities" />
+      </picture>
+    
+      <picture class="Icon--homeDWP" data-icon="homeDWP" data-category="home" data-character="">
+          <span>homeDWP</span>
+          <input type="text" value="TSFrameworkIcons-homeDWP" />
+      </picture>
+    
+      <picture class="Icon--homeDepartments" data-icon="homeDepartments" data-category="home" data-character="">
+          <span>homeDepartments</span>
+          <input type="text" value="TSFrameworkIcons-homeDepartments" />
+      </picture>
+    
+      <picture class="Icon--homeFeedback" data-icon="homeFeedback" data-category="home" data-character="">
+          <span>homeFeedback</span>
+          <input type="text" value="TSFrameworkIcons-homeFeedback" />
+      </picture>
+    
+      <picture class="Icon--homeHierachy" data-icon="homeHierachy" data-category="home" data-character="">
+          <span>homeHierachy</span>
+          <input type="text" value="TSFrameworkIcons-homeHierachy" />
+      </picture>
+    
+      <picture class="Icon--homeSearch" data-icon="homeSearch" data-category="home" data-character="">
+          <span>homeSearch</span>
+          <input type="text" value="TSFrameworkIcons-homeSearch" />
+      </picture>
+    
+      <picture class="Icon--homeVideo" data-icon="homeVideo" data-category="home" data-character="">
+          <span>homeVideo</span>
+          <input type="text" value="TSFrameworkIcons-homeVideo" />
+      </picture>
+    
+      <picture class="Icon--widgetDashboard" data-icon="widgetDashboard" data-category="home" data-character="">
+          <span>widgetDashboard</span>
+          <input type="text" value="TSFrameworkIcons-widgetDashboard" />
+      </picture>
+    
+      <picture class="Icon--homeLauncher" data-icon="homeLauncher" data-category="home" data-character="">
+          <span>homeLauncher</span>
+          <input type="text" value="TSFrameworkIcons-homeLauncher" />
+      </picture>
+    
+      <picture class="Icon--homePhonebook" data-icon="homePhonebook" data-category="home" data-character="">
+          <span>homePhonebook</span>
+          <input type="text" value="TSFrameworkIcons-homePhonebook" />
+      </picture>
+    
+      <picture class="Icon--homeSettings" data-icon="homeSettings" data-category="home" data-character="">
+          <span>homeSettings</span>
+          <input type="text" value="TSFrameworkIcons-homeSettings" />
+      </picture>
+    
+      <picture class="Icon--appNotAvailable" data-icon="appNotAvailable" data-category="home" data-character="">
+          <span>appNotAvailable</span>
+          <input type="text" value="TSFrameworkIcons-appNotAvailable" />
+      </picture>
+    
+      <picture class="Icon--communityNotAvailable" data-icon="communityNotAvailable" data-category="home" data-character="">
+          <span>communityNotAvailable</span>
+          <input type="text" value="TSFrameworkIcons-communityNotAvailable" />
+      </picture>
+    
+      <picture class="Icon--widgetPowerBI" data-icon="widgetPowerBI" data-category="home" data-character="">
+          <span>widgetPowerBI</span>
+          <input type="text" value="TSFrameworkIcons-widgetPowerBI" />
+      </picture>
+    
+      <picture class="Icon--widgetMSViewer" data-icon="widgetMSViewer" data-category="home" data-character="">
+          <span>widgetMSViewer</span>
+          <input type="text" value="TSFrameworkIcons-widgetMSViewer" />
+      </picture>
+    
+      <picture class="Icon--dwpNotification" data-icon="dwpNotification" data-category="home" data-character="">
+          <span>dwpNotification</span>
+          <input type="text" value="TSFrameworkIcons-dwpNotification" />
+      </picture>
+    
+      <picture class="Icon--widgetYammer" data-icon="widgetYammer" data-category="home" data-character="">
+          <span>widgetYammer</span>
+          <input type="text" value="TSFrameworkIcons-widgetYammer" />
+      </picture>
+    
+      <picture class="Icon--agri" data-icon="agri" data-category="market" data-character="">
+          <span>agri</span>
+          <input type="text" value="TSFrameworkIcons-agri" />
+      </picture>
+    
+      <picture class="Icon--cac40" data-icon="cac40" data-category="market" data-character="">
+          <span>cac40</span>
+          <input type="text" value="TSFrameworkIcons-cac40" />
+      </picture>
+    
+      <picture class="Icon--energy" data-icon="energy" data-category="market" data-character="">
+          <span>energy</span>
+          <input type="text" value="TSFrameworkIcons-energy" />
+      </picture>
+    
+      <picture class="Icon--forex" data-icon="forex" data-category="market" data-character="">
+          <span>forex</span>
+          <input type="text" value="TSFrameworkIcons-forex" />
+      </picture>
+    
+      <picture class="Icon--interstock" data-icon="interstock" data-category="market" data-character="">
+          <span>interstock</span>
+          <input type="text" value="TSFrameworkIcons-interstock" />
+      </picture>
+    
+      <picture class="Icon--major" data-icon="major" data-category="market" data-character="">
+          <span>major</span>
+          <input type="text" value="TSFrameworkIcons-major" />
+      </picture>
+    
+      <picture class="Icon--metals" data-icon="metals" data-category="market" data-character="">
+          <span>metals</span>
+          <input type="text" value="TSFrameworkIcons-metals" />
+      </picture>
+    
+      <picture class="Icon--dollarLimit" data-icon="dollarLimit" data-category="market" data-character="">
+          <span>dollarLimit</span>
+          <input type="text" value="TSFrameworkIcons-dollarLimit" />
+      </picture>
+    
+      <picture class="Icon--ecoApi" data-icon="ecoApi" data-category="market" data-character="">
+          <span>ecoApi</span>
+          <input type="text" value="TSFrameworkIcons-ecoApi" />
+      </picture>
+    
+      <picture class="Icon--medissysGestionLPS" data-icon="medissysGestionLPS" data-category="market" data-character="">
+          <span>medissysGestionLPS</span>
+          <input type="text" value="TSFrameworkIcons-medissysGestionLPS" />
+      </picture>
+    
+      <picture class="Icon--medissysGestion" data-icon="medissysGestion" data-category="market" data-character="">
+          <span>medissysGestion</span>
+          <input type="text" value="TSFrameworkIcons-medissysGestion" />
+      </picture>
+    
+      <picture class="Icon--recordFinance" data-icon="recordFinance" data-category="record" data-character="">
+          <span>recordFinance</span>
+          <input type="text" value="TSFrameworkIcons-recordFinance" />
+      </picture>
+    
+      <picture class="Icon--recordTasks" data-icon="recordTasks" data-category="record" data-character="">
+          <span>recordTasks</span>
+          <input type="text" value="TSFrameworkIcons-recordTasks" />
+      </picture>
+    
+      <picture class="Icon--recordUser" data-icon="recordUser" data-category="record" data-character="">
+          <span>recordUser</span>
+          <input type="text" value="TSFrameworkIcons-recordUser" />
+      </picture>
+    
+      <picture class="Icon--roundEdit" data-icon="roundEdit" data-category="round" data-character="">
+          <span>roundEdit</span>
+          <input type="text" value="TSFrameworkIcons-roundEdit" />
+      </picture>
+    
+      <picture class="Icon--roundError" data-icon="roundError" data-category="round" data-character="">
+          <span>roundError</span>
+          <input type="text" value="TSFrameworkIcons-roundError" />
+      </picture>
+    
+      <picture class="Icon--roundInfo" data-icon="roundInfo" data-category="round" data-character="">
+          <span>roundInfo</span>
+          <input type="text" value="TSFrameworkIcons-roundInfo" />
+      </picture>
+    
+      <picture class="Icon--roundSuccess" data-icon="roundSuccess" data-category="round" data-character="">
+          <span>roundSuccess</span>
+          <input type="text" value="TSFrameworkIcons-roundSuccess" />
+      </picture>
+    
+      <picture class="Icon--roundInfoOutline" data-icon="roundInfoOutline" data-category="round" data-character="">
+          <span>roundInfoOutline</span>
+          <input type="text" value="TSFrameworkIcons-roundInfoOutline" />
+      </picture>
+    
+      <picture class="Icon--roundPlus" data-icon="roundPlus" data-category="round" data-character="">
+          <span>roundPlus</span>
+          <input type="text" value="TSFrameworkIcons-roundPlus" />
+      </picture>
+    
+      <picture class="Icon--like" data-icon="like" data-category="social" data-character="">
+          <span>like</span>
+          <input type="text" value="TSFrameworkIcons-like" />
+      </picture>
+    
+      <picture class="Icon--share" data-icon="share" data-category="social" data-character="">
+          <span>share</span>
+          <input type="text" value="TSFrameworkIcons-share" />
+      </picture>
+    
+      <picture class="Icon--unlike" data-icon="unlike" data-category="social" data-character="">
+          <span>unlike</span>
+          <input type="text" value="TSFrameworkIcons-unlike" />
+      </picture>
+    
+      <picture class="Icon--close24-mini" data-icon="close24-mini" data-category="tools" data-character="">
+          <span>close24-mini</span>
+          <input type="text" value="TSFrameworkIcons-close24-mini" />
+      </picture>
+    
+      <picture class="Icon--close30-small" data-icon="close30-small" data-category="tools" data-character="">
+          <span>close30-small</span>
+          <input type="text" value="TSFrameworkIcons-close30-small" />
+      </picture>
+    
+      <picture class="Icon--close40-standard" data-icon="close40-standard" data-category="tools" data-character="">
+          <span>close40-standard</span>
+          <input type="text" value="TSFrameworkIcons-close40-standard" />
+      </picture>
+    
+      <picture class="Icon--close50-medium" data-icon="close50-medium" data-category="tools" data-character="">
+          <span>close50-medium</span>
+          <input type="text" value="TSFrameworkIcons-close50-medium" />
+      </picture>
+    
+      <picture class="Icon--crossCancel24" data-icon="crossCancel24" data-category="tools" data-character="">
+          <span>crossCancel24</span>
+          <input type="text" value="TSFrameworkIcons-crossCancel24" />
+      </picture>
+    
+      <picture class="Icon--crossCancel30" data-icon="crossCancel30" data-category="tools" data-character="">
+          <span>crossCancel30</span>
+          <input type="text" value="TSFrameworkIcons-crossCancel30" />
+      </picture>
+    
+      <picture class="Icon--crossCancel40" data-icon="crossCancel40" data-category="tools" data-character="">
+          <span>crossCancel40</span>
+          <input type="text" value="TSFrameworkIcons-crossCancel40" />
+      </picture>
+    
+      <picture class="Icon--crossCancel50" data-icon="crossCancel50" data-category="tools" data-character="">
+          <span>crossCancel50</span>
+          <input type="text" value="TSFrameworkIcons-crossCancel50" />
+      </picture>
+    
+      <picture class="Icon--downloadBox40" data-icon="downloadBox40" data-category="tools" data-character="">
+          <span>downloadBox40</span>
+          <input type="text" value="TSFrameworkIcons-downloadBox40" />
+      </picture>
+    
+      <picture class="Icon--downloadBox50" data-icon="downloadBox50" data-category="tools" data-character="">
+          <span>downloadBox50</span>
+          <input type="text" value="TSFrameworkIcons-downloadBox50" />
+      </picture>
+    
+      <picture class="Icon--plus24" data-icon="plus24" data-category="tools" data-character="">
+          <span>plus24</span>
+          <input type="text" value="TSFrameworkIcons-plus24" />
+      </picture>
+    
+      <picture class="Icon--plus30" data-icon="plus30" data-category="tools" data-character="">
+          <span>plus30</span>
+          <input type="text" value="TSFrameworkIcons-plus30" />
+      </picture>
+    
+      <picture class="Icon--plus40" data-icon="plus40" data-category="tools" data-character="">
+          <span>plus40</span>
+          <input type="text" value="TSFrameworkIcons-plus40" />
+      </picture>
+    
+      <picture class="Icon--plus50" data-icon="plus50" data-category="tools" data-character="">
+          <span>plus50</span>
+          <input type="text" value="TSFrameworkIcons-plus50" />
+      </picture>
+    
+      <picture class="Icon--tick16" data-icon="tick16" data-category="tools" data-character="">
+          <span>tick16</span>
+          <input type="text" value="TSFrameworkIcons-tick16" />
+      </picture>
+    
+      <picture class="Icon--tick24" data-icon="tick24" data-category="tools" data-character="">
+          <span>tick24</span>
+          <input type="text" value="TSFrameworkIcons-tick24" />
+      </picture>
+    
+      <picture class="Icon--tick30" data-icon="tick30" data-category="tools" data-character="">
+          <span>tick30</span>
+          <input type="text" value="TSFrameworkIcons-tick30" />
+      </picture>
+    
+      <picture class="Icon--tick40" data-icon="tick40" data-category="tools" data-character="">
+          <span>tick40</span>
+          <input type="text" value="TSFrameworkIcons-tick40" />
+      </picture>
+    
+      <picture class="Icon--tick50" data-icon="tick50" data-category="tools" data-character="">
+          <span>tick50</span>
+          <input type="text" value="TSFrameworkIcons-tick50" />
+      </picture>
+    
+      <picture class="Icon--tickDouble24" data-icon="tickDouble24" data-category="tools" data-character="">
+          <span>tickDouble24</span>
+          <input type="text" value="TSFrameworkIcons-tickDouble24" />
+      </picture>
+    
+      <picture class="Icon--tickSuccess24" data-icon="tickSuccess24" data-category="tools" data-character="">
+          <span>tickSuccess24</span>
+          <input type="text" value="TSFrameworkIcons-tickSuccess24" />
+      </picture>
+    
+      <picture class="Icon--tickSuccess30" data-icon="tickSuccess30" data-category="tools" data-character="">
+          <span>tickSuccess30</span>
+          <input type="text" value="TSFrameworkIcons-tickSuccess30" />
+      </picture>
+    
+      <picture class="Icon--tickSuccess40" data-icon="tickSuccess40" data-category="tools" data-character="">
+          <span>tickSuccess40</span>
+          <input type="text" value="TSFrameworkIcons-tickSuccess40" />
+      </picture>
+    
+      <picture class="Icon--tickSuccess50" data-icon="tickSuccess50" data-category="tools" data-character="">
+          <span>tickSuccess50</span>
+          <input type="text" value="TSFrameworkIcons-tickSuccess50" />
+      </picture>
+    
+      <picture class="Icon--uploadBox40" data-icon="uploadBox40" data-category="tools" data-character="">
+          <span>uploadBox40</span>
+          <input type="text" value="TSFrameworkIcons-uploadBox40" />
+      </picture>
+    
+      <picture class="Icon--uploadBox50" data-icon="uploadBox50" data-category="tools" data-character="">
+          <span>uploadBox50</span>
+          <input type="text" value="TSFrameworkIcons-uploadBox50" />
+      </picture>
+    
+      <picture class="Icon--cities" data-icon="cities" data-category="travel" data-character="">
+          <span>cities</span>
+          <input type="text" value="TSFrameworkIcons-cities" />
+      </picture>
+    
+      <picture class="Icon--globe" data-icon="globe" data-category="travel" data-character="">
+          <span>globe</span>
+          <input type="text" value="TSFrameworkIcons-globe" />
+      </picture>
+    
+      <picture class="Icon--plane" data-icon="plane" data-category="travel" data-character="">
+          <span>plane</span>
+          <input type="text" value="TSFrameworkIcons-plane" />
+      </picture>
+    
+      <picture class="Icon--transport" data-icon="transport" data-category="travel" data-character="">
+          <span>transport</span>
+          <input type="text" value="TSFrameworkIcons-transport" />
+      </picture>
+    
+      <picture class="Icon--planeArrival" data-icon="planeArrival" data-category="travel" data-character="">
+          <span>planeArrival</span>
+          <input type="text" value="TSFrameworkIcons-planeArrival" />
+      </picture>
+    
+      <picture class="Icon--planeDeparture" data-icon="planeDeparture" data-category="travel" data-character="">
+          <span>planeDeparture</span>
+          <input type="text" value="TSFrameworkIcons-planeDeparture" />
+      </picture>
+    
+      <picture class="Icon--group" data-icon="group" data-category="user" data-character="">
+          <span>group</span>
+          <input type="text" value="TSFrameworkIcons-group" />
+      </picture>
+    
+      <picture class="Icon--groupApprovers" data-icon="groupApprovers" data-category="user" data-character="">
+          <span>groupApprovers</span>
+          <input type="text" value="TSFrameworkIcons-groupApprovers" />
+      </picture>
+    
+      <picture class="Icon--groupSend" data-icon="groupSend" data-category="user" data-character="">
+          <span>groupSend</span>
+          <input type="text" value="TSFrameworkIcons-groupSend" />
+      </picture>
+    
+      <picture class="Icon--user" data-icon="user" data-category="user" data-character="">
+          <span>user</span>
+          <input type="text" value="TSFrameworkIcons-user" />
+      </picture>
+    
+      <picture class="Icon--userAssign" data-icon="userAssign" data-category="user" data-character="">
+          <span>userAssign</span>
+          <input type="text" value="TSFrameworkIcons-userAssign" />
+      </picture>
+    
+      <picture class="Icon--userBack" data-icon="userBack" data-category="user" data-character="">
+          <span>userBack</span>
+          <input type="text" value="TSFrameworkIcons-userBack" />
+      </picture>
+    
+      <picture class="Icon--userCopy" data-icon="userCopy" data-category="user" data-character="">
+          <span>userCopy</span>
+          <input type="text" value="TSFrameworkIcons-userCopy" />
+      </picture>
+    
+      <picture class="Icon--userDoc" data-icon="userDoc" data-category="user" data-character="">
+          <span>userDoc</span>
+          <input type="text" value="TSFrameworkIcons-userDoc" />
+      </picture>
+    
+      <picture class="Icon--userPlus" data-icon="userPlus" data-category="user" data-character="">
+          <span>userPlus</span>
+          <input type="text" value="TSFrameworkIcons-userPlus" />
+      </picture>
+    
+      <picture class="Icon--userSend" data-icon="userSend" data-category="user" data-character="">
+          <span>userSend</span>
+          <input type="text" value="TSFrameworkIcons-userSend" />
+      </picture>
+    
+      <picture class="Icon--userTravel" data-icon="userTravel" data-category="user" data-character="">
+          <span>userTravel</span>
+          <input type="text" value="TSFrameworkIcons-userTravel" />
+      </picture>
+    
+      <picture class="Icon--groupeThree" data-icon="groupeThree" data-category="user" data-character="">
+          <span>groupeThree</span>
+          <input type="text" value="TSFrameworkIcons-groupeThree" />
+      </picture>
+    
+      <picture class="Icon--groupThreeAlt" data-icon="groupThreeAlt" data-category="user" data-character="">
+          <span>groupThreeAlt</span>
+          <input type="text" value="TSFrameworkIcons-groupThreeAlt" />
+      </picture>
+    
+      <picture class="Icon--groupInheritedPermissions" data-icon="groupInheritedPermissions" data-category="user" data-character="">
+          <span>groupInheritedPermissions</span>
+          <input type="text" value="TSFrameworkIcons-groupInheritedPermissions" />
+      </picture>
+    
+      <picture class="Icon--hierarchy" data-icon="hierarchy" data-category="workflow" data-character="">
+          <span>hierarchy</span>
+          <input type="text" value="TSFrameworkIcons-hierarchy" />
+      </picture>
+    
+      <picture class="Icon--history" data-icon="history" data-category="workflow" data-character="">
+          <span>history</span>
+          <input type="text" value="TSFrameworkIcons-history" />
+      </picture>
+    
+      <picture class="Icon--hourglass" data-icon="hourglass" data-category="workflow" data-character="">
+          <span>hourglass</span>
+          <input type="text" value="TSFrameworkIcons-hourglass" />
+      </picture>
+    
+      <picture class="Icon--signature" data-icon="signature" data-category="workflow" data-character="">
+          <span>signature</span>
+          <input type="text" value="TSFrameworkIcons-signature" />
+      </picture>
+    
+      <picture class="Icon--validationHistory" data-icon="validationHistory" data-category="workflow" data-character="">
+          <span>validationHistory</span>
+          <input type="text" value="TSFrameworkIcons-validationHistory" />
+      </picture>
+    
+      <picture class="Icon--workflowError" data-icon="workflowError" data-category="workflow" data-character="">
+          <span>workflowError</span>
+          <input type="text" value="TSFrameworkIcons-workflowError" />
+      </picture>
+    
+  </div>
+
+
+  <button class="Add">+</button>
+
+</body>
+</html>

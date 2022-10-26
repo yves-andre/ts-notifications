@@ -1,0 +1,1458 @@
+@font-face {
+  font-family: "TSFrameworkIcons";
+  src: url('./TSFrameworkIcons.woff?1666106055')  format('woff'),
+       url('./TSFrameworkIcons.woff2?1666106055') format('woff2');
+}
+
+[class*='Icon--']:not(.ms-Icon):before{
+  font-family: "TSFrameworkIcons";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  /* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+  text-decoration: none;
+  text-transform: none;
+  speak: none;
+  line-height: 1;
+  font-size: 40px;
+  display: inline-block;
+}
+
+
+.Icon--accounting:before {
+  content: "\EA01";
+}
+
+.Icon--allChecked40:before {
+  content: "\EB4D";
+}
+
+.Icon--allChecked50:before {
+  content: "\EB4E";
+}
+
+.Icon--appElements:before {
+  content: "\EB60";
+}
+
+.Icon--appFeedbacks:before {
+  content: "\EB61";
+}
+
+.Icon--appHierarchy:before {
+  content: "\EB62";
+}
+
+.Icon--appLayout:before {
+  content: "\EB63";
+}
+
+.Icon--appointments50:before {
+  content: "\EB31";
+}
+
+.Icon--archives:before {
+  content: "\EA09";
+}
+
+.Icon--attachment:before {
+  content: "\EA18";
+}
+
+.Icon--back:before {
+  content: "\EAA7";
+}
+
+.Icon--bell:before {
+  content: "\EA19";
+}
+
+.Icon--bellFeed:before {
+  content: "\EABB";
+}
+
+.Icon--bellSend:before {
+  content: "\EA1A";
+}
+
+.Icon--board:before {
+  content: "\EA1B";
+}
+
+.Icon--burger:before {
+  content: "\EA77";
+}
+
+.Icon--burger50:before {
+  content: "\EB44";
+}
+
+.Icon--calendar:before {
+  content: "\EA71";
+}
+
+.Icon--camera40:before {
+  content: "\EB33";
+}
+
+.Icon--camera50:before {
+  content: "\EB34";
+}
+
+.Icon--cancel:before {
+  content: "\EA1C";
+}
+
+.Icon--chat40:before {
+  content: "\EB35";
+}
+
+.Icon--chat50:before {
+  content: "\EB36";
+}
+
+.Icon--close:before {
+  content: "\EABD";
+}
+
+.Icon--closeMedium:before {
+  content: "\EB0D";
+}
+
+.Icon--closeStandard:before {
+  content: "\EB0E";
+}
+
+.Icon--compliance:before {
+  content: "\EB00";
+}
+
+.Icon--copy:before {
+  content: "\EA1D";
+}
+
+.Icon--copy2:before {
+  content: "\EA1E";
+}
+
+.Icon--counterpart:before {
+  content: "\EA1F";
+}
+
+.Icon--crude:before {
+  content: "\EA20";
+}
+
+.Icon--dashboard:before {
+  content: "\EAA2";
+}
+
+.Icon--departments:before {
+  content: "\EAA3";
+}
+
+.Icon--dollar:before {
+  content: "\EA25";
+}
+
+.Icon--dollarBill:before {
+  content: "\EA26";
+}
+
+.Icon--dollarSend:before {
+  content: "\EA27";
+}
+
+.Icon--dollarTick:before {
+  content: "\EA28";
+}
+
+.Icon--dots:before {
+  content: "\EA29";
+}
+
+.Icon--dotsVertical:before {
+  content: "\EAE1";
+}
+
+.Icon--doubleTick:before {
+  content: "\EB0B";
+}
+
+.Icon--download:before {
+  content: "\EA2A";
+}
+
+.Icon--edit:before {
+  content: "\EA2B";
+}
+
+.Icon--equal:before {
+  content: "\EAC9";
+}
+
+.Icon--exclamationPoint:before {
+  content: "\EB0F";
+}
+
+.Icon--expand30:before {
+  content: "\EB4C";
+}
+
+.Icon--export:before {
+  content: "\EA36";
+}
+
+.Icon--expressValidation:before {
+  content: "\EAC7";
+}
+
+.Icon--extend:before {
+  content: "\EA37";
+}
+
+.Icon--favorite:before {
+  content: "\EB59";
+}
+
+.Icon--favoriteAlt:before {
+  content: "\EB5A";
+}
+
+.Icon--filters:before {
+  content: "\EAE2";
+}
+
+.Icon--flag:before {
+  content: "\EAA6";
+}
+
+.Icon--flagOutline:before {
+  content: "\EABC";
+}
+
+.Icon--flash:before {
+  content: "\EA82";
+}
+
+.Icon--focus:before {
+  content: "\EB11";
+}
+
+.Icon--folder40:before {
+  content: "\EB3B";
+}
+
+.Icon--folder50:before {
+  content: "\EB3C";
+}
+
+.Icon--folderExplore50:before {
+  content: "\EB46";
+}
+
+.Icon--folderMove30:before {
+  content: "\EB42";
+}
+
+.Icon--fullscreenOff:before {
+  content: "\EAD4";
+}
+
+.Icon--fullscreenOn:before {
+  content: "\EAD5";
+}
+
+.Icon--gift:before {
+  content: "\EA38";
+}
+
+.Icon--hat:before {
+  content: "\EAED";
+}
+
+.Icon--healthCross:before {
+  content: "\EB01";
+}
+
+.Icon--homeApps50:before {
+  content: "\EB47";
+}
+
+.Icon--launcher:before {
+  content: "\EA83";
+}
+
+.Icon--leaving:before {
+  content: "\EAAE";
+}
+
+.Icon--lightBulb:before {
+  content: "\EA84";
+}
+
+.Icon--location30:before {
+  content: "\EB32";
+}
+
+.Icon--location50:before {
+  content: "\EB56";
+}
+
+.Icon--lock:before {
+  content: "\EA39";
+}
+
+.Icon--mail:before {
+  content: "\EA3A";
+}
+
+.Icon--mail40:before {
+  content: "\EB37";
+}
+
+.Icon--mail50:before {
+  content: "\EB38";
+}
+
+.Icon--mailDollar:before {
+  content: "\EABF";
+}
+
+.Icon--mailSend:before {
+  content: "\EA3B";
+}
+
+.Icon--mailTo:before {
+  content: "\EB5B";
+}
+
+.Icon--market:before {
+  content: "\EA3C";
+}
+
+.Icon--minus:before {
+  content: "\EA3E";
+}
+
+.Icon--numbers:before {
+  content: "\EA8C";
+}
+
+.Icon--openAll:before {
+  content: "\EB54";
+}
+
+.Icon--order:before {
+  content: "\EB14";
+}
+
+.Icon--orderAz:before {
+  content: "\EB04";
+}
+
+.Icon--paint:before {
+  content: "\EAA1";
+}
+
+.Icon--phoneBook:before {
+  content: "\EAA9";
+}
+
+.Icon--pinDnd:before {
+  content: "\EB57";
+}
+
+.Icon--plus:before {
+  content: "\EA3F";
+}
+
+.Icon--press:before {
+  content: "\EA40";
+}
+
+.Icon--preview:before {
+  content: "\EA41";
+}
+
+.Icon--preview-50:before {
+  content: "\EB0A";
+}
+
+.Icon--print:before {
+  content: "\EA42";
+}
+
+.Icon--questionMark:before {
+  content: "\EB40";
+}
+
+.Icon--redo:before {
+  content: "\EA8D";
+}
+
+.Icon--refresh:before {
+  content: "\EA46";
+}
+
+.Icon--reorder:before {
+  content: "\EAA8";
+}
+
+.Icon--reorderAlt30:before {
+  content: "\EB58";
+}
+
+.Icon--reply:before {
+  content: "\EAAA";
+}
+
+.Icon--resize:before {
+  content: "\EA8E";
+}
+
+.Icon--rocket:before {
+  content: "\EB64";
+}
+
+.Icon--roundClose:before {
+  content: "\EAC0";
+}
+
+.Icon--save:before {
+  content: "\EA47";
+}
+
+.Icon--savePlus:before {
+  content: "\EA48";
+}
+
+.Icon--search:before {
+  content: "\EA49";
+}
+
+.Icon--settings:before {
+  content: "\EA4A";
+}
+
+.Icon--shieldCheck:before {
+  content: "\EB5C";
+}
+
+.Icon--sort30:before {
+  content: "\EB3D";
+}
+
+.Icon--sortDown30:before {
+  content: "\EB3E";
+}
+
+.Icon--sortUp30:before {
+  content: "\EB3F";
+}
+
+.Icon--stop:before {
+  content: "\EA4B";
+}
+
+.Icon--tab:before {
+  content: "\EB53";
+}
+
+.Icon--tableEdit:before {
+  content: "\EAE4";
+}
+
+.Icon--telephone40:before {
+  content: "\EB39";
+}
+
+.Icon--telephone50:before {
+  content: "\EB3A";
+}
+
+.Icon--textSizeMinus:before {
+  content: "\EA92";
+}
+
+.Icon--textSizePlus:before {
+  content: "\EA93";
+}
+
+.Icon--textSizeReset:before {
+  content: "\EA94";
+}
+
+.Icon--tick:before {
+  content: "\EA4C";
+}
+
+.Icon--tickStandard:before {
+  content: "\EB10";
+}
+
+.Icon--trash:before {
+  content: "\EA4D";
+}
+
+.Icon--trash30:before {
+  content: "\EB43";
+}
+
+.Icon--undo:before {
+  content: "\EA95";
+}
+
+.Icon--unlock:before {
+  content: "\EA5A";
+}
+
+.Icon--untrash:before {
+  content: "\EA5B";
+}
+
+.Icon--upload:before {
+  content: "\EA5C";
+}
+
+.Icon--validations:before {
+  content: "\EABE";
+}
+
+.Icon--video:before {
+  content: "\EA96";
+}
+
+.Icon--view:before {
+  content: "\EA68";
+}
+
+.Icon--voice:before {
+  content: "\EAEE";
+}
+
+.Icon--warning:before {
+  content: "\EA69";
+}
+
+.Icon--weather:before {
+  content: "\EA6A";
+}
+
+.Icon--window:before {
+  content: "\EA9D";
+}
+
+.Icon--absenceNotice:before {
+  content: "\EA02";
+}
+
+.Icon--expense:before {
+  content: "\EA03";
+}
+
+.Icon--groupCalendar:before {
+  content: "\EA04";
+}
+
+.Icon--missionOrder:before {
+  content: "\EA05";
+}
+
+.Icon--networkAccount:before {
+  content: "\EA06";
+}
+
+.Icon--reports:before {
+  content: "\EA07";
+}
+
+.Icon--requisitionForms:before {
+  content: "\EA08";
+}
+
+.Icon--dwp:before {
+  content: "\EA72";
+}
+
+.Icon--outlook:before {
+  content: "\EA73";
+}
+
+.Icon--sharepoint:before {
+  content: "\EA74";
+}
+
+.Icon--skype:before {
+  content: "\EA75";
+}
+
+.Icon--windows:before {
+  content: "\EA76";
+}
+
+.Icon--tsf:before {
+  content: "\EAA0";
+}
+
+.Icon--medecoWeb50:before {
+  content: "\EB4F";
+}
+
+.Icon--peopleMoves:before {
+  content: "\EB50";
+}
+
+.Icon--chrome:before {
+  content: "\EB51";
+}
+
+.Icon--internetExplorer:before {
+  content: "\EB52";
+}
+
+.Icon--openInSharepoint:before {
+  content: "\EB67";
+}
+
+.Icon--arrowDown:before {
+  content: "\EA0A";
+}
+
+.Icon--arrowLeft:before {
+  content: "\EA0B";
+}
+
+.Icon--arrowRight:before {
+  content: "\EA0C";
+}
+
+.Icon--arrowUp:before {
+  content: "\EA0D";
+}
+
+.Icon--caretDown:before {
+  content: "\EA0E";
+}
+
+.Icon--caretLeft:before {
+  content: "\EA0F";
+}
+
+.Icon--caretRight:before {
+  content: "\EA10";
+}
+
+.Icon--caretUp:before {
+  content: "\EA11";
+}
+
+.Icon--chevronDoubleDown:before {
+  content: "\EA12";
+}
+
+.Icon--chevronDoubleUp:before {
+  content: "\EA13";
+}
+
+.Icon--chevronDown:before {
+  content: "\EA14";
+}
+
+.Icon--chevronLeft:before {
+  content: "\EA15";
+}
+
+.Icon--chevronRight:before {
+  content: "\EA16";
+}
+
+.Icon--chevronUp:before {
+  content: "\EA17";
+}
+
+.Icon--chevronDoubleLeft:before {
+  content: "\EA9E";
+}
+
+.Icon--chevronDoubleRight:before {
+  content: "\EA9F";
+}
+
+.Icon--caretDWP:before {
+  content: "\EAEF";
+}
+
+.Icon--arrowPullLeft:before {
+  content: "\EB06";
+}
+
+.Icon--arrowPullRight:before {
+  content: "\EB07";
+}
+
+.Icon--caretRoundedDown:before {
+  content: "\EB12";
+}
+
+.Icon--caretRoundedUp:before {
+  content: "\EB13";
+}
+
+.Icon--caretRoundedDown40:before {
+  content: "\EB48";
+}
+
+.Icon--caretRoundedLeft40:before {
+  content: "\EB49";
+}
+
+.Icon--caretRoundedRight40:before {
+  content: "\EB4A";
+}
+
+.Icon--caretRoundedUp40:before {
+  content: "\EB4B";
+}
+
+.Icon--calendarDay:before {
+  content: "\EAFC";
+}
+
+.Icon--calendarTeam:before {
+  content: "\EAFD";
+}
+
+.Icon--calendarWeek:before {
+  content: "\EAFE";
+}
+
+.Icon--chartLine:before {
+  content: "\EA78";
+}
+
+.Icon--abidjan:before {
+  content: "\EA4E";
+}
+
+.Icon--yyc:before {
+  content: "\EA4F";
+}
+
+.Icon--dbx:before {
+  content: "\EA51";
+}
+
+.Icon--gva:before {
+  content: "\EA52";
+}
+
+.Icon--hou:before {
+  content: "\EA54";
+}
+
+.Icon--mow:before {
+  content: "\EA55";
+}
+
+.Icon--par:before {
+  content: "\EA56";
+}
+
+.Icon--sin:before {
+  content: "\EA58";
+}
+
+.Icon--astana:before {
+  content: "\EACA";
+}
+
+.Icon--bak:before {
+  content: "\EACB";
+}
+
+.Icon--baku:before {
+  content: "\EACC";
+}
+
+.Icon--bru:before {
+  content: "\EACD";
+}
+
+.Icon--brussels:before {
+  content: "\EACE";
+}
+
+.Icon--cal:before {
+  content: "\EACF";
+}
+
+.Icon--calgary:before {
+  content: "\EAD0";
+}
+
+.Icon--copenhagen:before {
+  content: "\EAD1";
+}
+
+.Icon--cph:before {
+  content: "\EAD2";
+}
+
+.Icon--dubai:before {
+  content: "\EAD3";
+}
+
+.Icon--geneva:before {
+  content: "\EAD6";
+}
+
+.Icon--houston:before {
+  content: "\EAD7";
+}
+
+.Icon--jnb:before {
+  content: "\EAD8";
+}
+
+.Icon--johannesburg:before {
+  content: "\EAD9";
+}
+
+.Icon--moscow:before {
+  content: "\EADA";
+}
+
+.Icon--paris:before {
+  content: "\EADB";
+}
+
+.Icon--singapore:before {
+  content: "\EADC";
+}
+
+.Icon--tse:before {
+  content: "\EADD";
+}
+
+.Icon--abj:before {
+  content: "\EADE";
+}
+
+.Icon--blockText:before {
+  content: "\EAE5";
+}
+
+.Icon--blockVideo:before {
+  content: "\EAE6";
+}
+
+.Icon--textBold:before {
+  content: "\EAE7";
+}
+
+.Icon--textBulletList:before {
+  content: "\EAE8";
+}
+
+.Icon--textItalic:before {
+  content: "\EAE9";
+}
+
+.Icon--textLink:before {
+  content: "\EAEA";
+}
+
+.Icon--textOrderedList:before {
+  content: "\EAEB";
+}
+
+.Icon--textUnderline:before {
+  content: "\EAEC";
+}
+
+.Icon--desktopQuestion:before {
+  content: "\EA79";
+}
+
+.Icon--mobileNotSupported:before {
+  content: "\EA7A";
+}
+
+.Icon--mobileDisabled:before {
+  content: "\EB5F";
+}
+
+.Icon--displayGrid:before {
+  content: "\EA7B";
+}
+
+.Icon--displayList:before {
+  content: "\EA7C";
+}
+
+.Icon--displayNewsSmall:before {
+  content: "\EA7D";
+}
+
+.Icon--displayTile:before {
+  content: "\EA7E";
+}
+
+.Icon--displayTileSmall:before {
+  content: "\EA7F";
+}
+
+.Icon--displayTable:before {
+  content: "\EAE0";
+}
+
+.Icon--displayListSmall:before {
+  content: "\EB15";
+}
+
+.Icon--doc:before {
+  content: "\EA21";
+}
+
+.Icon--docLegal:before {
+  content: "\EA22";
+}
+
+.Icon--docReport:before {
+  content: "\EA23";
+}
+
+.Icon--docValidate:before {
+  content: "\EA24";
+}
+
+.Icon--docExcel:before {
+  content: "\EA80";
+}
+
+.Icon--event:before {
+  content: "\EA2C";
+}
+
+.Icon--absenceOvertime:before {
+  content: "\EA2D";
+}
+
+.Icon--absencePlus:before {
+  content: "\EA2E";
+}
+
+.Icon--holiday:before {
+  content: "\EA2F";
+}
+
+.Icon--info:before {
+  content: "\EA30";
+}
+
+.Icon--mission:before {
+  content: "\EA31";
+}
+
+.Icon--onCallDuty:before {
+  content: "\EA32";
+}
+
+.Icon--overtime:before {
+  content: "\EA33";
+}
+
+.Icon--overtimePlus:before {
+  content: "\EA34";
+}
+
+.Icon--training:before {
+  content: "\EA35";
+}
+
+.Icon--meeting:before {
+  content: "\EA3D";
+}
+
+.Icon--absenceSettings:before {
+  content: "\EA81";
+}
+
+.Icon--birthday:before {
+  content: "\EAA4";
+}
+
+.Icon--overtimeSpecificDay:before {
+  content: "\EAA5";
+}
+
+.Icon--telework:before {
+  content: "\EB45";
+}
+
+.Icon--fileAudio:before {
+  content: "\EAAF";
+}
+
+.Icon--fileCompressed:before {
+  content: "\EAB0";
+}
+
+.Icon--fileImage:before {
+  content: "\EAB1";
+}
+
+.Icon--filePdf:before {
+  content: "\EAB2";
+}
+
+.Icon--filePresentation:before {
+  content: "\EAB3";
+}
+
+.Icon--fileSpreadsheet:before {
+  content: "\EAB4";
+}
+
+.Icon--fileText:before {
+  content: "\EAB5";
+}
+
+.Icon--fileVideo:before {
+  content: "\EAB6";
+}
+
+.Icon--fileNote:before {
+  content: "\EB41";
+}
+
+.Icon--widgetApps:before {
+  content: "\EA97";
+}
+
+.Icon--widgetCommunities:before {
+  content: "\EA98";
+}
+
+.Icon--widgetDocs:before {
+  content: "\EA99";
+}
+
+.Icon--widgetLinks:before {
+  content: "\EA9A";
+}
+
+.Icon--widgetMarket:before {
+  content: "\EA9B";
+}
+
+.Icon--widgetNews:before {
+  content: "\EA9C";
+}
+
+.Icon--copyAlt:before {
+  content: "\EAC1";
+}
+
+.Icon--hide:before {
+  content: "\EAC2";
+}
+
+.Icon--image:before {
+  content: "\EAC3";
+}
+
+.Icon--infoAlt:before {
+  content: "\EAC4";
+}
+
+.Icon--lockAlt:before {
+  content: "\EAC5";
+}
+
+.Icon--shareAlt:before {
+  content: "\EAC6";
+}
+
+.Icon--widgetPlus:before {
+  content: "\EAC8";
+}
+
+.Icon--boardsManage:before {
+  content: "\EADF";
+}
+
+.Icon--homeDoc:before {
+  content: "\EAF0";
+}
+
+.Icon--homeCommunities:before {
+  content: "\EAF1";
+}
+
+.Icon--homeDWP:before {
+  content: "\EAF2";
+}
+
+.Icon--homeDepartments:before {
+  content: "\EAF3";
+}
+
+.Icon--homeFeedback:before {
+  content: "\EAF4";
+}
+
+.Icon--homeHierachy:before {
+  content: "\EAF5";
+}
+
+.Icon--homeSearch:before {
+  content: "\EAF6";
+}
+
+.Icon--homeVideo:before {
+  content: "\EAF7";
+}
+
+.Icon--widgetDashboard:before {
+  content: "\EAF8";
+}
+
+.Icon--homeLauncher:before {
+  content: "\EAF9";
+}
+
+.Icon--homePhonebook:before {
+  content: "\EAFA";
+}
+
+.Icon--homeSettings:before {
+  content: "\EAFB";
+}
+
+.Icon--appNotAvailable:before {
+  content: "\EB02";
+}
+
+.Icon--communityNotAvailable:before {
+  content: "\EB03";
+}
+
+.Icon--widgetPowerBI:before {
+  content: "\EB08";
+}
+
+.Icon--widgetMSViewer:before {
+  content: "\EB09";
+}
+
+.Icon--dwpNotification:before {
+  content: "\EB0C";
+}
+
+.Icon--widgetYammer:before {
+  content: "\EB55";
+}
+
+.Icon--agri:before {
+  content: "\EA85";
+}
+
+.Icon--cac40:before {
+  content: "\EA86";
+}
+
+.Icon--energy:before {
+  content: "\EA87";
+}
+
+.Icon--forex:before {
+  content: "\EA88";
+}
+
+.Icon--interstock:before {
+  content: "\EA89";
+}
+
+.Icon--major:before {
+  content: "\EA8A";
+}
+
+.Icon--metals:before {
+  content: "\EA8B";
+}
+
+.Icon--dollarLimit:before {
+  content: "\EAE3";
+}
+
+.Icon--ecoApi:before {
+  content: "\EB16";
+}
+
+.Icon--medissysGestionLPS:before {
+  content: "\EB5D";
+}
+
+.Icon--medissysGestion:before {
+  content: "\EB5E";
+}
+
+.Icon--recordFinance:before {
+  content: "\EA43";
+}
+
+.Icon--recordTasks:before {
+  content: "\EA44";
+}
+
+.Icon--recordUser:before {
+  content: "\EA45";
+}
+
+.Icon--roundEdit:before {
+  content: "\EAB7";
+}
+
+.Icon--roundError:before {
+  content: "\EAB8";
+}
+
+.Icon--roundInfo:before {
+  content: "\EAB9";
+}
+
+.Icon--roundSuccess:before {
+  content: "\EABA";
+}
+
+.Icon--roundInfoOutline:before {
+  content: "\EAFF";
+}
+
+.Icon--roundPlus:before {
+  content: "\EB05";
+}
+
+.Icon--like:before {
+  content: "\EA8F";
+}
+
+.Icon--share:before {
+  content: "\EA90";
+}
+
+.Icon--unlike:before {
+  content: "\EA91";
+}
+
+.Icon--close24-mini:before {
+  content: "\EB17";
+}
+
+.Icon--close30-small:before {
+  content: "\EB18";
+}
+
+.Icon--close40-standard:before {
+  content: "\EB19";
+}
+
+.Icon--close50-medium:before {
+  content: "\EB1A";
+}
+
+.Icon--crossCancel24:before {
+  content: "\EB1B";
+}
+
+.Icon--crossCancel30:before {
+  content: "\EB1C";
+}
+
+.Icon--crossCancel40:before {
+  content: "\EB1D";
+}
+
+.Icon--crossCancel50:before {
+  content: "\EB1E";
+}
+
+.Icon--downloadBox40:before {
+  content: "\EB1F";
+}
+
+.Icon--downloadBox50:before {
+  content: "\EB20";
+}
+
+.Icon--plus24:before {
+  content: "\EB21";
+}
+
+.Icon--plus30:before {
+  content: "\EB22";
+}
+
+.Icon--plus40:before {
+  content: "\EB23";
+}
+
+.Icon--plus50:before {
+  content: "\EB24";
+}
+
+.Icon--tick16:before {
+  content: "\EB25";
+}
+
+.Icon--tick24:before {
+  content: "\EB26";
+}
+
+.Icon--tick30:before {
+  content: "\EB27";
+}
+
+.Icon--tick40:before {
+  content: "\EB28";
+}
+
+.Icon--tick50:before {
+  content: "\EB29";
+}
+
+.Icon--tickDouble24:before {
+  content: "\EB2A";
+}
+
+.Icon--tickSuccess24:before {
+  content: "\EB2B";
+}
+
+.Icon--tickSuccess30:before {
+  content: "\EB2C";
+}
+
+.Icon--tickSuccess40:before {
+  content: "\EB2D";
+}
+
+.Icon--tickSuccess50:before {
+  content: "\EB2E";
+}
+
+.Icon--uploadBox40:before {
+  content: "\EB2F";
+}
+
+.Icon--uploadBox50:before {
+  content: "\EB30";
+}
+
+.Icon--cities:before {
+  content: "\EA50";
+}
+
+.Icon--globe:before {
+  content: "\EA53";
+}
+
+.Icon--plane:before {
+  content: "\EA57";
+}
+
+.Icon--transport:before {
+  content: "\EA59";
+}
+
+.Icon--planeArrival:before {
+  content: "\EAAB";
+}
+
+.Icon--planeDeparture:before {
+  content: "\EAAC";
+}
+
+.Icon--group:before {
+  content: "\EA5D";
+}
+
+.Icon--groupApprovers:before {
+  content: "\EA5E";
+}
+
+.Icon--groupSend:before {
+  content: "\EA5F";
+}
+
+.Icon--user:before {
+  content: "\EA60";
+}
+
+.Icon--userAssign:before {
+  content: "\EA61";
+}
+
+.Icon--userBack:before {
+  content: "\EA62";
+}
+
+.Icon--userCopy:before {
+  content: "\EA63";
+}
+
+.Icon--userDoc:before {
+  content: "\EA64";
+}
+
+.Icon--userPlus:before {
+  content: "\EA65";
+}
+
+.Icon--userSend:before {
+  content: "\EA66";
+}
+
+.Icon--userTravel:before {
+  content: "\EA67";
+}
+
+.Icon--groupeThree:before {
+  content: "\EAAD";
+}
+
+.Icon--groupThreeAlt:before {
+  content: "\EB65";
+}
+
+.Icon--groupInheritedPermissions:before {
+  content: "\EB66";
+}
+
+.Icon--hierarchy:before {
+  content: "\EA6B";
+}
+
+.Icon--history:before {
+  content: "\EA6C";
+}
+
+.Icon--hourglass:before {
+  content: "\EA6D";
+}
+
+.Icon--signature:before {
+  content: "\EA6E";
+}
+
+.Icon--validationHistory:before {
+  content: "\EA6F";
+}
+
+.Icon--workflowError:before {
+  content: "\EA70";
+}
