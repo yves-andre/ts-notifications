@@ -1,0 +1,17 @@
+.Explorer {
+  padding: 20px;
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  scrollbar-width: none;
+  flex-direction: column;
+  display: flex;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  circle[fill='#2b2e33'] {
+    fill: black;
+  }
+}

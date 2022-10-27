@@ -4,16 +4,25 @@ import { Layout } from '@trading/energies-ui'
 import { Topbar } from '../../pages/topbar/Topbar'
 import { Sidebar } from '../../pages/sidebar/Sidebar'
 
+import './Page.scss'
+
 export const Page: React.FC = () => {
   return (
-    <Layout heightDefault={75}>
-      <Layout.Top>
-        <Topbar />
-      </Layout.Top>
-      <Layout.Sidebar>
+    <Layout styleContent={{ padding: 0, overflow: 'hidden' }}>
+      <Layout.Nav>
         <Sidebar />
-      </Layout.Sidebar>
-      <Outlet />
+      </Layout.Nav>
+      <div className='Page'>
+        <div className='Page-content'>
+          <Topbar />
+          <Outlet />
+        </div>
+        {/*
+        <div className='Page-form'>
+            <div className='Page-header'></div>
+        </div>
+        */}
+      </div>
     </Layout>
   )
 }

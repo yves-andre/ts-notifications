@@ -34,7 +34,7 @@ export const Topbar: React.FC = () => {
       <div className='Topbar-title'>{getTitleByCategory(selectedCategory)}</div>
       <div className='Topbar-actions'>
         <Tabs />
-        {/* <DelegationToggle /> */}
+        <DelegationToggle />
       </div>
     </div>
   )

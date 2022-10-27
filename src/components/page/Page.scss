@@ -1,0 +1,49 @@
+.Page {
+  flex: 1;
+  display: flex;
+  max-height: 100vh;
+  overflow: hidden;
+  &-content {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 420px;
+    &:only-child {
+      flex: 1;
+      flex-basis: 100%;
+    }
+  }
+  &-form {
+    flex: 1;
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      background-color: #131519;
+      width: 1px;
+      z-index: 1;
+    }
+  }
+  &-header {
+    padding: 15px 20px 15px;
+    background-color: var(--ts-global-theme);
+    top: 0;
+    position: sticky;
+    z-index: 1;
+    height: 100px;
+    box-sizing: border-box;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      background-color: #131519;
+      opacity: 0.34;
+      width: 1px;
+      z-index: 2;
+    }
+  }
+}

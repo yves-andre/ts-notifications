@@ -85,10 +85,21 @@ export const Menu: React.FC<Props> = ({ applications }) => {
         return undefined
     }
   }
+  const getColorByCategory = (category: number): string | undefined => {
+    switch (category) {
+      case CATEGORY.ACTION_FEED:
+        return 'tileBlue'
+      case CATEGORY.INFORMATION_FEED:
+        return 'orange'
+      default:
+        return undefined
+    }
+  }
 
   const navCategories = CATEGORIES.map((category) => ({
     isExpanded: true,
     key: category,
+    color: getColorByCategory(category),
     icon: getIconByCategory(category),
     title: getTitleByCategory(category),
     badge: getAppCountByCategory(category) || undefined,
@@ -97,17 +108,28 @@ export const Menu: React.FC<Props> = ({ applications }) => {
       title: app.title,
       icon: app.image,
       badge: getAppCount(app) || undefined,
+      color: getColorByCategory(category),
       onClick: () => selectAppHandler(app.match, category),
     })),
   }))
 
+  const css = `:root {
+    --ts-global-theme: var(--ts-color-${getColorByCategory(selectedCategory)});
+    --ts-global-theme-dark: var(--ts-color-${getColorByCategory(
+      selectedCategory
+    )}-dark);
+  }`
+
   return (
-    <Nav
-      onClick={(item: any) => selectCategoryHandler(item.key)}
-      active={selectedApplication || selectedCategory}
-      items={navCategories}
-      variant='secondary'
-    />
+    <>
+      <style>{css}</style>
+      <Nav
+        onClick={(item: any) => selectCategoryHandler(item.key)}
+        active={selectedApplication || selectedCategory}
+        items={navCategories}
+        variant='feed'
+      />
+    </>
   )
 }
 

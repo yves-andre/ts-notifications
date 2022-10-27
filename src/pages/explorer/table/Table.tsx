@@ -4,6 +4,7 @@ import {
   Picture,
   Icon,
   Text,
+  Status,
   Table as TableUI,
 } from '@trading/energies-ui'
 import Notification from '../../../data/interfaces/notification'
@@ -88,6 +89,28 @@ export const Table: React.FC<Props> = ({ notifications }) => {
     )
   }
 
+  /* TODO : Service to get from Sharepoint */
+  const getColorApplication = (title: string) => {
+    switch (title) {
+      case 'MISSION ORDERS':
+        return 'purpleLight'
+      case 'REQUISITIONS FORMS':
+        return 'waterGreen'
+      case 'EXPENSES':
+        return 'blue'
+      case 'TS & NEWS':
+        return 'red'
+      case 'ABSENCE NOTICE':
+      case 'LIMITS':
+      case 'NETWORK ACCOUNT':
+      case 'TS & NEWS':
+      case 'DIGITAL WORKPLACE':
+        return 'purpleLight'
+      default:
+        return 'red'
+    }
+  }
+
   return (
     <TableUI variant='feed'>
       <thead>
@@ -99,19 +122,28 @@ export const Table: React.FC<Props> = ({ notifications }) => {
           <TD field='date' align='right'>
             Date
           </TD>
-          <td align='right' width='230'>
-            Actions
-          </td>
+          <td align='right' width='100'></td>
         </tr>
       </thead>
       <tbody>
         {notifications.map((notification) => (
-          <tr key={notification._id}>
+          <tr
+            key={notification._id}
+            onClick={() => openNotificationHandler(notification)}
+          >
             <th>
+              {/* TODO: HOW IS DID THE NOTIFICATION READ STATUS? */}
+              <Status
+                variant='badge'
+                color={getColorApplication(notification.title)}
+                style={{ marginLeft: -10, marginRight: 5 }}
+              ></Status>
+              {/* ---------------------------------------------- */}
               {notification.image && (
                 <Picture
                   person
                   round
+                  color={getColorApplication(notification.title)}
                   size='small'
                   icon={notification.image}
                   style={{ marginRight: 10 }}
@@ -139,13 +171,19 @@ export const Table: React.FC<Props> = ({ notifications }) => {
                 </Highlight>
               </Text>
             </th>
-            <th align='right' style={{ paddingRight: 0 }}>
-              <Button onClick={() => openNotificationHandler(notification)}>
-                OPEN
-              </Button>
-              <Button onClick={() => dismissNotificationHandler(notification)}>
-                DISMISS
-              </Button>
+            <th
+              align='right'
+              style={{ paddingRight: 5 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Button
+                size='small'
+                icon='close30-small'
+                iconOnly
+                color='#161719'
+                style={{ borderRadius: '50%' }}
+                onClick={() => dismissNotificationHandler(notification)}
+              />
             </th>
           </tr>
         ))}
