@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import { CATEGORY } from '../../../data/constants/category'
 import Application from '../../../data/interfaces/application'
 import { useAppDispatch } from '../../../hooks/use-app-dispatch'
@@ -8,16 +8,18 @@ import { filtersActions } from '../../../store/filters-slice'
 import { Nav } from '@trading/energies-ui'
 
 import './Menu.scss'
+import CategoryColor from '../../../data/interfaces/category-color'
 
 interface Props {
   applications: Application[]
+  categoryColors: CategoryColor[]
 }
 
 const ACTION_FEED = CATEGORY.ACTION_FEED
 const INFORMATION_FEED = CATEGORY.INFORMATION_FEED
 const CATEGORIES = [ACTION_FEED, INFORMATION_FEED]
 
-export const Menu: React.FC<Props> = ({ applications }) => {
+export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   const notifications = useAppSelector(
     (state) => state.notifications.notificationItems
   )
@@ -28,8 +30,8 @@ export const Menu: React.FC<Props> = ({ applications }) => {
     (state) => state.filters.selectedApplication
   )
 
-  const dispatch = useAppDispatch()
-
+  const dispatch = useAppDispatch();
+  
   const getAppsByCategory = (category: number): Application[] => {
     const filterValue = category === ACTION_FEED ? 'workflow' : 'socialflow'
     return applications?.filter((app) => app.type === filterValue)
@@ -86,14 +88,8 @@ export const Menu: React.FC<Props> = ({ applications }) => {
     }
   }
   const getColorByCategory = (category: number): string | undefined => {
-    switch (category) {
-      case CATEGORY.ACTION_FEED:
-        return 'tileBlue'
-      case CATEGORY.INFORMATION_FEED:
-        return 'orange'
-      default:
-        return undefined
-    }
+    const filterValue = category === ACTION_FEED ? 'workflow' : 'socialflow'
+    return categoryColors.find(c => c.title === filterValue)?.color
   }
 
   const navCategories = CATEGORIES.map((category) => ({
