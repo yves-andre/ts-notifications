@@ -1,9 +1,9 @@
 export const APP_CONFIG: any = {
-  APP_COLOR: 'tileBlue',
-  APP_NAME: 'Notifications',
+  APP_COLOR: "tileBlue",
+  APP_NAME: "Notifications",
   THEME_ASSETS: {
-    icons: '/assets/icons',
-    placeholder: '',
+    icons: "http://sp-resources-dev.dts.corp.local/tsf/assets/icons/",
+    placeholder: "http://sp-resources-dev.dts.corp.local/tsf/assets/images/placeholder/",
   },
-  THEME_FONTS: ['', ''],
-}
+  THEME_FONTS: ["", ""],
+};
