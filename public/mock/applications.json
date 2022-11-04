@@ -5,49 +5,57 @@
         "Title": "Mission orders",
         "Match": "mission-orders,mission orders,missionorders",
         "NotificationType": "workflow",
-        "image": "missionOrder"
+        "image": "missionOrder",
+        "TxtColor": "purpleLight"
       },
       {
         "Title": "Absence notice",
         "Match": "absence notice,absence-notice,absencenotice",
         "NotificationType": "workflow",
-        "image": "absenceNotice"
+        "image": "absenceNotice",
+        "TxtColor": "purpleLight"
       },
       {
         "Title": "Limits",
         "Match": "limits",
         "NotificationType": "workflow",
-        "image": "dashboard"
+        "image": "dashboard",
+        "TxtColor": "purpleLight"
       },
       {
         "Title": "Requisition forms",
         "Match": "requisition forms,requisition-forms,requisitionforms",
         "NotificationType": "workflow",
-        "image": "requisitionForms"
+        "image": "requisitionForms",
+        "TxtColor": "waterGreen"
       },
       {
         "Title": "Network account",
         "Match": "network account,network-account,networkaccount",
         "NotificationType": "workflow",
-        "image": "networkAccount"
+        "image": "networkAccount",
+        "TxtColor": "purpleLight"
       },
       {
         "Title": "Expenses",
         "Match": "expenses",
         "NotificationType": "workflow",
-        "image": "expense"
+        "image": "expense",
+        "TxtColor": "blue"
       },
       {
         "Title": "TS & News",
         "Match": "ts & news,ts&news,ts-&-news,ts and news,ts-and-news,tsandnews,ts news,ts-news,tsnews",
         "NotificationType": "socialflow",
-        "image": "dashboard"
+        "image": "dashboard",
+        "TxtColor": "red"
       },
       {
         "Title": "Digital workplace",
         "Match": "digital workplace,digital-workplace,digitalworkplace",
         "NotificationType": "socialflow",
-        "image": "dwp"
+        "image": "dwp",
+        "TxtColor": "purpleLight"
       }
     ]
   }

@@ -6,20 +6,23 @@ import Menu from "./menu/Menu";
 import "./Sidebar.scss";
 import { getCategoryColors } from "../../services/category-service";
 import CategoryColor from "../../data/interfaces/category-color";
+import { useAppSelector } from "../../hooks/use-app-selector";
+import { useAppDispatch } from "../../hooks/use-app-dispatch";
+import { fetchApplications } from "../../store/applications-slice";
 
 export const Sidebar: React.FC = () => {
-  const [applications, setApplications] = useState<Application[]>();
   const [categoryColors, setCategoryColors] = useState<CategoryColor[]>();
+  const applications: Application[] = useAppSelector(
+    (state) => state.applications.applications
+  );
+  const dispatch = useAppDispatch();
 
   // Load the applications and colors
   useEffect(() => {
     (async () => {
-      const [_applications, _categoryColors] = await Promise.all([
-        getApplications(),
-        getCategoryColors(),
-      ]);
-      setApplications(_applications);
-      setCategoryColors(_categoryColors);
+      const categoryColors = await getCategoryColors();
+      setCategoryColors(categoryColors);
+      dispatch(fetchApplications());
     })();
   }, []);
 

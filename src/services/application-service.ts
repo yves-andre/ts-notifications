@@ -18,6 +18,7 @@ export const getApplications = async () => {
           type: application.NotificationType,
           title: application.Title,
           image: application.image,
+          txtColor: application.TxtColor
         } as Application;
       });
     });

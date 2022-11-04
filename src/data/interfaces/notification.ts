@@ -6,6 +6,7 @@ export default interface Notification {
   date: string;
   status: number;
   isRead: boolean;
+  isSeen?: boolean;
   isFavorite: boolean;
   _id: string;
   title: string;
