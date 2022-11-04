@@ -31,8 +31,6 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
     (state) => state.filters.selectedApplication
   );
 
-  console.log(applications);
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
