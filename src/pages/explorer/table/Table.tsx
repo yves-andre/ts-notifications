@@ -163,7 +163,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
           <TD field="title">Source</TD>
           <TD field="subtitle">Subject</TD>
           <TD field="description">Description</TD>
-          <TD field="details">Sent to</TD>
+          <TD field="details">Details</TD>
           <TD field="date" align="right">
             Date
           </TD>
@@ -196,7 +196,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
                   style={{ marginRight: 10 }}
                 />
               )}
-              <Highlight highlight={search}>{`${notification.title} - ${notification._id}`}</Highlight>
+              <Highlight highlight={search}>{notification.title}</Highlight>
             </th>
             <th>
               <Highlight highlight={search}>{notification.subtitle}</Highlight>
