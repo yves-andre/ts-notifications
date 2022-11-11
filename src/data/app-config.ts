@@ -6,4 +6,5 @@ export const APP_CONFIG: any = {
     placeholder: "http://sp-resources-dev.dts.corp.local/tsf/assets/images/placeholder/",
   },
   THEME_FONTS: ["", ""],
+  DEFAULT_APPLICATION_COLOR: "#0000006e"
 };

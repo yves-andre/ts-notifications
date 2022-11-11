@@ -22,6 +22,7 @@ import {
 import "./Table.scss";
 import { CATEGORY } from "../../../data/constants/category";
 import { STATUS } from "../../../data/constants/status";
+import { APP_CONFIG } from "../../../data/app-config";
 
 interface Props {
   notifications: Notification[];
@@ -97,7 +98,6 @@ export const Table: React.FC<Props> = ({ notifications }) => {
     );
   };
 
-  /* TODO : Service to get from Sharepoint */
   const getColorApplication = (title: string) => {
     const applicationColor = applications.find((application) =>
       application.match
@@ -106,7 +106,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
         .split(",")
         .includes(title.trim().toLowerCase())
     )?.txtColor;
-    return applicationColor || "red";
+    return applicationColor || APP_CONFIG.DEFAULT_APPLICATION_COLOR;
   };
 
   const renderActionButtons = (notification: Notification) => {
@@ -195,7 +195,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
                   style={{ marginRight: 10 }}
                 />
               )}
-              <Highlight highlight={search}>{notification.title}</Highlight>
+              <Highlight highlight={search}>{`${notification.title} - ${notification._id}`}</Highlight>
             </th>
             <th>
               <Highlight highlight={search}>{notification.subtitle}</Highlight>
