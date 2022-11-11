@@ -45,6 +45,7 @@ export const Explorer: React.FC = () => {
           filters.selectedApplication
             .toLowerCase()
             .split(',')
+            .map(a => a.trim())
             .includes(n.title.trim().toLocaleLowerCase())
       )
 

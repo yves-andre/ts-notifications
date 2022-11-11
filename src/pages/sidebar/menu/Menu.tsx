@@ -51,7 +51,10 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
     return notifications
     .filter((n) => n.status === 1)
     .filter((n) =>
-      application.match.split(",").includes(n.title.trim().toLowerCase())
+      application.match
+        .split(",")
+        .map(a => a.trim())
+        .includes(n.title.trim().toLowerCase())
     ).length;
   };
 

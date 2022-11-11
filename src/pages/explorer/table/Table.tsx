@@ -104,6 +104,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
         .trim()
         .toLowerCase()
         .split(",")
+        .map(a => a.trim())
         .includes(title.trim().toLowerCase())
     )?.txtColor;
     return applicationColor || APP_CONFIG.DEFAULT_APPLICATION_COLOR;
