@@ -118,7 +118,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
             <Tooltip title="mark as treated" placement="left">
               <Button
                 size="small"
-                icon="close30-small"
+                icon="tick"
                 iconOnly
                 color="#161719"
                 style={{ borderRadius: "50%" }}
@@ -131,7 +131,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
             <Tooltip title="open to treat" placement="left">
               <Button
                 size="small"
-                icon="openAll"
+                icon="preview"
                 iconOnly
                 color="#161719"
                 style={{ borderRadius: "50%" }}
@@ -142,10 +142,10 @@ export const Table: React.FC<Props> = ({ notifications }) => {
         }
       case CATEGORY.INFORMATION_FEED:
         return (
-          <Tooltip title="mark as treated" placement="left">
+          <Tooltip title="dismiss" placement="left">
             <Button
               size="small"
-              icon="close30-small"
+              icon="close"
               iconOnly
               color="#161719"
               style={{ borderRadius: "50%" }}
@@ -168,7 +168,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
             Date
           </TD>
           {selectedStatus !== STATUS.TREATED && (
-            <td align="right" width="100"></td>
+            <td align="right" width="100">Actions</td>
           )}
         </tr>
       </thead>
