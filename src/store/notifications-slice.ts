@@ -56,7 +56,7 @@ export const setNotificationsIsSeen = (category: number) => {
   };
 };
 
-export const dismissNotification = (id: string) => {
+export const dismissNotificationById = (id: string) => {
   return async (dispatch: AppDispatch) => {
     try {
       await _dismissNotification(id);
@@ -67,7 +67,22 @@ export const dismissNotification = (id: string) => {
   };
 };
 
-export const setNotificationIsRead = (id: string) => {
+export const dismissNotifications = (notifications: Notification[]) => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      await Promise.all(
+        notifications.map(async (notification) => {
+          await _dismissNotification(notification._id);
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+
+export const setNotificationIsReadById = (id: string) => {
   return async (dispatch: AppDispatch) => {
     try {
       await _setNotificationIsRead(id, true);

@@ -59,10 +59,17 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   };
 
   const getNotificationCountByCategory = (category: number): number | null => {
-    
-    const count = notifications
-      .filter(n => n.category === category)
-      .filter(n => n.status === STATUS.TO_BE_TREATED).length;
+    let count = 0;
+    if(category === CATEGORY.ACTION_FEED){
+      count = notifications
+        .filter(n => n.category === category)
+        .filter(n => n.status === STATUS.TO_BE_TREATED).length;
+    }else if (category === CATEGORY.INFORMATION_FEED){
+      count = notifications
+        .filter(n => n.category === category)
+        .filter(n => n.isSeen === false)
+        .filter(n => n.status === STATUS.TO_BE_TREATED).length;
+    }
     if (count > 0) return count;
     return null;
   };

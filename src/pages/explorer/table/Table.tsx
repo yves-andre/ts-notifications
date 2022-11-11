@@ -15,8 +15,9 @@ import { useAppSelector } from "../../../hooks/use-app-selector";
 import { useAppDispatch } from "../../../hooks/use-app-dispatch";
 import { filtersActions } from "../../../store/filters-slice";
 import {
-  dismissNotification,
-  setNotificationIsRead,
+  dismissNotificationById,
+  dismissNotifications,
+  setNotificationIsReadById,
 } from "../../../store/notifications-slice";
 
 import "./Table.scss";
@@ -35,6 +36,9 @@ export const Table: React.FC<Props> = ({ notifications }) => {
   const selectedStatus = useAppSelector(
     (state) => state.filters.selectedStatus
   );
+  const selectedCategory = useAppSelector(
+    (state) => state.filters.selectedCategory
+  )
   const applications = useAppSelector(
     (state) => state.applications.applications
   );
@@ -54,11 +58,11 @@ export const Table: React.FC<Props> = ({ notifications }) => {
 
   const openNotificationHandler = (notification: Notification) => {
     window.open(notification.sourceUrl, "_blank", "noopener,noreferrer");
-    !notification.isRead && dispatch(setNotificationIsRead(notification._id));
+    !notification.isRead && dispatch(setNotificationIsReadById(notification._id));
   };
 
   const dismissNotificationHandler = (notification: Notification) => {
-    dispatch(dismissNotification(notification._id));
+    dispatch(dismissNotificationById(notification._id));
   };
 
   const SortIcon: React.FC<{ field: string }> = ({ field }) => {
@@ -156,6 +160,16 @@ export const Table: React.FC<Props> = ({ notifications }) => {
     }
   };
 
+  const dismissAllHandler = () => {
+    const notificationsToDismiss = notifications.filter(
+      (notification) =>
+        notification.category === CATEGORY.INFORMATION_FEED &&
+        notification.status === STATUS.TO_BE_TREATED
+    );
+    console.log(notificationsToDismiss);
+    dispatch(dismissNotifications(notificationsToDismiss));
+  };
+
   return (
     <TableUI variant="feed">
       <thead>
@@ -167,9 +181,23 @@ export const Table: React.FC<Props> = ({ notifications }) => {
           <TD field="date" align="right">
             Date
           </TD>
-          {selectedStatus !== STATUS.TREATED && (
-            <td align="right" width="100">Actions</td>
-          )}
+          {selectedStatus !== STATUS.TREATED &&
+            selectedCategory === CATEGORY.ACTION_FEED && (
+              <td align="right" width="100">
+                Actions
+              </td>
+            )}
+          {selectedStatus !== STATUS.TREATED &&
+            selectedCategory === CATEGORY.INFORMATION_FEED && (
+              <td align="right" width="100">
+                <Button
+                    size="small"
+                    style={{ borderRadius: "10px" }}
+                    onClick={dismissAllHandler}
+                    color={APP_CONFIG.DEFAULT_APPLICATION_COLOR}
+                >Dismiss all</Button>
+              </td>
+            )}
         </tr>
       </thead>
       <tbody>
