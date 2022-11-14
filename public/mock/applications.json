@@ -44,8 +44,8 @@
         "TxtColor": "blue"
       },
       {
-        "Title": "TS & News",
-        "Match": "ts & news,ts&news,ts-&-news,ts and news,ts-and-news,tsandnews,ts news,ts-news,tsnews",
+        "Title": "T&S News",
+        "Match": "t&s news,t&snews,t-&-s-news,t and s news,t-and-s-news,tandsnews,ts news,ts-news,tsnews",
         "NotificationType": "socialflow",
         "image": "dashboard",
         "TxtColor": "red"

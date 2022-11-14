@@ -27,9 +27,6 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
   );
-  const selectedApplication = useAppSelector(
-    (state) => state.filters.selectedApplication
-  );
 
   const dispatch = useAppDispatch();
 
@@ -47,39 +44,29 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
 
   const getNotificationCount = (
     application: Application,
-    category?: number
   ) => {
-    // for the action feed menu item, the appCount corresponds to
-    // the number of notifications that are TO_BE_TREATED (status === 1)
-    if (category === CATEGORY.ACTION_FEED) {
-      return notifications
-        .filter((n) =>
-          application.match.split(",").includes(n.title.trim().toLowerCase())
-        )
-        .filter((n) => n.status === STATUS.TO_BE_TREATED).length;
-    }
-    // for the information feed menu item, the appCount corresponds to
-    // the number of notifications that are not seen (isSeen === false)
-    else if (category === CATEGORY.INFORMATION_FEED) {
-      return notifications
-        .filter((n) =>
-          application.match.split(",").includes(n.title.trim().toLowerCase())
-        )
-        .filter((n) => !n.isSeen).length;
-    }
-    // no category is present when we count the notifications for a given
-    // application, then just return the number of notifications
-    else {
-      return notifications.filter((n) =>
-        application.match.split(",").includes(n.title.trim().toLowerCase())
-      ).length;
-    }
+    return notifications
+    .filter((n) => n.status === 1)
+    .filter((n) =>
+      application.match
+        .split(",")
+        .map(a => a.trim())
+        .includes(n.title.trim().toLowerCase())
+    ).length;
   };
 
   const getNotificationCountByCategory = (category: number): number | null => {
-    const count = getAppsByCategory(category).reduce((count, application) => {
-      return (count += getNotificationCount(application, category));
-    }, 0);
+    let count = 0;
+    if(category === CATEGORY.ACTION_FEED){
+      count = notifications
+        .filter(n => n.category === category)
+        .filter(n => n.status === STATUS.TO_BE_TREATED).length;
+    }else if (category === CATEGORY.INFORMATION_FEED){
+      count = notifications
+        .filter(n => n.category === category)
+        .filter(n => n.isSeen === false)
+        .filter(n => n.status === STATUS.TO_BE_TREATED).length;
+    }
     if (count > 0) return count;
     return null;
   };
@@ -150,12 +137,14 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
     )}-dark);
   }`;
 
+  console.log(navCategories);
+
   return (
     <>
       <style>{css}</style>
       <Nav
         onClick={(item: any) => selectCategoryHandler(item.key)}
-        active={selectedApplication || selectedCategory}
+        active={selectedCategory}
         items={navCategories}
         variant="feed"
       />

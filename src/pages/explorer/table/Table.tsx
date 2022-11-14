@@ -15,23 +15,30 @@ import { useAppSelector } from '../../../hooks/use-app-selector'
 import { useAppDispatch } from '../../../hooks/use-app-dispatch'
 import { filtersActions } from '../../../store/filters-slice'
 import {
-  dismissNotification,
-  setNotificationIsRead,
-} from '../../../store/notifications-slice'
+  dismissNotificationById,
+  dismissNotifications,
+  setNotificationIsReadById,
+} from "../../../store/notifications-slice";
 
-import './Table.scss'
-import { CATEGORY } from '../../../data/constants/category'
-import { STATUS } from '../../../data/constants/status'
+import "./Table.scss";
+import { CATEGORY } from "../../../data/constants/category";
+import { STATUS } from "../../../data/constants/status";
+import { APP_CONFIG } from "../../../data/app-config";
 
 interface Props {
   notifications: Notification[]
 }
 
 export const Table: React.FC<Props> = ({ notifications }) => {
-  const search = useAppSelector((state) => state.filters.searchFilter)
-  const sortFilter = useAppSelector((state) => state.filters.sortFilter)
-  const dispatch = useAppDispatch()
-  const selectedStatus = useAppSelector((state) => state.filters.selectedStatus)
+  const search = useAppSelector((state) => state.filters.searchFilter);
+  const sortFilter = useAppSelector((state) => state.filters.sortFilter);
+  const dispatch = useAppDispatch();
+  const selectedStatus = useAppSelector(
+    (state) => state.filters.selectedStatus
+  );
+  const selectedCategory = useAppSelector(
+    (state) => state.filters.selectedCategory
+  )
   const applications = useAppSelector(
     (state) => state.applications.applications
   )
@@ -50,13 +57,13 @@ export const Table: React.FC<Props> = ({ notifications }) => {
   }
 
   const openNotificationHandler = (notification: Notification) => {
-    window.open(notification.sourceUrl, '_blank', 'noopener,noreferrer')
-    !notification.isRead && dispatch(setNotificationIsRead(notification._id))
-  }
+    window.open(notification.sourceUrl, "_blank", "noopener,noreferrer");
+    !notification.isRead && dispatch(setNotificationIsReadById(notification._id));
+  };
 
   const dismissNotificationHandler = (notification: Notification) => {
-    dispatch(dismissNotification(notification._id))
-  }
+    dispatch(dismissNotificationById(notification._id));
+  };
 
   const SortIcon: React.FC<{ field: string }> = ({ field }) => {
     if (sortFilter.field === field) {
@@ -95,17 +102,17 @@ export const Table: React.FC<Props> = ({ notifications }) => {
     )
   }
 
-  /* TODO : Service to get from Sharepoint */
   const getColorApplication = (title: string) => {
     const applicationColor = applications.find((application) =>
       application.match
         .trim()
         .toLowerCase()
-        .split(',')
+        .split(",")
+        .map(a => a.trim())
         .includes(title.trim().toLowerCase())
-    )?.txtColor
-    return applicationColor || 'red'
-  }
+    )?.txtColor;
+    return applicationColor || APP_CONFIG.DEFAULT_APPLICATION_COLOR;
+  };
 
   const renderActionButtons = (notification: Notification) => {
     switch (notification.category) {
@@ -114,8 +121,8 @@ export const Table: React.FC<Props> = ({ notifications }) => {
           return (
             <Tooltip title='Mark as Treated' placement='left'>
               <Button
-                size='small'
-                icon='close30-small'
+                size="small"
+                icon="tick"
                 iconOnly
                 color='#161719'
                 style={{ borderRadius: '50%' }}
@@ -127,8 +134,8 @@ export const Table: React.FC<Props> = ({ notifications }) => {
           return (
             <Tooltip title='Open to Treat' placement='left'>
               <Button
-                size='small'
-                icon='openAll'
+                size="small"
+                icon="preview"
                 iconOnly
                 color='#161719'
                 style={{ borderRadius: '50%' }}
@@ -139,10 +146,10 @@ export const Table: React.FC<Props> = ({ notifications }) => {
         }
       case CATEGORY.INFORMATION_FEED:
         return (
-          <Tooltip title='Dismiss' placement='left'>
+          <Tooltip title="dismiss" placement="left">
             <Button
-              size='small'
-              icon='close30-small'
+              size="small"
+              icon="close"
               iconOnly
               color='#161719'
               style={{ borderRadius: '50%' }}
@@ -153,20 +160,44 @@ export const Table: React.FC<Props> = ({ notifications }) => {
     }
   }
 
+  const dismissAllHandler = () => {
+    const notificationsToDismiss = notifications.filter(
+      (notification) =>
+        notification.category === CATEGORY.INFORMATION_FEED &&
+        notification.status === STATUS.TO_BE_TREATED
+    );
+    console.log(notificationsToDismiss);
+    dispatch(dismissNotifications(notificationsToDismiss));
+  };
+
   return (
     <TableUI variant='feed'>
       <thead>
         <tr>
-          <TD field='title'>Source</TD>
-          <TD field='subtitle'>Subject</TD>
-          <TD field='description'>Description</TD>
-          <TD field='details'>Sent to</TD>
-          <TD field='date' align='right'>
+          <TD field="title">Source</TD>
+          <TD field="subtitle">Subject</TD>
+          <TD field="description">Description</TD>
+          <TD field="details">Details</TD>
+          <TD field="date" align="right">
             Date
           </TD>
-          {selectedStatus !== STATUS.TREATED && (
-            <td align='right' width='100'></td>
-          )}
+          {selectedStatus !== STATUS.TREATED &&
+            selectedCategory === CATEGORY.ACTION_FEED && (
+              <td align="right" width="100">
+                Actions
+              </td>
+            )}
+          {selectedStatus !== STATUS.TREATED &&
+            selectedCategory === CATEGORY.INFORMATION_FEED && (
+              <td align="right" width="100">
+                <Button
+                    size="small"
+                    style={{ borderRadius: "10px" }}
+                    onClick={dismissAllHandler}
+                    color={APP_CONFIG.DEFAULT_APPLICATION_COLOR}
+                >Dismiss all</Button>
+              </td>
+            )}
         </tr>
       </thead>
       <tbody>

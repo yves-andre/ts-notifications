@@ -1,3 +1,4 @@
+import { sortArrayByStringField } from './../utils/helpers';
 import { AppDispatch } from './index';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Application from "../data/interfaces/application";
@@ -12,7 +13,9 @@ const applicationsSlice = createSlice({
   initialState,
   reducers: {
     load(state, action: PayloadAction<Application[]>) {
-      state.applications = action.payload;
+      // sort by title
+      const applications = sortArrayByStringField(action.payload, "title", true);
+      state.applications = applications;
     },
   },
 });

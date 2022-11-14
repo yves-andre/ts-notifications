@@ -28,7 +28,7 @@ export const Sidebar: React.FC = () => {
 
   return (
     <div className="Sidebar">
-      {applications && categoryColors && (
+      {applications.length > 0 && categoryColors && (
         <Menu applications={applications} categoryColors={categoryColors} />
       )}
       {!applications && <p>Loading ...</p>}
