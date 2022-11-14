@@ -27,9 +27,6 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
   );
-  const selectedApplication = useAppSelector(
-    (state) => state.filters.selectedApplication
-  );
 
   const dispatch = useAppDispatch();
 
@@ -140,12 +137,14 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
     )}-dark);
   }`;
 
+  console.log(navCategories);
+
   return (
     <>
       <style>{css}</style>
       <Nav
         onClick={(item: any) => selectCategoryHandler(item.key)}
-        active={selectedApplication || selectedCategory}
+        active={selectedCategory}
         items={navCategories}
         variant="feed"
       />

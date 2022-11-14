@@ -16,7 +16,6 @@ export const Page: React.FC = () => {
     <Layout styleContent={{ padding: 0, overflow: "hidden" }}>
       <Layout.Header>
         <Header
-          variant={"default"}
           active="notifications"
           onChange={(key) => console.log(key)}
           className='globalNav'
