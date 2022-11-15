@@ -67,8 +67,7 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
         .filter(n => n.isSeen === false)
         .filter(n => n.status === STATUS.TO_BE_TREATED).length;
     }
-    if (count > 0) return count;
-    return null;
+    return count;
   };
 
   const selectCategoryHandler = (category: number): void => {
@@ -136,8 +135,6 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
       selectedCategory
     )}-dark);
   }`;
-
-  console.log(navCategories);
 
   return (
     <>
