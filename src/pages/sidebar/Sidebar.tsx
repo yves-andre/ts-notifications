@@ -8,20 +8,21 @@ import { getCategoryColors } from "../../services/category-service";
 import CategoryColor from "../../data/interfaces/category-color";
 import { useAppSelector } from "../../hooks/use-app-selector";
 import { useAppDispatch } from "../../hooks/use-app-dispatch";
-import { fetchApplications } from "../../store/applications-slice";
+import { fetchApplications, fetchCategoryColors } from "../../store/applications-slice";
 
 export const Sidebar: React.FC = () => {
-  const [categoryColors, setCategoryColors] = useState<CategoryColor[]>();
   const applications: Application[] = useAppSelector(
     (state) => state.applications.applications
   );
+  const categoryColors: CategoryColor[] = useAppSelector(
+    (state) => state.applications.categoryColors
+  )
   const dispatch = useAppDispatch();
 
   // Load the applications and colors
   useEffect(() => {
     (async () => {
-      const categoryColors = await getCategoryColors();
-      setCategoryColors(categoryColors);
+      dispatch(fetchCategoryColors());
       dispatch(fetchApplications());
     })();
   }, []);

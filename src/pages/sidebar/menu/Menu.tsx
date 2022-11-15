@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { CATEGORY } from "../../../data/constants/category";
 import Application from "../../../data/interfaces/application";
 import { useAppDispatch } from "../../../hooks/use-app-dispatch";
@@ -30,8 +30,31 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
 
   const dispatch = useAppDispatch();
 
+
+  const [nav, setNav] = useState<any>();
+
   useEffect(() => {
-    // for the information feed category, we want to set the 
+    const navCategories = CATEGORIES.map((category) => ({
+      isExpanded: true,
+      key: category,
+      color: getColorByCategory(category),
+      icon: getIconByCategory(category),
+      title: getTitleByCategory(category),
+      badge: getNotificationCountByCategory(category) || undefined,
+      items: getAppsByCategory(category).map((app, i) => ({
+        key: app.match,
+        title: app.title,
+        icon: app.image,
+        badge: getNotificationCount(app) || undefined,
+        color: getColorByCategory(category),
+        onClick: () => selectAppHandler(app.match, category),
+      })),
+    }));
+    setNav(navCategories);
+  }, []);
+
+  useEffect(() => {
+    // for the information feed category, we want to set the
     // isSeen attribute to true as soon as the catefory is selected
     selectedCategory === CATEGORY.INFORMATION_FEED &&
       dispatch(setNotificationsIsSeen(selectedCategory));
@@ -42,30 +65,28 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
     return applications?.filter((app) => app.type === filterValue);
   };
 
-  const getNotificationCount = (
-    application: Application,
-  ) => {
+  const getNotificationCount = (application: Application) => {
     return notifications
-    .filter((n) => n.status === 1)
-    .filter((n) =>
-      application.match
-        .split(",")
-        .map(a => a.trim())
-        .includes(n.title.trim().toLowerCase())
-    ).length;
+      .filter((n) => n.status === 1)
+      .filter((n) =>
+        application.match
+          .split(",")
+          .map((a) => a.trim())
+          .includes(n.title.trim().toLowerCase())
+      ).length;
   };
 
   const getNotificationCountByCategory = (category: number): number | null => {
     let count = 0;
-    if(category === CATEGORY.ACTION_FEED){
+    if (category === CATEGORY.ACTION_FEED) {
       count = notifications
-        .filter(n => n.category === category)
-        .filter(n => n.status === STATUS.TO_BE_TREATED).length;
-    }else if (category === CATEGORY.INFORMATION_FEED){
+        .filter((n) => n.category === category)
+        .filter((n) => n.status === STATUS.TO_BE_TREATED).length;
+    } else if (category === CATEGORY.INFORMATION_FEED) {
       count = notifications
-        .filter(n => n.category === category)
-        .filter(n => n.isSeen === false)
-        .filter(n => n.status === STATUS.TO_BE_TREATED).length;
+        .filter((n) => n.category === category)
+        .filter((n) => n.isSeen === false)
+        .filter((n) => n.status === STATUS.TO_BE_TREATED).length;
     }
     return count;
   };
@@ -97,6 +118,7 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
         return <></>;
     }
   };
+
   const getIconByCategory = (category: number): string | undefined => {
     switch (category) {
       case CATEGORY.ACTION_FEED:
@@ -107,27 +129,11 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
         return undefined;
     }
   };
+
   const getColorByCategory = (category: number): string | undefined => {
     const filterValue = category === ACTION_FEED ? "workflow" : "socialflow";
     return categoryColors.find((c) => c.title === filterValue)?.color;
   };
-
-  const navCategories = CATEGORIES.map((category) => ({
-    isExpanded: true,
-    key: category,
-    color: getColorByCategory(category),
-    icon: getIconByCategory(category),
-    title: getTitleByCategory(category),
-    badge: getNotificationCountByCategory(category) || undefined,
-    items: getAppsByCategory(category).map((app, i) => ({
-      key: app.match,
-      title: app.title,
-      icon: app.image,
-      badge: getNotificationCount(app) || undefined,
-      color: getColorByCategory(category),
-      onClick: () => selectAppHandler(app.match, category),
-    })),
-  }));
 
   const css = `:root {
     --ts-global-theme: var(--ts-color-${getColorByCategory(selectedCategory)});
@@ -139,12 +145,14 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   return (
     <>
       <style>{css}</style>
-      <Nav
-        onClick={(item: any) => selectCategoryHandler(item.key)}
-        active={selectedCategory}
-        items={navCategories}
-        variant="feed"
-      />
+      {nav && (
+        <Nav
+          onClick={(item: any) => selectCategoryHandler(item.key)}
+          active={selectedCategory}
+          items={nav}
+          variant="feed"
+        />
+      )}
     </>
   );
 };
