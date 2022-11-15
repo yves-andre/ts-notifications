@@ -20,10 +20,10 @@ import {
   setNotificationIsReadById,
 } from '../../../store/notifications-slice'
 
-import "./Table.scss";
-import { CATEGORY } from "../../../data/constants/category";
-import { STATUS } from "../../../data/constants/status";
-import { APP_CONFIG } from "../../../data/app-config";
+import './Table.scss'
+import { CATEGORY } from '../../../data/constants/category'
+import { STATUS } from '../../../data/constants/status'
+import { APP_CONFIG } from '../../../data/app-config'
 import CategoryColor from '../../../data/interfaces/category-color'
 
 interface Props {
@@ -118,13 +118,14 @@ export const Table: React.FC<Props> = ({ notifications }) => {
   }
 
   const getColorIsReadStatus = (title: string) => {
-    const applicationColor = getColorApplication(title);
-    if(applicationColor === APP_CONFIG.DEFAULT_APPLICATION_COLOR){
-      const filterValue = selectedCategory === CATEGORY.ACTION_FEED ? "workflow" : "socialflow";
-      return categoryColors.find(c => c.title === filterValue)?.color;
+    const applicationColor = getColorApplication(title)
+    if (applicationColor === APP_CONFIG.DEFAULT_APPLICATION_COLOR) {
+      const filterValue =
+        selectedCategory === CATEGORY.ACTION_FEED ? 'workflow' : 'socialflow'
+      return categoryColors.find((c) => c.title === filterValue)?.color
     }
-    return applicationColor;
-  };
+    return applicationColor
+  }
 
   const renderActionButtons = (notification: Notification) => {
     switch (notification.category) {
@@ -158,7 +159,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
         }
       case CATEGORY.INFORMATION_FEED:
         return (
-          <Tooltip title="Dismiss" placement="left">
+          <Tooltip title='Dismiss' placement='left'>
             <Button
               size='small'
               icon='close'
@@ -224,7 +225,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
                 <Status
                   variant='badge'
                   color={getColorIsReadStatus(notification.title)}
-                  style={{ marginLeft: -10, marginRight: 5 }}
+                  style={{ marginLeft: -2, marginRight: 6 }}
                 ></Status>
               )}
               {notification.image && (
