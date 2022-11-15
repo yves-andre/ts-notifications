@@ -20,10 +20,11 @@ import {
   setNotificationIsReadById,
 } from '../../../store/notifications-slice'
 
-import './Table.scss'
-import { CATEGORY } from '../../../data/constants/category'
-import { STATUS } from '../../../data/constants/status'
-import { APP_CONFIG } from '../../../data/app-config'
+import "./Table.scss";
+import { CATEGORY } from "../../../data/constants/category";
+import { STATUS } from "../../../data/constants/status";
+import { APP_CONFIG } from "../../../data/app-config";
+import CategoryColor from '../../../data/interfaces/category-color'
 
 interface Props {
   notifications: Notification[]
@@ -39,6 +40,9 @@ export const Table: React.FC<Props> = ({ notifications }) => {
   )
   const applications = useAppSelector(
     (state) => state.applications.applications
+  )
+  const categoryColors: CategoryColor[] = useAppSelector(
+    (state) => state.applications.categoryColors
   )
 
   const sortColumnHandler = (fieldName: string) => {
@@ -113,6 +117,15 @@ export const Table: React.FC<Props> = ({ notifications }) => {
     return applicationColor || APP_CONFIG.DEFAULT_APPLICATION_COLOR
   }
 
+  const getColorIsReadStatus = (title: string) => {
+    const applicationColor = getColorApplication(title);
+    if(applicationColor === APP_CONFIG.DEFAULT_APPLICATION_COLOR){
+      const filterValue = selectedCategory === CATEGORY.ACTION_FEED ? "workflow" : "socialflow";
+      return categoryColors.find(c => c.title === filterValue)?.color;
+    }
+    return applicationColor;
+  };
+
   const renderActionButtons = (notification: Notification) => {
     switch (notification.category) {
       case CATEGORY.ACTION_FEED:
@@ -145,7 +158,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
         }
       case CATEGORY.INFORMATION_FEED:
         return (
-          <Tooltip title='dismiss' placement='left'>
+          <Tooltip title="Dismiss" placement="left">
             <Button
               size='small'
               icon='close'
@@ -210,8 +223,8 @@ export const Table: React.FC<Props> = ({ notifications }) => {
               {!notification.isRead && (
                 <Status
                   variant='badge'
-                  color={getColorApplication(notification.title)}
-                  style={{ marginLeft: -2, marginRight: 6 }}
+                  color={getColorIsReadStatus(notification.title)}
+                  style={{ marginLeft: -10, marginRight: 5 }}
                 ></Status>
               )}
               {notification.image && (
@@ -234,7 +247,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
                 light
                 style={{ letterSpacing: '0.065em' }}
               >
-                <Highlight highlight={search}>{notification.title}</Highlight>
+                <Highlight highlight={search}>{notification._id}</Highlight>
               </Text>
             </th>
             <th>

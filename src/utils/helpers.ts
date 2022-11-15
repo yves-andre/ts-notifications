@@ -29,7 +29,9 @@ export const sortArrayByDateStringField = (
   ascending: boolean
 ) => {
   if (ascending) {
-    return array.sort(function(a,b){return new Date(a[fieldName]).getTime() - new Date(b[fieldName]).getTime()});
+    return array.sort((a, b) => Number(new Date(a[fieldName])) - Number(new Date(b[fieldName])));
+    // return array.sort(function(a,b){return new Date(a[fieldName]).getTime() - new Date(b[fieldName]).getTime()});
   }
-  return array.sort(function(a,b){return new Date(a[fieldName]).getTime() + new Date(b[fieldName]).getTime()});
+  return array.sort((a, b) => Number(new Date(b[fieldName])) - Number(new Date(a[fieldName])));
+  // return array.sort(function(a,b){return new Date(a[fieldName]).getTime() + new Date(b[fieldName]).getTime()});
 };
