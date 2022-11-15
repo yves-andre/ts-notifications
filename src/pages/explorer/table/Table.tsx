@@ -166,7 +166,6 @@ export const Table: React.FC<Props> = ({ notifications }) => {
         notification.category === CATEGORY.INFORMATION_FEED &&
         notification.status === STATUS.TO_BE_TREATED
     );
-    console.log(notificationsToDismiss);
     dispatch(dismissNotifications(notificationsToDismiss));
   };
 

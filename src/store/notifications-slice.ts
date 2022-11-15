@@ -75,6 +75,7 @@ export const dismissNotifications = (notifications: Notification[]) => {
           await _dismissNotification(notification._id);
         })
       );
+      dispatch(fetchNotifications());
     } catch (error) {
       console.log(error);
     }
