@@ -198,7 +198,7 @@
     "date": "2019-06-03T16:21:24.549Z",
     "status": 2,
     "isReminder": false,
-    "isRead": false,
+    "isRead": true,
     "isSeen": true,
     "isFavorite": false,
     "isManual": false,
