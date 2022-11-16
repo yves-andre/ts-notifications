@@ -51,7 +51,7 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
       })),
     }));
     setNav(navCategories);
-  }, []);
+  }, [notifications]);
 
   useEffect(() => {
     // for the information feed category, we want to set the
