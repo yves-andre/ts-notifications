@@ -248,7 +248,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
                 light
                 style={{ letterSpacing: '0.065em' }}
               >
-                <Highlight highlight={search}>{notification._id}</Highlight>
+                <Highlight highlight={search}>{notification.title}</Highlight>
               </Text>
             </th>
             <th>
