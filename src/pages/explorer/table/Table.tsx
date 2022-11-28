@@ -220,7 +220,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
             key={notification._id}
             onClick={() => openNotificationHandler(notification)}
           >
-            <th>
+            <th style={{ whiteSpace: 'nowrap' }}>
               {!notification.isRead && (
                 <Status
                   variant='badge'
