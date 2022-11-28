@@ -9,6 +9,8 @@ import CategoryColor from "../../data/interfaces/category-color";
 import { useAppSelector } from "../../hooks/use-app-selector";
 import { useAppDispatch } from "../../hooks/use-app-dispatch";
 import { fetchApplications, fetchCategoryColors } from "../../store/applications-slice";
+import { fetchNotificationCounts } from "../../store/notifications-slice";
+import { NotificationCount } from "../../data/interfaces/notification-count";
 
 export const Sidebar: React.FC = () => {
   const applications: Application[] = useAppSelector(
@@ -16,7 +18,11 @@ export const Sidebar: React.FC = () => {
   );
   const categoryColors: CategoryColor[] = useAppSelector(
     (state) => state.applications.categoryColors
+  );
+  const notificationCounts: NotificationCount[] = useAppSelector(
+    (state) => state.notifications.notificationCounts
   )
+
   const dispatch = useAppDispatch();
 
   // Load the applications and colors
@@ -24,13 +30,14 @@ export const Sidebar: React.FC = () => {
     (async () => {
       dispatch(fetchCategoryColors());
       dispatch(fetchApplications());
+      dispatch(fetchNotificationCounts());
     })();
   }, []);
 
   return (
     <div className="Sidebar">
-      {applications.length > 0 && categoryColors && (
-        <Menu applications={applications} categoryColors={categoryColors} />
+      {applications.length > 0 && notificationCounts.length > 0 && categoryColors && (
+        <Menu applications={applications} categoryColors={categoryColors} notificationCounts={notificationCounts}/>
       )}
       {!applications && <p>Loading ...</p>}
     </div>

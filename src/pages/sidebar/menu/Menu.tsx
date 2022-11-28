@@ -10,17 +10,23 @@ import { setNotificationsIsSeen } from "../../../store/notifications-slice";
 import { STATUS } from "../../../data/constants/status";
 
 import "./Menu.scss";
+import { NotificationCount } from "../../../data/interfaces/notification-count";
 
 interface Props {
   applications: Application[];
   categoryColors: CategoryColor[];
+  notificationCounts: NotificationCount[];
 }
 
 const ACTION_FEED = CATEGORY.ACTION_FEED;
 const INFORMATION_FEED = CATEGORY.INFORMATION_FEED;
 const CATEGORIES = [ACTION_FEED, INFORMATION_FEED];
 
-export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
+export const Menu: React.FC<Props> = ({
+  applications,
+  categoryColors,
+  notificationCounts,
+}) => {
   const notifications = useAppSelector(
     (state) => state.notifications.notificationItems
   );
@@ -77,18 +83,11 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   };
 
   const getNotificationCountByCategory = (category: number): number | null => {
-    let count = 0;
-    if (category === CATEGORY.ACTION_FEED) {
-      count = notifications
-        .filter((n) => n.category === category)
-        .filter((n) => n.status === STATUS.TO_BE_TREATED).length;
-    } else if (category === CATEGORY.INFORMATION_FEED) {
-      count = notifications
-        .filter((n) => n.category === category)
-        .filter((n) => n.isSeen === false)
-        .filter((n) => n.status === STATUS.TO_BE_TREATED).length;
-    }
-    return count;
+    return (
+      notificationCounts.find(
+        (notificationCount) => parseInt(notificationCount.category) === category
+      )?.count || 0
+    );
   };
 
   const selectCategoryHandler = (category: number): void => {

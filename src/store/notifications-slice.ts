@@ -1,8 +1,11 @@
+import { CATEGORY } from "./../data/constants/category";
+import { NotificationCount } from "./../data/interfaces/notification-count";
 import {
   getNotifications,
   setNotificationIsSeen,
   dismissNotification as _dismissNotification,
-  setNotificationIsRead as _setNotificationIsRead
+  setNotificationIsRead as _setNotificationIsRead,
+  getNotificationCountByCategory,
 } from "./../services/notification-service";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AppDispatch } from "./index";
@@ -10,6 +13,7 @@ import Notification from "../data/interfaces/notification";
 
 const initialState = {
   notificationItems: [] as Notification[],
+  notificationCounts: [] as NotificationCount[],
 };
 
 const notificationSlice = createSlice({
@@ -19,6 +23,9 @@ const notificationSlice = createSlice({
     load(state, action: PayloadAction<Notification[]>) {
       state.notificationItems = action.payload;
     },
+    getNotificationCount(state, action: PayloadAction<NotificationCount[]>) {
+      state.notificationCounts = action.payload;
+    },
   },
 });
 
@@ -27,6 +34,20 @@ export const fetchNotifications = () => {
     try {
       const notifications: Notification[] = await getNotifications();
       dispatch(notificationActions.load(notifications));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const fetchNotificationCounts = () => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const notificationCounts = await Promise.all([
+        getNotificationCountByCategory(CATEGORY.ACTION_FEED),
+        getNotificationCountByCategory(CATEGORY.INFORMATION_FEED),
+      ]);
+      dispatch(notificationActions.getNotificationCount(notificationCounts));
     } catch (error) {
       console.error(error);
     }
@@ -82,7 +103,6 @@ export const dismissNotifications = (notifications: Notification[]) => {
   };
 };
 
-
 export const setNotificationIsReadById = (id: string) => {
   return async (dispatch: AppDispatch) => {
     try {
@@ -91,8 +111,8 @@ export const setNotificationIsReadById = (id: string) => {
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 
 export const notificationActions = notificationSlice.actions;
 
