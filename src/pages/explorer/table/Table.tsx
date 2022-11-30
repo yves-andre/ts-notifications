@@ -10,7 +10,6 @@ import {
 } from '@trading/energies-ui'
 import Notification from '../../../data/interfaces/notification'
 import { formatDate } from '../../../utils/formatters'
-import Highlight from '../../../components/Highlight/Highlight'
 import { useAppSelector } from '../../../hooks/use-app-selector'
 import { useAppDispatch } from '../../../hooks/use-app-dispatch'
 import { filtersActions } from '../../../store/filters-slice'
@@ -19,12 +18,14 @@ import {
   dismissNotifications,
   setNotificationIsReadById,
 } from '../../../store/notifications-slice'
-
-import './Table.scss'
+import { useRef } from "react";
 import { CATEGORY } from '../../../data/constants/category'
 import { STATUS } from '../../../data/constants/status'
 import { APP_CONFIG } from '../../../data/app-config'
 import CategoryColor from '../../../data/interfaces/category-color'
+
+import './Table.scss'
+import classNames from 'classnames'
 
 interface Props {
   notifications: Notification[]
@@ -44,6 +45,8 @@ export const Table: React.FC<Props> = ({ notifications }) => {
   const categoryColors: CategoryColor[] = useAppSelector(
     (state) => state.applications.categoryColors
   )
+
+  const ref = useRef(null);
 
   const sortColumnHandler = (fieldName: string) => {
     // 1st click on column = order ascending,
@@ -182,8 +185,31 @@ export const Table: React.FC<Props> = ({ notifications }) => {
     dispatch(dismissNotifications(notificationsToDismiss))
   }
 
+  const getHighlightedText = (text: string | undefined, highlight: string) => {
+    if (!text) {
+      return <span>{text}</span>
+    }
+    // Split on highlight term and include term into parts, ignore case
+    const parts = text.split(new RegExp(`(${highlight})`, 'gi'))
+    return (
+      <span>
+        {' '}
+        {parts.map((part, i) => (
+          <span
+            key={i}
+            className={classNames({
+              Highlight: part.toLowerCase() === highlight.toLowerCase(),
+            })}
+          >
+            {part}
+          </span>
+        ))}{' '}
+      </span>
+    )
+  }
+
   return (
-    <TableUI variant='feed'>
+    <TableUI variant='feed' className='NotificationTable'>
       <thead>
         <tr>
           <TD field='title'>Source</TD>
@@ -215,9 +241,9 @@ export const Table: React.FC<Props> = ({ notifications }) => {
         </tr>
       </thead>
       <tbody>
-        {notifications.map((notification) => (
+        {notifications.map((notification,index) => (
           <tr
-            key={notification._id}
+            key={index}
             onClick={() => openNotificationHandler(notification)}
           >
             <th style={{ whiteSpace: 'nowrap' }}>
@@ -248,29 +274,42 @@ export const Table: React.FC<Props> = ({ notifications }) => {
                 light
                 style={{ letterSpacing: '0.065em' }}
               >
-                <Highlight highlight={search}>{notification.title}</Highlight>
+                <>
+                  {search && <span>{getHighlightedText(notification.title, search)}</span>}
+                  {!search && <span>{notification.title}</span>}
+                </>
               </Text>
             </th>
+
             <th>
-              <Highlight highlight={search}>{notification.subtitle}</Highlight>
+              {search && <span>{getHighlightedText(notification.subtitle, search)}</span>}
+              {!search && <span>{notification.subtitle}</span>}
             </th>
+
             <th>
               <Text light color='white'>
-                <Highlight highlight={search}>
-                  {notification.description}
-                </Highlight>
+                <>
+                  {search && <span>{getHighlightedText(notification.description, search)}</span>}
+                  {!search && <span>{notification.description}</span>}
+                </>
               </Text>
             </th>
+
             <th>
               <Text color='rgba(255,255,255,.4)' italic light size='small'>
-                <Highlight highlight={search}>{notification.details}</Highlight>
+                <>
+                  {search && <span>{getHighlightedText(notification.details, search)}</span>}
+                  {!search && <span>{notification.details}</span>}
+                </>
               </Text>
             </th>
+
             <th align='right'>
               <Text color='rgba(255,255,255,.4)' italic light size='small'>
-                <Highlight highlight={search}>
-                  {formatDate(notification.date)}
-                </Highlight>
+                <>
+                {search && <span>{getHighlightedText(formatDate(notification.date), search)}</span>}
+                {!search && <span>{formatDate(notification.date)}</span>}
+                </>
               </Text>
             </th>
             {selectedStatus !== STATUS.TREATED && (

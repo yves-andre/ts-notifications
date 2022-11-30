@@ -1,4 +1,3 @@
-import { STATUS } from './../data/constants/status';
 import { CATEGORY } from "./../data/constants/category";
 import { NotificationCount } from "./../data/interfaces/notification-count";
 import {
@@ -120,13 +119,15 @@ const getAllNotifications = async () => {
   if(process.env.NODE_ENV === "development") {
     return await getNotifications();
   }
-  const [n1,n2,n3,n4]: Notification[][] = await Promise.all([
+  const [n1,n2,n3,n4,n5,n6]: Notification[][] = await Promise.all([
     getNotifications(0,0),
     getNotifications(1,0),
     getNotifications(0,1),
     getNotifications(1,1),
+    getNotifications(2,0),
+    getNotifications(2,1),
   ]);
-  const result = [...n1,...n2,...n3,...n4];
+  const result = [...n1,...n2,...n3,...n4,...n5,...n6];
   return result;
 }
 
