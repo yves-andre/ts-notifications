@@ -1,3 +1,4 @@
+import { STATUS } from './../data/constants/status';
 import { CATEGORY } from "./../data/constants/category";
 import { NotificationCount } from "./../data/interfaces/notification-count";
 import {
@@ -32,7 +33,7 @@ const notificationSlice = createSlice({
 export const fetchNotifications = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      const notifications: Notification[] = await getNotifications();
+      const notifications: Notification[] = await getAllNotifications();
       dispatch(notificationActions.load(notifications));
     } catch (error) {
       console.error(error);
@@ -57,7 +58,7 @@ export const fetchNotificationCounts = () => {
 export const setNotificationsIsSeen = (category: number) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const allNotifications: Notification[] = await getNotifications();
+      const allNotifications: Notification[] = await getAllNotifications();
       // get the notifications by category, that have not been seen
       const filteredNotifications = allNotifications
         .filter((notification) => notification.category === category)
@@ -113,6 +114,21 @@ export const setNotificationIsReadById = (id: string) => {
     }
   };
 };
+
+
+const getAllNotifications = async () => {
+  if(process.env.NODE_ENV === "development") {
+    return await getNotifications();
+  }
+  const [n1,n2,n3,n4]: Notification[][] = await Promise.all([
+    getNotifications(0,0),
+    getNotifications(1,0),
+    getNotifications(0,1),
+    getNotifications(1,1),
+  ]);
+  const result = [...n1,...n2,...n3,...n4];
+  return result;
+}
 
 export const notificationActions = notificationSlice.actions;
 

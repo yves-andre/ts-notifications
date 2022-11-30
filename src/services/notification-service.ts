@@ -1,11 +1,15 @@
-import { NotificationCount } from './../data/interfaces/notification-count';
+import { NotificationCount } from "./../data/interfaces/notification-count";
 import { CATEGORY } from "./../data/constants/category";
 import { httpGet, httpPut } from "./_http-client";
-export const getNotifications = async () => {
-  const notifications = await httpGet(
-    process.env.REACT_APP_API_NOTIFICATIONS_URL as string,
-    { credentials: "include" }
-  );
+
+export const getNotifications = async (category?: number, status?: number) => {
+  let url = "";
+  if(process.env.NODE_ENV === "development") {
+    url = process.env.REACT_APP_API_NOTIFICATIONS_URL as string;
+  }else{
+    url = `${process.env.REACT_APP_API_NOTIFICATIONS_URL}${category}/${status}`;
+  }
+  const notifications = await httpGet(url, { credentials: "include" });
   return notifications;
 };
 
@@ -13,20 +17,16 @@ export const getNotificationCountByCategory = async (category: number) => {
   let notificationCount: NotificationCount;
   switch (category) {
     case CATEGORY.ACTION_FEED:
-      notificationCount = (
-        await httpGet(
-          process.env.REACT_APP_API_ACTION_FEED_NOTIFICATION_COUNT as string,
-          { credentials: "include" }
-        )
-      ) as NotificationCount;
+      notificationCount = (await httpGet(
+        process.env.REACT_APP_API_ACTION_FEED_NOTIFICATION_COUNT as string,
+        { credentials: "include" }
+      )) as NotificationCount;
       break;
     case CATEGORY.INFORMATION_FEED:
-      notificationCount = (
-        await httpGet(
-          process.env.REACT_APP_API_INFORMATION_FEED_NOTIFICATION_COUNT as string,
-          { credentials: "include" }
-        )
-      ) as NotificationCount;
+      notificationCount = (await httpGet(
+        process.env.REACT_APP_API_INFORMATION_FEED_NOTIFICATION_COUNT as string,
+        { credentials: "include" }
+      )) as NotificationCount;
       break;
     default:
       throw new Error("No category matches the given parameter");
