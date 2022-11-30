@@ -16,6 +16,7 @@ export const getApplications = async () => {
         return {
           match: application.Match,
           type: application.NotificationType,
+          sourceName: application.SourceName,
           title: application.Title,
           image: application.image,
           txtColor: application.TxtColor

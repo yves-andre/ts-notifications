@@ -5,6 +5,7 @@
         "Title": "Mission orders",
         "Match": "mission-orders,mission orders,missionorders",
         "NotificationType": "workflow",
+        "SourceName": "mission-orders",
         "image": "missionOrder",
         "TxtColor": "purpleLight"
       },
@@ -12,6 +13,7 @@
         "Title": "Absence notice",
         "Match": "absence notice,absence-notice,absencenotice",
         "NotificationType": "workflow",
+        "SourceName": "absence-notice",
         "image": "absenceNotice",
         "TxtColor": "purpleLight"
       },
@@ -19,6 +21,7 @@
         "Title": "Limits",
         "Match": "limits",
         "NotificationType": "workflow",
+        "SourceName": "limits",
         "image": "dashboard",
         "TxtColor": "purpleLight"
       },
@@ -26,6 +29,7 @@
         "Title": "Requisition forms",
         "Match": "requisition forms,requisition-forms,requisitionforms",
         "NotificationType": "workflow",
+        "SourceName": "requisition-forms",
         "image": "requisitionForms",
         "TxtColor": "waterGreen"
       },
@@ -33,6 +37,7 @@
         "Title": "Network account",
         "Match": "network account,network-account,networkaccount",
         "NotificationType": "workflow",
+        "SourceName": "network-account",
         "image": "networkAccount",
         "TxtColor": "purpleLight"
       },
@@ -40,13 +45,15 @@
         "Title": "Expenses",
         "Match": "expenses",
         "NotificationType": "workflow",
+        "SourceName": "expenses",
         "image": "expense",
         "TxtColor": "blue"
       },
       {
         "Title": "T&S News",
-        "Match": "t&s news,t&snews,t-&-s-news,t and s news,t-and-s-news,tandsnews,ts news,ts-news,tsnews",
+        "Match": "t&s news,t&snews,t-&-s-news,t and s news,t-and-s-news,tandsnews,ts news,ts-news,tsnews,news",
         "NotificationType": "socialflow",
+        "SourceName": "news",
         "image": "dashboard",
         "TxtColor": "red"
       },
@@ -54,6 +61,7 @@
         "Title": "Digital workplace",
         "Match": "digital workplace,digital-workplace,digitalworkplace",
         "NotificationType": "socialflow",
+        "SourceName": "digital-workplace",
         "image": "dwp",
         "TxtColor": "purpleLight"
       }

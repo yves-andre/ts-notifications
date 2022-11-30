@@ -18,7 +18,7 @@ export const Page: React.FC = () => {
       <Layout.Header>
         <Header
           active='notifications'
-          onChange={(key) => console.log(key)}
+          onChange={(key) => {}}
           logo={totalLogo}
           className='globalNav'
           items={[
@@ -26,7 +26,6 @@ export const Page: React.FC = () => {
               key: 'notifications',
               title: 'T&S Notifications',
               onClick: () => {
-                console.log('T&S Notifications')
               },
             },
             {

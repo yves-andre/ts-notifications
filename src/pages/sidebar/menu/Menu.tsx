@@ -36,7 +36,6 @@ export const Menu: React.FC<Props> = ({
 
   const dispatch = useAppDispatch();
 
-
   const [nav, setNav] = useState<any>();
 
   useEffect(() => {
@@ -48,7 +47,7 @@ export const Menu: React.FC<Props> = ({
       title: getTitleByCategory(category),
       badge: getNotificationCountByCategory(category) || undefined,
       items: getAppsByCategory(category).map((app, i) => ({
-        key: app.match,
+        key: app.sourceName,
         title: app.title,
         icon: app.image,
         badge: getNotificationCount(app) || undefined,
@@ -74,11 +73,12 @@ export const Menu: React.FC<Props> = ({
   const getNotificationCount = (application: Application) => {
     return notifications
       .filter((n) => n.status === 1)
-      .filter((n) =>
+      .filter(
+        (n) =>
         application.match
           .split(",")
           .map((a) => a.trim())
-          .includes(n.title.trim().toLowerCase())
+          .includes(n.sourceName.trim().toLowerCase())
       ).length;
   };
 
