@@ -6,6 +6,7 @@ import Search from "./search/Search";
 import {
   includesString,
   sortArrayByDateStringField,
+  sortArrayByStringAndDate,
   sortArrayByStringField,
 } from "../../utils/helpers";
 import { formatDate } from "../../utils/formatters";
@@ -65,6 +66,15 @@ export const Explorer: React.FC = () => {
       );
     }
 
+
+    if(filters.sortFilter.field === "title"){
+      filterNotifications = sortArrayByStringAndDate(
+        filterNotifications,
+        filters.sortFilter.field,
+        "date",
+        filters.sortFilter.asc
+      );
+    }
     return filterNotifications;
   };
 
