@@ -15,7 +15,6 @@ import { NotificationCount } from "../../../data/interfaces/notification-count";
 interface Props {
   applications: Application[];
   categoryColors: CategoryColor[];
-  notificationCounts: NotificationCount[];
 }
 
 const ACTION_FEED = CATEGORY.ACTION_FEED;
@@ -25,7 +24,6 @@ const CATEGORIES = [ACTION_FEED, INFORMATION_FEED];
 export const Menu: React.FC<Props> = ({
   applications,
   categoryColors,
-  notificationCounts,
 }) => {
   const notifications = useAppSelector(
     (state) => state.notifications.notificationItems
@@ -33,6 +31,9 @@ export const Menu: React.FC<Props> = ({
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
   );
+  const notificationCounts: NotificationCount[] = useAppSelector(
+    (state) => state.notifications.notificationCounts
+  )
 
   const dispatch = useAppDispatch();
 
@@ -56,7 +57,7 @@ export const Menu: React.FC<Props> = ({
       })),
     }));
     setNav(navCategories);
-  }, [notifications]);
+  }, [notifications, notificationCounts]);
 
   useEffect(() => {
     // for the information feed category, we want to set the

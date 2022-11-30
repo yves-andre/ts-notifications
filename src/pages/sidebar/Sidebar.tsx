@@ -19,9 +19,6 @@ export const Sidebar: React.FC = () => {
   const categoryColors: CategoryColor[] = useAppSelector(
     (state) => state.applications.categoryColors
   );
-  const notificationCounts: NotificationCount[] = useAppSelector(
-    (state) => state.notifications.notificationCounts
-  )
 
   const dispatch = useAppDispatch();
 
@@ -34,12 +31,16 @@ export const Sidebar: React.FC = () => {
     })();
   }, []);
 
+  const menuIsReady: () => boolean = () => {
+    return (applications.length > 0 && !!categoryColors);
+  }
+
   return (
     <div className="Sidebar">
-      {applications.length > 0 && notificationCounts.length > 0 && categoryColors && (
-        <Menu applications={applications} categoryColors={categoryColors} notificationCounts={notificationCounts}/>
+      {menuIsReady() && (
+        <Menu applications={applications} categoryColors={categoryColors} />
       )}
-      {!applications && <p>Loading ...</p>}
+      {!menuIsReady() && <p>Loading menu ... </p>}
     </div>
   );
 };
