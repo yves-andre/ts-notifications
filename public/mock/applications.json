@@ -64,6 +64,14 @@
         "SourceName": "digital-workplace",
         "image": "dwp",
         "TxtColor": "purpleLight"
+      },
+      {
+        "Title": "Expenses",
+        "Match": "expenses",
+        "NotificationType": "socialflow",
+        "SourceName": "expenses",
+        "image": "expense",
+        "TxtColor": "blue"
       }
     ]
   }
