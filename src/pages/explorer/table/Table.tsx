@@ -18,7 +18,6 @@ import {
   dismissNotifications,
   setNotificationIsReadById,
 } from "../../../store/notifications-slice";
-import { useRef } from "react";
 import { CATEGORY } from "../../../data/constants/category";
 import { STATUS } from "../../../data/constants/status";
 import { APP_CONFIG } from "../../../data/app-config";
@@ -48,16 +47,11 @@ export const Table: React.FC<Props> = ({ notifications }) => {
     (state) => state.applications.categoryColors
   );
 
-  const ref = useRef(null);
-
   const sortColumnHandler = (fieldName: string) => {
     // 1st click on column = order ascending,
-    // 2nd click = order descending,
-    // 3rd click = remove order
+    // 2nd click = order descending
     if (sortFilter.field === fieldName) {
-      sortFilter.asc
-        ? dispatch(filtersActions.setSortFilter({ ...sortFilter, asc: false }))
-        : dispatch(filtersActions.setSortFilter({ field: "", asc: true }));
+      dispatch(filtersActions.setSortFilter({ ...sortFilter, asc: !sortFilter.asc }));
     } else {
       dispatch(filtersActions.setSortFilter({ field: fieldName, asc: true }));
     }
