@@ -57,8 +57,34 @@ export const Table: React.FC<Props> = ({ notifications }) => {
     }
   };
 
+  const getNotificationDefaultAction = (notification: Notification) => {
+    let defaultAction = notification.actions.find((action) => action.isDefault);
+    if (!defaultAction) {
+      defaultAction = notification.actions[0];
+    }
+    return () => {
+      if (defaultAction && defaultAction.url) {
+        const actionUrlSplit = defaultAction.url.split('|');
+        let actionUrl = actionUrlSplit[actionUrlSplit.length - 1];
+        let target = '_blank';
+        if (actionUrlSplit.length > 1) {
+          target = actionUrlSplit[0];
+        }
+        if (
+            // if the current url is in the notification url, we don't open in a new tab
+            actionUrl.toLowerCase().indexOf(window.location.href.toLowerCase()) > -1
+        ) {
+          target = '_self';
+        }
+        window.open(actionUrl, target, "noopener,noreferrer");
+      }
+    }
+  };
+
   const openNotificationHandler = (notification: Notification) => {
-    window.open(notification.sourceUrl, "_blank", "noopener,noreferrer");
+    const action = getNotificationDefaultAction(notification);
+    action && action.call(this)
+    //window.open(notification.sourceUrl, "_blank", "noopener,noreferrer");
     !notification.isRead &&
       dispatch(setNotificationIsReadById(notification._id));
   };
