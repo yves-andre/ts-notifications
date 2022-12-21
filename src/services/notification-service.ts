@@ -4,12 +4,16 @@ import { httpGet, httpPut } from "./_http-client";
 
 export const getNotifications = async (category?: number, status?: number) => {
   let url = "";
-  if(process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === "development") {
     url = process.env.REACT_APP_API_NOTIFICATIONS_URL as string;
-  }else{
+  } else {
     url = `${process.env.REACT_APP_API_NOTIFICATIONS_URL}${category}/${status}`;
   }
-  const notifications = await httpGet(url, { credentials: "include" });
+  const notifications = await httpGet(
+    url,
+    {},
+    true
+  );
   return notifications;
 };
 
@@ -19,13 +23,15 @@ export const getNotificationCountByCategory = async (category: number) => {
     case CATEGORY.ACTION_FEED:
       notificationCount = (await httpGet(
         process.env.REACT_APP_API_ACTION_FEED_NOTIFICATION_COUNT as string,
-        { credentials: "include" }
+        {},
+        true
       )) as NotificationCount;
       break;
     case CATEGORY.INFORMATION_FEED:
       notificationCount = (await httpGet(
         process.env.REACT_APP_API_INFORMATION_FEED_NOTIFICATION_COUNT as string,
-        { credentials: "include" }
+        {},
+        true
       )) as NotificationCount;
       break;
     default:
@@ -41,7 +47,8 @@ export const setNotificationIsSeen = async (id: string, isSeen: boolean) => {
       id
     ) as string,
     { isSeen: isSeen },
-    { credentials: "include" }
+    {},
+    true
   );
   return result;
 };
@@ -53,7 +60,8 @@ export const setNotificationIsRead = async (id: string, isRead: boolean) => {
       id
     ) as string,
     { isRead: isRead },
-    { credentials: "include" }
+    {},
+    true
   );
   return result;
 };
@@ -65,7 +73,8 @@ export const dismissNotification = async (id: string) => {
       id
     ) as string,
     { status: 2 },
-    { credentials: "include" }
+    {},
+    true
   );
   return result;
 };
