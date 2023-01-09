@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Page from "./components/page/Page";
 import Explorer from "./pages/explorer/Explorer";
-import { fetchNotifications } from "./store/notifications-slice";
+import { fetchNotifications, fetchNotificationCounts } from "./store/notifications-slice";
 import { useAppDispatch } from "./hooks/use-app-dispatch";
 import { filtersActions } from "./store/filters-slice";
 import { FILTER } from "./data/constants/filter";
@@ -19,6 +19,7 @@ export const App: React.FC = () => {
   // fetch notifications on load and on WS message
   useEffect(() => {
     dispatch(fetchNotifications());
+    dispatch(fetchNotificationCounts());
   }, [lastMessage]);
 
   // setting default filters to store from search params
