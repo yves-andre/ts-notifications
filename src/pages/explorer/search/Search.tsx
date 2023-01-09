@@ -6,16 +6,17 @@ import { filtersActions } from '../../../store/filters-slice'
 import { Input } from '@trading/energies-ui'
 
 import './Search.scss'
+import { useDebounce } from '../../../hooks/use-debounce'
 
 export const Search: React.FC = () => {
   const dispatch = useAppDispatch()
 
-  const search = useAppSelector((state) => state.filters.searchFilter)
+  const search = useAppSelector((state) => state.filters.searchFilter);
 
   const searchChangeHandler = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    dispatch(filtersActions.setSearchFilter(event.target.value))
+    dispatch(filtersActions.setSearchFilter(event.target.value));
   }
 
   return (

@@ -1,8 +1,11 @@
+import { CATEGORY } from "./../data/constants/category";
+import { NotificationCount } from "./../data/interfaces/notification-count";
 import {
   getNotifications,
   setNotificationIsSeen,
   dismissNotification as _dismissNotification,
-  setNotificationIsRead as _setNotificationIsRead
+  setNotificationIsRead as _setNotificationIsRead,
+  getNotificationCountByCategory,
 } from "./../services/notification-service";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AppDispatch } from "./index";
@@ -10,6 +13,7 @@ import Notification from "../data/interfaces/notification";
 
 const initialState = {
   notificationItems: [] as Notification[],
+  notificationCounts: [] as NotificationCount[],
 };
 
 const notificationSlice = createSlice({
@@ -19,14 +23,31 @@ const notificationSlice = createSlice({
     load(state, action: PayloadAction<Notification[]>) {
       state.notificationItems = action.payload;
     },
+    getNotificationCount(state, action: PayloadAction<NotificationCount[]>) {
+      state.notificationCounts = action.payload;
+    },
   },
 });
 
 export const fetchNotifications = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      const notifications: Notification[] = await getNotifications();
+      const notifications: Notification[] = await getAllNotifications();
       dispatch(notificationActions.load(notifications));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const fetchNotificationCounts = () => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const notificationCounts = await Promise.all([
+        getNotificationCountByCategory(CATEGORY.ACTION_FEED),
+        getNotificationCountByCategory(CATEGORY.INFORMATION_FEED),
+      ]);
+      dispatch(notificationActions.getNotificationCount(notificationCounts));
     } catch (error) {
       console.error(error);
     }
@@ -36,7 +57,7 @@ export const fetchNotifications = () => {
 export const setNotificationsIsSeen = (category: number) => {
   return async (dispatch: AppDispatch) => {
     try {
-      const allNotifications: Notification[] = await getNotifications();
+      const allNotifications: Notification[] = await getAllNotifications();
       // get the notifications by category, that have not been seen
       const filteredNotifications = allNotifications
         .filter((notification) => notification.category === category)
@@ -82,7 +103,6 @@ export const dismissNotifications = (notifications: Notification[]) => {
   };
 };
 
-
 export const setNotificationIsReadById = (id: string) => {
   return async (dispatch: AppDispatch) => {
     try {
@@ -91,7 +111,24 @@ export const setNotificationIsReadById = (id: string) => {
     } catch (error) {
       console.log(error);
     }
+  };
+};
+
+
+const getAllNotifications = async () => {
+  if(process.env.NODE_ENV === "development") {
+    return await getNotifications();
   }
+  const [n1,n2,n3,n4,n5,n6]: Notification[][] = await Promise.all([
+    getNotifications(0,0),
+    getNotifications(1,0),
+    getNotifications(0,1),
+    getNotifications(1,1),
+    getNotifications(2,0),
+    getNotifications(2,1),
+  ]);
+  const result = [...n1,...n2,...n3,...n4,...n5,...n6];
+  return result;
 }
 
 export const notificationActions = notificationSlice.actions;

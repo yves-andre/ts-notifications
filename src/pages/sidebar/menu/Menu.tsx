@@ -7,9 +7,9 @@ import { filtersActions } from "../../../store/filters-slice";
 import { Nav } from "@trading/energies-ui";
 import CategoryColor from "../../../data/interfaces/category-color";
 import { setNotificationsIsSeen } from "../../../store/notifications-slice";
-import { STATUS } from "../../../data/constants/status";
 
 import "./Menu.scss";
+import { NotificationCount } from "../../../data/interfaces/notification-count";
 
 interface Props {
   applications: Application[];
@@ -27,9 +27,14 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
   );
+  const selectedApplication = useAppSelector(
+    (state) => state.filters.selectedApplication
+  );
+  const notificationCounts: NotificationCount[] = useAppSelector(
+    (state) => state.notifications.notificationCounts
+  );
 
   const dispatch = useAppDispatch();
-
 
   const [nav, setNav] = useState<any>();
 
@@ -42,16 +47,16 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
       title: getTitleByCategory(category),
       badge: getNotificationCountByCategory(category) || undefined,
       items: getAppsByCategory(category).map((app, i) => ({
-        key: app.match,
+        key: `${app.sourceName}_${app.type}`,
         title: app.title,
         icon: app.image,
-        badge: getNotificationCount(app) || undefined,
+        badge: getNotificationCount(app, category) || undefined,
         color: getColorByCategory(category),
         onClick: () => selectAppHandler(app.match, category),
       })),
     }));
     setNav(navCategories);
-  }, [notifications]);
+  }, [notifications, notificationCounts]);
 
   useEffect(() => {
     // for the information feed category, we want to set the
@@ -65,30 +70,25 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
     return applications?.filter((app) => app.type === filterValue);
   };
 
-  const getNotificationCount = (application: Application) => {
+  const getNotificationCount = (application: Application, category: number) => {
     return notifications
       .filter((n) => n.status === 1)
-      .filter((n) =>
-        application.match
-          .split(",")
-          .map((a) => a.trim())
-          .includes(n.title.trim().toLowerCase())
+      .filter(
+        (n) =>
+          application.match
+            .split(",")
+            .map((a) => a.trim())
+            .includes(n.sourceName.trim().toLowerCase()) &&
+          n.category === category
       ).length;
   };
 
   const getNotificationCountByCategory = (category: number): number | null => {
-    let count = 0;
-    if (category === CATEGORY.ACTION_FEED) {
-      count = notifications
-        .filter((n) => n.category === category)
-        .filter((n) => n.status === STATUS.TO_BE_TREATED).length;
-    } else if (category === CATEGORY.INFORMATION_FEED) {
-      count = notifications
-        .filter((n) => n.category === category)
-        .filter((n) => n.isSeen === false)
-        .filter((n) => n.status === STATUS.TO_BE_TREATED).length;
-    }
-    return count;
+    return (
+      notificationCounts.find(
+        (notificationCount) => parseInt(notificationCount.category) === category
+      )?.count || 0
+    );
   };
 
   const selectCategoryHandler = (category: number): void => {
@@ -142,13 +142,25 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
     )}-dark);
   }`;
 
+  const getActiveNavItem = () => {
+    if (selectedApplication) {
+      const filterValue =
+        selectedCategory === ACTION_FEED ? "workflow" : "socialflow";
+      return `${
+        applications.find((app) => app.match === selectedApplication)
+          ?.sourceName
+      }_${applications.find((app) => app.type === filterValue)?.type}`;
+    }
+    return selectedCategory;
+  };
+
   return (
     <>
       <style>{css}</style>
       {nav && (
         <Nav
           onClick={(item: any) => selectCategoryHandler(item.key)}
-          active={selectedCategory}
+          active={getActiveNavItem()}
           items={nav}
           variant="feed"
         />
