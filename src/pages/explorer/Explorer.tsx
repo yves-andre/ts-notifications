@@ -14,6 +14,7 @@ import { formatDate } from "../../utils/formatters";
 import { Placeholder } from "@trading/energies-ui";
 
 import "./Explorer.scss";
+import { getUserLogin } from "../../services/auth-service";
 
 export const Explorer: React.FC = () => {
   const notifications: Notification[] = useAppSelector(
@@ -25,10 +26,15 @@ export const Explorer: React.FC = () => {
   );
 
   useEffect(() => {
-    setFilterNotifications(filterAndSortNotifications(notifications));
+    const fetchUserLogin = async () => {
+      return await getUserLogin();
+    }
+    fetchUserLogin().then((login) => {
+      setFilterNotifications(filterAndSortNotifications(notifications, login));
+    })
   }, [notifications, filters]);
 
-  const filterAndSortNotifications = (notifications: Notification[]) => {
+  const filterAndSortNotifications = (notifications: Notification[], userLogin: string) => {
     let filterNotifications = notifications
       .filter(
         (n) =>
@@ -51,6 +57,12 @@ export const Explorer: React.FC = () => {
             .includes(n.sourceName.trim().toLocaleLowerCase())
       );
 
+    //hide delegations if showDelegations is false
+    if(filters.showDelegations.value === false){
+      filterNotifications = filterNotifications.filter(
+        (n) => !(n.owner.login !== userLogin && n.delegates.includes(userLogin))
+      );
+    }
     // sort the notifications to be displayed in the Table
     if (filters.sortFilter.field === "date") {
       filterNotifications = sortArrayByDateStringField(

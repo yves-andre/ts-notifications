@@ -20,6 +20,7 @@ export default interface Notification {
   image: string;
   reference: string;
   sourceName: string;
+  delegates: string[];
 }
 
 interface Owner {
