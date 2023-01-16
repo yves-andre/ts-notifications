@@ -24,7 +24,7 @@ export const Page: React.FC = () => {
           items={[
             {
               key: 'notifications',
-              title: 'T&S Notifications',
+              title: 'Trading Notifications',
               onClick: () => {
               },
             },
