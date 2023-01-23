@@ -7,6 +7,7 @@ export default interface Notification {
   status: number;
   isRead: boolean;
   isSeen?: boolean;
+  isImportant?: boolean;
   isFavorite: boolean;
   _id: string;
   title: string;

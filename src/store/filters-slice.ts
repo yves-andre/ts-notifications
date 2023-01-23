@@ -9,8 +9,8 @@ const initialState = {
   showDelegations: {value: true, hasBeenSet: false},
   searchFilter: "",
   sortFilter: {
-    field: "",
-    asc: true
+    field: "date",
+    asc: false
   },
 };
 
