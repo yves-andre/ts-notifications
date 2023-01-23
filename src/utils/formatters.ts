@@ -23,5 +23,5 @@ export const formatDate = (dateString: string) => {
 
   const options:any = { year: 'numeric', month: 'short', day: 'numeric'};
 
-  return `${date.toLocaleDateString('ch-FR', options)} ${time}`;
+  return `${date.toLocaleDateString('en-GB', options)} ${time}`;
 };

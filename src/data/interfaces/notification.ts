@@ -7,6 +7,7 @@ export default interface Notification {
   status: number;
   isRead: boolean;
   isSeen?: boolean;
+  isImportant?: boolean;
   isFavorite: boolean;
   _id: string;
   title: string;
@@ -20,6 +21,7 @@ export default interface Notification {
   image: string;
   reference: string;
   sourceName: string;
+  delegates: string[];
 }
 
 interface Owner {

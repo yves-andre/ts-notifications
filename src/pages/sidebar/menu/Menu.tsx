@@ -7,7 +7,6 @@ import { filtersActions } from "../../../store/filters-slice";
 import { Nav } from "@trading/energies-ui";
 import CategoryColor from "../../../data/interfaces/category-color";
 import { setNotificationsIsSeen } from "../../../store/notifications-slice";
-import { STATUS } from "../../../data/constants/status";
 
 import "./Menu.scss";
 import { NotificationCount } from "../../../data/interfaces/notification-count";
@@ -21,19 +20,19 @@ const ACTION_FEED = CATEGORY.ACTION_FEED;
 const INFORMATION_FEED = CATEGORY.INFORMATION_FEED;
 const CATEGORIES = [ACTION_FEED, INFORMATION_FEED];
 
-export const Menu: React.FC<Props> = ({
-  applications,
-  categoryColors,
-}) => {
+export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   const notifications = useAppSelector(
     (state) => state.notifications.notificationItems
   );
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
   );
+  const selectedApplication = useAppSelector(
+    (state) => state.filters.selectedApplication
+  );
   const notificationCounts: NotificationCount[] = useAppSelector(
     (state) => state.notifications.notificationCounts
-  )
+  );
 
   const dispatch = useAppDispatch();
 
@@ -48,10 +47,10 @@ export const Menu: React.FC<Props> = ({
       title: getTitleByCategory(category),
       badge: getNotificationCountByCategory(category) || undefined,
       items: getAppsByCategory(category).map((app, i) => ({
-        key: app.sourceName,
+        key: `${app.sourceName}_${app.type}`,
         title: app.title,
         icon: app.image,
-        badge: getNotificationCount(app) || undefined,
+        badge: getNotificationCount(app, category) || undefined,
         color: getColorByCategory(category),
         onClick: () => selectAppHandler(app.match, category),
       })),
@@ -71,15 +70,16 @@ export const Menu: React.FC<Props> = ({
     return applications?.filter((app) => app.type === filterValue);
   };
 
-  const getNotificationCount = (application: Application) => {
+  const getNotificationCount = (application: Application, category: number) => {
     return notifications
       .filter((n) => n.status === 1)
       .filter(
         (n) =>
-        application.match
-          .split(",")
-          .map((a) => a.trim())
-          .includes(n.sourceName.trim().toLowerCase())
+          application.match
+            .split(",")
+            .map((a) => a.trim())
+            .includes(n.sourceName.trim().toLowerCase()) &&
+          n.category === category
       ).length;
   };
 
@@ -142,13 +142,25 @@ export const Menu: React.FC<Props> = ({
     )}-dark);
   }`;
 
+  const getActiveNavItem = () => {
+    if (selectedApplication) {
+      const filterValue =
+        selectedCategory === ACTION_FEED ? "workflow" : "socialflow";
+      return `${
+        applications.find((app) => app.match === selectedApplication)
+          ?.sourceName
+      }_${applications.find((app) => app.type === filterValue)?.type}`;
+    }
+    return selectedCategory;
+  };
+
   return (
     <>
       <style>{css}</style>
       {nav && (
         <Nav
           onClick={(item: any) => selectCategoryHandler(item.key)}
-          active={selectedCategory}
+          active={getActiveNavItem()}
           items={nav}
           variant="feed"
         />

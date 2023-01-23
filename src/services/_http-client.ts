@@ -92,8 +92,9 @@ export const httpPutAuth = async (
 
 
 const getVersion: any = async () => {
-  const versionResponse = await fetch("http://www.dpw-notifier.com/version");
-  const version = await versionResponse.text();
+  // const versionResponse = await fetch("http://www.dpw-notifier.com/version");
+  // const version = await versionResponse.text();
+  const version = "old";
   if (version === "old") {
     return {
       httpGet: async (route: string, config: object = {}) => {

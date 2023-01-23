@@ -5,7 +5,7 @@ import useWebSocket from "react-use-websocket";
 export const useAppWebSocket = () => {
   const getSocketUrl = useCallback(() => {
     return new Promise((resolve) => {
-      const login = getUserLogin().then((response) => {
+      getUserLogin().then((response) => {
         resolve((process.env.REACT_APP_WS_URL as string).replace("{LOGIN}", response));
       });
     });
