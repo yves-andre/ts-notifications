@@ -1,5 +1,6 @@
 const getNewToken = async () => {
-  const url = process.env.REACT_APP_API_DWP_AUTH as string;
+  const root = process.env.REACT_APP_API_DWP_ROOT_2 as string;
+  const url = root + process.env.REACT_APP_API_DWP_AUTH as string;
   const authResponse = await fetch(url, {
     credentials: "include"
   });
@@ -13,6 +14,11 @@ export const httpGetAuth = async (
   authRequired: boolean = false
 ) => {
   if (!route) throw new Error("a route must be provided");
+  // a DWP route must be constructed with the Root api url
+  if(!route.includes("http")){
+    route = process.env.REACT_APP_API_DWP_ROOT_2 + route;
+  }
+
   let GETConfig = {
     headers: {
       Accept: "application/json",
@@ -55,6 +61,10 @@ export const httpPutAuth = async (
   authRequired: boolean = false
 ) => {
   if (!route) throw new Error("a route must be provided");
+  // a DWP route must be constructed with the Root api url
+  if(!route.includes("http")){
+    route = process.env.REACT_APP_API_DWP_ROOT_2 + route;
+  }
   const PUTConfig = {
     method: "PUT",
     headers: {
@@ -92,19 +102,27 @@ export const httpPutAuth = async (
 
 
 const getVersion: any = async () => {
-  // const versionResponse = await fetch("http://www.dpw-notifier.com/version");
-  // const version = await versionResponse.text();
-  const version = "old";
-  if (version === "old") {
+  const url = process.env.REACT_APP_API_DWP_VERSION as string;
+  const versionResponse = await fetch(url);
+  const version = await versionResponse.text();
+  if (version === "1.0") {
     return {
       httpGet: async (route: string, config: object = {}) => {
         if (!route) throw new Error("a route must be provided");
+        // a DWP route must be constructed with the Root api url
+        if(!route.includes("http")){
+          route = process.env.REACT_APP_API_DWP_ROOT_1 + route;
+        }
         const response = await fetch(route, config);
         if (!response.ok) throw new Error(`could not fetch data for url ${route}`);
         return await response.json();
       },
       httpPut: async (route: string, payload: object = {}, config: object = {}) => {
         if (!route) throw new Error("a route must be provided");
+        // a DWP route must be constructed with the Root api url
+        if(!route.includes("http")){
+          route = process.env.REACT_APP_API_DWP_ROOT_1 + route;
+        }
         const PUTConfig = {
           ...config,
           method: "PUT",
@@ -119,8 +137,10 @@ const getVersion: any = async () => {
         return await response.json()
       }
     };
-  } else {
+  } else if (version === "2.0") {
     return { httpGet: httpGetAuth, httpPut: httpPutAuth };
+  }else {
+    throw new Error("Uknown dwp version");
   }
 }
 
