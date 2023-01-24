@@ -5,9 +5,9 @@ import { httpGet, httpPut } from "./_http-client";
 export const getNotifications = async (category?: number, status?: number) => {
   let url = "";
   if (process.env.NODE_ENV === "development") {
-    url = process.env.REACT_APP_API_NOTIFICATIONS_URL as string;
+    url = "/"
   } else {
-    url = `${process.env.REACT_APP_API_NOTIFICATIONS_URL}${category}/${status}`;
+    url = `/${category}/${status}`;
   }
   const notifications = await httpGet(
     url,
