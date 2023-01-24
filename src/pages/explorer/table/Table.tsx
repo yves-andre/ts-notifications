@@ -25,12 +25,13 @@ import CategoryColor from "../../../data/interfaces/category-color";
 
 import "./Table.scss";
 import classNames from "classnames";
+import NotificationGroup from "../../../data/interfaces/notification-group";
 
 interface Props {
-  notifications: Notification[];
+  notificationGroups: NotificationGroup[];
 }
 
-export const Table: React.FC<Props> = ({ notifications }) => {
+export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const search = useAppSelector((state) => state.filters.searchFilter);
   const sortFilter = useAppSelector((state) => state.filters.sortFilter);
   const dispatch = useAppDispatch();
@@ -71,8 +72,8 @@ export const Table: React.FC<Props> = ({ notifications }) => {
           target = actionUrlSplit[0];
         }
         if (
-            // if the current url is in the notification url, we don't open in a new tab
-            actionUrl.toLowerCase().indexOf(window.location.href.toLowerCase()) > -1
+          // if the current url is in the notification url, we don't open in a new tab
+          actionUrl.toLowerCase().indexOf(window.location.href.toLowerCase()) > -1
         ) {
           target = '_self';
         }
@@ -116,12 +117,19 @@ export const Table: React.FC<Props> = ({ notifications }) => {
   const TD: React.FC<{
     field: string;
     children: string;
-    align?: "center" | "right" | "justify" | "char" | undefined;
-  }> = ({ field, children, align }) => {
+    align?: "center" | "right" | "justify" | "char";
+    start?: boolean;
+    end?: boolean;
+  }> = ({ field, children, align, start, end }) => {
+    const borderRadius = {
+      borderBottomLeftRadius: start ? "0px" : undefined,
+      borderBottomRightRadius: end ? "0px" : undefined
+    };
+  
     return (
       <td
         onClick={() => sortColumnHandler(field)}
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", ...borderRadius }}
         align={align}
       >
         <Text variant="current">{children}</Text>&nbsp;
@@ -200,12 +208,14 @@ export const Table: React.FC<Props> = ({ notifications }) => {
   };
 
   const dismissAllHandler = () => {
-    const notificationsToDismiss = notifications.filter(
-      (notification) =>
-        notification.category === CATEGORY.INFORMATION_FEED &&
-        notification.status === STATUS.TO_BE_TREATED
-    );
-    dispatch(dismissNotifications(notificationsToDismiss));
+    notificationGroups.map(notificationGroup => {
+      const notificationsToDismiss = notificationGroup.notifications.filter(
+        (notification) =>
+          notification.category === CATEGORY.INFORMATION_FEED &&
+          notification.status === STATUS.TO_BE_TREATED
+      );
+      dispatch(dismissNotifications(notificationsToDismiss));
+    });
   };
 
   const getHighlightedText = (text: string | undefined, highlight: string) => {
@@ -235,7 +245,7 @@ export const Table: React.FC<Props> = ({ notifications }) => {
     <TableUI variant="feed" className="NotificationTable">
       <thead>
         <tr>
-          <TD field="title">Source</TD>
+          <TD field="title" start>Source</TD>
           <TD field="subtitle">Subject</TD>
           <TD field="description">Description</TD>
           <TD field="details">Details</TD>
@@ -244,9 +254,9 @@ export const Table: React.FC<Props> = ({ notifications }) => {
           </TD>
           {selectedStatus !== STATUS.TREATED &&
             selectedCategory === CATEGORY.ACTION_FEED && (
-              <td align="right" width="100">
+              <TD field="actions" align="right" end>
                 Actions
-              </td>
+              </TD>
             )}
           {selectedStatus !== STATUS.TREATED &&
             selectedCategory === CATEGORY.INFORMATION_FEED && (
@@ -264,105 +274,118 @@ export const Table: React.FC<Props> = ({ notifications }) => {
         </tr>
       </thead>
       <tbody>
-        {notifications.map((notification, index) => (
-          <tr key={index} onClick={() => openNotificationHandler(notification)}>
-            <th style={{ whiteSpace: "nowrap" }}>
-              {!notification.isRead && (
-                <Status
-                  variant="badge"
-                  color={getColorIsReadStatus(notification.sourceName)}
-                  style={{ marginLeft: -2, marginRight: 6 }}
-                ></Status>
-              )}
-              {notification.image && (
-                <Picture
-                  person
-                  round
-                  color={getColorApplication(notification.sourceName)}
-                  size="small"
-                  icon={notification.image}
-                  style={{
-                    marginRight: 10,
-                    marginLeft: notification.isRead ? 10 : 0,
-                  }}
-                />
-              )}
-              <Text
-                color="rgba(255,255,255,.5)"
-                size="small"
-                uppercase
-                light
-                style={{ letterSpacing: "0.065em" }}
-              >
-                <>
-                  {search && (
-                    <span>
-                      {getHighlightedText(notification.title, search)}
-                    </span>
+        {notificationGroups.map((notificationGroup: NotificationGroup) => (
+          <>
+            <tr className="group-row">
+              <th>{notificationGroup.name}</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            {notificationGroup.notifications.map((notification, index) => (
+              <tr key={index} onClick={() => openNotificationHandler(notification)}>
+                <th style={{ whiteSpace: "nowrap" }}>
+                  {!notification.isRead && (
+                    <Status
+                      variant="badge"
+                      color={getColorIsReadStatus(notification.sourceName)}
+                      style={{ marginLeft: -2, marginRight: 6 }}
+                    ></Status>
                   )}
-                  {!search && <span>{notification.title}</span>}
-                </>
-              </Text>
-            </th>
-
-            <th>
-              {search && (
-                <span>{getHighlightedText(notification.subtitle, search)}</span>
-              )}
-              {!search && <span>{notification.subtitle}</span>}
-            </th>
-
-            <th>
-              <Text light color="white">
-                <>
-                  {search && (
-                    <span>
-                      {getHighlightedText(notification.description, search)}
-                    </span>
+                  {notification.image && (
+                    <Picture
+                      person
+                      round
+                      color={getColorApplication(notification.sourceName)}
+                      size="small"
+                      icon={notification.image}
+                      style={{
+                        marginRight: 10,
+                        marginLeft: notification.isRead ? 10 : 0,
+                      }}
+                    />
                   )}
-                  {!search && <span>{notification.description}</span>}
-                </>
-              </Text>
-            </th>
-
-            <th>
-              <Text color="rgba(255,255,255,.4)" italic light size="small">
-                <>
-                  {search && (
-                    <span>
-                      {getHighlightedText(notification.details, search)}
-                    </span>
-                  )}
-                  {!search && <span>{notification.details}</span>}
-                </>
-              </Text>
-            </th>
-
-            <th align="right">
-              <Text color="rgba(255,255,255,.4)" italic light size="small">
-                <>
-                  {search && (
-                    <span>
-                      {getHighlightedText(
-                        formatDate(notification.date),
-                        search
+                  <Text
+                    color="rgba(255,255,255,.5)"
+                    size="small"
+                    uppercase
+                    light
+                    style={{ letterSpacing: "0.065em" }}
+                  >
+                    <>
+                      {search && (
+                        <span>
+                          {getHighlightedText(notification.title, search)}
+                        </span>
                       )}
-                    </span>
+                      {!search && <span>{notification.title}</span>}
+                    </>
+                  </Text>
+                </th>
+
+                <th>
+                  {search && (
+                    <span>{getHighlightedText(notification.subtitle, search)}</span>
                   )}
-                  {!search && <span>{formatDate(notification.date)}</span>}
-                </>
-              </Text>
-            </th>
-            {selectedStatus !== STATUS.TREATED && (
-              <th
-                align="right"
-                style={{ paddingRight: 5 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {renderActionButtons(notification)}
-              </th>
-            )}
-          </tr>
+                  {!search && <span>{notification.subtitle}</span>}
+                </th>
+
+                <th>
+                  <Text light color="white">
+                    <>
+                      {search && (
+                        <span>
+                          {getHighlightedText(notification.description, search)}
+                        </span>
+                      )}
+                      {!search && <span>{notification.description}</span>}
+                    </>
+                  </Text>
+                </th>
+
+                <th>
+                  <Text color="rgba(255,255,255,.4)" italic light size="small">
+                    <>
+                      {search && (
+                        <span>
+                          {getHighlightedText(notification.details, search)}
+                        </span>
+                      )}
+                      {!search && <span>{notification.details}</span>}
+                    </>
+                  </Text>
+                </th>
+
+                <th align="right">
+                  <Text color="rgba(255,255,255,.4)" italic light size="small">
+                    <>
+                      {search && (
+                        <span>
+                          {getHighlightedText(
+                            formatDate(notification.date),
+                            search
+                          )}
+                        </span>
+                      )}
+                      {!search && <span>{formatDate(notification.date)}</span>}
+                    </>
+                  </Text>
+                </th>
+                {selectedStatus !== STATUS.TREATED && (
+                  <th
+                    align="right"
+                    style={{ paddingRight: 5 }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {renderActionButtons(notification)}
+                  </th>
+                )}
+              </tr>
+
+            ))}
+          </>
         ))}
       </tbody>
     </TableUI>
