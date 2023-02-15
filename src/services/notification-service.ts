@@ -2,6 +2,12 @@ import { NotificationCount } from "./../data/interfaces/notification-count";
 import { CATEGORY } from "./../data/constants/category";
 import { httpGet, httpPut } from "./_http-client";
 
+const defaultRequestConfig = {
+  headers : {
+    Accept: "application/json"
+  }
+};
+
 export const getNotifications = async (category?: number, status?: number) => {
   let url = "";
   if (process.env.NODE_ENV === "development") {
@@ -11,7 +17,7 @@ export const getNotifications = async (category?: number, status?: number) => {
   }
   const notifications = await httpGet(
     url,
-    {},
+    defaultRequestConfig,
     true
   );
   return notifications;
@@ -23,14 +29,14 @@ export const getNotificationCountByCategory = async (category: number) => {
     case CATEGORY.ACTION_FEED:
       notificationCount = (await httpGet(
         process.env.REACT_APP_API_ACTION_FEED_NOTIFICATION_COUNT as string,
-        {},
+        defaultRequestConfig,
         true
       )) as NotificationCount;
       break;
     case CATEGORY.INFORMATION_FEED:
       notificationCount = (await httpGet(
         process.env.REACT_APP_API_INFORMATION_FEED_NOTIFICATION_COUNT as string,
-        {},
+        defaultRequestConfig,
         true
       )) as NotificationCount;
       break;
@@ -47,7 +53,7 @@ export const setNotificationIsSeen = async (id: string, isSeen: boolean) => {
       id
     ) as string,
     { isSeen: isSeen },
-    {},
+    defaultRequestConfig,
     true
   );
   return result;
@@ -60,7 +66,7 @@ export const setNotificationIsRead = async (id: string, isRead: boolean) => {
       id
     ) as string,
     { isRead: isRead },
-    {},
+    defaultRequestConfig,
     true
   );
   return result;
@@ -73,7 +79,7 @@ export const dismissNotification = async (id: string) => {
       id
     ) as string,
     { status: 2 },
-    {},
+    defaultRequestConfig,
     true
   );
   return result;
