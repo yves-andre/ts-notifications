@@ -125,7 +125,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
       borderBottomLeftRadius: start ? "0px" : undefined,
       borderBottomRightRadius: end ? "0px" : undefined
     };
-  
+
     return (
       <td
         onClick={() => sortColumnHandler(field)}
@@ -276,14 +276,16 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
       <tbody>
         {notificationGroups.map((notificationGroup: NotificationGroup) => (
           <>
-            <tr className="group-row">
-              <th>{notificationGroup.name}</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
+            {notificationGroups.length > 1 &&
+              <tr className="group-row">
+                <th>{notificationGroup.name}</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            }
             {notificationGroup.notifications.map((notification, index) => (
               <tr key={index} onClick={() => openNotificationHandler(notification)}>
                 <th style={{ whiteSpace: "nowrap" }}>
@@ -329,7 +331,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                   {search && (
                     <span>{getHighlightedText(notification.subtitle, search)}</span>
                   )}
-                  {!search && <span>{notification.subtitle}</span>}
+                  {!search && <span>{notification.isImportant ? <span className="important-explamation">! </span> : ""}{notification.subtitle}</span>}
                 </th>
 
                 <th>

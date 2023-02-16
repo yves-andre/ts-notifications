@@ -36,7 +36,7 @@ export const App: React.FC = () => {
           dispatch(filtersActions.setSelectedApplication(value));
           break;
         case FILTER.SHOW_DELEGATIONS:
-          const showDelegations = JSON.parse(value).value;
+          const showDelegations = value === "true";
           dispatch(filtersActions.toggleShowDelegations(showDelegations));
           break;
         case FILTER.SEARCH_FILTER:
