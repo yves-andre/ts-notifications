@@ -18,7 +18,7 @@ export const Search: React.FC = () => {
   ) => {
     dispatch(filtersActions.setSearchFilter(event.target.value));
   }
-
+ 
   return (
     <Input
       placeholder='Quick search ...'

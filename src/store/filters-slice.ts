@@ -6,11 +6,21 @@ const initialState = {
   selectedCategory: CATEGORY.ACTION_FEED,
   selectedStatus: STATUS.TO_BE_TREATED,
   selectedApplication: "",
-  showDelegations: {value: true, hasBeenSet: false},
+  showDelegations: undefined,
   searchFilter: "",
   sortFilter: {
     field: "date",
     asc: false
+  },
+} as {
+  selectedCategory: number,
+  selectedStatus: number,
+  selectedApplication: string,
+  showDelegations: boolean | undefined,
+  searchFilter: string,
+  sortFilter: {
+    field: string,
+    asc: boolean
   },
 };
 
@@ -27,9 +37,8 @@ const filtersSlice = createSlice({
     setSelectedApplication(state, action: PayloadAction<string>) {
       state.selectedApplication = action.payload;
     },
-    toggleShowDelegations(state, action: PayloadAction<boolean>) {
-      state.showDelegations.value = action.payload;
-      state.showDelegations.hasBeenSet = true;
+    toggleShowDelegations(state, action: PayloadAction<boolean | undefined>) {
+      state.showDelegations = action.payload;
     },
     setSearchFilter(state, action: PayloadAction<string>) {
       state.searchFilter = action.payload;

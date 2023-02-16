@@ -16,6 +16,8 @@ import { Placeholder } from "@trading/energies-ui";
 
 import "./Explorer.scss";
 import { getUserLogin } from "../../services/auth-service";
+
+
 import NotificationGroup from "../../data/interfaces/notification-group";
 
 const notificationPeriodGroups = [
@@ -118,7 +120,7 @@ export const Explorer: React.FC = () => {
       );
 
     //hide delegations if showDelegations is false
-    if (filters.showDelegations.value === false) {
+    if (filters.showDelegations === false) {
       filterNotifications = filterNotifications.filter(
         (n) => !(n.owner.login !== userLogin && n.delegates.includes(userLogin))
       );
@@ -138,7 +140,6 @@ export const Explorer: React.FC = () => {
       );
     }
 
-
     if (filters.sortFilter.field === "title") {
       filterNotifications = sortArrayByStringAndDate(
         filterNotifications,
@@ -147,6 +148,7 @@ export const Explorer: React.FC = () => {
         filters.sortFilter.asc
       );
     }
+    
 
     return groupNotifications(filterNotifications);
   };
@@ -208,7 +210,6 @@ export const Explorer: React.FC = () => {
 
     return groupedNotifications;
   };
-
 
   return (
     <div className="Explorer">

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useAppDispatch } from './use-app-dispatch'
 import { useAppSelector } from './use-app-selector'
+import { filtersActions } from '../store/filters-slice'
 
 // listens to filter changes and adds them to the route as query params,
 export const useRouteFilters = () => {
@@ -12,6 +13,9 @@ export const useRouteFilters = () => {
   // adding filters to the route whenever a filter changes
   useEffect(() => {
     let searchParams = {} as any
+    if(filters.showDelegations === undefined){
+      initShowDelegationToggle(false);
+    }
     Object.keys(filters).map((filterKey) => {
       type filtersKey = keyof typeof filters
       if (filters[filterKey as filtersKey] !== '') {
@@ -24,6 +28,11 @@ export const useRouteFilters = () => {
     })
     setSearchParams(searchParams)
   }, [filters])
+
+
+  const initShowDelegationToggle = (showDelegations: boolean) => {
+    dispatch(filtersActions.toggleShowDelegations(showDelegations))
+  }
 
   return searchParams
 }

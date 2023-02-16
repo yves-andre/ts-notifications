@@ -5,26 +5,17 @@ import { filtersActions } from '../../../store/filters-slice'
 import './DelegationToggle.scss'
 
 export const DelegationToggle: React.FC = () => {
-  const showDelegationsObject = useAppSelector(
+  const showDelegations = useAppSelector(
     (state) => state.filters.showDelegations
   );
-  
-  const [showDelegations, setShowDelegations] = useState<boolean | null>(null);
-  
-  // we use a useState showDelegations that is updated in the useEffect
-  // because we want to wait for the showDelegations.hasBeenSet to be true,
-  // in order to avoid a flashing of the checkbox
-  useEffect(() => {
-    showDelegationsObject.hasBeenSet && setShowDelegations(showDelegationsObject.value);
-  },[showDelegationsObject])
 
   const dispatch = useAppDispatch();
 
   const toggleHandler = () => {
-    dispatch(filtersActions.toggleShowDelegations(!showDelegationsObject.value))
+    dispatch(filtersActions.toggleShowDelegations(!showDelegations))
   }
 
-  if (showDelegations !== null) {
+  if (showDelegations !== undefined) {
     return (
       <label className="DelegationToggle">
         Show delegations:
@@ -34,6 +25,7 @@ export const DelegationToggle: React.FC = () => {
             type="checkbox"
             onChange={toggleHandler}
             checked={showDelegations}
+            defaultChecked={showDelegations}
           />
           <span className="DelegationToggle-label">
             <span></span>
