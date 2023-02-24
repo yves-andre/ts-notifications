@@ -1,3 +1,7 @@
 body {
   margin: 0;
 }
+
+:root[data-darkmode='true'] {
+  --ts-global-background: #262b33;
+}
