@@ -14,7 +14,7 @@ export const useRouteFilters = () => {
   useEffect(() => {
     let searchParams = {} as any
     if(filters.showDelegations === undefined){
-      initShowDelegationToggle(false);
+      initShowDelegationToggle(true);
     }
     Object.keys(filters).map((filterKey) => {
       type filtersKey = keyof typeof filters
