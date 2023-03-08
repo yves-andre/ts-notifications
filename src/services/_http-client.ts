@@ -4,8 +4,8 @@ const getNewToken = async () => {
   const authResponse = await fetch(url, {
     credentials: "include"
   });
-  const authData = await authResponse.json();
-  return authData.token;
+  const authData = await authResponse.text();
+  return authData;
 };
 
 export const httpGetAuth = async (
