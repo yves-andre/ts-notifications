@@ -18,8 +18,11 @@ export const App: React.FC = () => {
 
   // fetch notifications on load and on WS message
   useEffect(() => {
-    dispatch(fetchNotifications());
-    dispatch(fetchNotificationCounts());
+    // only react to EVENT type socket messages
+    if ((lastMessage?.data as string)?.startsWith("42")){
+      dispatch(fetchNotifications());
+      dispatch(fetchNotificationCounts());
+    }
   }, [lastMessage]);
 
   // setting default filters to store from search params
