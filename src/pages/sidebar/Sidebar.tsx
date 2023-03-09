@@ -27,7 +27,6 @@ export const Sidebar: React.FC = () => {
     (async () => {
       dispatch(fetchCategoryColors());
       dispatch(fetchApplications());
-      dispatch(fetchNotificationCounts());
     })();
   }, []);
 

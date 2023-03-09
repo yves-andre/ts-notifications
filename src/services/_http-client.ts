@@ -1,3 +1,6 @@
+let versionPromise: Promise<any> | null = null; // global variable to cache the result of getVersion
+
+
 const getNewToken = async () => {
   const root = process.env.REACT_APP_API_DWP_ROOT_2 as string;
   const url = root + process.env.REACT_APP_API_DWP_AUTH as string;
@@ -154,7 +157,10 @@ const getVersion: any = async (authRequired: boolean) => {
 
 // Wrapper function that retrieves the correct httpGet function depending on the version
 export const httpGet = async (route: string, config: object = {}, authRequired: boolean = false) => {
-  const { httpGet } = await getVersion(authRequired);
+  if (!versionPromise) {
+    versionPromise = getVersion(authRequired); // cache the result of getVersion
+  }
+  const { httpGet } = await versionPromise;
   return await httpGet(route, config, authRequired);
 };
 
