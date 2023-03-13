@@ -52,8 +52,14 @@ export const setNotificationIsSeen = async (id: string, isSeen: boolean) => {
       "{id}",
       id
     ) as string,
-    { isSeen: isSeen },
-    defaultRequestConfig,
+    { isSeen: isSeen },    
+    {
+      ...defaultRequestConfig,
+      headers: {
+        ...defaultRequestConfig.headers,
+        "Content-Type": "application/json",
+      },
+    },
     true
   );
   return result;
@@ -66,7 +72,13 @@ export const setNotificationIsRead = async (id: string, isRead: boolean) => {
       id
     ) as string,
     { isRead: isRead },
-    defaultRequestConfig,
+    {
+      ...defaultRequestConfig,
+      headers: {
+        ...defaultRequestConfig.headers,
+        "Content-Type": "application/json",
+      },
+    },
     true
   );
   return result;
@@ -79,7 +91,13 @@ export const dismissNotification = async (id: string) => {
       id
     ) as string,
     { status: 2 },
-    defaultRequestConfig,
+    {
+      ...defaultRequestConfig,
+      headers: {
+        ...defaultRequestConfig.headers,
+        "Content-Type": "application/json",
+      },
+    },
     true
   );
   return result;
