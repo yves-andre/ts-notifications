@@ -14,3 +14,18 @@ export const getUserLogin = async () => {
   });
   return login;
 };
+
+export const getUserNameFromLogin = async (login: string) => {
+  const loginEncoded = encodeURIComponent(login).replace('%5C', '\\');
+  const url = `${process.env.REACT_APP_API_URL}/Web/siteusers(@v)?@v='${loginEncoded}'`;
+  const config = {
+    contentType: "application/json",
+    headers: {
+      Accept: 'application/json;odata=verbose'
+    }
+  }
+  const username =  await httpGet(url, config).then((response) => {
+    return response?.d?.Title;
+  })
+  return username;
+}

@@ -22,6 +22,8 @@ export default interface Notification {
   reference: string;
   sourceName: string;
   delegates: string[];
+  treatedBy: string;
+  treatedOn: string;
 }
 
 interface Owner {
