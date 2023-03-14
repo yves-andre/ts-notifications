@@ -361,12 +361,17 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 <th>
                   <Text color='rgba(255,255,255,.4)' italic light size='small'>
                     <>
-                      {search && (
-                        <span>
-                          {getHighlightedText(notification.details, search)}
-                        </span>
+                      {selectedStatus === STATUS.TREATED && 
+                      search && 
+                      notification.treatedBy 
+                      && notification.treatedOn && (
+                        <span>Marked as treated by  <span style={{ textDecoration: "underline" }}>{getHighlightedText(notification.treatedBy, search)}</span> on {getHighlightedText(notification.treatedOn, search)}</span>
                       )}
-                      {!search && <span>{notification.details}</span>}
+                      {selectedStatus === STATUS.TREATED && 
+                      notification.treatedBy && 
+                      notification.treatedOn && 
+                      !search && 
+                      <span>Marked as treated by <span style={{ textDecoration: "underline" }}>{notification.treatedBy}</span> on {notification.treatedOn}</span>}
                     </>
                   </Text>
                 </th>

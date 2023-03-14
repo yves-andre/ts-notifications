@@ -1,3 +1,5 @@
+import { formatDate } from './../utils/formatters';
+import { getUserNameFromLogin } from './../services/auth-service';
 import { CATEGORY } from "./../data/constants/category";
 import { NotificationCount } from "./../data/interfaces/notification-count";
 import {
@@ -32,7 +34,18 @@ const notificationSlice = createSlice({
 export const fetchNotifications = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      const notifications: Notification[] = await getAllNotifications();
+      let notifications: Notification[] = await getAllNotifications();
+      notifications = await Promise.all(
+        notifications.map(async (notification: Notification) => {
+          if (notification.treatedBy) {
+            notification.treatedBy = await getUserNameFromLogin(notification.treatedBy);
+            if(notification.treatedOn) {
+              notification.treatedOn = formatDate(notification.treatedOn);
+            }
+          }
+          return notification;
+        })
+      );
       dispatch(notificationActions.load(notifications));
     } catch (error) {
       console.error(error);
