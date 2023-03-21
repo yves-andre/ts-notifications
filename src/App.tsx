@@ -21,7 +21,7 @@ export const App: React.FC = () => {
   // and set social notification to SEEN
   useEffect(() => {
     // only react to EVENT type socket messages
-    if ((lastMessage?.data as string)?.startsWith("42")){
+    if ((lastMessage?.data as string)?.startsWith("42") || process.env.NODE_ENV === "development"){
       dispatch(fetchNotifications());
       dispatch(fetchNotificationCounts());
       dispatch(setNotificationsIsSeen(CATEGORY.INFORMATION_FEED));
