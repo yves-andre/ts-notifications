@@ -123,9 +123,7 @@ export const Explorer: React.FC = () => {
 
     //hide delegations if showDelegations is false
     if (filters.showDelegations === false) {
-      filterNotifications = filterNotifications.filter(
-        (n) => !(n.owner.login !== userLogin && n.delegates.includes(userLogin))
-      )
+      filterNotifications = filterNotifications.filter(n => !n.isDelegate)
     }
     // sort the notifications to be displayed in the Table
     if (filters.sortFilter.field === 'date') {

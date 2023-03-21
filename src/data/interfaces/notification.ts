@@ -21,6 +21,7 @@ export default interface Notification {
   image: string;
   reference: string;
   sourceName: string;
+  isDelegate: boolean;
   delegates: string[];
   treatedBy: string;
   treatedOn: string;
