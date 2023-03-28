@@ -29,8 +29,8 @@ export const useAppWebSocket = () => {
     if (readyState === 3) { // readyState of 3 indicates a closed connection
       // Log the lost connection
       console.warn("WebSocket connection lost, attempting to reconnect...");
-      // Reconnect after a random wait period between 0 and 1 seconds
-      const reconnectTimeout = Math.floor(Math.random() * 1000);
+      // Reconnect after a random wait period between 1 and 5 minutes
+      const reconnectTimeout = Math.floor(Math.random() * 300000) + 60000;
       reconnectTimeoutRef.current = window.setTimeout(() => {
         sendMessage(""); // Send an empty message to trigger reconnection
       }, reconnectTimeout);
