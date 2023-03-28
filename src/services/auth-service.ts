@@ -75,7 +75,7 @@ const saveUsername = (login: string, username: string | null) => {
   } catch (error) {
     console.error('Error parsing usernames from sessionStorage:', error);
   }
-  
+
   savedUsernames[login] = username;
   sessionStorage.setItem(sessionStorageKey, JSON.stringify(savedUsernames));
 }
