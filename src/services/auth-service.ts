@@ -16,6 +16,18 @@ export const getUserLogin = async () => {
   return login;
 };
 
+export const getRawUserLogin = async () => {
+  const login = await httpGet(process.env.REACT_APP_API_AUTH_URL as string, {
+    headers: {
+      Accept: "application/json;odata=verbose",
+    },
+  })
+  .then((response) => {
+    return response.d.LoginName;
+  });
+  return login;
+};
+
 export const getUserNameFromLogin = async (login: string) => {
   let savedUsernames = {} as any;
 

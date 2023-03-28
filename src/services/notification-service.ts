@@ -1,9 +1,10 @@
 import { NotificationCount } from "./../data/interfaces/notification-count";
 import { CATEGORY } from "./../data/constants/category";
 import { httpGet, httpPut } from "./_http-client";
+import { getRawUserLogin, getUserLogin } from "./auth-service";
 
 const defaultRequestConfig = {
-  headers : {
+  headers: {
     Accept: "application/json"
   }
 };
@@ -52,7 +53,7 @@ export const setNotificationIsSeen = async (id: string, isSeen: boolean) => {
       "{id}",
       id
     ) as string,
-    { isSeen: isSeen },    
+    { isSeen: isSeen },
     {
       ...defaultRequestConfig,
       headers: {
@@ -85,12 +86,13 @@ export const setNotificationIsRead = async (id: string, isRead: boolean) => {
 };
 
 export const dismissNotification = async (id: string) => {
+  const rawLoginName = await getRawUserLogin();
   const result = httpPut(
     process.env.REACT_APP_API_UPDATE_NOTIFICATION?.replace(
       "{id}",
       id
     ) as string,
-    { status: 2 },
+    { status: 2, isRead: 1, treatedBy: rawLoginName, treatedOn: new Date().toISOString() },
     {
       ...defaultRequestConfig,
       headers: {
