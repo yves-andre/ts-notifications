@@ -1,14 +1,32 @@
 let versionPromise: Promise<any> | null = null; // global variable to cache the result of getVersion
+let tokenPromise: Promise<string> | null = null;
 
 
 const getNewToken = async () => {
-  const root = process.env.REACT_APP_API_DWP_ROOT_2 as string;
-  const url = root + process.env.REACT_APP_API_DWP_AUTH as string;
-  const authResponse = await fetch(url, {
-    credentials: "include"
-  });
-  const authData = await authResponse.text();
-  return authData;
+  if (tokenPromise) {
+    // If there is an ongoing token request, wait for it to finish
+    return await tokenPromise;
+  }
+
+  // Start a new token request and store the promise
+  tokenPromise = (async () => {
+    const root = process.env.REACT_APP_API_DWP_ROOT_2 as string;
+    const url = root + process.env.REACT_APP_API_DWP_AUTH as string;
+    const authResponse = await fetch(url, {
+      credentials: "include",
+    });
+    const authData = await authResponse.text();
+    return authData;
+  })();
+
+  try {
+    // Wait for the token request to finish
+    const token = await tokenPromise;
+    return token;
+  } finally {
+    // Clear the token promise after the request is done
+    tokenPromise = null;
+  }
 };
 
 export const httpGetAuth = async (
