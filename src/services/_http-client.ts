@@ -123,7 +123,7 @@ export const httpPutAuth = async (
 
 const refreshVersionPromise = async () => {
   versionInfo.promise = getApiVersion();
-  versionInfo.expiration = Date.now() + 30000; // Set expiration time to 5 minutes from now
+  versionInfo.expiration = Date.now() + 300000; // Set expiration time to 5 minutes from now
 };
 
 const getApiVersion: any = async () => {
