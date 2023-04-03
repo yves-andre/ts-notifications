@@ -1,4 +1,4 @@
-let versionPromise: Promise<any> | null = null; // global variable to cache the result of getVersion
+let versionInfo: { promise: Promise<any> | null, expiration: number | null } = { promise: null, expiration: null }; // global variable to store versionPromise and its expiration
 let tokenPromise: Promise<string> | null = null;
 
 
@@ -121,12 +121,9 @@ export const httpPutAuth = async (
   return await response.json();
 };
 
-const refreshVersionPromise = async (interval: number) => {
-  // Schedule the versionPromise refresh
-  setInterval(async () => {
-    versionPromise = null;
-    versionPromise = await getApiVersion();
-  }, interval);
+const refreshVersionPromise = async () => {
+  versionInfo.promise = getApiVersion();
+  versionInfo.expiration = Date.now() + 30000; // Set expiration time to 5 minutes from now
 };
 
 const getApiVersion: any = async () => {
@@ -134,14 +131,15 @@ const getApiVersion: any = async () => {
   const versionResponse = await fetch(url);
   const version = await versionResponse.text();
   return version;
-}
+};
 
 const getHttpMethods: any = async (authRequired: boolean) => {
-  if (!versionPromise) {
-    versionPromise = getApiVersion();
-    refreshVersionPromise(300000); //refresh every 5 minutes
+  // Check if the versionPromise has expired or not set, then refresh it
+  if (!versionInfo.promise || !versionInfo.expiration || Date.now() > versionInfo.expiration) {
+    await refreshVersionPromise();
   }
-  const version = await versionPromise;
+
+  const version = await versionInfo.promise;
   if (version === "1.0") {
     return {
       httpGet: async (route: string, config: object = {}) => {
