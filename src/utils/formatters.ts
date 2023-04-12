@@ -8,13 +8,13 @@ export const formatDate = (dateString: string) => {
   });
 
   if (
-    date.getDay() === currentDate.getDay() &&
+    date.getDate() === currentDate.getDate() &&
     date.getMonth() === currentDate.getMonth() &&
     date.getFullYear() === currentDate.getFullYear()
   ) {
     return 'Today at ' + time;
   } else if (
-    date.getDay() === currentDate.getDay() - 1 &&
+    date.getDate() === currentDate.getDate() - 1 &&
     date.getMonth() === currentDate.getMonth() &&
     date.getFullYear() === currentDate.getFullYear()
   ){
