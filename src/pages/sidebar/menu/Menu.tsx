@@ -61,8 +61,8 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   useEffect(() => {
     // for the information feed category, we want to set the
     // isSeen attribute to true as soon as the catefory is selected
-    selectedCategory === CATEGORY.INFORMATION_FEED &&
-      dispatch(setNotificationsIsSeen(selectedCategory));
+   /* selectedCategory === CATEGORY.INFORMATION_FEED &&
+      dispatch(setNotificationsIsSeen(selectedCategory));*/
   }, [selectedCategory]);
 
   const getAppsByCategory = (category: number): Application[] => {

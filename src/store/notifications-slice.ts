@@ -4,7 +4,7 @@ import { CATEGORY } from "./../data/constants/category";
 import { NotificationCount } from "./../data/interfaces/notification-count";
 import {
   getNotifications,
-  setNotificationIsSeen,
+  setNotificationIsSeen as _setNotificationIsSeen,
   dismissNotification as _dismissNotification,
   setNotificationIsRead as _setNotificationIsRead,
   getNotificationCountByCategory,
@@ -78,7 +78,7 @@ export const setNotificationsIsSeen = (category: number) => {
       // we set the isSeen property to true for each notification
       await Promise.all(
         filteredNotifications.map(async (notification) => {
-          await setNotificationIsSeen(notification._id, true);
+          await _setNotificationIsSeen(notification._id, true);
         })
       );
       // call the fetchNotifications to update the notifications
@@ -87,6 +87,20 @@ export const setNotificationsIsSeen = (category: number) => {
     } catch (error) {
       console.error(error);
     }
+  };
+};
+
+export const setNotificationsIsSeenByIds = (ids: string[]) => {
+  return async (dispatch: AppDispatch) => {
+    const promisesList: any[] = [];
+    ids.forEach((notificationId ) => {
+      promisesList.push(_setNotificationIsSeen(notificationId, true))
+    })
+    Promise.all(promisesList).then(() => {
+      dispatch(fetchNotifications());
+    }, (error) => {
+      console.log(error);
+    })
   };
 };
 
