@@ -18,6 +18,7 @@ import './Explorer.scss'
 import { getUserLogin } from '../../services/auth-service'
 
 import NotificationGroup from '../../data/interfaces/notification-group'
+import { STATUS } from '../../data/constants/status'
 
 const notificationPeriodGroups = [
   {
@@ -109,7 +110,13 @@ export const Explorer: React.FC = () => {
           includesString(formatDate(n.date), filters.searchFilter)
       )
       .filter((n) => n.category === filters.selectedCategory)
-      .filter((n) => n.status === filters.selectedStatus)
+      .filter((n) => {
+        if(filters.selectedStatus === STATUS.TO_BE_TREATED){
+          return n.status === STATUS.NEW  || n.status === STATUS.TO_BE_TREATED
+        }else{
+          return n.status === filters.selectedStatus;
+        }
+      })
       // filter by selected application
       .filter(
         (n) =>

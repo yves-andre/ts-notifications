@@ -346,5 +346,46 @@
     "__v": 0,
     "createdAt": "2022-11-30T15:00:46.128Z",
     "updatedAt": "2022-11-30T15:00:57.251Z"
+  },
+  {
+    "owner": { "login": "adervi" },
+    "category": 1,
+    "details": "",
+    "status": 0,
+    "isReminder": false,
+    "isRead": false,
+    "isFavorite": false,
+    "isSeen": true,
+    "isManual": false,
+    "isImportant": false,
+    "isDelegate": false,
+    "delegates": [],
+    "_id": "6426d1f5040788001d58dbd1",
+    "title": "T&S News",
+    "subtitle": "Notification Test 2",
+    "description": "",
+    "image": "widgetNews",
+    "reference": "",
+    "sourceUrl": "'http://home-preprod.dts.corp.local",
+    "sourceName": "news",
+    "actions": [
+      {
+        "isDefault": false,
+        "_id": "5c8bd82093a2030016703cf9",
+        "name": "read",
+        "url": "http://home-preprod.dts.corp.local/Pages/Home.aspx#!?NewsId=126&List=TS News V2"
+      },
+      {
+        "isDefault": false,
+        "_id": "5c8bd82093a2030016703cf9",
+        "name": "read",
+        "url": "http://home-preprod.dts.corp.local/Pages/Home.aspx#!?NewsId=126&List=TS News V2"
+      }
+    ],
+    "eventType": "published",
+    "date": "2023-03-31T12:28:37.163Z",
+    "createdAt": "2023-03-31T12:28:39.483Z",
+    "updatedAt": "2023-03-31T12:29:35.833Z",
+    "__v": 0
   }
 ]
