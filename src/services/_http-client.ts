@@ -1,4 +1,4 @@
-let versionPromise: Promise<any> | null = null; // global variable to cache the result of getVersion
+let versionInfo: { promise: Promise<any> | null, expiration: number | null } = { promise: null, expiration: null }; // global variable to store versionPromise and its expiration
 let tokenPromise: Promise<string> | null = null;
 
 
@@ -121,11 +121,25 @@ export const httpPutAuth = async (
   return await response.json();
 };
 
+const refreshVersionPromise = async () => {
+  versionInfo.promise = getApiVersion();
+  versionInfo.expiration = Date.now() + 300000; // Set expiration time to 5 minutes from now
+};
 
-const getVersion: any = async (authRequired: boolean) => {
+const getApiVersion: any = async () => {
   const url = process.env.REACT_APP_API_DWP_VERSION as string;
   const versionResponse = await fetch(url);
   const version = await versionResponse.text();
+  return version;
+};
+
+const getHttpMethods: any = async (authRequired: boolean) => {
+  // Check if the versionPromise has expired or not set, then refresh it
+  if (!versionInfo.promise || !versionInfo.expiration || Date.now() > versionInfo.expiration) {
+    await refreshVersionPromise();
+  }
+
+  const version = await versionInfo.promise;
   if (version === "1.0") {
     return {
       httpGet: async (route: string, config: object = {}) => {
@@ -175,15 +189,12 @@ const getVersion: any = async (authRequired: boolean) => {
 
 // Wrapper function that retrieves the correct httpGet function depending on the version
 export const httpGet = async (route: string, config: object = {}, authRequired: boolean = false) => {
-  if (!versionPromise) {
-    versionPromise = getVersion(authRequired); // cache the result of getVersion
-  }
-  const { httpGet } = await versionPromise;
+  const { httpGet } = await getHttpMethods(authRequired);
   return await httpGet(route, config, authRequired);
 };
 
 // Wrapper function that retrieves the correct httpGet function depending on the version
 export const httpPut = async (route: string, payload: object = {}, config: object = {}, authRequired: boolean = false) => {
-  const { httpPut } = await getVersion();
+  const { httpPut } = await getHttpMethods();
   return await httpPut(route, payload, config, authRequired);
 };
