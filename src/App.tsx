@@ -24,7 +24,7 @@ export const App: React.FC = () => {
     if ((lastMessage?.data as string)?.startsWith("42") || process.env.NODE_ENV === "development"){
       dispatch(fetchNotifications());
       dispatch(fetchNotificationCounts());
-      dispatch(setNotificationsIsSeen(CATEGORY.INFORMATION_FEED));
+      //dispatch(setNotificationsIsSeen(CATEGORY.INFORMATION_FEED));
     }
   }, [lastMessage]);
 

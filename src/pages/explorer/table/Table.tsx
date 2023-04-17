@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {
   Button,
   Picture,
@@ -17,6 +17,7 @@ import {
   dismissNotificationById,
   dismissNotifications,
   setNotificationIsReadById,
+  setNotificationsIsSeenByIds,
 } from '../../../store/notifications-slice'
 import { CATEGORY } from '../../../data/constants/category'
 import { STATUS } from '../../../data/constants/status'
@@ -26,6 +27,8 @@ import CategoryColor from '../../../data/interfaces/category-color'
 import './Table.scss'
 import classNames from 'classnames'
 import NotificationGroup from '../../../data/interfaces/notification-group'
+import {getUserLogin} from "../../../services/auth-service";
+import {setNotificationIsSeen} from "../../../services/notification-service";
 
 interface Props {
   notificationGroups: NotificationGroup[]
@@ -45,6 +48,21 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const categoryColors: CategoryColor[] = useAppSelector(
     (state) => state.applications.categoryColors
   )
+
+  useEffect(() => {
+    notificationGroups.forEach((notificationGroup: NotificationGroup) => {
+      const notificationsToMarkAsSeen = notificationGroup.notifications.filter(
+          (notification) =>
+              !notification.isSeen
+      )
+      if(notificationsToMarkAsSeen.length){
+        const notificationsIds = notificationsToMarkAsSeen.map((notification) => {
+          return notification._id
+        })
+        dispatch(setNotificationsIsSeenByIds(notificationsIds))
+      }
+    })
+  }, [notificationGroups])
 
   const sortColumnHandler = (fieldName: string) => {
     // 1st click on column = order ascending,
