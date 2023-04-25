@@ -22,7 +22,9 @@ export const App: React.FC = () => {
   useEffect(() => {
     // only react to EVENT type socket messages
     if ((lastMessage?.data as string)?.startsWith("40") || process.env.NODE_ENV === "development"){
-      dispatch(fetchNotifications());
+      if(searchParams){
+        dispatch(fetchNotifications(searchParams));
+      }
       dispatch(fetchNotificationCounts());
       //dispatch(setNotificationsIsSeen(CATEGORY.INFORMATION_FEED));
     }
