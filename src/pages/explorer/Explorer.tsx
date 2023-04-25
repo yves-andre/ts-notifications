@@ -171,7 +171,7 @@ export const Explorer: React.FC = () => {
   }
 
   const groupNotifications = (notifications: Notification[]) => {
-    if (notifications.length <= 0) return []
+    if (notifications.length <= 0) return null
 
     const groupedNotifications: NotificationGroup[] = []
 
