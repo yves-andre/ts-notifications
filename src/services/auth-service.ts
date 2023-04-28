@@ -56,6 +56,7 @@ export const getUserNameFromLogin = async (login: string) => {
   }).catch(error => {
     console.error(`Error when fetching username from login : ${login}`, error);
     saveUsername(login, login);
+    return login || "";
   })
 
   if (username) {
