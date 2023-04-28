@@ -43,22 +43,24 @@ export const fetchNotifications = (searchParams: URLSearchParams | null = null) 
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       let notifications = null;
-      if(getState().notifications.notificationItems){
+      if (getState().notifications.notificationItems) {
         notifications = await getAllNotificationsLoad();
-      }else{        
+      } else {
         await getAllNotificationsAppend(dispatch, searchParams);
         notifications = getState().notifications.notificationItems;
       }
       if (notifications) {
+        dispatch(notificationActions.append([]));
         notifications = await Promise.all(
           notifications.map(async (notification: Notification) => {
-            if (notification.treatedBy) {
-              notification.treatedBy = await getUserNameFromLogin(notification.treatedBy);
-              if (notification.treatedOn) {
-                notification.treatedOn = formatDate(notification.treatedOn);
+            let updatedNotification = { ...notification }; // Create a shallow copy of the notification object
+            if (updatedNotification.treatedBy) {
+              updatedNotification.treatedBy = await getUserNameFromLogin(notification.treatedBy);
+              if (updatedNotification.treatedOn) {
+                updatedNotification.treatedOn = formatDate(updatedNotification.treatedOn);
               }
             }
-            return notification;
+            return updatedNotification;
           })
         );
         dispatch(notificationActions.load(notifications));
