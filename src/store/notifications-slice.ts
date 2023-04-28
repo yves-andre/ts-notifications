@@ -31,8 +31,10 @@ const notificationSlice = createSlice({
     },
     append(state, action: PayloadAction<Notification[]>) {
       if (state.notificationItems) {
+        console.log("DEBUG NOTIFICATION APPEND PUSH",action.payload);
         state.notificationItems.push(...action.payload);
       } else {
+        console.log("DEBUG NOTIFICATION APPEND REPLACE",action.payload);
         state.notificationItems = action.payload;
       }
     },
@@ -43,24 +45,30 @@ export const fetchNotifications = (searchParams: URLSearchParams | null = null) 
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       let notifications = null;
-      if(getState().notifications.notificationItems){
+      if (getState().notifications.notificationItems) {
+        console.log("DEBUG","FETCH NOTIFICATIONS 1");
         notifications = await getAllNotificationsLoad();
-      }else{        
+      } else {
+        console.log("DEBUG","FETCH NOTIFICATIONS 2");
         await getAllNotificationsAppend(dispatch, searchParams);
         notifications = getState().notifications.notificationItems;
       }
       if (notifications) {
+        dispatch(notificationActions.append([]));
+        console.log("DEBUG","FETCH NOTIFICATIONS 3");
         notifications = await Promise.all(
           notifications.map(async (notification: Notification) => {
-            if (notification.treatedBy) {
-              notification.treatedBy = await getUserNameFromLogin(notification.treatedBy);
-              if (notification.treatedOn) {
-                notification.treatedOn = formatDate(notification.treatedOn);
+            let updatedNotification = { ...notification }; // Create a shallow copy of the notification object
+            if (updatedNotification.treatedBy) {
+              updatedNotification.treatedBy = await getUserNameFromLogin(notification.treatedBy);
+              if (updatedNotification.treatedOn) {
+                updatedNotification.treatedOn = formatDate(updatedNotification.treatedOn);
               }
             }
-            return notification;
+            return updatedNotification;
           })
         );
+        console.log("DEBUG","FETCH NOTIFICATIONS 4");
         dispatch(notificationActions.load(notifications));
       }
     } catch (error) {
@@ -68,6 +76,7 @@ export const fetchNotifications = (searchParams: URLSearchParams | null = null) 
     }
   };
 };
+
 
 
 export const fetchNotificationCounts = () => {
@@ -115,7 +124,7 @@ export const setNotificationsIsSeen = (category: number) => {
 export const setNotificationsIsSeenByIds = (ids: string[]) => {
   return async (dispatch: AppDispatch) => {
     const promisesList: any[] = [];
-    ids.forEach((notificationId ) => {
+    ids.forEach((notificationId) => {
       promisesList.push(_setNotificationIsSeen(notificationId, true))
     })
     Promise.all(promisesList).then(() => {
@@ -164,18 +173,20 @@ export const setNotificationIsReadById = (id: string) => {
 };
 
 const getAllNotificationsLoad = async () => {
-  if(process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === "development") {
     return await getNotifications();
   }
-  const [n1,n2,n3,n4,n5,n6]: Notification[][] = await Promise.all([
-    getNotifications(0,0),
-    getNotifications(1,0),
-    getNotifications(0,1),
-    getNotifications(1,1),
-    getNotifications(2,0),
-    getNotifications(2,1),
+  console.log("DEBUG NOTIFICATION LOAD START");
+  const [n1, n2, n3, n4, n5, n6]: Notification[][] = await Promise.all([
+    getNotifications(0, 0),
+    getNotifications(1, 0),
+    getNotifications(0, 1),
+    getNotifications(1, 1),
+    getNotifications(2, 0),
+    getNotifications(2, 1),
   ]);
-  const result = [...n1,...n2,...n3,...n4,...n5,...n6];
+  const result = [...n1, ...n2, ...n3, ...n4, ...n5, ...n6];
+  console.log("DEBUG NOTIFICATION LOAD RESULT", result);
   return result;
 }
 
@@ -185,6 +196,8 @@ const getAllNotificationsAppend = async (dispatch: AppDispatch, searchParams: UR
     dispatch(notificationActions.append(notifications));
     return;
   };
+
+  console.log("DEBUG NOTIFICATION APPEND START");
 
   // get the current category and status from the url
   const selectedCategory = +(searchParams?.get(FILTER.SELECTED_CATEGORY) || "0");
