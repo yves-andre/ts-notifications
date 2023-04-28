@@ -87,7 +87,6 @@ export const Explorer: React.FC = () => {
   const [filterNotifications, setFilterNotifications] = useState(
     null as NotificationGroup[] | null
   )
-  const [showPlaceholder, setShowPlaceholder] = useState(false);
 
   useEffect(() => {
     const fetchUserLogin = async () => {
@@ -99,13 +98,6 @@ export const Explorer: React.FC = () => {
       })
     }
   }, [notifications, filters])
-
-
-  useEffect(() => {
-    if (filterNotifications) {
-      setShowPlaceholder(filterNotifications.length === 0)
-    }
-  }, [filterNotifications])
 
   const filterAndSortNotifications = (
     notifications: Notification[],
@@ -229,12 +221,14 @@ export const Explorer: React.FC = () => {
     return groupedNotifications
   }
 
-  if (!notifications || !filterNotifications) return <Loader />
+  if (!notifications) {
+    return <Loader />
+  }
 
   return (
     <div className='Explorer'>
       <Search />
-      {showPlaceholder ? (
+      {!filterNotifications ? (
         <Placeholder
           title="You don't have any notification."
           image='emptyBox'
