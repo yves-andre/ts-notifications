@@ -50,7 +50,6 @@ export const fetchNotifications = (searchParams: URLSearchParams | null = null) 
         notifications = getState().notifications.notificationItems;
       }
       if (notifications) {
-        dispatch(notificationActions.append([]));
         notifications = await Promise.all(
           notifications.map(async (notification: Notification) => {
             let updatedNotification = { ...notification }; // Create a shallow copy of the notification object
