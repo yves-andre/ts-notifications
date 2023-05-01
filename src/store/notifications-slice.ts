@@ -192,7 +192,7 @@ const getAllNotificationsAppend = async (dispatch: AppDispatch, searchParams: UR
   const selectedCategory = +(searchParams?.get(FILTER.SELECTED_CATEGORY) || "0");
   const selectedStatus = +(searchParams?.get(FILTER.SELECTED_STATUS) || "1");
 
-  const priorityPromise = getNotifications(selectedCategory, selectedStatus);
+  const priorityPromise = getNotifications(selectedStatus, selectedCategory);
 
   const allCombinations = [
     [0, 0],
@@ -205,7 +205,7 @@ const getAllNotificationsAppend = async (dispatch: AppDispatch, searchParams: UR
 
   // Remove the one matching selectedCategory and selectedStatus from allCombinations
   const filteredCombinations = allCombinations.filter(
-    ([category, status]) => !(category === selectedCategory && status === selectedStatus)
+    ([status, category]) => !(category === selectedCategory && status === selectedStatus)
   );
 
   // First await the priorityPromise
