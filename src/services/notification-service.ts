@@ -85,6 +85,23 @@ export const setNotificationIsRead = async (id: string, isRead: boolean) => {
   return result;
 };
 
+export const dismissNotifications = async () => {
+  const rawLoginName = await getRawUserLogin();
+  const result = httpPut(process.env.REACT_APP_API_DISMISS_URL as string, 
+    { treatedBy: rawLoginName }, 
+    {
+      ...defaultRequestConfig,
+      headers: {
+        ...defaultRequestConfig.headers,
+        "Content-Type": "application/json",
+      },
+    }, 
+    true
+  );
+  return result;
+}
+
+
 export const dismissNotification = async (id: string) => {
   const rawLoginName = await getRawUserLogin();
   const result = httpPut(
