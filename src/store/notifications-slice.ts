@@ -7,6 +7,7 @@ import {
   setNotificationIsSeen as _setNotificationIsSeen,
   dismissNotification as _dismissNotification,
   setNotificationIsRead as _setNotificationIsRead,
+  dismissNotifications as _dismissNotifications,
   getNotificationCountByCategory,
 } from "./../services/notification-service";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -23,6 +24,9 @@ const notificationSlice = createSlice({
   name: "notifications",
   initialState,
   reducers: {
+    reset(state){
+      state.notificationItems = null;
+    },
     load(state, action: PayloadAction<Notification[]>) {
       state.notificationItems = action.payload;
     },
@@ -140,15 +144,13 @@ export const dismissNotificationById = (id: string) => {
 
 export const dismissNotifications = (notifications: Notification[]) => {
   return async (dispatch: AppDispatch) => {
+    dispatch(notificationActions.reset());
     try {
-      await Promise.all(
-        notifications.map(async (notification) => {
-          await _dismissNotification(notification._id);
-        })
-      );
-      dispatch(fetchNotifications());
+      await _dismissNotifications();
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch(fetchNotifications());
     }
   };
 };
