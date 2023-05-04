@@ -142,15 +142,31 @@ export const dismissNotificationById = (id: string) => {
   };
 };
 
+// export const dismissNotifications = (notifications: Notification[]) => {
+//   return async (dispatch: AppDispatch) => {
+//     dispatch(notificationActions.reset());
+//     try {
+//       await _dismissNotifications();
+//     } catch (error) {
+//       console.log(error);
+//     } finally {
+//       dispatch(fetchNotifications());
+//     }
+//   };
+// };
+
+//TODO Use the commented version of the function above once the dismissAll route is fixed
 export const dismissNotifications = (notifications: Notification[]) => {
   return async (dispatch: AppDispatch) => {
-    dispatch(notificationActions.reset());
     try {
-      await _dismissNotifications();
+      await Promise.all(
+        notifications.map(async (notification) => {
+          await _dismissNotification(notification._id);
+        })
+      );
+      dispatch(fetchNotifications());
     } catch (error) {
       console.log(error);
-    } finally {
-      dispatch(fetchNotifications());
     }
   };
 };
