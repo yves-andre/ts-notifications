@@ -21,19 +21,15 @@ export const App: React.FC = () => {
   // fetch notifications on load and on WS message
   // and set social notification to SEEN
   useEffect(() => {
-    (async () => {
-      const userLogin = await getUserLogin();
-      // only react to EVENT type socket messages
       if (
           (lastMessage?.data as string)?.startsWith("40") || 
-          (lastMessage?.data as string)?.includes(`NotificationAdded${userLogin}`) ||
-          (lastMessage?.data as string)?.includes(`NotificationUpdated${userLogin}`) ||
+          (lastMessage?.data as string)?.includes("NotificationAdded") ||
+          (lastMessage?.data as string)?.includes("NotificationUpdated") ||
           process.env.NODE_ENV === "development"){          
         dispatch(fetchNotifications());
         dispatch(fetchNotificationCounts());
         //dispatch(setNotificationsIsSeen(CATEGORY.INFORMATION_FEED));
       }
-    })()
   }, [lastMessage]);
 
   // setting default filters to store from search params
