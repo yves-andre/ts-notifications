@@ -11,7 +11,6 @@ import { useRouteFilters } from "./hooks/use-route-filters";
 
 import "./App.scss";
 import { CATEGORY } from "./data/constants/category";
-import { getUserLogin } from "./services/auth-service";
 
 export const App: React.FC = () => {
   const searchParams = useRouteFilters();
