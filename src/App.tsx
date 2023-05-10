@@ -23,7 +23,6 @@ export const App: React.FC = () => {
   useEffect(() => {
     (async () => {
       const userLogin = await getUserLogin();
-      console.log("USER LOGIN",userLogin);
       // only react to EVENT type socket messages
       if (
           (lastMessage?.data as string)?.startsWith("40") || 
