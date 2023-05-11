@@ -241,6 +241,7 @@ export const Explorer: React.FC = () => {
           />
         )
         break;
+        case 503:
         case 408:
           errorMessage = (
             <Placeholder

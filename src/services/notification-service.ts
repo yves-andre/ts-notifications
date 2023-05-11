@@ -16,10 +16,6 @@ export const getNotifications = async (category?: number, status?: number) => {
   } else {
     url = `/${category}/${status}`;
   }
-  // url = "https://app.requestly.io/mock/7gmdFoaQdhKfe28uLfa9";
-  // url = "http://localhost:3001/timeout";
-  url = "http://10.255.255.1"
-  // return [];
   const notifications = await httpGet(
     url,
     defaultRequestConfig,

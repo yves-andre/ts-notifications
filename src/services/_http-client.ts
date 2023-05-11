@@ -158,15 +158,13 @@ const getHttpMethods: any = async (authRequired: boolean) => {
           route = process.env.REACT_APP_API_DWP_ROOT_1 + route;
         }
         try {
-          const response:any = await fetchWithTimeout(route, GETConfig);
+          const response:any = await fetch(route, GETConfig);
           if (!response.ok) {
             console.error(`Could not fetch data for url ${route}, error ${response.status}`);
             return response.status;
           }
           return await response.json();
         } catch (error:any) {
-          console.log("DEBUG_TIMEOUT",error);
-          debugger;
           console.error(`An error occurred: ${error.message}, status code: ${error.status}`);
           // also handle failed requests where there is no status code
           return error.message == "Failed to fetch" ? 1 : error.status;
@@ -198,15 +196,6 @@ const getHttpMethods: any = async (authRequired: boolean) => {
   } else {
     throw new Error("Uknown dwp version");
   }
-}
-
-function fetchWithTimeout(url:string, options:any, timeout = 1000*90) {
-  return Promise.race([
-    fetch(url, options),
-    new Promise((_, reject) =>
-      setTimeout(() => reject({status: 408, ok: false, message: 'Request timed out'}), timeout)
-    )
-  ]);
 }
 
 // Wrapper function that retrieves the correct httpGet function depending on the version
