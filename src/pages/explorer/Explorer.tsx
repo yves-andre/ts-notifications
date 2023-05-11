@@ -19,6 +19,7 @@ import { getUserLogin } from '../../services/auth-service'
 
 import NotificationGroup from '../../data/interfaces/notification-group'
 import { STATUS } from '../../data/constants/status'
+import Loader from '../../components/loader/Loader'
 
 const notificationPeriodGroups = [
   {
@@ -79,21 +80,26 @@ const notificationPeriodGroups = [
 ]
 
 export const Explorer: React.FC = () => {
-  const notifications: Notification[] = useAppSelector(
+  const notifications: Notification[] | null = useAppSelector(
     (state) => state.notifications.notificationItems
   )
   const filters = useAppSelector((state) => state.filters)
   const [filterNotifications, setFilterNotifications] = useState(
-    [] as NotificationGroup[]
+    null as NotificationGroup[] | null
   )
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserLogin = async () => {
       return await getUserLogin()
     }
-    fetchUserLogin().then((login) => {
-      setFilterNotifications(filterAndSortNotifications(notifications, login))
-    })
+    if (notifications) {
+      fetchUserLogin().then((login) => {
+        setFilterNotifications(filterAndSortNotifications(notifications, login));
+        setLoading(false);
+      })
+    }
   }, [notifications, filters])
 
   const filterAndSortNotifications = (
@@ -111,9 +117,9 @@ export const Explorer: React.FC = () => {
       )
       .filter((n) => n.category === filters.selectedCategory)
       .filter((n) => {
-        if(filters.selectedStatus === STATUS.TO_BE_TREATED){
-          return n.status === STATUS.NEW  || n.status === STATUS.TO_BE_TREATED
-        }else{
+        if (filters.selectedStatus === STATUS.TO_BE_TREATED) {
+          return n.status === STATUS.NEW || n.status === STATUS.TO_BE_TREATED
+        } else {
           return n.status === filters.selectedStatus;
         }
       })
@@ -160,7 +166,7 @@ export const Explorer: React.FC = () => {
   }
 
   const groupNotifications = (notifications: Notification[]) => {
-    if (notifications.length <= 0) return []
+    if (notifications.length <= 0) return null
 
     const groupedNotifications: NotificationGroup[] = []
 
@@ -218,12 +224,14 @@ export const Explorer: React.FC = () => {
     return groupedNotifications
   }
 
+  if (loading) {
+    return <Loader />
+  }
+
   return (
     <div className='Explorer'>
       <Search />
-      {filterNotifications.length > 0 ? (
-        <Table notificationGroups={filterNotifications} />
-      ) : (
+      {!filterNotifications ? (
         <Placeholder
           title="You don't have any notification."
           image='emptyBox'
@@ -231,6 +239,8 @@ export const Explorer: React.FC = () => {
           color={true}
           style={{ minHeight: 0 }}
         />
+      ) : (
+        <Table notificationGroups={filterNotifications} />
       )}
     </div>
   )

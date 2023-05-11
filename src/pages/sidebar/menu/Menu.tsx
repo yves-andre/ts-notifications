@@ -71,6 +71,7 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   };
 
   const getNotificationCount = (application: Application, category: number) => {
+    if (!notifications) return 0;
     return notifications
       .filter((n) => n.status === 1)
       .filter(
