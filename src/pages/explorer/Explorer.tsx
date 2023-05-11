@@ -91,6 +91,8 @@ export const Explorer: React.FC = () => {
     null as NotificationGroup[] | null
   )
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchUserLogin = async () => {
       return await getUserLogin()
@@ -98,6 +100,7 @@ export const Explorer: React.FC = () => {
     if (notifications) {
       fetchUserLogin().then((login) => {
         setFilterNotifications(filterAndSortNotifications(notifications, login));
+        setLoading(false);
       })
     }
   }, [notifications, filters])
@@ -224,7 +227,7 @@ export const Explorer: React.FC = () => {
     return groupedNotifications
   }
 
-  if (!notifications && !notificationError) {
+  if (loading && !notificationError) {
     return <Loader />
   }
 

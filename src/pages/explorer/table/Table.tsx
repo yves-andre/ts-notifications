@@ -211,7 +211,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
         }
       case CATEGORY.INFORMATION_FEED:
         return (
-          <Tooltip title='Clear' placement='left'>
+          <Tooltip title='Dismiss' placement='left'>
             <Button
               size='small'
               icon='close'
@@ -287,7 +287,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                   onClick={dismissAllHandler}
                   color={APP_CONFIG.DEFAULT_APPLICATION_COLOR}
                 >
-                  Clear all
+                  Dismiss all
                 </Button>
               </td>
             )}
