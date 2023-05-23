@@ -21,6 +21,7 @@ export const Page: React.FC = () => {
           onChange={(key) => {}}
           logo={totalLogo}
           className='globalNav'
+          settingsAction={() => {}}
           items={[
             {
               key: 'notifications',
