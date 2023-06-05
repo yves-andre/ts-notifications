@@ -2,7 +2,8 @@ import { httpGet } from "./_http-client";
 const sessionStorageKey = 'notification_login_usernames';
 
 export const getUserLogin = async () => {
-  const login = await httpGet(process.env.REACT_APP_API_AUTH_URL as string, {
+  const url = `${window.location.protocol}${process.env.REACT_APP_API_AUTH_URL}`;
+  const login = await httpGet(url, {
     headers: {
       Accept: "application/json;odata=verbose",
     },
@@ -17,7 +18,8 @@ export const getUserLogin = async () => {
 };
 
 export const getRawUserLogin = async () => {
-  const login = await httpGet(process.env.REACT_APP_API_AUTH_URL as string, {
+  const url = `${window.location.protocol}${process.env.REACT_APP_API_AUTH_URL}`;
+  const login = await httpGet(url, {
     headers: {
       Accept: "application/json;odata=verbose",
     },
@@ -44,7 +46,7 @@ export const getUserNameFromLogin = async (login: string) => {
   }
 
   const loginEncoded = encodeURIComponent(login).replace('%5C', '\\');
-  const url = `${process.env.REACT_APP_API_URL}/Web/siteusers(@v)?@v='${loginEncoded}'`;
+  const url = `${window.location.protocol}${process.env.REACT_APP_API_URL}/Web/siteusers(@v)?@v='${loginEncoded}'`;
   const config = {
     contentType: "application/json",
     headers: {

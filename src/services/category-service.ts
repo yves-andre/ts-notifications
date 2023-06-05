@@ -2,8 +2,9 @@ import CategoryColor from "../data/interfaces/category-color";
 import { httpGet } from "./_http-client";
 
 export const getCategoryColors = async () => {
+  const url = `${window.location.protocol}${process.env.REACT_APP_API_CATEGORY_COLORS_URL}`;
   const applications = await httpGet(
-    process.env.REACT_APP_API_CATEGORY_COLORS_URL as string,
+    url,
     {
       headers: {
         Accept: "application/json;odata=verbose",
