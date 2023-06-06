@@ -104,7 +104,7 @@ export const httpPutAuth = async (
   }
 
   // Try the GET request
-  let response = await fetch(route, PUTConfig);
+  let response:any = await fetch(route, PUTConfig);
 
   // If the response is a 401, try to get a new token and retry the request
   while (response.status === 401 && authRequired) {
@@ -116,8 +116,10 @@ export const httpPutAuth = async (
     window.localStorage.setItem("token", newToken);
     response = await fetch(route, PUTConfig);
   }
-
-  if (!response.ok) throw new Error(`could not fetch data for url ${route}`);
+  if (!response.ok) {
+    return response.status;
+    console.error(`could not fetch data for url ${route}, error ${response.status}`)
+  }
   return await response.json();
 };
 
@@ -155,9 +157,18 @@ const getHttpMethods: any = async (authRequired: boolean) => {
         if (!route.includes("http")) {
           route = process.env.REACT_APP_API_DWP_ROOT_1 + route;
         }
-        const response = await fetch(route, GETConfig);
-        if (!response.ok) throw new Error(`could not fetch data for url ${route}`);
-        return await response.json();
+        try {
+          const response:any = await fetch(route, GETConfig);
+          if (!response.ok) {
+            console.error(`Could not fetch data for url ${route}, error ${response.status}`);
+            return response.status;
+          }
+          return await response.json();
+        } catch (error:any) {
+          console.error(`An error occurred: ${error.message}, status code: ${error.status}`);
+          // also handle failed requests where there is no status code
+          return error.message == "Failed to fetch" ? 1 : error.status;
+        }
       },
       httpPut: async (route: string, payload: object = {}, config: object = {}) => {
         if (!route) throw new Error("a route must be provided");

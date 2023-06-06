@@ -83,6 +83,9 @@ export const Explorer: React.FC = () => {
   const notifications: Notification[] | null = useAppSelector(
     (state) => state.notifications.notificationItems
   )
+  const notificationError: number | null = useAppSelector(
+    (state) => state.notifications.notificationError
+  )
   const filters = useAppSelector((state) => state.filters)
   const [filterNotifications, setFilterNotifications] = useState(
     null as NotificationGroup[] | null
@@ -224,8 +227,46 @@ export const Explorer: React.FC = () => {
     return groupedNotifications
   }
 
-  if (loading) {
+  if (loading && !notificationError) {
     return <Loader />
+  }
+
+  if (notificationError) {
+    let errorMessage = null;
+    switch (notificationError) {
+      case 500:
+        errorMessage = (
+          <Placeholder
+            title={`Sorry something went wrong. (Error ${notificationError})`}
+            image='error'
+            theme='dark'
+            style={{ minHeight: 0 }}
+          />
+        )
+        break;
+        case 503:
+        case 408:
+          errorMessage = (
+            <Placeholder
+              title={`Sorry something went wrong. (Timeout)`}
+              image='error'
+              theme='dark'
+              style={{ minHeight: 0 }}
+            />
+          )
+          break;
+      default:
+        errorMessage = (
+          <Placeholder
+            title="Sorry something went wrong"
+            image='error'
+            theme='dark'
+            style={{ minHeight: 0 }}
+          />
+        )
+        break;
+    }
+    return errorMessage;
   }
 
   return (
