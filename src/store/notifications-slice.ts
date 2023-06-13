@@ -18,6 +18,7 @@ import { FILTER } from '../data/constants/filter';
 const initialState = {
   notificationItems: null as Notification[] | null,
   notificationCounts: [] as NotificationCount[],
+  notificationError: null as number | null
 };
 
 const notificationSlice = createSlice({
@@ -28,16 +29,27 @@ const notificationSlice = createSlice({
       state.notificationItems = null;
     },
     load(state, action: PayloadAction<Notification[]>) {
-      state.notificationItems = action.payload;
+      if(typeof action.payload === "number"){
+        const error = action.payload;
+        state.notificationError = error;
+      }else{
+        state.notificationItems = action.payload;
+      }
     },
     getNotificationCount(state, action: PayloadAction<NotificationCount[]>) {
       state.notificationCounts = action.payload;
     },
     append(state, action: PayloadAction<Notification[]>) {
-      if (state.notificationItems) {
-        state.notificationItems.push(...action.payload);
-      } else {
-        state.notificationItems = action.payload;
+      if(typeof action.payload === "number"){
+        const error = action.payload;
+        state.notificationError = error;
+      }
+      else {
+        if (state.notificationItems) {
+          state.notificationItems.push(...action.payload);
+        } else {
+          state.notificationItems = action.payload;
+        }
       }
     },
   },
@@ -142,31 +154,15 @@ export const dismissNotificationById = (id: string) => {
   };
 };
 
-// export const dismissNotifications = (notifications: Notification[]) => {
-//   return async (dispatch: AppDispatch) => {
-//     dispatch(notificationActions.reset());
-//     try {
-//       await _dismissNotifications();
-//     } catch (error) {
-//       console.log(error);
-//     } finally {
-//       dispatch(fetchNotifications());
-//     }
-//   };
-// };
-
-//TODO Use the commented version of the function above once the dismissAll route is fixed
 export const dismissNotifications = (notifications: Notification[]) => {
   return async (dispatch: AppDispatch) => {
+    dispatch(notificationActions.reset());
     try {
-      await Promise.all(
-        notifications.map(async (notification) => {
-          await _dismissNotification(notification._id);
-        })
-      );
-      dispatch(fetchNotifications());
+      await _dismissNotifications();
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch(fetchNotifications());
     }
   };
 };
