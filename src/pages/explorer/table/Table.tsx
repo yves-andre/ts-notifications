@@ -29,6 +29,7 @@ import classNames from 'classnames'
 import NotificationGroup from '../../../data/interfaces/notification-group'
 import {getUserLogin} from "../../../services/auth-service";
 import {setNotificationIsSeen} from "../../../services/notification-service";
+import { redirect, useNavigate } from 'react-router-dom'
 
 interface Props {
   notificationGroups: NotificationGroup[]
@@ -38,6 +39,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const search = useAppSelector((state) => state.filters.searchFilter)
   const sortFilter = useAppSelector((state) => state.filters.sortFilter)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const selectedStatus = useAppSelector((state) => state.filters.selectedStatus)
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
@@ -78,7 +80,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
 
   const getNotificationDefaultAction = (notification: Notification) => {
     let defaultAction = notification.actions.find((action) => action.isDefault)
-    if (!defaultAction) {
+    if (!defaultAction && notification.actions.length > 0) {
       defaultAction = notification.actions[0]
     }
     return () => {
@@ -102,8 +104,15 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   }
 
   const openNotificationHandler = (notification: Notification) => {
-    const action = getNotificationDefaultAction(notification)
-    action && action.call(this)
+    console.log(notification)
+    if (notification.hasValidationForm && notification.validationFormUrl) {
+        const resp = navigate(`/validation/${notification._id}`)
+        console.log(resp);
+    } else {
+      const action = getNotificationDefaultAction(notification)
+      action && action.call(this)
+    }
+    
     //window.open(notification.sourceUrl, "_blank", "noopener,noreferrer");
     !notification.isRead &&
       dispatch(setNotificationIsReadById(notification._id))

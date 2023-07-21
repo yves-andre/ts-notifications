@@ -85,11 +85,17 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   };
 
   const getNotificationCountByCategory = (category: number): number | null => {
-    return (
+    const countResponse =  (
       notificationCounts.find(
         (notificationCount) => parseInt(notificationCount.category) === category
-      )?.count || 0
+      )
     );
+    const count = countResponse?.count || 0;
+    const pendingCount = countResponse?.pendingCount || 0;
+    if (category === 0 && pendingCount <= count) {
+      return count - pendingCount;
+    }
+    return count;
   };
 
   const selectCategoryHandler = (category: number): void => {

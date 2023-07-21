@@ -121,3 +121,38 @@ export const dismissNotification = async (id: string) => {
   );
   return result;
 };
+
+export const getValidationFormById = async (id: string): Promise<any> => {
+  return await httpGet(
+    `${process.env.REACT_APP_API_GET_VALIDATION_FORM}/${id}`,
+    defaultRequestConfig,
+    true
+  );
+};
+
+export const validateFormById = async (id: string, data:any): Promise<any> => {
+  return await httpPut(
+    `${process.env.REACT_APP_API_UPDATE_VALIDATION_STATUS}/${id}`,
+    data,
+    { headers: {
+      'Content-Type' : 'application/json'
+      }
+    },
+    true
+  );
+};
+
+export const updateFormPendingTimeout = async (reference: string): Promise<any> => {
+  const data = {
+    isPending: false
+  }
+  return await httpPut(
+    `${process.env.REACT_APP_API_UPDATE_NOTIFICATION_BY_REFERENCE}/${reference}`,
+    data,
+    { headers: {
+      'Content-Type' : 'application/json'
+      }
+    },
+    true
+  );
+};
