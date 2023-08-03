@@ -1,16 +1,21 @@
 import React, {useEffect, useState} from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
+import ValidationForm, { ItemValidationTemplate } from '../../components/validation-form/validation-form';
 
 import Notification from '../../data/interfaces/notification'
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { getValidationFormById, updateFormPendingTimeout, validateFormById } from '../../services/notification-service';
 
+import validationFormSample from './validation-form-sample.json';
+
+
+
 export const Validation: React.FC = () => {
   let { id } = useParams()
   const navigate = useNavigate()
-  const [validation, setValidation] = useState(undefined);
+  const [validationForm, setValidationForm] = useState<ItemValidationTemplate|undefined>(undefined);
   const [notification, setNotification] = useState<Notification>()
   const [initialTime, setInitialTime] = useState(0)
   const [finalTime, setFinalTime] = useState(0)
@@ -63,7 +68,11 @@ export const Validation: React.FC = () => {
       }
       getValidationFormById(notification._id)
         .then((validationJSON) => {
-          setValidation(validationJSON);
+          const re = new RegExp("\u2028|\u2029|\uFEFF");
+          const result = validationJSON.replace(re, '');
+          console.log(result)
+          console.log(JSON.parse(result))
+          setValidationForm(validationFormSample);
       })
       .catch(console.error)
     }
@@ -76,10 +85,10 @@ export const Validation: React.FC = () => {
   }, [notification?.isPending]);
 
   useEffect(() => {
-    if (validation && finalTime === 0) {
+    if (validationForm && finalTime === 0) {
       setFinalTime(performance.now())
     }
-  }, [validation]);
+  }, [validationForm]);
 
   const onBackClick = () => {
     navigate('/explorer')
@@ -98,11 +107,12 @@ export const Validation: React.FC = () => {
     }
   }
 
+
   return (<div style={{padding: "10px"}}>
     <button style={{maxWidth:"100px", margin:"10px"}} onClick={() => onBackClick()}>BACK</button>
     <div style={{color:"darkseagreen", marginTop:"10px"}}>Total time : {getDuration()}</div>
-    { !validation && !notification && <Loader></Loader> }
-    { (validation && notification && !notification.treatedBy) && <>
+    { !validationForm && !notification && <Loader></Loader> }
+    { (validationForm && notification && !notification.treatedBy) && <>
       {
         notification.isPending ?
           <span style={{color: 'goldenrod'}}>
@@ -114,15 +124,16 @@ export const Validation: React.FC = () => {
           <button onClick={() => updateFormStatus(false)}>Refuse</button>
         </>
       }
-      
-      <pre style={{overflowY: "scroll", maxWidth:"1200px", height:"600px", whiteSpace: "pre-wrap", paddingTop: "10px"}}>
-        { validation ?? '' }
-      </pre>
     </> }
 
-    { (validation && notification && notification.treatedBy) &&
-      <div style={{color:'green'}}>Notification is treated</div> 
-    }
+      { (validationForm && notification && notification.treatedBy) &&
+        <div style={{color:'green'}}>Notification is treated</div> 
+      }
+
+    {(validationForm && notification) &&
+      <ValidationForm validationForm={validationForm}></ValidationForm> 
+    }   
+    
     
   </div>);
 }

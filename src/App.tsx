@@ -25,7 +25,7 @@ export const App: React.FC = () => {
       (lastMessage?.data as string)?.startsWith("40") ||
       (lastMessage?.data as string)?.includes("NotificationAdded") ||
       (lastMessage?.data as string)?.includes("NotificationUpdated") ||
-      process.env.NODE_ENV === "development") {
+      process.env.NODE_ENV === "local") {
       if (searchParams) {
         dispatch(fetchNotifications(searchParams));
       }

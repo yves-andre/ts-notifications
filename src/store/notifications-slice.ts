@@ -179,7 +179,7 @@ export const setNotificationIsReadById = (id: string) => {
 };
 
 const getAllNotificationsLoad = async () => {
-  if(process.env.NODE_ENV === "development") {
+  if(process.env.NODE_ENV === "local") {
     return await getNotifications();
   }
   const [n1,n2,n3,n4,n5,n6]: Notification[][] = await Promise.all([
@@ -195,7 +195,7 @@ const getAllNotificationsLoad = async () => {
 }
 
 const getAllNotificationsAppend = async (dispatch: AppDispatch, searchParams: URLSearchParams | null = null) => {
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === "local") {
     const notifications = await getNotifications();
     dispatch(notificationActions.append(notifications));
     return;

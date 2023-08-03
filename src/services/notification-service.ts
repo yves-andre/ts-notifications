@@ -11,7 +11,7 @@ const defaultRequestConfig = {
 
 export const getNotifications = async (category?: number, status?: number) => {
   let url = "";
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === "local") {
     url = "/notifications.json"
   } else {
     url = `/${category}/${status}`;

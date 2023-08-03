@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(
 );
 
 const environmentAssets =
-  process.env.NODE_ENV !== "development" ? APP_CONFIG.THEME_ASSETS : undefined;
+  process.env.NODE_ENV !== "local" ? APP_CONFIG.THEME_ASSETS : undefined;
 
 root.render(
   <Theme

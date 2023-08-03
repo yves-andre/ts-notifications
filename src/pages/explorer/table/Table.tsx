@@ -105,7 +105,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
 
   const openNotificationHandler = (notification: Notification) => {
     console.log(notification)
-    if (notification.hasValidationForm && notification.validationFormUrl) {
+    if (true || notification.hasValidationForm && notification.validationFormUrl) {
         const resp = navigate(`/validation/${notification._id}`)
         console.log(resp);
     } else {

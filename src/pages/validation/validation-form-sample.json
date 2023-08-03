@@ -1,0 +1,233 @@
+{
+    "version": "1.0",
+    "type": "itemValidationTemplate",
+    "validationRules": {
+    },
+    "data": {
+    },
+    "template": {
+      "color": "blue", 
+      "gradient": "purple2", 
+      "items": [
+        {
+          "type": "headerBlock",
+          "title": "Expense Title",
+          "subtitle": "Expense Subtitle",
+          "image": "{{expense.user.image}}",
+          "total": "{{expense.total}}",
+          "buttons": [
+            {
+              "name": "Open",
+              "icon": "Open",
+              "color": "blue",
+              "type": "web_url",
+              "url": "{{expense.expenseURL}}"
+            },
+            {
+              "name": "Edit",
+              "icon": "pen",
+              "color": "orange",
+              "type": "web_url",
+              "url": "{{expense.expenseURL}}"
+            }
+          ]
+        },
+        {
+          "type": "sectionBlock",
+          "title": "Expense",
+          "subtitle": "{{expense.expenseId}}",
+          "actions": [],
+          "items": [
+            {
+              "type": "fromToDate",
+              "labelFrom": "From",
+              "labelTo": "To",
+              "dateFormat": "DD MMM YYYY",
+              "fromDate": "{{absence.startDate}}",
+              "toDate": "{{absence.endDate}}"
+            }
+          ]
+        },
+        {
+          "type": "sectionBlock",
+          "title": "Details",
+          "subtitle": "",
+          "infotip": {
+            "icon": "info",
+            "color": "grey",
+            "tooltip": "Caption",
+            "closeButtonText": "Ok, Got it",
+            "items": [
+              {
+                "type": "text",
+                "icon": "warning",
+                "color": "yellow",
+                "title": "Mandatory Check",
+                "subtitle": "",
+                "text": "You have to check this line if you want to validate this item."
+              },
+              {
+                "type": "text",
+                "icon": "warning",
+                "color": "purple",
+                "title": "With beneficiary company",
+                "subtitle": "",
+                "text": "There is a beneficiary company in this expense line."
+              }
+            ]
+          },
+          "items": [
+            {
+              "type": "listBlock",
+              "data": "{{expense.items}}",
+              "items": [
+                {
+                  "title": "{{item.title}}",
+                  "status": "{{item.status}}",
+                  "subtitle": "{{item.subtitle}}",
+                  "image": "{{item.image}}",
+                  "value": "{{item.total}} {{item.currency}}",
+                  "items": [
+                    {
+                      "type": "slideshow",
+                      "slides": "{{item.uploadedImages}}"
+                    },
+                    {
+                      "type": "title",
+                      "title": "{{item.Title}}"
+                    },
+                    {
+                      "type": "sectionBlock",
+                      "items": [
+                        {
+                          "type": "date",
+                          "label": "Date",
+                          "value": "{{item.date}}"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "sectionBlock",
+                      "title": "Details",
+                      "items": [
+                        {
+                          "type": "dataList",
+                          "display": "block",
+                          "data": "{{item.detailsDataList}}"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "sectionBlock",
+                      "title": "Price Details",
+                      "items": [
+                        {
+                          "type": "dataList",
+                          "display": "inline",
+                          "data": "{{item.priceDetailsDataList}}"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "footerBlock",
+                      "displayedIf": "{{validation[item.key]}}",
+                      "items": [
+                        {
+                          "type": "rulesValidationButton",
+                          "label": "Comment Check",
+                          "color": "orange",
+                          "icon": "uncheck",
+                          "validationValue": "{{validation[item.key]}}",
+                          "validatedConfig": {
+                            "label": "Comment checked",
+                            "icon": "check",
+                            "color": "green"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {"type": "sectionBlock",
+          "title": "Information",
+          "subtitle": "",
+          "items": [
+            {
+              "type": "dataList",
+              "items": [
+                {
+                  "label": "Project",
+                  "value": "Business Excellence"
+                },
+                {
+                  "label": "Mission Order",
+                  "value": "MO123456789 - Marseille Training",
+                  "href": "https://applications.dts.corp.local/missionorder/123456789"
+                },
+                {
+                  "label": "Training",
+                  "value": "NA",
+                  "isEmpty": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "sectionBlock",
+          "title": "More",
+          "subtitle": "",
+          "items": [
+            {
+              "type": "listBlock",
+              "display": "menu",
+              "items": [{
+                "title": "Employee Details",
+                "subtitle": "{{item.title}}",
+                "icon": "user",
+                "items": [
+                  {
+                    "type": "employeeCard",
+                    "data": "{{item.employee}}"
+                  }
+                ]
+              },
+                {
+                  "title": "Validation History",
+                  "subtitle": "{{item.validationHistory.history.length}} activities",
+                  "icon": "history",
+                  "items": [
+                    {
+                      "type": "validationHistory",
+                      "data": "{{item.validationHistory}}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "footerBlock",
+          "items": [
+            {
+              "type": "hierarchyValidation",
+              "commentEnabled": true,
+              "commentPlaceholder": "Comments",
+              "validateButton" : {
+                "commentMandatory": false
+              },
+              "rejectButton": {
+                "commentMandatory": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+  
