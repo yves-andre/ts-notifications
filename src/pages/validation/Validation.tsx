@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
-import ValidationForm, { ItemValidationTemplate } from '../../components/validation-form/validation-form';
+import ValidationForm from '../../components/validation-form/validation-form';
+import { ItemValidationTemplate } from '../../components/validation-form/validation-form-service';
 
 import Notification from '../../data/interfaces/notification'
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
@@ -9,8 +10,6 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { getValidationFormById, updateFormPendingTimeout, validateFormById } from '../../services/notification-service';
 
 import validationFormSample from './validation-form-sample.json';
-
-
 
 export const Validation: React.FC = () => {
   let { id } = useParams()
@@ -68,10 +67,10 @@ export const Validation: React.FC = () => {
       }
       getValidationFormById(notification._id)
         .then((validationJSON) => {
-          const re = new RegExp("\u2028|\u2029|\uFEFF");
-          const result = validationJSON.replace(re, '');
-          console.log(result)
-          console.log(JSON.parse(result))
+         // const re = new RegExp("\u2028|\u2029|\uFEFF");
+         // const result = validationJSON.replace(re, '');
+        //  console.log(result)
+        //  console.log(JSON.parse(result))
           setValidationForm(validationFormSample);
       })
       .catch(console.error)

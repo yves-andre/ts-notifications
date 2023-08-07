@@ -1,6 +1,6 @@
 {
     "version": "1.0",
-    "type": "itemValidationTemplate",
+    "type": "AbsenceValidationTemplate",
     "validationRules": {
     },
     "data": {
@@ -11,31 +11,31 @@
       "items": [
         {
           "type": "headerBlock",
-          "title": "Expense Title",
-          "subtitle": "Expense Subtitle",
-          "image": "{{expense.user.image}}",
-          "total": "{{expense.total}}",
+          "title": "Time Off - Vacation",
+          "subtitle": "Magali LEFEVRE",
+          "image": "https://mysite.dts.corp.local/User%20Photos/Profile%20Pictures/MLEFEV.jpg",
+          "total": "8 days",
           "buttons": [
             {
               "name": "Open",
               "icon": "Open",
               "color": "blue",
               "type": "web_url",
-              "url": "{{expense.expenseURL}}"
+              "url": "http://application-dev.dts.corp.local/"
             },
             {
               "name": "Edit",
               "icon": "pen",
               "color": "orange",
               "type": "web_url",
-              "url": "{{expense.expenseURL}}"
+              "url": "http://application-dev.dts.corp.local/"
             }
           ]
         },
         {
           "type": "sectionBlock",
-          "title": "Expense",
-          "subtitle": "{{expense.expenseId}}",
+          "title": "Time Off",
+          "subtitle": "#ABSENCE1222299494",
           "actions": [],
           "items": [
             {
@@ -43,8 +43,8 @@
               "labelFrom": "From",
               "labelTo": "To",
               "dateFormat": "DD MMM YYYY",
-              "fromDate": "{{absence.startDate}}",
-              "toDate": "{{absence.endDate}}"
+              "fromDate": "10/01/2023",
+              "toDate": "10/05/2023"
             }
           ]
         },
@@ -52,126 +52,17 @@
           "type": "sectionBlock",
           "title": "Details",
           "subtitle": "",
-          "infotip": {
-            "icon": "info",
-            "color": "grey",
-            "tooltip": "Caption",
-            "closeButtonText": "Ok, Got it",
-            "items": [
-              {
-                "type": "text",
-                "icon": "warning",
-                "color": "yellow",
-                "title": "Mandatory Check",
-                "subtitle": "",
-                "text": "You have to check this line if you want to validate this item."
-              },
-              {
-                "type": "text",
-                "icon": "warning",
-                "color": "purple",
-                "title": "With beneficiary company",
-                "subtitle": "",
-                "text": "There is a beneficiary company in this expense line."
-              }
-            ]
-          },
-          "items": [
-            {
-              "type": "listBlock",
-              "data": "{{expense.items}}",
-              "items": [
-                {
-                  "title": "{{item.title}}",
-                  "status": "{{item.status}}",
-                  "subtitle": "{{item.subtitle}}",
-                  "image": "{{item.image}}",
-                  "value": "{{item.total}} {{item.currency}}",
-                  "items": [
-                    {
-                      "type": "slideshow",
-                      "slides": "{{item.uploadedImages}}"
-                    },
-                    {
-                      "type": "title",
-                      "title": "{{item.Title}}"
-                    },
-                    {
-                      "type": "sectionBlock",
-                      "items": [
-                        {
-                          "type": "date",
-                          "label": "Date",
-                          "value": "{{item.date}}"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "sectionBlock",
-                      "title": "Details",
-                      "items": [
-                        {
-                          "type": "dataList",
-                          "display": "block",
-                          "data": "{{item.detailsDataList}}"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "sectionBlock",
-                      "title": "Price Details",
-                      "items": [
-                        {
-                          "type": "dataList",
-                          "display": "inline",
-                          "data": "{{item.priceDetailsDataList}}"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "footerBlock",
-                      "displayedIf": "{{validation[item.key]}}",
-                      "items": [
-                        {
-                          "type": "rulesValidationButton",
-                          "label": "Comment Check",
-                          "color": "orange",
-                          "icon": "uncheck",
-                          "validationValue": "{{validation[item.key]}}",
-                          "validatedConfig": {
-                            "label": "Comment checked",
-                            "icon": "check",
-                            "color": "green"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {"type": "sectionBlock",
-          "title": "Information",
-          "subtitle": "",
           "items": [
             {
               "type": "dataList",
               "items": [
                 {
-                  "label": "Project",
-                  "value": "Business Excellence"
+                  "label": "Type",
+                  "value": "Vacation"
                 },
                 {
-                  "label": "Mission Order",
-                  "value": "MO123456789 - Marseille Training",
-                  "href": "https://applications.dts.corp.local/missionorder/123456789"
-                },
-                {
-                  "label": "Training",
-                  "value": "NA",
-                  "isEmpty": true
+                  "label": "Comment",
+                  "value": "Voyage aux US ;)"
                 }
               ]
             }
@@ -187,23 +78,23 @@
               "display": "menu",
               "items": [{
                 "title": "Employee Details",
-                "subtitle": "{{item.title}}",
+                "subtitle": "Magali LEFEVRE",
                 "icon": "user",
                 "items": [
                   {
                     "type": "employeeCard",
-                    "data": "{{item.employee}}"
+                    "data": "{json of employee data}"
                   }
                 ]
               },
                 {
                   "title": "Validation History",
-                  "subtitle": "{{item.validationHistory.history.length}} activities",
+                  "subtitle": "2 activities",
                   "icon": "history",
                   "items": [
                     {
                       "type": "validationHistory",
-                      "data": "{{item.validationHistory}}"
+                      "data": "validation history data in json"
                     }
                   ]
                 }
