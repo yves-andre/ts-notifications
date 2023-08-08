@@ -1,123 +1,169 @@
 {
-    "version": "1.0",
-    "type": "AbsenceValidationTemplate",
-    "validationRules": {
-    },
-    "data": {
-    },
-    "template": {
-      "color": "blue", 
-      "gradient": "purple2", 
-      "items": [
-        {
-          "type": "headerBlock",
-          "title": "Time Off - Vacation",
-          "subtitle": "Magali LEFEVRE",
-          "image": "https://mysite.dts.corp.local/User%20Photos/Profile%20Pictures/MLEFEV.jpg",
-          "total": "8 days",
-          "buttons": [
-            {
-              "name": "Open",
-              "icon": "Open",
-              "color": "blue",
-              "type": "web_url",
-              "url": "http://application-dev.dts.corp.local/"
-            },
-            {
-              "name": "Edit",
-              "icon": "pen",
-              "color": "orange",
-              "type": "web_url",
-              "url": "http://application-dev.dts.corp.local/"
-            }
-          ]
-        },
-        {
-          "type": "sectionBlock",
-          "title": "Time Off",
-          "subtitle": "#ABSENCE1222299494",
-          "actions": [],
-          "items": [
-            {
-              "type": "fromToDate",
-              "labelFrom": "From",
-              "labelTo": "To",
-              "fromDate": "10/01/2023",
-              "toDate": "10/05/2023"
-            }
-          ]
-        },
-        {
-          "type": "sectionBlock",
-          "title": "Details",
-          "subtitle": "",
-          "items": [
-            {
-              "type": "dataList",
-              "items": [
-                {
-                  "label": "Type",
-                  "value": "Vacation"
-                },
-                {
-                  "label": "Comment",
-                  "value": "Voyage aux US ;)"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "sectionBlock",
-          "title": "More",
-          "subtitle": "",
-          "items": [
-            {
-              "type": "listBlock",
-              "display": "menu",
-              "items": [{
+  "version": "1.0",
+  "type": "AbsenceValidationTemplate",
+  "validationRules": {
+  },
+  "data": {
+  },
+  "template": {
+    "color": "blue",
+    "gradient": "purple2",
+    "items": [
+      {
+        "type": "header",
+        "title": "Time Off - Vacation",
+        "subtitle": "Magali LEFEVRE",
+        "image": "https://mysite.dts.corp.local/User%20Photos/Profile%20Pictures/MLEFEV.jpg",
+        "total": "8 days",
+        "buttons": [
+          {
+            "name": "Open",
+            "icon": "Open",
+            "color": "blue",
+            "url": "http://application-dev.dts.corp.local/"
+          },
+          {
+            "name": "Edit",
+            "icon": "pen",
+            "color": "orange",
+            "url": "http://application-dev.dts.corp.local/"
+          }
+        ]
+      },
+      {
+        "type": "section",
+        "title": "Time Off",
+        "subtitle": "#ABSENCE1222299494",
+        "items": [
+          {
+            "type": "fromToDate",
+            "labelFrom": "From",
+            "labelTo": "To",
+            "fromDate": "10/01/2023",
+            "toDate": "10/05/2023"
+          }
+        ]
+      },
+      {
+        "type": "section",
+        "title": "Details",
+        "subtitle": "",
+        "items": [
+          {
+            "type": "dataList",
+            "display": "block",
+            "data": [
+              {
+                "label": "Type",
+                "value": "Vacation"
+              },
+              {
+                "label": "Comment",
+                "value": "Voyage aux US ;)"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "section",
+        "title": "More",
+        "subtitle": "",
+        "items": [
+          {
+            "type": "list",
+            "display": "menu",
+            "listItems": [
+              {
                 "title": "Employee Details",
                 "subtitle": "Magali LEFEVRE",
                 "icon": "user",
                 "items": [
                   {
                     "type": "employeeCard",
-                    "data": "{json of employee data}"
+                    "data": {
+                      "employee": {
+                        "fullName": "Alexandra DE LA VILLARDIERE",
+                        "image": "path/to/image.png",
+                        "jobTitle": "General Manager Trading Ops and Logistics",
+                        "branch": "TS",
+                        "department": "Trading",
+                        "site": "Geneva",
+                        "service": "Trading Ops and Logistics",
+                        "hierarchy": [
+                          {
+                            "level": "N+1",
+                            "name": "Billie Jean"
+                          },
+                          {
+                            "level": "N+2",
+                            "name": "Jeanne DELANOE, John DOE, Elodie YGREK"
+                          }
+                        ]
+                      }
+                    }
                   }
                 ]
               },
-                {
-                  "title": "Validation History",
-                  "subtitle": "2 activities",
-                  "icon": "history",
-                  "items": [
-                    {
-                      "type": "validationHistory",
-                      "data": "validation history data in json"
+              {
+                "title": "Validation History",
+                "subtitle": "2 activities",
+                "icon": "history",
+                "items": [
+                  {
+                    "type": "validationHistory",
+                    "data": {
+                      "history": [
+                        {
+                          "title": "30 Oct 2022 | Hierarchy Validation",
+                          "user": "Bille Jean, Jeanne DELANOE, John DOE, Elodie YGREK",
+                          "status": {
+                            "color": "orange",
+                            "label": "Pending"
+                          }
+                        },
+                        {
+                          "title": "30 Oct 2022 | Employee Validation",
+                          "user": "Alexandra DE LA VILLARDIERE",
+                          "status": {
+                            "color": "green",
+                            "label": "Validated"
+                          }
+                        },
+                        {
+                          "title": "29 Oct 2022 | Secretary Validation",
+                          "user": "Elena CORDOVA",
+                          "status": {
+                            "color": "green",
+                            "label": "Validated"
+                          },
+                          "comment": "Ajouter le reçu du Taxi Uber svp"
+                        }
+                      ]
                     }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "footerBlock",
-          "items": [
-            {
-              "type": "hierarchyValidation",
-              "commentEnabled": true,
-              "commentPlaceholder": "Comments",
-              "validateButton" : {
-                "commentMandatory": false
-              },
-              "rejectButton": {
-                "commentMandatory": true
+                  }
+                ]
               }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "footer",
+        "items": [
+          {
+            "type": "hierarchyValidation",
+            "commentEnabled": true,
+            "commentPlaceholder": "Comments",
+            "validateButton": {
+              "commentMandatory": false
+            },
+            "rejectButton": {
+              "commentMandatory": true
             }
-          ]
-        }
-      ]
-    }
+          }
+        ]
+      }
+    ]
   }
-  
+}
