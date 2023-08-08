@@ -42,7 +42,6 @@
               "type": "fromToDate",
               "labelFrom": "From",
               "labelTo": "To",
-              "dateFormat": "DD MMM YYYY",
               "fromDate": "10/01/2023",
               "toDate": "10/05/2023"
             }
