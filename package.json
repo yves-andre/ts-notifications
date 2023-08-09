@@ -8,20 +8,20 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@trading/energies-ui": "bitbucket:empica/ts-ui-build#63b6314",
+    "@trading/energies-ui": "bitbucket:empica/ts-ui-build#3e73a30",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.62",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/react-redux": "^7.1.24",
     "classnames": "^2.3.2",
-    "sass": "^1.54.9",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "react-use-websocket": "^4.2.0",
+    "sass": "^1.54.9",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
@@ -61,6 +61,7 @@
     "node": "16.16.0"
   },
   "devDependencies": {
+    "dayjs": "^1.11.9",
     "dotenv-cli": "^7.1.0"
   }
 }

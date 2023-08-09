@@ -244,17 +244,17 @@ export const Explorer: React.FC = () => {
           />
         )
         break;
-        case 503:
-        case 408:
-          errorMessage = (
-            <Placeholder
-              title={`Sorry something went wrong. (Timeout)`}
-              image='error'
-              theme='dark'
-              style={{ minHeight: 0 }}
-            />
-          )
-          break;
+      case 503:
+      case 408:
+        errorMessage = (
+          <Placeholder
+            title={`Sorry something went wrong. (Timeout)`}
+            image='error'
+            theme='dark'
+            style={{ minHeight: 0 }}
+          />
+        )
+        break;
       default:
         errorMessage = (
           <Placeholder
@@ -270,20 +270,26 @@ export const Explorer: React.FC = () => {
   }
 
   return (
-    <div className='Explorer'>
-      <Search />
+    <>
+
       {!filterNotifications ? (
-        <Placeholder
-          title="You don't have any notification."
-          image='emptyBox'
-          theme='dark'
-          color={true}
-          style={{ minHeight: 0 }}
-        />
+        <>
+          {filters.searchFilter && <Search stacked={false} />}
+          <Placeholder
+            title="You don't have any notification."
+            image='emptyBox'
+            color={true}
+            style={{ minHeight: 0, flex: 1, padding: 0 }}
+          />
+        </>
       ) : (
-        <Table notificationGroups={filterNotifications} />
+        <>
+
+          <Search stacked={true} />
+          <Table notificationGroups={filterNotifications} />
+        </>
       )}
-    </div>
+    </>
   )
 }
 

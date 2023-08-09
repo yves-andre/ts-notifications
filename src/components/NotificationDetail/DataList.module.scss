@@ -1,0 +1,78 @@
+.DataList {
+  list-style-type: none;
+  list-style-position: outside;
+  padding: 0;
+  margin: 0;
+  &:has(li) {
+    padding: 2px 0;
+  }
+  &-item {
+    padding: 8px 10px;
+    margin: 0;
+    position: relative;
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--ts-global-border);
+    }
+    &.isEmpty {
+      .DataList-value {
+        color: var(--ts-color-neutral-gray);
+        font-style: italic;
+      }
+    }
+  }
+  &-label {
+    font-size: 15px;
+    color: var(--ts-color-neutral-gray);
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+    overflow: hidden;
+  }
+  &-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  &-status {
+    height: 0;
+    min-height: 0;
+    min-width: 20px;
+  }
+  &-value {
+    font-size: 15px;
+    color: var(--ts-color-neutral-night);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    &[href] {
+      transition: color 110ms ease-out;
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: var(--theme);
+        opacity: 0;
+        transition: opacity 110ms ease-out;
+        z-index: 1;
+      }
+      &:hover {
+        color: var(--theme);
+        &::before {
+          opacity: 0.05;
+        }
+      }
+    }
+  }
+}
+/*----------------------------------------------------------------------------*/
+.DataList--inline {
+  .DataList-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 40px;
+    box-sizing: border-box;
+  }
+}

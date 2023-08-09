@@ -1,0 +1,14 @@
+.RulesValidationButton {
+  flex: 1;
+  padding: 12px 10px;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &-button {
+    min-width: 250px;
+    [data-branding='new'] & {
+      text-transform: uppercase;
+    }
+  }
+}

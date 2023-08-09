@@ -1,5 +1,6 @@
 export const APP_CONFIG: any = {
-  APP_COLOR: 'tileBlue',
+  APP_COLOR: 'corporate/red',
+  APP_GRADIENT: 'corporate/red',
   APP_NAME: 'Notifications',
   THEME_ASSETS: {
     icons: 'https://sp-resources-dev.dts.corp.local/tsf/assets/icons/',
@@ -10,7 +11,7 @@ export const APP_CONFIG: any = {
   },
   THEME_FONTS: [
     'https://sp-resources-dev.dts.corp.local/tsf/assets/fonts/opensans/opensans.css',
-    'https://sp-resources-dev.dts.corp.local/tsf/assets/fonts/raleway/raleway.css',
+    'https://sp-resources-dev.dts.corp.local/tsf/assets/fonts/nunito/nunito.css',
   ],
   DEFAULT_APPLICATION_COLOR: '#0000006e',
 }

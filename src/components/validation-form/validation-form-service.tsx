@@ -8,15 +8,15 @@ interface ValidationRule {
   // propertyName: propertyType;
 }
 
-export  interface Button {
+export interface Button {
   name: string;
   icon: string;
   color: string;
-  type: string;
+  type?: string;
   url: string;
 }
 
-export  interface InfoTipItem {
+export interface InfoTipItem {
   type: string;
   icon: string;
   color: string;
@@ -25,22 +25,22 @@ export  interface InfoTipItem {
   text: string;
 }
 
-export  interface ValidateButton {
+export interface ValidateButton {
   commentMandatory: boolean;
 }
 
-export  interface RejectButton {
+export interface RejectButton {
   commentMandatory: boolean;
 }
 
-export  interface Item {
+export interface Item {
   type?: string;
   title?: string;
   subtitle?: string;
   image?: string;
   total?: string;
   buttons?: Button[];
-  label?:string;
+  label?: string;
   labelFrom?: string;
   labelTo?: string;
   dateFormat?: string;
@@ -53,7 +53,7 @@ export  interface Item {
     closeButtonText: string;
     items: InfoTipItem[];
   };
-  data?: string;
+  data?: any;
   slides?: string;
   display?: string;
   items?: Item[]; // Renamed from listItems to Items
@@ -83,41 +83,41 @@ export interface ItemValidationTemplate {
 
 
 export const generateComponents = (templateItems: Item[]): React.ReactNode => {
-    return templateItems.map((item, index) => {
-      switch (item.type) {
-        case 'headerBlock':
-          return <HeaderBlock {...item as HeaderBlockProps} />
-        case 'sectionBlock':
-          return (
-            <div key={index}>
-              {/* Render your sectionBlock component here */}
-              <h2>{item.title}</h2>
-              <p>{item.subtitle}</p>
-              {/* Recursively render nested items */}
-              {item.items && generateComponents(item.items)}
-            </div>
-          );
+  return templateItems.map((item, index) => {
+    switch (item.type) {
+      case 'headerBlock':
+        return <HeaderBlock {...item as HeaderBlockProps} />
+      case 'sectionBlock':
+        return (
+          <div key={index}>
+            {/* Render your sectionBlock component here */}
+            <h2>{item.title}</h2>
+            <p>{item.subtitle}</p>
+            {/* Recursively render nested items */}
+            {item.items && generateComponents(item.items)}
+          </div>
+        );
 
-        case 'fromToDate':
-            return <FromToDate {...item as FromToDateProps} />
-        case 'listBlock':
-          return (
-            <ul key={index}>
-              {/* Render your listBlock component here */}
-              {item.items && item.items.map((item, liIndex) => (
-                <li key={liIndex}>
-                  <h3>{item.title}</h3>
-                  <p>{item.subtitle}</p>
-                  {/* Recursively render nested items */}
-                  {item.items && generateComponents(item.items)}
-                </li>
-              ))}
-            </ul>
-          );
-  
-        // Add more cases for other types as needed
-        default:
-          return null;
-      }
-    });
-  };
+      case 'fromToDate':
+        return <FromToDate {...item as FromToDateProps} />
+      case 'listBlock':
+        return (
+          <ul key={index}>
+            {/* Render your listBlock component here */}
+            {item.items && item.items.map((item, liIndex) => (
+              <li key={liIndex}>
+                <h3>{item.title}</h3>
+                <p>{item.subtitle}</p>
+                {/* Recursively render nested items */}
+                {item.items && generateComponents(item.items)}
+              </li>
+            ))}
+          </ul>
+        );
+
+      // Add more cases for other types as needed
+      default:
+        return null;
+    }
+  });
+};

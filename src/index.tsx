@@ -16,10 +16,10 @@ const environmentAssets =
 root.render(
   <Theme
     color={APP_CONFIG.APP_COLOR}
+    gradient={APP_CONFIG.APP_GRADIENT}
     assets={environmentAssets}
     fonts={APP_CONFIG.THEME_FONTS}
-    legacyBranding={true}
-    darkMode={true}
+    legacyBranding={false}
   >
     <HashRouter>
       <Provider store={store}>

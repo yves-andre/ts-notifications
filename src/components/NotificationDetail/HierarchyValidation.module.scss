@@ -1,0 +1,11 @@
+.HierarchyValidation {
+  flex: 1;
+  padding: 21px 10px;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  &-actions {
+    display: flex;
+    gap: 9px;
+  }
+}

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import {
   Button,
   Picture,
@@ -27,8 +27,8 @@ import CategoryColor from '../../../data/interfaces/category-color'
 import './Table.scss'
 import classNames from 'classnames'
 import NotificationGroup from '../../../data/interfaces/notification-group'
-import {getUserLogin} from "../../../services/auth-service";
-import {setNotificationIsSeen} from "../../../services/notification-service";
+import { getUserLogin } from "../../../services/auth-service";
+import { setNotificationIsSeen } from "../../../services/notification-service";
 import { redirect, useNavigate } from 'react-router-dom'
 
 interface Props {
@@ -54,10 +54,10 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   useEffect(() => {
     notificationGroups.forEach((notificationGroup: NotificationGroup) => {
       const notificationsToMarkAsSeen = notificationGroup.notifications.filter(
-          (notification) =>
-              !notification.isSeen
+        (notification) =>
+          !notification.isSeen
       )
-      if(notificationsToMarkAsSeen.length){
+      if (notificationsToMarkAsSeen.length) {
         const notificationsIds = notificationsToMarkAsSeen.map((notification) => {
           return notification._id
         })
@@ -106,13 +106,13 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const openNotificationHandler = (notification: Notification) => {
     console.log(notification)
     if (true || notification.hasValidationForm && notification.validationFormUrl) {
-        const resp = navigate(`/validation/${notification._id}`)
-        console.log(resp);
+      const resp = navigate(`/validation/${notification._id}`)
+      console.log(resp);
     } else {
       const action = getNotificationDefaultAction(notification)
       action && action.call(this)
     }
-    
+
     //window.open(notification.sourceUrl, "_blank", "noopener,noreferrer");
     !notification.isRead &&
       dispatch(setNotificationIsReadById(notification._id))
@@ -303,8 +303,8 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
         </tr>
       </thead>
       <tbody>
-        {notificationGroups.map((notificationGroup: NotificationGroup) => (
-          <>
+        {notificationGroups.map((notificationGroup: NotificationGroup, i: number) => (
+          <React.Fragment key={i}>
             {notificationGroups.length > 1 && (
               <tr>
                 <th colSpan={6}>{notificationGroup.name}</th>
@@ -337,7 +337,6 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                     />
                   )}
                   <Text
-                    color='rgba(255,255,255,.5)'
                     size='small'
                     uppercase
                     light
@@ -373,7 +372,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 </th>
 
                 <th>
-                  <Text light color='white'>
+                  <Text light>
                     <>
                       {search && (
                         <span>
@@ -386,7 +385,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 </th>
 
                 <th>
-                  <Text color='rgba(255,255,255,.4)' italic light size='small'>
+                  <Text italic light size='small'>
                     <>
                       {
                         notification.details &&
@@ -412,7 +411,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 </th>
 
                 <th align='right'>
-                  <Text color='rgba(255,255,255,.4)' italic light size='small'>
+                  <Text italic light size='small'>
                     <>
                       {search && (
                         <span>
@@ -437,7 +436,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 )}
               </tr>
             ))}
-          </>
+          </React.Fragment>
         ))}
       </tbody>
     </TableUI>

@@ -8,7 +8,7 @@ import { Input } from '@trading/energies-ui'
 import './Search.scss'
 import { useDebounce } from '../../../hooks/use-debounce'
 
-export const Search: React.FC = () => {
+export const Search: React.FC<{ stacked: boolean }> = ({ stacked }) => {
   const dispatch = useAppDispatch()
 
   const search = useAppSelector((state) => state.filters.searchFilter);
@@ -18,17 +18,21 @@ export const Search: React.FC = () => {
   ) => {
     dispatch(filtersActions.setSearchFilter(event.target.value));
   }
- 
+
   return (
     <Input
-      placeholder='Quick search ...'
+      size='large'
+      placeholder='Quick search in this list...'
       type='search'
-      variant='translucide'
-      round
-      icon={{ name: 'search', position: 'before', color: 'white' }}
+      icon={{ name: 'search', position: 'before' }}
+      stacked={stacked}
       onChange={searchChangeHandler}
       deleteBtn={true}
       value={search}
+      style={{
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+      }}
     />
   )
 }
