@@ -43,12 +43,12 @@ export const NotificationItem = ({
           color={color}
         >
           <Icon name={image} size='xs' />
-          {sourceName}
+          <span className={b('title')}>{title?.toLowerCase()}</span>
         </Status>
       </td>
       <td>
         <div className={b('subject')}>
-          <span className={b('title')}>
+          <span className={b('subtitle')}>
             {isImportant && (
               <Icon
                 className={b('important')}
@@ -57,9 +57,8 @@ export const NotificationItem = ({
                 color='red'
               />
             )}
-            {title}
+            {subtitle}
           </span>
-          {subtitle && <div className={b('subtitle')}>{subtitle}</div>}
           {description && <div className={b('desc')}>{description}</div>}
         </div>
       </td>

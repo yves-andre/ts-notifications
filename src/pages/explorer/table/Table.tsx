@@ -107,7 +107,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
 
   const openNotificationHandler = (notification: Notification) => {
     console.log(notification)
-    if (true || notification.hasValidationForm && notification.validationFormUrl) {
+    if (notification.hasValidationForm && notification.validationFormUrl) {
       const resp = navigate(`/validation/${notification._id}`)
       console.log(resp);
     } else {
@@ -326,12 +326,27 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 title={getHighlightedText(notification.title, search)}
                 subtitle={getHighlightedText(notification.subtitle, search)}
                 description={getHighlightedText(notification.description, search)}
-                details={notification.details}
+                details={
+                  <>
+                    {
+                      notification.details &&
+                      <>
+                        <span>{notification.details}</span>
+                        <br />
+                      </>
+                    }
+                    {selectedStatus === STATUS.TREATED &&
+                      notification.treatedBy &&
+                      notification.treatedOn &&
+                      <span>Marked as treated by  <span style={{ textDecoration: "underline" }}>{getHighlightedText(notification.treatedBy, search)}</span> on {getHighlightedText(notification.treatedOn, search)}</span>
+                    }
+                  </>
+                }
                 date={getHighlightedText(formatDate(notification.date), search)}
                 onClick={() => openNotificationHandler(notification)}
-                active={false}
-                status={undefined}
+                status={selectedStatus}
                 color={getColorApplication(notification.sourceName)}
+                active={false}
               />
             ))}
 
