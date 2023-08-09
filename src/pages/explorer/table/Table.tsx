@@ -31,6 +31,8 @@ import { getUserLogin } from "../../../services/auth-service";
 import { setNotificationIsSeen } from "../../../services/notification-service";
 import { redirect, useNavigate } from 'react-router-dom'
 
+import NotificationItem from './../../../components/NotificationItem'
+
 interface Props {
   notificationGroups: NotificationGroup[]
 }
@@ -148,7 +150,8 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
     align?: 'center' | 'right' | 'justify' | 'char'
     start?: boolean
     end?: boolean
-  }> = ({ field, children, align, start, end }) => {
+    style?: React.CSSProperties
+  }> = ({ field, children, align, start, end, style }) => {
     const borderRadius = {
       borderBottomLeftRadius: start ? '0px' : undefined,
       borderBottomRightRadius: end ? '0px' : undefined,
@@ -157,7 +160,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
     return (
       <td
         onClick={() => sortColumnHandler(field)}
-        style={{ cursor: 'pointer', ...borderRadius }}
+        style={{ cursor: 'pointer', ...borderRadius, ...style }}
         align={align}
       >
         <Text variant='current'>{children}</Text>&nbsp;
@@ -249,6 +252,9 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
     if (!text) {
       return <span>{text}</span>
     }
+
+    if (!highlight) return text
+
     // Split on highlight term and include term into parts, ignore case
     const parts = text.split(new RegExp(`(${highlight})`, 'gi'))
     return (
@@ -276,9 +282,8 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
             Source
           </TD>
           <TD field='subtitle'>Subject</TD>
-          <TD field='description'>Description</TD>
-          <TD field='details'>Details</TD>
-          <TD field='date' align='right'>
+          <TD field='details' style={{ width: 250, maxWidth: 250 }}>Details</TD>
+          <TD field='date'>
             Date
           </TD>
           {selectedStatus !== STATUS.TREATED &&
@@ -302,14 +307,35 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
             )}
         </tr>
       </thead>
-      <tbody>
+      <tbody style={{ color: 'var(--ts-color-neutral-gray)' }}>
         {notificationGroups.map((notificationGroup: NotificationGroup, i: number) => (
           <React.Fragment key={i}>
             {notificationGroups.length > 1 && (
               <tr>
-                <th colSpan={6}>{notificationGroup.name}</th>
+                <th colSpan={5}>{notificationGroup.name}</th>
               </tr>
             )}
+
+            {notificationGroup.notifications.map((notification, index) => (
+              <NotificationItem
+                key={index}
+                isRead={notification.isRead}
+                isImportant={notification.isImportant}
+                image={notification.image}
+                sourceName={notification.sourceName}
+                title={getHighlightedText(notification.title, search)}
+                subtitle={getHighlightedText(notification.subtitle, search)}
+                description={getHighlightedText(notification.description, search)}
+                details={notification.details}
+                date={getHighlightedText(formatDate(notification.date), search)}
+                onClick={() => openNotificationHandler(notification)}
+                active={false}
+                status={undefined}
+                color={getColorApplication(notification.sourceName)}
+              />
+            ))}
+
+
             {notificationGroup.notifications.map((notification, index) => (
               <tr
                 key={index}
@@ -369,9 +395,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                       {notification.subtitle}
                     </span>
                   )}
-                </th>
-
-                <th>
+                  <br />
                   <Text light>
                     <>
                       {search && (
@@ -410,7 +434,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                   </Text>
                 </th>
 
-                <th align='right'>
+                <th>
                   <Text italic light size='small'>
                     <>
                       {search && (

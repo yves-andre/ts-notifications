@@ -1,5 +1,5 @@
 import React from 'react'
-import { STATUS } from '../_status.constant'
+import { STATUS } from '../NotificationDetail/_status.constant'
 
 import { Picture, BEM } from '@trading/energies-ui'
 import styles from './NotificationBadge.module.scss'

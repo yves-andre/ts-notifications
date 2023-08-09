@@ -1,5 +1,5 @@
 import React from 'react'
-import { STATUS } from '../../status.constant'
+import { STATUS } from '../NotificationDetail/_status.constant'
 
 import { NotificationBadge } from './'
 
@@ -10,24 +10,28 @@ const b = BEM(styles)
 
 /*----------------------------------------------------------------------------*/
 export const NotificationItem = ({
-  source,
-  subject,
-  detail,
+  isRead,
+  image,
+  sourceName,
+  title,
+  subtitle,
+  isImportant,
+  details,
+  description,
   date,
-  status,
-  unread,
-  active,
   onClick,
-  important,
+  active,
+  status,
+  color
 }) => {
-  const theme = setTheme(source.color)
+  const theme = setTheme(color)
   return (
     <tr
       className={b({
         hasClick: onClick,
         isActive: active,
         isError: status === STATUS.ERROR,
-        isUnread: unread,
+        isUnread: !isRead,
       })}
       onClick={onClick}
       style={theme}
@@ -36,16 +40,16 @@ export const NotificationItem = ({
         <Status
           className={b('status')}
           variant='badgePastel'
-          color={source.color}
+          color={color}
         >
-          <Icon name={source.icon} size='xs' />
-          {source.title}
+          <Icon name={image} size='xs' />
+          {sourceName}
         </Status>
       </td>
       <td>
         <div className={b('subject')}>
           <span className={b('title')}>
-            {important && (
+            {isImportant && (
               <Icon
                 className={b('important')}
                 name='exclamationPoint'
@@ -53,15 +57,16 @@ export const NotificationItem = ({
                 color='red'
               />
             )}
-            {subject.title}
+            {title}
           </span>
-          {subject.desc && <div className={b('desc')}>{subject.desc}</div>}
+          {subtitle && <div className={b('subtitle')}>{subtitle}</div>}
+          {description && <div className={b('desc')}>{description}</div>}
         </div>
       </td>
-      <td>{detail}</td>
+      <td>{details}</td>
       <td>{date}</td>
       <td align='right'>
-        <NotificationBadge status={status} />
+        {status && <NotificationBadge status={status} />}
       </td>
     </tr>
   )
