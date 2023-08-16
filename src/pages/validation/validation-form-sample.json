@@ -1,107 +1,103 @@
 {
   "version": "1.0",
   "type": "AbsenceValidationTemplate",
-  "validationRules": {
-  },
-  "data": {
-  },
+  "validationRules": {},
+  "data": {},
   "template": {
-    "color": "blue",
-    "gradient": "purple2",
+    "color": "corporate/green",
+    "gradient": "corporate/green",
     "items": [
       {
-        "type": "header",
-        "title": "Time Off - Vacation",
-        "subtitle": "Magali LEFEVRE",
-        "image": "https://mysite.dts.corp.local/User%20Photos/Profile%20Pictures/MLEFEV.jpg",
-        "total": "8 days",
-        "buttons": [
-          {
-            "name": "Open",
-            "icon": "Open",
-            "color": "blue",
-            "url": "http://application-dev.dts.corp.local/"
-          },
-          {
-            "name": "Edit",
-            "icon": "pen",
-            "color": "orange",
-            "url": "http://application-dev.dts.corp.local/"
-          }
-        ]
+        "title": "Telework",
+        "subtitle": "Sptest MANAGER 1",
+        "image": "https://mysite.dts.corp.local/User%20Photos/Profile%20Pictures/mtest.jpg",
+        "total": "1 day",
+        "buttons": [],
+        "type": "headerBlock"
       },
       {
-        "type": "section",
-        "title": "Time Off",
-        "subtitle": "#ABSENCE1222299494",
+        "title": "Telework",
+        "subtitle": "ABS230000527",
         "items": [
           {
-            "type": "fromToDate",
             "labelFrom": "From",
             "labelTo": "To",
-            "fromDate": "10/01/2023",
-            "toDate": "10/05/2023"
+            "dateFormat": "",
+            "fromDate": "08/09/2023",
+            "toDate": "08/09/2023",
+            "type": "fromToDate"
           }
-        ]
+        ],
+        "type": "sectionBlock"
       },
       {
-        "type": "section",
         "title": "Details",
         "subtitle": "",
         "items": [
           {
-            "type": "dataList",
             "display": "block",
             "data": [
               {
-                "label": "Type",
-                "value": "Vacation"
+                "label": "Home/Not Home",
+                "value": "Home",
+                "isEmpty": false
+              },
+              {
+                "label": "Country",
+                "value": "Switzerland",
+                "isEmpty": false
               },
               {
                 "label": "Comment",
-                "value": "Voyage aux US ;)"
+                "value": "Aymen_test_lvl_hierarchy_employeeCard",
+                "isEmpty": false
+              },
+              {
+                "label": "Region",
+                "value": "CH - Geneva",
+                "isEmpty": false
               }
-            ]
+            ],
+            "type": "dataList"
           }
-        ]
+        ],
+        "type": "sectionBlock"
       },
       {
-        "type": "section",
         "title": "More",
         "subtitle": "",
         "items": [
           {
-            "type": "list",
             "display": "menu",
             "listItems": [
               {
                 "title": "Employee Details",
-                "subtitle": "Magali LEFEVRE",
+                "subtitle": "Sptest MANAGER 1",
                 "icon": "user",
                 "items": [
                   {
-                    "type": "employeeCard",
                     "data": {
                       "employee": {
-                        "fullName": "Alexandra DE LA VILLARDIERE",
-                        "image": "path/to/image.png",
-                        "jobTitle": "General Manager Trading Ops and Logistics",
+                        "fullName": "Sptest MANAGER 1",
+                        "image": "https://mysite.dts.corp.local/User%20Photos/Profile%20Pictures/mtest.jpg",
+                        "jobTitle": "",
                         "branch": "TS",
-                        "department": "Trading",
                         "site": "Geneva",
-                        "service": "Trading Ops and Logistics",
+                        "department": "SPTEST Informatique",
+                        "service": "Test",
                         "hierarchy": [
                           {
                             "level": "N+1",
-                            "name": "Billie Jean"
+                            "name": "Sptest MANAGER 2, Sptest MANAGER DELEGATION PERM"
                           },
                           {
                             "level": "N+2",
-                            "name": "Jeanne DELANOE, John DOE, Elodie YGREK"
+                            "name": "Sptest MANAGER 3, Sptest MANAGER DELEGATION PERM"
                           }
                         ]
                       }
-                    }
+                    },
+                    "type": "employeeCard"
                   }
                 ]
               },
@@ -111,48 +107,41 @@
                 "icon": "history",
                 "items": [
                   {
-                    "type": "validationHistory",
                     "data": {
                       "history": [
                         {
-                          "title": "30 Oct 2022 | Hierarchy Validation",
-                          "user": "Bille Jean, Jeanne DELANOE, John DOE, Elodie YGREK",
-                          "status": {
-                            "color": "orange",
-                            "label": "Pending"
-                          }
-                        },
-                        {
-                          "title": "30 Oct 2022 | Employee Validation",
-                          "user": "Alexandra DE LA VILLARDIERE",
-                          "status": {
-                            "color": "green",
-                            "label": "Validated"
-                          }
-                        },
-                        {
-                          "title": "29 Oct 2022 | Secretary Validation",
-                          "user": "Elena CORDOVA",
+                          "title": "11 Aug 2023 | Employee Validation",
+                          "user": "Sptest MANAGER 1",
                           "status": {
                             "color": "green",
                             "label": "Validated"
                           },
-                          "comment": "Ajouter le reçu du Taxi Uber svp"
+                          "comment": ""
+                        },
+                        {
+                          "title": "11 Aug 2023 | Hierarchy Validation",
+                          "user": "Sptest MANAGER 2, Sptest MANAGER DELEGATION PERM",
+                          "status": {
+                            "color": "orange",
+                            "label": "Pending"
+                          },
+                          "comment": ""
                         }
                       ]
-                    }
+                    },
+                    "type": "validationHistory"
                   }
                 ]
               }
-            ]
+            ],
+            "type": "listBlock"
           }
-        ]
+        ],
+        "type": "sectionBlock"
       },
       {
-        "type": "footer",
         "items": [
           {
-            "type": "hierarchyValidation",
             "commentEnabled": true,
             "commentPlaceholder": "Comments",
             "validateButton": {
@@ -160,9 +149,11 @@
             },
             "rejectButton": {
               "commentMandatory": true
-            }
+            },
+            "type": "hierarchyValidation"
           }
-        ]
+        ],
+        "type": "footerBlock"
       }
     ]
   }

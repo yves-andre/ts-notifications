@@ -66,8 +66,8 @@ export const App: React.FC = () => {
       <Route path="/" element={<Page />}>
         <Route index element={<Navigate to="/explorer" />} />
         <Route path="explorer" element={<Explorer />} />
-        <Route path="explorer/:filter" element={<Explorer />} />
-        <Route path="validation/:id" element={<Validation />} />
+        {/*<Route path="explorer/:filter" element={<Explorer />} />*/}
+        <Route path="explorer/:notificationId" element={<Explorer />} />
       </Route>
      
     </Routes>

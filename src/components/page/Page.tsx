@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
+import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom'
 import { Layout, Header, LocalNav, Flex, Col, IconButton } from '@trading/energies-ui'
 import { Topbar } from '../../pages/topbar/Topbar'
 import { Sidebar } from '../../pages/sidebar/Sidebar'
@@ -17,8 +17,26 @@ import NotificationDetail from '../../components/NotificationDetail'
 
 import './Page.scss'
 import { APP_CONFIG } from '../../data/app-config'
+import Notification from "../../data/interfaces/notification";
+import {fetchNotifications, selectNotificationById, setNotificationIsReadById} from "../../store/notifications-slice";
+import {useSelector} from "react-redux";
+
+const userProfile = {}
 
 export const Page: React.FC = () => {
+  const navigate = useNavigate()
+  const location = useLocation();
+  const params= useParams()
+  const dispatch = useAppDispatch();
+  const [hasValidation, setHasValidation] = React.useState(false)
+  const notification = useSelector(selectNotificationById(params.notificationId));
+
+  useEffect(() => {
+    if (!notification) {
+      dispatch(fetchNotifications());
+    }
+  }, [dispatch, notification]);
+
   const totalLogo =
     process.env.NODE_ENV !== 'development'
       ? APP_CONFIG.THEME_ASSETS.totalLogo
@@ -37,7 +55,9 @@ export const Page: React.FC = () => {
     (state) => state.applications.categoryColors
   );
 
-  const dispatch = useAppDispatch();
+  useEffect(() => {
+    setHasValidation(!!notification)
+  }, [notification])
 
   // Load the applications and colors
   useEffect(() => {
@@ -48,6 +68,10 @@ export const Page: React.FC = () => {
   }, []);
 
   const menuIsReady = applications.length > 0 && !!categoryColors
+
+  const onValidationClose = () => {
+    const resp = navigate({pathname: `/explorer`, search: location.search})
+  }
 
   return (
     <>
@@ -63,7 +87,8 @@ export const Page: React.FC = () => {
 
         {/* HEADER ----------------------------------------------------------*/}
         <Layout.Header>
-          {/*<Header
+          {<Header
+          userProfile={userProfile}
           style={{
             '--ts-global-theme': 'var(--ts-color-corporate-red)',
             '--ts-global-theme-dark': 'var(--ts-color-corporate-red-dark)',
@@ -73,7 +98,7 @@ export const Page: React.FC = () => {
           logo={totalLogo}
           variant='default'
           active='notifications'
-          onChange={(key) => console.log(key)}
+          onChange={(key: any) => console.log(key)}
           settingsAction={() => { }}
           rainbow={true}
           items={[
@@ -90,8 +115,7 @@ export const Page: React.FC = () => {
               },
             },
           ]}
-        ></Header>*/}
-          <div style={{ height: 50, background: 'var(--ts-color-lightGray)' }}> <small>TODO: Header to fix</small></div>
+        ></Header>}
         </Layout.Header>
 
 
@@ -134,24 +158,24 @@ export const Page: React.FC = () => {
             </>
           </Col>
 
-          <Col
-            style={{
-              maxWidth: 410,
-              background: 'white',
-              marginRight: -25,
-              display: 'flex',
-              flexDirection: 'column',
-              alignSelf: 'flex-start',
-              height: 'calc(100vh - 50px)',
-              position: 'sticky',
-              top: 0,
-              zIndex: 5,
-            }}
-          >
-            <NotificationDetail onClose={() => console.log('close')} />
-
-          </Col>
-
+          {
+            hasValidation && (<Col
+              style={{
+                maxWidth: 410,
+                background: 'white',
+                marginRight: -25,
+                display: 'flex',
+                flexDirection: 'column',
+                alignSelf: 'flex-start',
+                height: 'calc(100vh - 50px)',
+                position: 'sticky',
+                top: 0,
+                zIndex: 5,
+              }}
+            >
+              <NotificationDetail notification={notification} onClose={() => onValidationClose()}/>
+            </Col>)
+          }
         </Flex>
       </Layout>
     </>

@@ -10,7 +10,7 @@ import {
   dismissNotifications as _dismissNotifications,
   getNotificationCountByCategory,
 } from "./../services/notification-service";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
 import type { AppDispatch, RootState } from "./index";
 import Notification from "../data/interfaces/notification";
 import { FILTER } from '../data/constants/filter';
@@ -54,6 +54,17 @@ const notificationSlice = createSlice({
     },
   },
 });
+
+
+const selectNotifications = (state: { notifications: { notificationItems: any; }; }) => {
+  return state.notifications.notificationItems;
+};
+
+export const selectNotificationById = (notificationId: any) =>
+  createSelector(
+    selectNotifications,
+    notifications => notifications?.find((notification: { _id: any; }) => notification._id === notificationId)
+  );
 
 export const fetchNotifications = (searchParams: URLSearchParams | null = null) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {

@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
-
-import { IconButton, setTheme, setGradient, BEM } from '@trading/energies-ui'
-
-import { Block, Error, Alert } from './'
-
+import React, {useEffect, useState} from 'react'
+import {BEM, IconButton, setGradient, setTheme} from '@trading/energies-ui'
+import {Alert, Block, Error} from './'
 import mock from './_mock.json'
-
 import styles from './Panel.module.scss'
+import {getValidationFormById} from "../../services/notification-service";
+import validationFormSample from "../../pages/validation/validation-form-sample.json";
+import {ItemValidationTemplate} from "../validation-form/validation-form-service";
+import error from "./Error";
+
 const b = BEM(styles)
 
 /*----------------------------------------------------------------------------*/
@@ -26,28 +27,69 @@ const PanelClose = ({ onClick, header }) => {
 }
 
 /*----------------------------------------------------------------------------*/
-export const Panel = ({ onClose, loading = false }) => {
+export const Panel = ({notification, onClose, loading = false }) => {
 
-  const template = mock.template
-
-  const theme = setTheme(template?.color)
+  const [template, setTemplate] = useState(undefined);
+  const [header, setHeader] = useState(undefined);
+  const [footer, setFooter] = useState(undefined);
+  const [content, setContent] = useState(undefined);
+  const [items, setItems] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(loading);
+  // const template = mock.template
+  const theme = setTheme(template?.color || '')
   const gradientStyles = setGradient(template?.gradient, 'background', true)
 
-  const items = template?.items
-
-  const header = items?.find((i) => i.type === 'headerBlock')
-  const footer = items?.find((i) => i.type === 'footerBlock')
-  const content = items?.filter(
-    (i) => i.type !== 'headerBlock' && i.type !== 'footerBlock'
-  )
 
   const [alert, setAlert] = useState(true)
+  const loadNotificationForm = () => {
+    setAlert(false);
+    setIsLoading(true);
+    if (notification && notification.hasValidationForm) {
+      getValidationFormById(notification._id)
+        .then((validationJSON) => {
+           // const re = new RegExp("\u2028|\u2029|\uFEFF");
+           // const result = validationJSON.replace(re, '');
+           console.log(validationJSON)
+
+          //  console.log(JSON.parse(result))
+          setTemplate(validationJSON.template);
+          const items = validationFormSample?.template?.items
+          // const items = validationJSON?.template?.items
+          const header = items?.find((i) => i.type === 'headerBlock')
+          const footer = items?.find((i) => i.type === 'footerBlock')
+          const content = items?.filter(
+            (i) => i.type !== 'headerBlock' && i.type !== 'footerBlock'
+          )
+          setItems(items)
+          setHeader(header)
+          setFooter(footer)
+          setContent(content)
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setAlert(true);
+          setIsLoading(false);
+          console.log(error)
+        })
+    }
+  }
+
+  useEffect(() => {
+    console.log('notification', notification)
+    if(notification && notification.hasValidationForm) {
+      loadNotificationForm()
+    } else {
+      setTemplate(undefined)
+    }
+  }, [notification])
+
+
 
   return (
     <div
       className={b({
         hasHeader: header,
-        isLoading: loading,
+        isLoading: isLoading,
       })}
       style={{ ...theme, ...gradientStyles }}
     >

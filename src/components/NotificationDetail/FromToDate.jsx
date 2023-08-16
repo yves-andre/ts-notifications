@@ -36,13 +36,13 @@ export const FromToDate = ({
         type='date'
         className={b('from')}
         label={labelFrom}
-        value={dayjs(from).isValid() ? from : fromDate}
+        value={dateFormat && dayjs(from).isValid() ? from : fromDate}
       />
       <Block
         type='date'
         className={b('to')}
         label={labelTo}
-        value={dayjs(to).isValid() ? to : toDate}
+        value={dateFormat && dayjs(to).isValid() ? to : toDate}
       />
     </div>
   )

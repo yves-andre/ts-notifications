@@ -29,7 +29,7 @@ import classNames from 'classnames'
 import NotificationGroup from '../../../data/interfaces/notification-group'
 import { getUserLogin } from "../../../services/auth-service";
 import { setNotificationIsSeen } from "../../../services/notification-service";
-import { redirect, useNavigate } from 'react-router-dom'
+import {redirect, useLocation, useNavigate, useParams} from 'react-router-dom'
 
 import NotificationItem from './../../../components/NotificationItem'
 
@@ -42,6 +42,8 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const sortFilter = useAppSelector((state) => state.filters.sortFilter)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const location = useLocation();
+  const params = useParams();
   const selectedStatus = useAppSelector((state) => state.filters.selectedStatus)
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
@@ -106,9 +108,10 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   }
 
   const openNotificationHandler = (notification: Notification) => {
-    console.log(notification)
     if (notification.hasValidationForm && notification.validationFormUrl) {
-      const resp = navigate(`/validation/${notification._id}`)
+      // const resp = navigate(`/validation/${notification._id}`)
+      console.log('location.pathname', location.search)
+      const resp = navigate({pathname: `/explorer/${notification._id}`, search: location.search})
       console.log(resp);
     } else {
       const action = getNotificationDefaultAction(notification)
@@ -346,7 +349,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 onClick={() => openNotificationHandler(notification)}
                 status={selectedStatus}
                 color={getColorApplication(notification.sourceName)}
-                active={false}
+                active={params?.notificationId === notification._id}
               />
             ))}
 

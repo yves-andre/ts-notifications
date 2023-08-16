@@ -8,7 +8,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@trading/energies-ui": "bitbucket:empica/ts-ui-build#3e73a30",
+    "@trading/energies-ui": "../ts-ui-build",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.62",
     "@types/react": "^18.0.21",
@@ -28,7 +28,7 @@
   "scripts": {
     "start": "npm run start-ws && react-scripts start",
     "start:local": "dotenv -e .env.local -- react-scripts start",
-    "start:development": "dotenv -e .env.development -- react-scripts start",
+    "start:development": "dotenv -e .env.development --host 0.0.0.0 react-scripts start",
     "start:staging": "dotenv -e .env.staging -- react-scripts start",
     "build": "react-scripts build",
     "build:development": "dotenv -e .env.development -- react-scripts build",
