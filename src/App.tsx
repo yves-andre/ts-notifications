@@ -12,6 +12,7 @@ import { useRouteFilters } from "./hooks/use-route-filters";
 import "./App.scss";
 import { CATEGORY } from "./data/constants/category";
 import Validation from "./pages/validation/Validation";
+import TestValidation from "./pages/test-validation/TestValidation";
 
 export const App: React.FC = () => {
   const searchParams = useRouteFilters();
@@ -69,7 +70,8 @@ export const App: React.FC = () => {
         {/*<Route path="explorer/:filter" element={<Explorer />} />*/}
         <Route path="explorer/:notificationId" element={<Explorer />} />
       </Route>
-     
+      <Route path="/test-validation" element={<TestValidation/>} />
+
     </Routes>
   );
 };

@@ -27,7 +27,7 @@ const PanelClose = ({ onClick, header }) => {
 }
 
 /*----------------------------------------------------------------------------*/
-export const Panel = ({notification, onClose, loading = false }) => {
+export const Panel = ({notification, onClose, loading = false, isDebug = false, validationJson = null }) => {
 
   const [template, setTemplate] = useState(undefined);
   const [header, setHeader] = useState(undefined);
@@ -41,29 +41,30 @@ export const Panel = ({notification, onClose, loading = false }) => {
 
 
   const [alert, setAlert] = useState(true)
+
+  const displayValidationForm = (validationForm) => {
+      setTemplate(validationForm.template);
+      const items = validationForm?.template?.items
+      // const items = validationJSON?.template?.items
+      const header = items?.find((i) => i.type === 'headerBlock')
+      const footer = items?.find((i) => i.type === 'footerBlock')
+      const content = items?.filter(
+          (i) => i.type !== 'headerBlock' && i.type !== 'footerBlock'
+      )
+      setItems(items)
+      setHeader(header)
+      setFooter(footer)
+      setContent(content)
+  }
+
   const loadNotificationForm = () => {
+
     setAlert(false);
     setIsLoading(true);
     if (notification && notification.hasValidationForm) {
       getValidationFormById(notification._id)
         .then((validationJSON) => {
-           // const re = new RegExp("\u2028|\u2029|\uFEFF");
-           // const result = validationJSON.replace(re, '');
-           console.log(validationJSON)
-
-          //  console.log(JSON.parse(result))
-          setTemplate(validationJSON.template);
-          const items = validationFormSample?.template?.items
-          // const items = validationJSON?.template?.items
-          const header = items?.find((i) => i.type === 'headerBlock')
-          const footer = items?.find((i) => i.type === 'footerBlock')
-          const content = items?.filter(
-            (i) => i.type !== 'headerBlock' && i.type !== 'footerBlock'
-          )
-          setItems(items)
-          setHeader(header)
-          setFooter(footer)
-          setContent(content)
+          displayValidationForm(validationJSON)
           setIsLoading(false);
         })
         .catch((error) => {
@@ -75,13 +76,21 @@ export const Panel = ({notification, onClose, loading = false }) => {
   }
 
   useEffect(() => {
-    console.log('notification', notification)
+      if(isDebug) {
+          return;
+      }
     if(notification && notification.hasValidationForm) {
       loadNotificationForm()
     } else {
       setTemplate(undefined)
     }
   }, [notification])
+
+  useEffect(() => {
+      if(validationJson && isDebug){
+          displayValidationForm(validationJson)
+      }
+  }, [validationJson])
 
 
 
