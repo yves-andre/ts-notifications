@@ -11,7 +11,7 @@ import { getNotificationsCountByCategory, getTitleByCategory } from "./menu-serv
 
 import "./Menu.scss";
 import { NotificationCount } from "../../data/interfaces/notification-count";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
 interface Props {
   applications: Application[];
@@ -24,6 +24,8 @@ const CATEGORIES = [ACTION_FEED, INFORMATION_FEED];
 
 export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   const navigate = useNavigate()
+  const location = useLocation();
+
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
   );

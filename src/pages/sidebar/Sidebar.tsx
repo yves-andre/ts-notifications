@@ -13,7 +13,7 @@ import { Nav } from '@trading/energies-ui'
 
 import "./Sidebar.scss";
 import {getNotificationsCountByCategory} from "../menu/menu-service";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 /*----------------------------------------------------------------------------*/
 
@@ -27,6 +27,7 @@ const ACTION_FEED = CATEGORY.ACTION_FEED;
 
 export const Sidebar: React.FC<ISidebarProps> = ({ applications, categoryColors }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const notifications = useAppSelector(
     (state) => state.notifications.notificationItems
