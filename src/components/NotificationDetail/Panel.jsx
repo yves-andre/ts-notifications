@@ -1,14 +1,23 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {BEM, IconButton, setGradient, setTheme} from '@trading/energies-ui'
 import {Alert, Block, Error} from './'
 import mock from './_mock.json'
 import styles from './Panel.module.scss'
-import {getValidationFormById} from "../../services/notification-service";
+import {
+  getNotificationIsPending,
+  getValidationFormById,
+  NOTIFICATION_SERVICE_ERRORS,
+  validateFormById
+} from "../../services/notification-service";
 import validationFormSample from "../../pages/validation/validation-form-sample.json";
 import {ItemValidationTemplate} from "../validation-form/validation-form-service";
 import error from "./Error";
+import { useAppDispatch } from "../../hooks/use-app-dispatch";
+import {notificationActions} from "../../store/notifications-slice";
 
 const b = BEM(styles)
+
+let currentAbortController = null;
 
 /*----------------------------------------------------------------------------*/
 
@@ -35,17 +44,27 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
   const [content, setContent] = useState(undefined);
   const [items, setItems] = useState(undefined);
   const [isLoading, setIsLoading] = useState(loading);
-  // const template = mock.template
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+
   const theme = setTheme(template?.color || '')
   const gradientStyles = setGradient(template?.gradient, 'background', true)
-
-
+  const currentValidationForm = useRef(null);
+  const currentValidationFormJSON = useRef(null);
   const [alert, setAlert] = useState(true)
+  const dispatch = useAppDispatch();
 
+
+
+  /**
+   * Display validation form
+   * @param validationForm
+   */
   const displayValidationForm = (validationForm) => {
+      setAlert(false);
+      setIsPending(false);
       setTemplate(validationForm.template);
-      const items = validationForm?.template?.items
-      // const items = validationJSON?.template?.items
+      const items = updateItemsConfig(validationForm?.template?.items)
       const header = items?.find((i) => i.type === 'headerBlock')
       const footer = items?.find((i) => i.type === 'footerBlock')
       const content = items?.filter(
@@ -57,48 +76,129 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
       setContent(content)
   }
 
-  const loadNotificationForm = () => {
+  /**
+   * Update items config to add onValidate and onReject functions
+   *
+   * @param items
+   * @returns {*[]|*}
+   */
+  const updateItemsConfig = (items) => {
+    if(!items) return [];
+    return items.map((item) => {
+      const pendingStatus = getNotificationIsPending(notification)
+      if(!pendingStatus.isPending && pendingStatus.isTimeout) {
+        setAlert(true)
+      }
+      if(pendingStatus.isPending) {
+        setIsPending(true)
+      }
+      const updatedItem = {...item}
+      switch(item.type) {
+        case 'hierarchyValidation':
+          updatedItem.isDisabled = pendingStatus.isPending;
+          updatedItem.onValidate = (comment) => {
+            return updateFormStatus(true, comment)
+          };
+          updatedItem.onReject = (comment) => {
+            return updateFormStatus(false, comment)
+          };
+          break;
+      }
 
+      if(item.items) {
+        updatedItem.items = updateItemsConfig(item.items)
+      }
+      return updatedItem;
+    })
+  }
+
+  /**
+   * Load validation form
+   */
+  const loadNotificationForm = async () => {
+    if(currentAbortController) {
+      currentAbortController.abort()
+    }
+    currentAbortController = new AbortController();
+    currentValidationFormJSON.current = null;
+    const signal = currentAbortController.signal;
     setAlert(false);
+    setIsPending(false);
     setIsLoading(true);
     if (notification && notification.hasValidationForm) {
-      getValidationFormById(notification._id)
-        .then((validationJSON) => {
-          displayValidationForm(validationJSON)
+      currentValidationForm.current = notification._id;
+      try {
+        const validationJSON = await getValidationFormById(notification._id, signal)
+        currentValidationFormJSON.current = validationJSON;
+        displayValidationForm(validationJSON)
+        setIsLoading(false);
+      } catch (e) {
+        if(e?.name === 'AbortError') {
+          return;
+        } else {
           setIsLoading(false);
-        })
-        .catch((error) => {
-          setAlert(true);
-          setIsLoading(false);
-          console.log(error)
-        })
+        }
+      }
     }
   }
 
+  /**
+   * Load validation form on notification change
+   */
   useEffect(() => {
-      if(isDebug) {
-          return;
-      }
-    if(notification && notification.hasValidationForm) {
+    if (isDebug) {
+      return;
+    }
+    if (notification?.hasValidationForm && notification?._id !== currentValidationForm.current) {
       loadNotificationForm()
     } else {
-      setTemplate(undefined)
+      if(notification?.hasValidationForm && notification?._id === currentValidationForm.current) {
+        // If notification is the same, display the same form with updated status
+        if(currentValidationFormJSON.current) {
+          displayValidationForm(currentValidationFormJSON.current)
+        }
+      } else {
+        setTemplate(undefined)
+      }
     }
   }, [notification])
 
+  /**
+   * Display validation form on debug mode
+   */
   useEffect(() => {
       if(validationJson && isDebug){
           displayValidationForm(validationJson)
       }
   }, [validationJson])
 
+  /**
+   * Update form status
+   * @param isValidated
+   * @param comment
+   * @returns {Promise<any>}
+   */
+  const updateFormStatus = async (isValidated, comment) => {
+    if (notification?._id) {
+      setIsUpdating(true);
+
+      dispatch(notificationActions.updatePendingStatus({
+        notificationId: notification._id,
+        isPending: true
+      }));
+
+      const validationResult = await validateFormById(notification._id, {isValidated: isValidated, comment: comment});
+      return validationResult;
+    }
+  }
 
 
   return (
     <div
       className={b({
         hasHeader: header,
-        isLoading: isLoading,
+        isLoading: isLoading
+
       })}
       style={{ ...theme, ...gradientStyles }}
     >
@@ -115,8 +215,19 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
           Sorry, the validation of this item does not succeed. Please try again.
         </Alert>
       )}
+      {isPending && (
+        <Alert
+          color='secondary/orange'
+          icon='filled/info-circle'
+          onClose={() => setIsPending(false)}
+        >
+          The validation for this item is currently underway. You are free to proceed with other tasks while this validation is in progress.
+        </Alert>
+      )}
 
-      <div className={b('content')}>
+      <div className={
+        b('content')
+      }>
         {content?.map((block, i) => (
           <Block key={i} {...block} />
         ))}

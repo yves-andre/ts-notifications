@@ -14,17 +14,29 @@ export const NotificationItem = ({
   image,
   sourceName,
   title,
+  category,
   subtitle,
   isImportant,
   details,
   description,
+  pendingStatus,
   date,
   onClick,
+  onBadgeClick,
   active,
   status,
-  color
+  color,
+  forceRender
 }) => {
   const theme = setTheme(color)
+
+  const onBadgeClickHandler = (e) => {
+    if (onBadgeClick) {
+      e.stopPropagation()
+      onBadgeClick()
+    }
+  }
+
   return (
     <tr
       className={b({
@@ -43,7 +55,7 @@ export const NotificationItem = ({
           color={color}
         >
           <Icon name={image} size='xs' />
-          <span className={b('title')}>{title?.toLowerCase()}</span>
+          <span className={b('title')}>{title}</span>
         </Status>
       </td>
       <td>
@@ -65,7 +77,7 @@ export const NotificationItem = ({
       <td>{details}</td>
       <td>{date}</td>
       <td align='right'>
-        {status && <NotificationBadge status={status} />}
+        {<NotificationBadge onClick={(e) => onBadgeClickHandler(e)} category={category} status={status} pendingStatus={pendingStatus} />}
       </td>
     </tr>
   )

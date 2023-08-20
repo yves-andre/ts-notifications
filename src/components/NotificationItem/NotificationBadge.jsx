@@ -3,10 +3,11 @@ import { STATUS } from '../../data/constants/status'
 
 import { Picture, BEM } from '@trading/energies-ui'
 import styles from './NotificationBadge.module.scss'
+import {CATEGORY} from "../../data/constants/category";
 const b = BEM(styles)
 
 /*----------------------------------------------------------------------------*/
-export const NotificationBadge = ({ status }) => {
+export const NotificationBadge = ({ status, pendingStatus, category, onClick = (e) =>{} }) => {
   const data = {
     [STATUS.TO_BE_TREATED]: {
       icon: 'filled/check',
@@ -15,7 +16,7 @@ export const NotificationBadge = ({ status }) => {
       round: true,
       size: 'small',
     },
-    [STATUS.IN_PROGRESS]: {
+    'PENDING': {
       icon: 'outline/hourglass',
       color: 'secondary/orange',
       variant: 'pastel',
@@ -27,13 +28,33 @@ export const NotificationBadge = ({ status }) => {
       color: 'corporate/green',
       size: 'large',
     },
-    [STATUS.ERROR]: {
+    'ERROR': {
       icon: 'filled/exclamation-circle',
       color: 'corporate/red',
       size: 'large',
     },
+    'DISMISS': {
+      icon: 'close',
+      color: 'dark',
+      round: true,
+      size: 'small',
+    }
   }
-  return <Picture className={b()} {...data[status]} />
+
+  const getStatus = () => {
+    if(category === CATEGORY.INFORMATION_FEED ) {
+      return 'DISMISS'
+    }
+    if (pendingStatus.isPending) {
+      return 'PENDING'
+    }
+    if(pendingStatus.isTimeout) {
+      return 'ERROR'
+    }
+    return status
+  }
+
+  return <Picture onClick={(e) => {onClick(e)}} className={b()} {...data[getStatus()]} />
 }
 
 export default NotificationBadge

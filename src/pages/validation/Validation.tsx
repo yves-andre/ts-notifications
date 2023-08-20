@@ -65,7 +65,7 @@ export const Validation: React.FC = () => {
       if (initialTime === 0) {
         setInitialTime(performance.now())
       }
-      getValidationFormById(notification._id)
+      /*getValidationFormById(notification._id)
         .then((validationJSON) => {
          // const re = new RegExp("\u2028|\u2029|\uFEFF");
          // const result = validationJSON.replace(re, '');
@@ -73,7 +73,7 @@ export const Validation: React.FC = () => {
         //  console.log(JSON.parse(result))
           setValidationForm(validationFormSample);
       })
-      .catch(console.error)
+      .catch(console.error)*/
     }
   }, [notification?.hasValidationForm]);
 

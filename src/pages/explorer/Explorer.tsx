@@ -192,7 +192,7 @@ export const Explorer: React.FC = () => {
       notifications.forEach((notification: Notification) => {
         let notificationDate = new Date(notification.date)
 
-        notificationPeriodGroups.map((group) => {
+        notificationPeriodGroups.forEach((group) => {
           if (
             !addedNotificationIds.has(notification._id) &&
             group.isInGroup(new Date(), notificationDate)

@@ -12,6 +12,8 @@ import { filtersActions } from "../../store/filters-slice";
 import { Nav } from '@trading/energies-ui'
 
 import "./Sidebar.scss";
+import {getNotificationsCountByCategory} from "../menu/menu-service";
+import {useNavigate} from "react-router-dom";
 
 /*----------------------------------------------------------------------------*/
 
@@ -24,6 +26,7 @@ interface ISidebarProps {
 const ACTION_FEED = CATEGORY.ACTION_FEED;
 
 export const Sidebar: React.FC<ISidebarProps> = ({ applications, categoryColors }) => {
+  const navigate = useNavigate();
 
   const notifications = useAppSelector(
     (state) => state.notifications.notificationItems
@@ -111,21 +114,8 @@ export const Sidebar: React.FC<ISidebarProps> = ({ applications, categoryColors 
 
 
   const getNotificationCountByCategory = (category: number): number | null => {
-    const countResponse = (
-      notificationCounts.find(
-        (notificationCount) => parseInt(notificationCount.category) === category
-      )
-    );
-    const count = countResponse?.count || 0;
-    const pendingCount = countResponse?.pendingCount || 0;
-    if (category === 0 && pendingCount <= count) {
-      return count - pendingCount;
-    }
-    return count;
+    return getNotificationsCountByCategory(category, notificationCounts);
   };
-
-
-
 
 
 
@@ -157,6 +147,8 @@ export const Sidebar: React.FC<ISidebarProps> = ({ applications, categoryColors 
         selectAppHandler(app?.match, selectedCategory)
       }
     }
+    navigate({pathname: `/explorer`, search: location.search})
+
   }
 
 

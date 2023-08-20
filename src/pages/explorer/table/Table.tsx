@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, {useEffect, useState} from 'react'
 import {
   Button,
   Picture,
@@ -28,10 +28,11 @@ import './Table.scss'
 import classNames from 'classnames'
 import NotificationGroup from '../../../data/interfaces/notification-group'
 import { getUserLogin } from "../../../services/auth-service";
-import { setNotificationIsSeen } from "../../../services/notification-service";
+import {getNotificationIsPending, setNotificationIsSeen} from "../../../services/notification-service";
 import {redirect, useLocation, useNavigate, useParams} from 'react-router-dom'
 
 import NotificationItem from './../../../components/NotificationItem'
+
 
 interface Props {
   notificationGroups: NotificationGroup[]
@@ -40,6 +41,8 @@ interface Props {
 export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const search = useAppSelector((state) => state.filters.searchFilter)
   const sortFilter = useAppSelector((state) => state.filters.sortFilter)
+  const [forceRender, setForceRender] = useState(false);
+
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const location = useLocation();
@@ -54,6 +57,17 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const categoryColors: CategoryColor[] = useAppSelector(
     (state) => state.applications.categoryColors
   )
+
+  useEffect(() => {
+    const updateInterval = 2 * 60 * 1000; // 2 minutes in milliseconds
+    const intervalId = setInterval(() => {
+      setForceRender(prevValue => !prevValue); // Toggle the prop value
+    }, updateInterval);
+
+    return () => {
+      clearInterval(intervalId); // Clear the interval on component unmount
+    };
+  }, []);
 
   useEffect(() => {
     notificationGroups.forEach((notificationGroup: NotificationGroup) => {
@@ -109,10 +123,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
 
   const openNotificationHandler = (notification: Notification) => {
     if (notification.hasValidationForm && notification.validationFormUrl) {
-      // const resp = navigate(`/validation/${notification._id}`)
-      console.log('location.pathname', location.search)
-      const resp = navigate({pathname: `/explorer/${notification._id}`, search: location.search})
-      console.log(resp);
+      navigate({pathname: `/explorer/${notification._id}`, search: location.search})
     } else {
       const action = getNotificationDefaultAction(notification)
       action && action.call(this)
@@ -127,50 +138,8 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
     dispatch(dismissNotificationById(notification._id))
   }
 
-  const SortIcon: React.FC<{ field: string }> = ({ field }) => {
-    if (sortFilter.field === field) {
-      return sortFilter.asc ? (
-        <Icon
-          name='caretRoundedDown'
-          size='small'
-          style={{ minWidth: 0, minHeight: 0, width: 15, height: 0 }}
-        />
-      ) : (
-        <Icon
-          name='caretRoundedUp'
-          size='small'
-          style={{ minWidth: 0, minHeight: 0, width: 15, height: 0 }}
-        />
-      )
-    } else {
-      return <></>
-    }
-  }
 
-  const TD: React.FC<{
-    field: string
-    children: string
-    align?: 'center' | 'right' | 'justify' | 'char'
-    start?: boolean
-    end?: boolean
-    style?: React.CSSProperties
-  }> = ({ field, children, align, start, end, style }) => {
-    const borderRadius = {
-      borderBottomLeftRadius: start ? '0px' : undefined,
-      borderBottomRightRadius: end ? '0px' : undefined,
-    }
 
-    return (
-      <td
-        onClick={() => sortColumnHandler(field)}
-        style={{ cursor: 'pointer', ...borderRadius, ...style }}
-        align={align}
-      >
-        <Text variant='current'>{children}</Text>&nbsp;
-        <SortIcon field={field} />
-      </td>
-    )
-  }
 
   const getColorApplication = (sourceName: string) => {
     const applicationColor = applications.find((application) =>
@@ -240,8 +209,21 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
     }
   }
 
+  const onBadgeClickHandler = (notification: Notification) => {
+    switch(notification.category) {
+      case CATEGORY.ACTION_FEED:
+        if (notification.isManual) {
+          dismissNotificationHandler(notification)
+        }
+        openNotificationHandler(notification)
+        break
+      case CATEGORY.INFORMATION_FEED:
+        dismissNotificationHandler(notification)
+    }
+  }
+
   const dismissAllHandler = () => {
-    notificationGroups.map((notificationGroup) => {
+    notificationGroups.forEach((notificationGroup) => {
       const notificationsToDismiss = notificationGroup.notifications.filter(
         (notification) =>
           notification.category === CATEGORY.INFORMATION_FEED &&
@@ -281,18 +263,18 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
     <TableUI variant='feed' className='NotificationTable'>
       <thead>
         <tr>
-          <TD field='title' start>
+          <TD field='title' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} start>
             Source
           </TD>
-          <TD field='subtitle'>Subject</TD>
-          <TD field='details' style={{ width: 250, maxWidth: 250 }}>Details</TD>
-          <TD field='date'>
+          <TD field='subtitle' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler}>Subject</TD>
+          <TD field='details' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} style={{ width: 250, maxWidth: 250 }}>Details</TD>
+          <TD field='date' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler}>
             Date
           </TD>
-          {selectedStatus !== STATUS.TREATED &&
+          {
             selectedCategory === CATEGORY.ACTION_FEED && (
-              <TD field='actions' align='right' end>
-                Actions
+              <TD field='actions' align='right' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} end>
+                {selectedStatus !== STATUS.TREATED ? 'Actions' : ''}
               </TD>
             )}
           {selectedStatus !== STATUS.TREATED &&
@@ -322,6 +304,8 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
             {notificationGroup.notifications.map((notification, index) => (
               <NotificationItem
                 key={index}
+                forceRender={forceRender}
+                category={notification.category}
                 isRead={notification.isRead}
                 isImportant={notification.isImportant}
                 image={notification.image}
@@ -329,6 +313,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 title={getHighlightedText(notification.title, search)}
                 subtitle={getHighlightedText(notification.subtitle, search)}
                 description={getHighlightedText(notification.description, search)}
+                onClick={() => openNotificationHandler(notification)}
                 details={
                   <>
                     {
@@ -346,15 +331,16 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                   </>
                 }
                 date={getHighlightedText(formatDate(notification.date), search)}
-                onClick={() => openNotificationHandler(notification)}
+                onBadgeClick={() => onBadgeClickHandler(notification)}
                 status={selectedStatus}
+                pendingStatus={getNotificationIsPending(notification)}
                 color={getColorApplication(notification.sourceName)}
                 active={params?.notificationId === notification._id}
               />
             ))}
 
 
-            {notificationGroup.notifications.map((notification, index) => (
+            {/*{notificationGroup.notifications.map((notification, index) => (
               <tr
                 key={index}
                 onClick={() => openNotificationHandler(notification)}
@@ -477,12 +463,62 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                   </th>
                 )}
               </tr>
-            ))}
+            ))}*/}
           </React.Fragment>
         ))}
       </tbody>
     </TableUI>
   )
 }
+
+
+const SortIcon: React.FC<{ field: string, sortFilter?: any }> = ({field, sortFilter}) => {
+  if (sortFilter.field === field) {
+    return sortFilter.asc ? (
+      <Icon
+        name='caretRoundedDown'
+        size='small'
+        style={{minWidth: 0, minHeight: 0, width: 15, height: 0}}
+      />
+    ) : (
+      <Icon
+        name='caretRoundedUp'
+        size='small'
+        style={{minWidth: 0, minHeight: 0, width: 15, height: 0}}
+      />
+    )
+  } else {
+    return <></>
+  }
+}
+
+
+const TD: React.FC<{
+  field: string
+  children: string
+  align?: 'center' | 'right' | 'justify' | 'char'
+  start?: boolean
+  end?: boolean
+  style?: React.CSSProperties,
+  sortFilter: any,
+  sortColumnHandler: (fieldName: string) => void
+}> = ({field, children, align, start, end, style, sortColumnHandler, sortFilter}) => {
+  const borderRadius = {
+    borderBottomLeftRadius: start ? '0px' : undefined,
+    borderBottomRightRadius: end ? '0px' : undefined,
+  }
+
+  return (
+    <td
+      onClick={() => sortColumnHandler(field)}
+      style={{cursor: 'pointer', ...borderRadius, ...style}}
+      align={align}
+    >
+      <Text variant='current'>{children}</Text>&nbsp;
+      <SortIcon field={field} sortFilter={sortFilter}/>
+    </td>
+  )
+}
+
 
 export default Table

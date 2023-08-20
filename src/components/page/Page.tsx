@@ -20,16 +20,21 @@ import { APP_CONFIG } from '../../data/app-config'
 import Notification from "../../data/interfaces/notification";
 import {fetchNotifications, selectNotificationById, setNotificationIsReadById} from "../../store/notifications-slice";
 import {useSelector} from "react-redux";
+import {getTitleByCategory} from "../../pages/menu/menu-service";
 
 const userProfile = {}
 
 export const Page: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation();
-  const params= useParams()
+  const params = useParams()
   const dispatch = useAppDispatch();
   const [hasValidation, setHasValidation] = React.useState(false)
   const notification = useSelector(selectNotificationById(params.notificationId));
+
+  const selectedCategory = useAppSelector(
+    (state) => state.filters.selectedCategory
+  )
 
   useEffect(() => {
     if (!notification) {
@@ -135,7 +140,7 @@ export const Page: React.FC = () => {
         {/* NAVIGATION 2nd LEVEL --------------------------------------------*/}
         <Layout.Sidebar style={{ background: 'white' }}>
           <Layout.SidebarHeader>
-            <h3 style={{ textTransform: 'uppercase' }}>Lorem ipsum</h3>
+            <h3 style={{ textTransform: 'uppercase' }}>{getTitleByCategory(selectedCategory)}</h3>
             <IconButton
               icon='crossCancel50'
               round

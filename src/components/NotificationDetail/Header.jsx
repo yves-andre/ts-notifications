@@ -37,7 +37,10 @@ export const Header = ({ image, title, subtitle, total, buttons, type }) => {
     icon: button.icon,
     color: button.color,
     children: button.name,
-    onClick: () => console.log(button.name, button.url),
+    onClick: () => {
+      console.log(button.name, button.url)
+      window.open(button.url, '_blank')
+    },
   }))
 
   return (

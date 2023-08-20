@@ -52,6 +52,18 @@ const notificationSlice = createSlice({
         }
       }
     },
+    updatePendingStatus(state, action: PayloadAction<{ notificationId: string; isPending: boolean }>) {
+      const notification = state.notificationItems?.find(
+        (notification) => notification._id === action.payload.notificationId
+      );
+      if (notification) {
+        notification.isPending = action.payload.isPending;
+        notification.pendingFrom = new Date().toISOString();
+      }
+      // replace the notificationItems array with a new array
+      // to trigger a re-render
+      state.notificationItems = [...state.notificationItems!];
+    }
   },
 });
 
@@ -242,7 +254,6 @@ const getAllNotificationsAppend = async (dispatch: AppDispatch, searchParams: UR
     dispatch(notificationActions.append(notifications));
   }
 };
-
 
 export const notificationActions = notificationSlice.actions;
 
