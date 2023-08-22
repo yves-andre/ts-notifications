@@ -8,4 +8,22 @@
     display: flex;
     gap: 9px;
   }
+  &.isValidationError {
+    padding: 0 10px 21px 10px;
+    input {
+      border: 1px solid var(--ts-color-red);
+    }
+  }
+}
+
+.ValidationContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  p {
+    padding: 10px;
+    margin: 0;
+    color: var(--ts-color-red)
+  }
 }

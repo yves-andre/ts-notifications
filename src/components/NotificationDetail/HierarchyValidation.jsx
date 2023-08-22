@@ -26,6 +26,16 @@ export const HierarchyValidationButtons = {
 
 */
 /*----------------------------------------------------------------------------*/
+
+const HierarchyValidationContainer = ({children, validationErrorMessage}) => {
+  return (
+    <div className={styles.ValidationContainer}>
+    {validationErrorMessage && <p>{validationErrorMessage}</p>}
+    {children}
+    </div>
+  );
+}
+
 export const HierarchyValidation = ({
   type,
   commentEnabled,
@@ -38,6 +48,13 @@ export const HierarchyValidation = ({
 }) => {
   const [comment, setComment] = useState('')
   const [isUpdating, setIsUpdating] = useState(false);
+
+  const [validationErrorMessage, setValidationErrorMessage] = useState(null);
+
+
+  const setValidationError = (message) => {
+    setValidationErrorMessage(message);
+  }
 
   const isCommentMandatory = (buttonName) => {
     switch(buttonName){
@@ -59,6 +76,7 @@ export const HierarchyValidation = ({
   const validate = async () => {
 
     if(isValid(HierarchyValidationButtons.Validate)){
+      setValidationError(null);
       try {
         setIsUpdating(true)
         await onValidate?.(comment);
@@ -67,64 +85,70 @@ export const HierarchyValidation = ({
       }
       setIsUpdating(false)
     } else {
-      console.log('error: comment is mandatory when validating');
+      setValidationError("Comment is mandatory when validating");
     }
   }
 
   const reject = async () => {
     if(isValid(HierarchyValidationButtons.Reject)){
+      setValidationError(null);
       try {
         setIsUpdating(true)
         await onReject?.(comment);
       } catch (e) {
         console.log('error: ', e);
       }
-      setIsUpdating(false)
+      setIsUpdating(false);
     } else {
-      console.log('error: comment is mandatory when rejecting');
+      setValidationError("Comment is mandatory when rejecting");
     }
   }
 
 
   return (
-    <div className={b()} data-type={type}>
-      <Input
-        placeholder={commentPlaceholder}
-        round
-        variant='gray'
-        margin={0}
-        type='text'
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-        style={{ flex: 1, lineHeight: 1 }}
-        disabled={!commentEnabled || isUpdating || isDisabled}
-      />
-      <div className={b('actions')}>
-        {validateButton && (
-          <IconButton
-            color='corporate/green'
-            icon='filled/check-circle'
-            size='xl'
-            disabled={isUpdating || isDisabled}
-            onClick={() => validate()}
-          >
-            Validate
-          </IconButton>
-        )}
-        {rejectButton && (
-          <IconButton
-            color='corporate/red'
-            icon='filled/times-circle'
-            size='xl'
-            disabled={isUpdating || isDisabled}
-            onClick={() => reject()}
-          >
-            Reject
-          </IconButton>
-        )}
+    <HierarchyValidationContainer validationErrorMessage={validationErrorMessage}>
+      <div
+        className={b({ isValidationError: !!validationErrorMessage })}
+        data-type={type}
+      >
+        <Input
+          placeholder={commentPlaceholder}
+          round
+          variant="gray"
+          margin={0}
+          type="text"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          style={{ flex: 1, lineHeight: 1 }}
+          disabled={!commentEnabled || isUpdating || isDisabled}
+        />
+        <div className={b("actions")}>
+          {validateButton && (
+            <IconButton
+              color="corporate/green"
+              icon="filled/check-circle"
+              size="xl"
+              disabled={isUpdating || isDisabled}
+              onClick={() => validate()}
+            >
+              Validate
+            </IconButton>
+          )}
+          {rejectButton && (
+            <IconButton
+              color="corporate/red"
+              icon="filled/times-circle"
+              size="xl"
+              disabled={isUpdating || isDisabled}
+              onClick={() => reject()}
+            >
+              Reject
+            </IconButton>
+          )}
+        </div>
       </div>
-    </div>
-  )
+    </HierarchyValidationContainer>
+  );
 }
 
 export default HierarchyValidation
