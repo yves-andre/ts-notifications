@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import { IconButton, Input, BEM } from '@trading/energies-ui'
 import styles from './HierarchyValidation.module.scss'
@@ -35,6 +35,8 @@ export const HierarchyValidation = ({
   onValidate,
   onReject,
   isDisabled,
+  notificationStatus,
+  notificationDetails
 }) => {
   const [comment, setComment] = useState('')
   const [isUpdating, setIsUpdating] = useState(false);
@@ -85,46 +87,50 @@ export const HierarchyValidation = ({
     }
   }
 
-
   return (
     <div className={b()} data-type={type}>
-      <Input
-        placeholder={commentPlaceholder}
-        round
-        variant='gray'
-        margin={0}
-        type='text'
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-        style={{ flex: 1, lineHeight: 1 }}
-        disabled={!commentEnabled || isUpdating || isDisabled}
-      />
-      <div className={b('actions')}>
-        {validateButton && (
-          <IconButton
-            color='corporate/green'
-            icon='filled/check-circle'
-            size='xl'
-            disabled={isUpdating || isDisabled}
-            onClick={() => validate()}
-          >
-            Validate
-          </IconButton>
-        )}
-        {rejectButton && (
-          <IconButton
-            color='corporate/red'
-            icon='filled/times-circle'
-            size='xl'
-            disabled={isUpdating || isDisabled}
-            onClick={() => reject()}
-          >
-            Reject
-          </IconButton>
-        )}
-      </div>
+      {notificationStatus === 2 && <p>{notificationDetails}</p>}
+      {notificationStatus !== 2 && (
+        <>
+          <Input
+            placeholder={commentPlaceholder}
+            round
+            variant="gray"
+            margin={0}
+            type="text"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            style={{ flex: 1, lineHeight: 1 }}
+            disabled={!commentEnabled || isUpdating || isDisabled}
+          />
+          <div className={b("actions")}>
+            {validateButton && (
+              <IconButton
+                color="corporate/green"
+                icon="filled/check-circle"
+                size="xl"
+                disabled={isUpdating || isDisabled}
+                onClick={() => validate()}
+              >
+                Validate
+              </IconButton>
+            )}
+            {rejectButton && (
+              <IconButton
+                color="corporate/red"
+                icon="filled/times-circle"
+                size="xl"
+                disabled={isUpdating || isDisabled}
+                onClick={() => reject()}
+              >
+                Reject
+              </IconButton>
+            )}
+          </div>
+        </>
+      )}
     </div>
-  )
+  );
 }
 
 export default HierarchyValidation
