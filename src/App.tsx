@@ -2,22 +2,35 @@ import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Page from "./components/page/Page";
 import Explorer from "./pages/explorer/Explorer";
-import { fetchNotifications, fetchNotificationCounts, setNotificationsIsSeen } from "./store/notifications-slice";
+import { fetchNotifications, fetchNotificationCounts, setNotificationsIsSeen, resetNotificationError } from "./store/notifications-slice";
 import { useAppDispatch } from "./hooks/use-app-dispatch";
 import { filtersActions } from "./store/filters-slice";
 import { FILTER } from "./data/constants/filter";
 import { useAppWebSocket } from "./hooks/use-app-websocket";
 import { useRouteFilters } from "./hooks/use-route-filters";
+import { useLocation } from 'react-router-dom';
 
 import "./App.scss";
 import { CATEGORY } from "./data/constants/category";
 import Validation from "./pages/validation/Validation";
 import TestValidation from "./pages/test-validation/TestValidation";
+import { useAppSelector } from "./hooks/use-app-selector";
 
 export const App: React.FC = () => {
   const searchParams = useRouteFilters();
   const dispatch = useAppDispatch();
   const lastMessage = useAppWebSocket();
+
+  const selectedCategory = useAppSelector(
+    (state) => state.filters.selectedCategory
+  );
+  const selectedStatus = useAppSelector(
+    (state) => state.filters.selectedStatus
+  );
+  const notificationError: number | null = useAppSelector(
+    (state) => state.notifications.notificationError
+  )
+
 
   // fetch notifications on load and on WS message
   // and set social notification to SEEN
@@ -34,6 +47,13 @@ export const App: React.FC = () => {
       //dispatch(setNotificationsIsSeen(CATEGORY.INFORMATION_FEED));
     }
   }, [lastMessage]);
+
+  // while we have a notification error, we recheck the call on each status or category change.
+  useEffect(() => {
+    if (searchParams && notificationError) {
+      dispatch(fetchNotifications(searchParams));
+    }
+  }, [selectedCategory, selectedStatus]);
 
   // setting default filters to store from search params
   useEffect(() => {

@@ -28,6 +28,9 @@ const notificationSlice = createSlice({
     reset(state){
       state.notificationItems = null;
     },
+    resetNotificationError(state) {
+      state.notificationError = null;
+    },
     load(state, action: PayloadAction<Notification[]>) {
       if(typeof action.payload === "number"){
         const error = action.payload;
@@ -83,7 +86,11 @@ export const fetchNotifications = (searchParams: URLSearchParams | null = null) 
     try {
       let notifications = null;
       if (getState().notifications.notificationItems) {
-        notifications = await getAllNotificationsLoad();
+        const data = await getAllNotificationsLoad();
+        notifications = data.result;
+        if(!data.hasErrors) {
+          dispatch(notificationActions.resetNotificationError());
+        }
       } else {
         await getAllNotificationsAppend(dispatch, searchParams);
         notifications = getState().notifications.notificationItems;
@@ -108,6 +115,16 @@ export const fetchNotifications = (searchParams: URLSearchParams | null = null) 
     }
   };
 };
+
+export const resetNotificationError = () => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      dispatch(notificationActions.resetNotificationError());
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 
 
 export const fetchNotificationCounts = () => {
@@ -205,17 +222,31 @@ const getAllNotificationsLoad = async () => {
   if(process.env.NODE_ENV === "local") {
     return await getNotifications();
   }
-  const [n1,n2,n3,n4,n5,n6]: Notification[][] = await Promise.all([
-    getNotifications(0,0),
-    getNotifications(1,0),
-    getNotifications(0,1),
-    getNotifications(1,1),
-    getNotifications(2,0),
-    getNotifications(2,1),
-  ]);
-  const result = [...n1,...n2,...n3,...n4,...n5,...n6];
-  return result;
+
+  let hasErrors = false;
+
+  const promises = [
+    getNotifications(0, 0),
+    getNotifications(1, 0),
+    getNotifications(0, 1),
+    getNotifications(1, 1),
+    getNotifications(2, 0),
+    getNotifications(2, 1),
+  ].map((promise) =>
+    promise.then((result) => {
+      if (Array.isArray(result)) {
+        return result;
+      }
+      hasErrors = true;
+      return [];
+    })
+  );
+
+  const [n1, n2, n3, n4, n5, n6]: Notification[][] = await Promise.all(promises);
+  const result = [...n1, ...n2, ...n3, ...n4, ...n5, ...n6];
+  return {result: result, hasErrors: hasErrors};
 }
+
 
 const getAllNotificationsAppend = async (dispatch: AppDispatch, searchParams: URLSearchParams | null = null) => {
   if (process.env.NODE_ENV === "local") {

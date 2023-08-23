@@ -57,22 +57,33 @@ export const httpGetAuth = async (
     GETConfig.headers.Authorization = `Bearer ${access_token}`;
   }
 
-  // Try the GET request
-  let response = await fetch(route, GETConfig);
+  try {
+    // Try the GET request
+    let response = await fetch(route, GETConfig);
 
-  // If the response is a 401, try to get a new token and retry the request
-  while (response.status === 401 && authRequired) {
-    // Get a new token
-    const newToken = await getNewToken();
+    // If the response is a 401, try to get a new token and retry the request
+    while (response.status === 401 && authRequired) {
+      // Get a new token
+      const newToken = await getNewToken();
 
-    // Update the Authorization header and retry the request
-    GETConfig.headers.Authorization = `Bearer ${newToken}`;
-    window.localStorage.setItem("token", newToken);
-    response = await fetch(route, GETConfig);
+      // Update the Authorization header and retry the request
+      GETConfig.headers.Authorization = `Bearer ${newToken}`;
+      window.localStorage.setItem("token", newToken);
+      response = await fetch(route, GETConfig);
+    }
+
+    if (!response.ok) {
+      console.error(`Could not fetch data for url ${route}, error ${response.status}`);
+      return response.status;
+    }
+
+    return await response.json();
+    
+  } catch(error:any) {
+    console.error(`An error occurred: ${error.message}, status code: ${error.status}`);
+    // also handle failed requests where there is no status code
+    return error.message == "Failed to fetch" ? 1 : error.status;
   }
-
-  if (!response.ok) throw new Error(`could not fetch data for url ${route}`);
-  return await response.json();
 };
 
 export const httpPutAuth = async (
