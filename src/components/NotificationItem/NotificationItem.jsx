@@ -6,6 +6,8 @@ import { NotificationBadge } from './'
 import { Icon, Status, BEM, setTheme } from '@trading/energies-ui'
 
 import styles from './NotificationItem.module.scss'
+import { CATEGORY } from '../../data/constants/category'
+import { STATUS as STATUS_CODES } from '../../data/constants/status'
 const b = BEM(styles)
 
 /*----------------------------------------------------------------------------*/
@@ -76,9 +78,11 @@ export const NotificationItem = ({
       </td>
       <td>{details}</td>
       <td>{date}</td>
-      <td align='right'>
-        {<NotificationBadge onClick={(e) => onBadgeClickHandler(e)} category={category} status={status} pendingStatus={pendingStatus} />}
-      </td>
+      {(category !== CATEGORY.INFORMATION_FEED || status !== STATUS_CODES.TREATED) && (
+        <td align='right'>
+          {<NotificationBadge onClick={(e) => onBadgeClickHandler(e)} category={category} status={status} pendingStatus={pendingStatus} />}
+        </td>
+      )}
     </tr>
   )
 }
