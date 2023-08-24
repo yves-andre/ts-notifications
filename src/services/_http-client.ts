@@ -61,15 +61,33 @@ export const httpGetAuth = async (
     // Try the GET request
     let response = await fetch(route, GETConfig);
 
+    let currentRetry = 1;
+    const maxWaitingTimeInMinutes = 5; // 5 minutes as the maximum waiting time
+    let totalDelay = 0; // Keep track of the total delay so far in milliseconds
+    
     // If the response is a 401, try to get a new token and retry the request
-    while (response.status === 401 && authRequired) {
+    while (response.status === 401 && authRequired && totalDelay < maxWaitingTimeInMinutes * 60 * 1000) {
       // Get a new token
       const newToken = await getNewToken();
-
+    
       // Update the Authorization header and retry the request
       GETConfig.headers.Authorization = `Bearer ${newToken}`;
       window.localStorage.setItem("token", newToken);
-      response = await fetch(route, GETConfig);
+    
+      // The formula is 200 x 2^(i-1) ms and we add as a maximum delay of 30 seconds
+      // so with a base of 200ms and for the 6 first retry we have 200, 400, 800, 1600, 3200, 6400, until 30000
+      let delayForThisRetry = Math.min(30000, 200 * Math.pow(2, currentRetry - 1));
+      await new Promise(resolve => setTimeout(resolve, delayForThisRetry));
+      console.log("WAITED " + delayForThisRetry);
+      response = await fetch(route, GETConfig); // Re-fetch after the delay
+    
+      totalDelay += delayForThisRetry; // Update the total delay so far
+      currentRetry++;
+    
+      // Check if total delay has exceeded maximum waiting time
+      if (totalDelay >= maxWaitingTimeInMinutes * 60 * 1000) {
+        throw new Error('Could not authenticate the user within the maximum waiting time');
+      }
     }
 
     if (!response.ok) {
