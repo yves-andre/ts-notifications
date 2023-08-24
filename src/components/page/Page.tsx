@@ -17,8 +17,7 @@ import NotificationDetail from '../../components/NotificationDetail'
 
 import './Page.scss'
 import { APP_CONFIG } from '../../data/app-config'
-import Notification from "../../data/interfaces/notification";
-import {fetchNotifications, selectNotificationById, setNotificationIsReadById} from "../../store/notifications-slice";
+import {fetchNotifications, selectNotificationById} from "../../store/notifications-slice";
 import {useSelector} from "react-redux";
 import {getTitleByCategory} from "../../pages/menu/menu-service";
 

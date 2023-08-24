@@ -36,7 +36,6 @@ export const App: React.FC = () => {
   // and set social notification to SEEN
   useEffect(() => {
     if (
-      (lastMessage?.data as string)?.startsWith("40") ||
       (lastMessage?.data as string)?.includes("NotificationAdded") ||
       (lastMessage?.data as string)?.includes("NotificationUpdated") ||
       process.env.NODE_ENV === "local") {
