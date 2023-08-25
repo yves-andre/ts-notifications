@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom'
 import { Layout, Header, LocalNav, Flex, Col, IconButton } from '@trading/energies-ui'
 import mock from '../../components/NotificationDetail/_mock-nodata.json'
-
+import CodeMirror from "@uiw/react-codemirror";
+import { json } from "@codemirror/lang-json";
 
 
 import NotificationDetail from '../../components/NotificationDetail'
@@ -91,7 +92,7 @@ export const TestValidation: React.FC = () => {
                 <Flex style={{ padding: '0 25px', flex: 1 }}>
                     <Col style={{ flexDirection: 'column', display: 'flex' }}>
                         <>
-                            <textarea style={{height:'100%', margin:'20px'}} id={'json-field'} defaultValue={JSON.stringify(validationForm, null, 2)} onChange={(event) => {
+                            {/* <textarea style={{height:'100%', margin:'20px'}} id={'json-field'} defaultValue={JSON.stringify(validationForm, null, 2)} onChange={(event) => {
                                 if(textareaTimeout) {
                                     clearTimeout(textareaTimeout)
                                 }
@@ -107,9 +108,31 @@ export const TestValidation: React.FC = () => {
 
 
                             }
-                            }></textarea>
+                            }></textarea> */}
+                            <CodeMirror
+                                className="CodeMirror"
+                                id="editor"
+                                value={JSON.stringify(validationForm, null, 2) || ""}
+                                height="100%"
+                                theme={"dark"}
+                                extensions={[json()]}
+                                onChange={(val) => {
+                                    if(textareaTimeout) {
+                                        clearTimeout(textareaTimeout)
+                                    }
+                                    textareaTimeout = setTimeout(() => {
+                                        try {
+                                            const validationJson =  JSON.parse(val)
+                                            console.log('setValidationForm', validationJson)
+                                            setValidationForm(validationJson)
+                                        } catch (e) {
+                                            console.log('Unvalid json', val)
+                                        }
+                                    },1000)
 
 
+                                }}
+                            />
                         </>
                     </Col>
 
