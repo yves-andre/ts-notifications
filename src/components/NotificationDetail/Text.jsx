@@ -18,6 +18,8 @@ const b = BEM(styles)
 }
 */
 /*----------------------------------------------------------------------------*/
+
+/*-----------------------------VERIFICATION : OK-----------------------------*/
 export const Text = ({ type, title, subtitle, text, color, icon }) => {
   return (
     <div className={b()} data-type={type}>

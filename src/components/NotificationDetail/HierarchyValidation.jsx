@@ -27,6 +27,7 @@ export const HierarchyValidationButtons = {
 */
 /*----------------------------------------------------------------------------*/
 
+/*-----------------------------VERIFICATION : OK-----------------------------*/
 const HierarchyValidationContainer = ({ children, validationErrorMessage }) => {
   return (
     <div className={styles.ValidationContainer}>

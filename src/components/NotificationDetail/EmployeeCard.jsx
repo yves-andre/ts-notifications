@@ -14,7 +14,7 @@ const b = BEM(styles)
   "data": {
     "employee": {
       "fullName": "Alexandra DE LA VILLARDIERE",
-      "image": "path/to/image.png",
+      "image": "https://picsum.photos/id/1005/40/40",
       "jobTitle": "General Manager Trading Ops and Logistics",
       "branch": "TS",
       "department": "Trading",
@@ -36,6 +36,8 @@ const b = BEM(styles)
 
 */
 /*----------------------------------------------------------------------------*/
+
+/*-----------------------------VERIFICATION : OK-----------------------------*/
 export const EmployeeCard = ({ type, data }) => {
   const {
     fullName,

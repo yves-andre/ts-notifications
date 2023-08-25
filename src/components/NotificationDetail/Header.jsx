@@ -32,6 +32,8 @@ const b = BEM(styles)
 }
 */
 /*----------------------------------------------------------------------------*/
+
+/*-----------------------------VERIFICATION : BUG - onclick triggers twice-----------------------------*/
 export const Header = ({ image, title, subtitle, total, buttons, type }) => {
   const actions = buttons.map((button) => ({
     icon: button.icon,

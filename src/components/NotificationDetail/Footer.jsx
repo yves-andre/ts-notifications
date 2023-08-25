@@ -27,6 +27,8 @@ const b = BEM(styles)
 }
 */
 /*----------------------------------------------------------------------------*/
+
+/*-----------------------------VERIFICATION : OK-----------------------------*/
 export const Footer = ({ type, items }) => {
   return (
     <footer className={b()} data-type={type}>

@@ -85,6 +85,8 @@ const b = BEM(styles)
 }
 */
 /*----------------------------------------------------------------------------*/
+
+/*-----------------------------VERIFICATION : OK-----------------------------*/
 const ListItem = ({ title, subtitle, status, image, icon, value, items }) => {
   const [open, setOpen] = useState(false)
   const hasItems = items?.length !== 0

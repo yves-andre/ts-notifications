@@ -38,6 +38,8 @@ const b = BEM(styles)
   },
 */
 /*----------------------------------------------------------------------------*/
+
+/*-----------------------------VERIFICATION : OK-----------------------------*/
 export const Section = ({ type, title, subtitle, infotip, items }) => {
   const [infotipOpen, setInfotipOpen] = useState(false)
   return (

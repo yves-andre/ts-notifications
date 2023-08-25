@@ -10,8 +10,8 @@ const b = BEM(styles)
 // EXEMPLE
 /*
 {
-  "icon": "info",
-  "color": "grey",
+  "icon": "filled/info-circle",
+  "color": "red",
   "tooltip": "Caption",
   "closeButtonText": "Ok, Got it",
   "items": [
@@ -35,6 +35,8 @@ const b = BEM(styles)
 }
 */
 /*----------------------------------------------------------------------------*/
+
+/*-----------------------------VERIFICATION : OK-----------------------------*/
 export const Infotip = ({ open, closeButtonText, onClose, items }) => {
   const handleEscapePress = (event) => {
     const { keyCode } = event

@@ -28,6 +28,8 @@ const b = BEM(styles)
 }
 */
 /*----------------------------------------------------------------------------*/
+
+/*-----------------------------VERIFICATION : OK-----------------------------*/
 export const Slideshow = ({ type, slides }) => {
   return (
     <div className={b()} data-type={type}>

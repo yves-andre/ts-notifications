@@ -31,13 +31,15 @@ const b = BEM(styles)
       "value": "Registration Fee",
       "status": {
         "color": "green",
-        "icon": "check"
+        "icon": "filled/check"
       }
     }
   ]
 }
 */
 /*----------------------------------------------------------------------------*/
+
+/*-----------------------------VERIFICATION : OK-----------------------------*/
 export const DataItem = ({ label, value, status, color, isEmpty, href }) => {
   const theme = setTheme(color) || {}
   return (

@@ -45,6 +45,8 @@ const b = BEM(styles)
 */
 
 /*----------------------------------------------------------------------------*/
+
+/*-----------------------------VERIFICATION : OK-----------------------------*/
 export const ValidationHistoryItem = ({ title, user, status, comment }) => {
   return (
     <div className={b('item')}>
