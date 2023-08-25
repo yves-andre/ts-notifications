@@ -20,6 +20,7 @@ import { getUserLogin } from '../../services/auth-service'
 import NotificationGroup from '../../data/interfaces/notification-group'
 import { STATUS } from '../../data/constants/status'
 import Loader from '../../components/loader/Loader'
+import { NotificationError } from '../../data/interfaces/notification-error'
 
 const notificationPeriodGroups = [
   {
@@ -83,8 +84,14 @@ export const Explorer: React.FC = () => {
   const notifications: Notification[] | null = useAppSelector(
     (state) => state.notifications.notificationItems
   )
-  const notificationError: number | null = useAppSelector(
+  const notificationError: NotificationError | null = useAppSelector(
     (state) => state.notifications.notificationError
+  )
+  const selectedStatus: number = useAppSelector(
+    (state) => state.filters.selectedStatus
+  )
+  const selectedCategory: number = useAppSelector(
+    (state) => state.filters.selectedCategory
   )
   const filters = useAppSelector((state) => state.filters)
   const [filterNotifications, setFilterNotifications] = useState(
@@ -231,13 +238,13 @@ export const Explorer: React.FC = () => {
     return <Loader />
   }
 
-  if (notificationError) {
+  if (notificationError && notificationError.status === selectedStatus && notificationError.category === selectedCategory) {
     let errorMessage = null;
-    switch (notificationError) {
+    switch (notificationError.code) {
       case 500:
         errorMessage = (
           <Placeholder
-            title={`Sorry something went wrong. (Error ${notificationError})`}
+            title={`Sorry something went wrong. (Error ${notificationError.code})`}
             image='error'
             theme='dark'
             style={{ minHeight: 0 }}
