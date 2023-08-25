@@ -17,7 +17,7 @@ import NotificationDetail from '../../components/NotificationDetail'
 
 import './Page.scss'
 import { APP_CONFIG } from '../../data/app-config'
-import {fetchNotifications, selectNotificationById} from "../../store/notifications-slice";
+import {fetchNotificationCounts, fetchNotifications, selectNotificationById} from "../../store/notifications-slice";
 import {useSelector} from "react-redux";
 import {getTitleByCategory} from "../../pages/menu/menu-service";
 
@@ -41,6 +41,12 @@ export const Page: React.FC = () => {
     }
   }, [dispatch, notification]);
 
+
+  // fetch the counts only on startup. (other calls are made on WS update in App.tsx)
+  useEffect(() => {
+    dispatch(fetchNotificationCounts());
+  }, [])
+  
   const totalLogo =
     process.env.NODE_ENV !== 'development'
       ? APP_CONFIG.THEME_ASSETS.totalLogo

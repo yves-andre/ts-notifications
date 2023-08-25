@@ -42,7 +42,6 @@ export const App: React.FC = () => {
       if (searchParams) {
         dispatch(fetchNotifications(searchParams));
       }
-      dispatch(fetchNotificationCounts());
       //dispatch(setNotificationsIsSeen(CATEGORY.INFORMATION_FEED));
     }
   }, [lastMessage]);

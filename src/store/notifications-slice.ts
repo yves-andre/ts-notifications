@@ -1,6 +1,5 @@
 import { formatDate } from './../utils/formatters';
 import { getUserNameFromLogin } from './../services/auth-service';
-import { CATEGORY } from "./../data/constants/category";
 import { NotificationCount } from "./../data/interfaces/notification-count";
 import {
   getNotifications,
@@ -8,7 +7,7 @@ import {
   dismissNotification as _dismissNotification,
   setNotificationIsRead as _setNotificationIsRead,
   dismissNotifications as _dismissNotifications,
-  getNotificationCountByCategory,
+  getNotificationCounts,
 } from "./../services/notification-service";
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
 import type { AppDispatch, RootState } from "./index";
@@ -130,11 +129,8 @@ export const resetNotificationError = () => {
 export const fetchNotificationCounts = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      const notificationCounts = await Promise.all([
-        getNotificationCountByCategory(CATEGORY.ACTION_FEED),
-        getNotificationCountByCategory(CATEGORY.INFORMATION_FEED),
-      ]);
-      dispatch(notificationActions.getNotificationCount(notificationCounts));
+      const counts = await getNotificationCounts();
+      dispatch(notificationActions.getNotificationCount(counts));
     } catch (error) {
       console.error(error);
     }
