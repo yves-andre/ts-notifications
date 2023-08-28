@@ -15,7 +15,7 @@ const b = BEM(styles)
 */
 /*----------------------------------------------------------------------------*/
 
-/*-----------------------------VERIFICATION : Should we treat the value as a string or a date ?-----------------------------*/
+/*-----------------------------VERIFICATION : OK-----------------------------*/
 export const Date = ({ type, label, value, className }) => {
   return (
     <div className={b({}, [], className)} data-type={type}>
