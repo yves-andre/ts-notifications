@@ -64,7 +64,16 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
     setAlert(false);
     setIsPending(false);
     setTemplate(validationForm.template);
-    const items = updateItemsConfig(validationForm?.template?.items)
+
+    const pendingStatus = getNotificationIsPending(notification)
+    if (!pendingStatus.isPending && pendingStatus.isTimeout) {
+      setAlert(true)
+    }
+    if (pendingStatus.isPending) {
+      setIsPending(true)
+    }
+
+    const items = updateItemsConfig(validationForm?.template?.items, notification, pendingStatus);
     const header = items?.find((i) => i.type === 'headerBlock')
     const footer = items?.find((i) => i.type === 'footerBlock')
     const content = items?.filter(
@@ -75,24 +84,17 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
     setFooter(footer)
     setContent(content)
 
-    if (items) {
-      const pendingStatus = getNotificationIsPending(notification)
-      if (!pendingStatus.isPending && pendingStatus.isTimeout) {
-        setAlert(true)
-      }
-      if (pendingStatus.isPending) {
-        setIsPending(true)
-      }
-    }
   }
 
   /**
    * Update items config to add onValidate and onReject functions
    *
    * @param items
+   * @param notification
+   * @param pendingStatus
    * @returns {*[]|*}
    */
-  const updateItemsConfig = (items) => {
+  const updateItemsConfig = (items, notification, pendingStatus) => {
     if(!items) return [];
     return items.map((item) => {
       if (item.type === 'footerBlock') {
@@ -116,7 +118,7 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
       }
 
       if(item.items) {
-        updatedItem.items = updateItemsConfig(item.items)
+        updatedItem.items = updateItemsConfig(item.items, notification, pendingStatus)
       }
       return updatedItem;
     })
