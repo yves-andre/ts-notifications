@@ -61,19 +61,29 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
    * @param validationForm
    */
   const displayValidationForm = (validationForm) => {
-      setAlert(false);
-      setIsPending(false);
-      setTemplate(validationForm.template);
-      const items = updateItemsConfig(validationForm?.template?.items)
-      const header = items?.find((i) => i.type === 'headerBlock')
-      const footer = items?.find((i) => i.type === 'footerBlock')
-      const content = items?.filter(
-          (i) => i.type !== 'headerBlock' && i.type !== 'footerBlock'
-      )
-      setItems(items)
-      setHeader(header)
-      setFooter(footer)
-      setContent(content)
+    setAlert(false);
+    setIsPending(false);
+    setTemplate(validationForm.template);
+    const items = updateItemsConfig(validationForm?.template?.items)
+    const header = items?.find((i) => i.type === 'headerBlock')
+    const footer = items?.find((i) => i.type === 'footerBlock')
+    const content = items?.filter(
+      (i) => i.type !== 'headerBlock' && i.type !== 'footerBlock'
+    )
+    setItems(items)
+    setHeader(header)
+    setFooter(footer)
+    setContent(content)
+
+    if (items) {
+      const pendingStatus = getNotificationIsPending(notification)
+      if (!pendingStatus.isPending && pendingStatus.isTimeout) {
+        setAlert(true)
+      }
+      if (pendingStatus.isPending) {
+        setIsPending(true)
+      }
+    }
   }
 
   /**
@@ -85,13 +95,6 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
   const updateItemsConfig = (items) => {
     if(!items) return [];
     return items.map((item) => {
-      const pendingStatus = getNotificationIsPending(notification)
-      if(!pendingStatus.isPending && pendingStatus.isTimeout) {
-        setAlert(true)
-      }
-      if(pendingStatus.isPending) {
-        setIsPending(true)
-      }
       if (item.type === 'footerBlock') {
         item.items = item.items.map((footerItem) => ({
           ...footerItem,
