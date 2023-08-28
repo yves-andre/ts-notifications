@@ -67,11 +67,6 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
       const items = updateItemsConfig(validationForm?.template?.items)
       const header = items?.find((i) => i.type === 'headerBlock')
       const footer = items?.find((i) => i.type === 'footerBlock')
-      footer.items = footer.items.map(item => ({
-        ...item,
-        notificationStatus: notification?.status,
-        notificationDetails: notification?.details
-      }));
       const content = items?.filter(
           (i) => i.type !== 'headerBlock' && i.type !== 'footerBlock'
       )
@@ -96,6 +91,13 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
       }
       if(pendingStatus.isPending) {
         setIsPending(true)
+      }
+      if (item.type === 'footerBlock') {
+        item.items = item.items.map((footerItem) => ({
+          ...footerItem,
+          notificationStatus: notification?.status,
+          notificationDetails: notification?.details,
+        }));
       }
       const updatedItem = {...item}
       switch(item.type) {
