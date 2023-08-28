@@ -17,7 +17,8 @@ import {
 } from "../menu/menu-service";
 import { useLocation, useNavigate } from "react-router-dom";
 import { STATUS } from "../../data/constants/status";
-import { getNotificationsByStatusAndCategory } from "../../store/notifications-slice";
+import { getNotificationItemsByCategoryAndStatus, getNotificationsByStatusAndCategory } from "../../store/notifications-slice";
+import { useSelector } from "react-redux";
 
 /*----------------------------------------------------------------------------*/
 
@@ -36,18 +37,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [navItems, setNavItems] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const navItems = await getSubnavCategories();
-      setNavItems(navItems);
-    })()
-  }, [])
-
-  const notifications = useAppSelector(
-    (state) => state.notifications.notificationItems
-  );
+  const [navItems, setNavItems] = useState<any>([]);
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
   );
@@ -57,9 +47,14 @@ export const Sidebar: React.FC<ISidebarProps> = ({
   const selectedApplication = useAppSelector(
     (state) => state.filters.selectedApplication
   );
-  const notificationCombinations = useAppSelector(
-    (state) => state.notifications.notificationCombinations
-  );
+  const toBeTreated = useSelector((state) => getNotificationItemsByCategoryAndStatus(state, selectedCategory, STATUS.TO_BE_TREATED));
+
+  useEffect(() => {
+    (async () => {
+      const navItems = await getSubnavCategories();
+      setNavItems(navItems);
+    })()
+  }, [toBeTreated]);
 
   const dispatch = useAppDispatch();
 
@@ -71,21 +66,19 @@ export const Sidebar: React.FC<ISidebarProps> = ({
   // We can replace this logic with a simple API call to fetch the category counts when ready.
   const getNotificationCount = async (
     category: number,
-    application?: Application
+    application?: Application,
   ) => {
     // check if wee need the notifications of status 1 corresponding to the current category in order to calculate the count
     if (
-      selectedStatus === STATUS.TREATED &&
-      notificationCombinations.find(
-        (c) => c[0] === STATUS.TO_BE_TREATED && c[1] === selectedCategory
-      )
+      selectedStatus === STATUS.TREATED
     ) {
       await dispatch(getNotificationsByStatusAndCategory(STATUS.TO_BE_TREATED, selectedCategory));      
     }
 
     if (application) {
-      return getNotificationCategorycount(category, notifications, application);
+      return getNotificationCategorycount(category, toBeTreated.items, application);
     }
+
     return getAllNotificationsCount(category, notificationCounts);
   };
 
@@ -143,7 +136,6 @@ export const Sidebar: React.FC<ISidebarProps> = ({
   const getSubnavCategories = async () => {
     // Get the badge count for the selected category, or set it to undefined if no count is returned
     const badge = await getNotificationCount(selectedCategory) || undefined;
-  
     // Map over the apps in the selected category, returning an array of Promises representing each app's details
     const appPromises = getAppsByCategory(selectedCategory).map(async (app) => ({
       key: `${app.sourceName}_${app.type}`,

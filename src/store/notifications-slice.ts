@@ -10,12 +10,31 @@ import {
   dismissNotifications as _dismissNotifications,
   getNotificationCountByCategory,
 } from "./../services/notification-service";
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  PayloadAction,
+  createSelector,
+  current,
+} from "@reduxjs/toolkit";
 import type { AppDispatch, RootState } from "./index";
 import Notification from "../data/interfaces/notification";
 import { FILTER } from "../data/constants/filter";
 import { NotificationError } from "../data/interfaces/notification-error";
 import { STATUS } from "../data/constants/status";
+
+interface StatusObject {
+  items: Notification[];
+  loaded: boolean;
+  error: number | null;
+}
+
+interface CategoryObject {
+  [key: number]: StatusObject;
+}
+
+type NotificationsItemsByCategory = {
+  [key: number]: CategoryObject;
+};
 
 const initialState = {
   notificationItems: null as Notification[] | null,
@@ -27,6 +46,32 @@ const initialState = {
     [STATUS.TO_BE_TREATED, CATEGORY.INFORMATION_FEED], // 1/1
     [STATUS.TREATED, CATEGORY.INFORMATION_FEED], // 2/1
   ] as number[][],
+  notificationsItemsByCategory: {
+    0: {
+      1: {
+        items: [] as Notification[],
+        loaded: false as boolean,
+        error: null as number | null,
+      },
+      2: {
+        items: [] as Notification[],
+        loaded: false as boolean,
+        error: null as number | null,
+      },
+    },
+    1: {
+      1: {
+        items: [] as Notification[],
+        loaded: false as boolean,
+        error: null as number | null,
+      },
+      2: {
+        items: [] as Notification[],
+        loaded: false as boolean,
+        error: null as number | null,
+      },
+    },
+  } as NotificationsItemsByCategory,
 };
 
 const notificationSlice = createSlice({
@@ -60,6 +105,18 @@ const notificationSlice = createSlice({
         }
       }
     },
+    setNotificationsItemsByCategory(
+      state,
+      action: PayloadAction<{
+        status: number;
+        category: number;
+        value: StatusObject;
+      }>
+    ) {
+      state.notificationsItemsByCategory[action.payload.category][
+        action.payload.status
+      ] = action.payload.value;
+    },
     updatePendingStatus(
       state,
       action: PayloadAction<{ notificationId: string; isPending: boolean }>
@@ -77,6 +134,28 @@ const notificationSlice = createSlice({
     },
   },
 });
+
+// A simple selector to get the entire notificationsItemsByCategory object from the state
+const getNotificationsItemsByCategory = (state: any) =>
+  state.notifications.notificationsItemsByCategory;
+
+// A selector that takes the category number and status number and returns the relevant StatusObject
+export const getNotificationItemsByCategoryAndStatus = createSelector(
+  [
+    getNotificationsItemsByCategory,
+    (state: any, category: number, status: number) => ({ category, status }),
+  ],
+  (notificationsItemsByCategory, { category, status }) => {
+    // Check if the category exists in the state
+    if (notificationsItemsByCategory[category]) {
+      // Check if the status exists within that category
+      if (notificationsItemsByCategory[category][status]) {
+        return notificationsItemsByCategory[category][status];
+      }
+    }
+    return null;
+  }
+);
 
 const selectNotifications = (state: {
   notifications: { notificationItems: any };
@@ -103,56 +182,65 @@ export const getNotificationsByStatusAndCategory = (
         return;
       }
 
-      const notificationCombinations =
-        getState().notifications.notificationCombinations;
-      const currentNotifications = getState().notifications.notificationItems;
-      const notificationError = getState().notifications.notificationError;
+      let currentNotifications =
+        getState().notifications.notificationsItemsByCategory;
+      let currentNotification =
+        currentNotifications[selectedCategory][selectedStatus];
+
+      if (!currentNotification) {
+        throw new Error("Invalid status or category");
+      }
 
       // fetch the notification if it hasn't been fetched yet
-      if (
-        notificationCombinations.some(
-          (c) => c[0] === selectedStatus && c[1] === selectedCategory
-        )
-      ) {
+      if (!currentNotification.loaded) {
         const currentRouteNotifications = await getNotifications(
           selectedStatus,
           selectedCategory
         );
-        // if we have a network error, we save the error number, else, we remove the route combination.
-        // This way, we keep repeting the call when there is a newtwork error.
+
+        // Create a new object based on currentNotification
+        let newNotification = {
+          ...currentNotification,
+        };
+
+        // if we have a network error, we save the error in the error field,
+        // else, we set the loaded value to true.
         if (typeof currentRouteNotifications === "number") {
-          dispatch(
-            notificationActions.setNotificationError({
-              code: currentRouteNotifications as number,
-              status: selectedStatus,
-              category: selectedCategory,
+          newNotification.loaded = false;
+          newNotification.error = currentRouteNotifications;
+        } else {
+          newNotification.loaded = true;
+          newNotification.error = null;
+          newNotification.items = currentRouteNotifications;
+        }
+
+        // set the treated by and treatedOn value
+        if (newNotification.items) {
+          newNotification.items = await Promise.all(
+            newNotification.items.map(async (notification: Notification) => {
+              let updatedNotification = { ...notification }; // Create a shallow copy of the notification object
+              if (updatedNotification.treatedBy) {
+                updatedNotification.treatedBy = await getUserNameFromLogin(
+                  notification.treatedBy
+                );
+                if (updatedNotification.treatedOn) {
+                  updatedNotification.treatedOn = formatDate(
+                    updatedNotification.treatedOn
+                  );
+                }
+              }
+              return updatedNotification;
             })
           );
-          return currentNotifications;
-        } else {
-          //remove the notification error if it was broken on the previous call
-          if (
-            notificationError?.status === selectedStatus &&
-            notificationError?.category === selectedCategory
-          ) {
-            dispatch(notificationActions.setNotificationError(null));
-          }
-          // Remove the one matching selectedCategory and selectedStatus from allCombinations
-          const filteredCombinations = notificationCombinations.filter(
-            ([status, category]) =>
-              !(category === selectedCategory && status === selectedStatus)
-          );
-          // Set the new resulting combinations (that haven't been called yet)
-          dispatch(
-            notificationActions.setNotificationCombinations(
-              filteredCombinations
-            )
-          );
-          dispatch(
-            notificationActions.appendNotifications(currentRouteNotifications)
-          );
-          return currentRouteNotifications;
         }
+
+        dispatch(
+          notificationActions.setNotificationsItemsByCategory({
+            category: selectedCategory,
+            status: selectedStatus,
+            value: newNotification,
+          })
+        );
       }
     } catch (error) {
       console.error(error);
@@ -172,27 +260,11 @@ export const fetchNotifications = (
       const selectedStatus = +(
         searchParams?.get(FILTER.SELECTED_STATUS) || "1"
       );
-      let newNotifications = await dispatch(
+
+      // set the new notifications to the state
+      await dispatch(
         getNotificationsByStatusAndCategory(selectedStatus, selectedCategory)
       );
-      if (newNotifications) {
-        newNotifications = await Promise.all(
-          newNotifications.map(async (notification: Notification) => {
-            let updatedNotification = { ...notification }; // Create a shallow copy of the notification object
-            if (updatedNotification.treatedBy) {
-              updatedNotification.treatedBy = await getUserNameFromLogin(
-                notification.treatedBy
-              );
-              if (updatedNotification.treatedOn) {
-                updatedNotification.treatedOn = formatDate(
-                  updatedNotification.treatedOn
-                );
-              }
-            }
-            return updatedNotification;
-          })
-        );
-      }
     } catch (error) {
       console.error(error);
     }

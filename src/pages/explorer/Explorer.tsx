@@ -15,12 +15,11 @@ import { formatDate } from '../../utils/formatters'
 import { Placeholder } from '@trading/energies-ui'
 
 import './Explorer.scss'
-import { getUserLogin } from '../../services/auth-service'
 
 import NotificationGroup from '../../data/interfaces/notification-group'
-import { STATUS } from '../../data/constants/status'
 import Loader from '../../components/loader/Loader'
-import { NotificationError } from '../../data/interfaces/notification-error'
+import { useSelector } from 'react-redux'
+import { getNotificationItemsByCategoryAndStatus } from '../../store/notifications-slice'
 
 const notificationPeriodGroups = [
   {
@@ -81,12 +80,6 @@ const notificationPeriodGroups = [
 ]
 
 export const Explorer: React.FC = () => {
-  const notifications: Notification[] | null = useAppSelector(
-    (state) => state.notifications.notificationItems
-  )
-  const notificationError: NotificationError | null = useAppSelector(
-    (state) => state.notifications.notificationError
-  )
   const selectedStatus: number = useAppSelector(
     (state) => state.filters.selectedStatus
   )
@@ -98,23 +91,19 @@ export const Explorer: React.FC = () => {
     null as NotificationGroup[] | null
   )
 
+  const notifications = useSelector((state) => getNotificationItemsByCategoryAndStatus(state, selectedCategory, selectedStatus));
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserLogin = async () => {
-      return await getUserLogin()
-    }
-    if (notifications) {
-      fetchUserLogin().then((login) => {
-        setFilterNotifications(filterAndSortNotifications(notifications, login));
-        setLoading(false);
-      })
+    if(notifications.loaded){
+      setFilterNotifications(filterAndSortNotifications(notifications.items));
+      setLoading(false);
     }
   }, [notifications, filters])
 
   const filterAndSortNotifications = (
-    notifications: Notification[],
-    userLogin: string
+    notifications: Notification[]
   ) => {
     let filterNotifications = notifications
       .filter(
@@ -125,14 +114,6 @@ export const Explorer: React.FC = () => {
           includesString(n.owner.login, filters.searchFilter) ||
           includesString(formatDate(n.date), filters.searchFilter)
       )
-      .filter((n) => n.category === filters.selectedCategory)
-      .filter((n) => {
-        if (filters.selectedStatus === STATUS.TO_BE_TREATED) {
-          return n.status === STATUS.NEW || n.status === STATUS.TO_BE_TREATED
-        } else {
-          return n.status === filters.selectedStatus;
-        }
-      })
       // filter by selected application
       .filter(
         (n) =>
@@ -234,17 +215,17 @@ export const Explorer: React.FC = () => {
     return groupedNotifications
   }
 
-  if (loading && !notificationError) {
+  if (loading && !notifications.error) {
     return <Loader />
   }
 
-  if (notificationError && notificationError.status === selectedStatus && notificationError.category === selectedCategory) {
+  if (notifications.error) {
     let errorMessage = null;
-    switch (notificationError.code) {
+    switch (notifications.error) {
       case 500:
         errorMessage = (
           <Placeholder
-            title={`Sorry something went wrong. (Error ${notificationError.code})`}
+            title={`Sorry something went wrong. (Error ${notifications.error})`}
             image='error'
             theme='dark'
             style={{ minHeight: 0 }}
