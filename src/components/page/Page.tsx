@@ -17,10 +17,11 @@ import NotificationDetail from '../../components/NotificationDetail'
 
 import './Page.scss'
 import { APP_CONFIG } from '../../data/app-config'
-import {fetchNotificationCounts, fetchNotifications, selectNotificationById} from "../../store/notifications-slice";
+import {fetchNotificationCounts, fetchNotificationsByStatusAndCategory, selectNotificationById} from "../../store/notifications-slice";
 import {useSelector} from "react-redux";
 import {getTitleByCategory} from "../../pages/menu/menu-service";
 import { useRouteFilters } from '../../hooks/use-route-filters'
+import { FILTER } from '../../data/constants/filter'
 
 
 const userProfile = {}
@@ -39,7 +40,14 @@ export const Page: React.FC = () => {
   )
 
   useEffect(() => {
-    dispatch(fetchNotifications(searchParams));
+    // get the current category and status from the url
+    const selectedCategory = +(
+      searchParams?.get(FILTER.SELECTED_CATEGORY) || "0"
+    );
+    const selectedStatus = +(
+      searchParams?.get(FILTER.SELECTED_STATUS) || "1"
+    );
+    dispatch(fetchNotificationsByStatusAndCategory(selectedStatus, selectedCategory));
   }, [dispatch, notification, searchParams]);
 
   // fetch the counts only on startup. (other calls are made on WS update in App.tsx)

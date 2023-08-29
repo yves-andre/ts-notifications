@@ -17,7 +17,7 @@ import {
 } from "../menu/menu-service";
 import { useLocation, useNavigate } from "react-router-dom";
 import { STATUS } from "../../data/constants/status";
-import { getNotificationItemsByCategoryAndStatus, getNotificationsByStatusAndCategory } from "../../store/notifications-slice";
+import { fetchNotificationsByStatusAndCategory, getNotificationItemsByCategoryAndStatus } from "../../store/notifications-slice";
 import { useSelector } from "react-redux";
 
 /*----------------------------------------------------------------------------*/
@@ -72,7 +72,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({
     if (
       selectedStatus === STATUS.TREATED
     ) {
-      await dispatch(getNotificationsByStatusAndCategory(STATUS.TO_BE_TREATED, selectedCategory));      
+      await dispatch(fetchNotificationsByStatusAndCategory(STATUS.TO_BE_TREATED, selectedCategory));      
     }
 
     if (application) {
