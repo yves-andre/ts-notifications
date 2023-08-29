@@ -78,7 +78,7 @@ const notificationSlice = createSlice({
           items: [...newItems[notification.category][notification.status].items, notification],
           loaded: true,
           error: null
-        },
+        };
         state.notificationsItemsByCategory = newItems;
       })
     },
@@ -170,10 +170,8 @@ export const getNotificationItemsByCategoryAndStatus = createSelector(
   }
 );
 
-const selectNotifications = (state: {
-  notifications: { notificationItems: any };
-}) => {
-  return state.notifications.notificationItems;
+const selectNotifications = (state: RootState) => {
+  return flattenNotificationItems(state.notifications);
 };
 
 export const selectNotificationById = (notificationId: any) =>
