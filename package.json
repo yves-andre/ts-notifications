@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "./",
   "dependencies": {
+    "@craco/craco": "^7.1.0",
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -27,10 +28,10 @@
   },
   "scripts": {
     "start": "npm run start-ws && react-scripts start",
-    "start:local": "dotenv -e .env.local -- react-scripts start",
+    "start:local": "dotenv -e .env.local -- craco start",
     "start:development": "dotenv -e .env.development --host 0.0.0.0 react-scripts start",
     "start:staging": "dotenv -e .env.staging -- react-scripts start",
-    "build": "react-scripts build",
+    "build": "craco build",
     "build:development": "dotenv -e .env.development -- react-scripts build",
     "build:staging": "dotenv -e .env.staging -- react-scripts build",
     "build:production": "dotenv -e .env.production -- react-scripts build",
@@ -62,6 +63,7 @@
   },
   "devDependencies": {
     "dayjs": "^1.11.9",
-    "dotenv-cli": "^7.1.0"
+    "dotenv-cli": "^7.1.0",
+    "mini-css-extract-plugin": "^2.7.6"
   }
 }
