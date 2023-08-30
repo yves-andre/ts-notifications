@@ -1,19 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {BEM, IconButton, setGradient, setTheme} from '@trading/energies-ui'
 import {Alert, Block, Error} from './'
-import mock from './_mock.json'
 import styles from './Panel.module.scss'
 import {
   getNotificationIsPending,
   getValidationFormById,
-  NOTIFICATION_SERVICE_ERRORS,
   validateFormById
 } from "../../services/notification-service";
-import validationFormSample from "../../pages/validation/validation-form-sample.json";
-import {ItemValidationTemplate} from "../validation-form/validation-form-service";
-import error from "./Error";
 import { useAppDispatch } from "../../hooks/use-app-dispatch";
-import {notificationActions} from "../../store/notifications-slice";
+import {notificationActions, openNotificationToValidate} from "../../store/notifications-slice";
+import { useAppSelector } from '../../hooks/use-app-selector'
 
 const b = BEM(styles)
 
@@ -53,6 +49,9 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
   const currentValidationFormJSON = useRef(null);
   const [alert, setAlert] = useState(true)
   const dispatch = useAppDispatch();
+  const notificationsToValidate = useAppSelector(
+    (state) => state.notifications.notificationsToValidate
+  );
 
 
 
@@ -109,9 +108,11 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
         case 'hierarchyValidation':
           updatedItem.isDisabled = pendingStatus.isPending;
           updatedItem.onValidate = (comment) => {
+            openNextNotificationToValidate(notification._id);
             return updateFormStatus(true, comment)
           };
           updatedItem.onReject = (comment) => {
+            openNextNotificationToValidate(notification._id);
             return updateFormStatus(false, comment)
           };
           break;
@@ -184,6 +185,26 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
       }
   }, [validationJson])
 
+  const openNextNotificationToValidate = (notificationId) => {
+    // Find the index of the current notification
+    const currentIndex = notificationsToValidate.findIndex(
+      (n) => n.id === notificationId
+    );
+    // Find the next notification with opened set to false
+    // First, check the notifications after the current one
+    // If none is found, check the notifications before the current one
+    const nextItemWithOpenedFalse = notificationsToValidate
+      .slice(currentIndex + 1) // slice the array from the notification after the current one
+      .concat(notificationsToValidate.slice(0, currentIndex)) // concatenate with the slice of the array before the current one
+      .find((notification) => !notification.opened && !notification.pending); // find the first notification that is not opened or pending
+    // If such a notification is found, dispatch an action to open it
+    if (nextItemWithOpenedFalse) {
+      dispatch(openNotificationToValidate(nextItemWithOpenedFalse.id));
+    }else {
+      onClose(notificationId);
+    }
+  };
+
   /**
    * Update form status
    * @param isValidated
@@ -204,6 +225,10 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
     }
   }
 
+  const onCloseHandler = () => {
+    onClose(notification._id);
+  }
+
 
   return (
     <div
@@ -214,7 +239,7 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
       })}
       style={{ ...theme, ...gradientStyles }}
     >
-      {onClose && <PanelClose onClick={onClose} header={header} />}
+      {onClose && <PanelClose onClick={onCloseHandler} header={header} />}
 
       {header && <Block {...header} />}
 

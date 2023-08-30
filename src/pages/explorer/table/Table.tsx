@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {
   Button,
-  Picture,
   Icon,
   Text,
-  Status,
   Table as TableUI,
   Tooltip,
 } from '@trading/energies-ui'
@@ -16,8 +14,10 @@ import { filtersActions } from '../../../store/filters-slice'
 import {
   dismissNotificationById,
   dismissNotifications,
+  openNotificationToValidate,
   setNotificationIsReadById,
   setNotificationsIsSeenByIds,
+  setNotificationsToValidate,
 } from '../../../store/notifications-slice'
 import { CATEGORY } from '../../../data/constants/category'
 import { STATUS } from '../../../data/constants/status'
@@ -27,9 +27,8 @@ import CategoryColor from '../../../data/interfaces/category-color'
 import './Table.scss'
 import classNames from 'classnames'
 import NotificationGroup from '../../../data/interfaces/notification-group'
-import { getUserLogin } from "../../../services/auth-service";
-import {getNotificationIsPending, setNotificationIsSeen} from "../../../services/notification-service";
-import {redirect, useLocation, useNavigate, useParams} from 'react-router-dom'
+import {getNotificationIsPending} from "../../../services/notification-service";
+import {useParams} from 'react-router-dom'
 
 import NotificationItem from './../../../components/NotificationItem'
 
@@ -44,8 +43,6 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const [forceRender, setForceRender] = useState(false);
 
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const location = useLocation();
   const params = useParams();
   const selectedStatus = useAppSelector((state) => state.filters.selectedStatus)
   const selectedCategory = useAppSelector(
@@ -81,8 +78,28 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
         })
         dispatch(setNotificationsIsSeenByIds(notificationsIds))
       }
-    })
+    });
+    const notificationsToValidate = getNotificationsToValidate(notificationGroups)
+    dispatch(setNotificationsToValidate(notificationsToValidate));
   }, [notificationGroups])
+
+
+  const getNotificationsToValidate = (notificationGroups: NotificationGroup[]) => {
+    let notificationsToValidate = [] as {id: string, isPending: boolean}[];
+    notificationGroups.forEach((notificationGroup: NotificationGroup) => {
+      const toValidateIds = notificationGroup.notifications
+        .filter((n: Notification) => n.hasValidationForm)
+        .map((n: Notification) => {
+          const isPending = getNotificationIsPending(n).isPending;
+          return {
+            id: n._id,
+            isPending: isPending
+          };
+        })
+      notificationsToValidate = [...notificationsToValidate,...toValidateIds]
+    })
+    return notificationsToValidate;
+  }
 
   const sortColumnHandler = (fieldName: string) => {
     // 1st click on column = order ascending,
@@ -123,7 +140,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
 
   const openNotificationHandler = (notification: Notification) => {
     if (notification.hasValidationForm && notification.validationFormUrl) {
-      navigate({pathname: `/explorer/${notification._id}`, search: location.search})
+      dispatch(openNotificationToValidate(notification._id));
     } else {
       const action = getNotificationDefaultAction(notification)
       action && action.call(this)

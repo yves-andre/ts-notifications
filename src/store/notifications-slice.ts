@@ -15,10 +15,17 @@ import type { AppDispatch, RootState } from "./index";
 import Notification from "../data/interfaces/notification";
 import { FILTER } from '../data/constants/filter';
 
+interface NotificationToValidate {
+  id: string;
+  opened: boolean;
+  pending: boolean;
+}
+
 const initialState = {
   notificationItems: null as Notification[] | null,
   notificationCounts: [] as NotificationCount[],
-  notificationError: null as number | null
+  notificationError: null as number | null,
+  notificationsToValidate: [] as NotificationToValidate[]
 };
 
 const notificationSlice = createSlice({
@@ -66,6 +73,31 @@ const notificationSlice = createSlice({
       // replace the notificationItems array with a new array
       // to trigger a re-render
       state.notificationItems = [...state.notificationItems!];
+    },
+    setNotificationsToValidate(state, action: PayloadAction<{id: string, isPending: boolean}[]>){
+      const notificationsToValidate = action.payload.map(
+        (validationNotification: {id: string, isPending: boolean}) => {
+          const stateNotificationToValidate = state.notificationsToValidate.find(n => n.id === validationNotification.id);
+          return {
+            id: validationNotification.id,
+            opened: stateNotificationToValidate ? stateNotificationToValidate.opened : false,
+            pending: validationNotification.isPending
+          }
+        }
+      );
+      state.notificationsToValidate = notificationsToValidate;
+    },
+    openNotificationToValidate(state, action: PayloadAction<string>){    
+      const openIndex = state.notificationsToValidate.findIndex(n => n.id === action.payload);
+      if(state.notificationsToValidate[openIndex]){
+        state.notificationsToValidate[openIndex].opened = true;
+      }
+    },
+    closeNotificationToValidate(state, action: PayloadAction<string>){    
+      const openIndex = state.notificationsToValidate.findIndex(n => n.id === action.payload);
+      if(state.notificationsToValidate[openIndex]){
+        state.notificationsToValidate[openIndex].opened = false;
+      }
     }
   },
 });
@@ -80,6 +112,43 @@ export const selectNotificationById = (notificationId: any) =>
     selectNotifications,
     notifications => notifications?.find((notification: { _id: any; }) => notification._id === notificationId)
   );
+
+
+export const setNotificationsToValidate = (
+  validationNotifications: {id: string, isPending: boolean}[]
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      dispatch(notificationActions.setNotificationsToValidate(validationNotifications));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const openNotificationToValidate = (
+  id: string
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      dispatch(notificationActions.openNotificationToValidate(id));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+
+export const closeNotificationToValidate = (
+  id: string
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      dispatch(notificationActions.closeNotificationToValidate(id));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 
 export const fetchNotifications = (searchParams: URLSearchParams | null = null) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
