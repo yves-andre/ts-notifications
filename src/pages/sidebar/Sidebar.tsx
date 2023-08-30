@@ -12,8 +12,8 @@ import { filtersActions } from "../../store/filters-slice";
 import { Nav } from '@trading/energies-ui'
 
 import "./Sidebar.scss";
-import {getNotificationsCountByCategory} from "../menu/menu-service";
-import {useLocation, useNavigate} from "react-router-dom";
+import { getNotificationsCountByCategory } from "../menu/menu-service";
+import { useLocation, useNavigate } from "react-router-dom";
 
 /*----------------------------------------------------------------------------*/
 
@@ -122,7 +122,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({ applications, categoryColors 
 
   const subnavCategories = ([{
     key: selectedCategory,
-    title: 'ALL ' + getTitleByCategory(selectedCategory),
+    title: 'All Apps',
     icon: getIconByCategory(selectedCategory),
     badge: getNotificationCountByCategory(selectedCategory) || undefined,
     color: getColorByCategory(selectedCategory)
@@ -148,7 +148,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({ applications, categoryColors 
         selectAppHandler(app?.match, selectedCategory)
       }
     }
-    navigate({pathname: `/explorer`, search: location.search})
+    navigate({ pathname: `/explorer`, search: location.search })
 
   }
 

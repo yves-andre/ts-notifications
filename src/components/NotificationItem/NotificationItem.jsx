@@ -17,6 +17,8 @@ export const NotificationItem = ({
   category,
   subtitle,
   isImportant,
+  hasValidationForm,
+  isManual,
   details,
   description,
   pendingStatus,
@@ -76,8 +78,16 @@ export const NotificationItem = ({
       </td>
       <td>{details}</td>
       <td>{date}</td>
-      <td align='right'>
-        {<NotificationBadge onClick={(e) => onBadgeClickHandler(e)} category={category} status={status} pendingStatus={pendingStatus} />}
+      <td align='right' style={{ paddingRight: 18 }}>
+        <NotificationBadge
+          onClick={(e) => onBadgeClickHandler(e)}
+          category={category}
+          status={status}
+          pendingStatus={pendingStatus}
+          hasValidationForm={hasValidationForm}
+          isManual={isManual}
+          active={active}
+        />
       </td>
     </tr>
   )
