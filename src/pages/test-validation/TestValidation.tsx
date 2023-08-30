@@ -109,30 +109,30 @@ export const TestValidation: React.FC = () => {
 
                             }
                             }></textarea> */}
-                            <CodeMirror
-                                className="CodeMirror"
-                                id="editor"
-                                value={JSON.stringify(validationForm, null, 2) || ""}
-                                height="100%"
-                                theme={"dark"}
-                                extensions={[json()]}
-                                onChange={(val:any) => {
-                                    if(textareaTimeout) {
-                                        clearTimeout(textareaTimeout)
-                                    }
-                                    textareaTimeout = setTimeout(() => {
-                                        try {
-                                            const validationJson =  JSON.parse(val)
-                                            console.log('setValidationForm', validationJson)
-                                            setValidationForm(validationJson)
-                                        } catch (e) {
-                                            console.log('Unvalid json', val)
+                            <div style={{ marginRight: -20, marginLeft: -25 }}>
+                                <CodeMirror
+                                    className="CodeMirror"
+                                    id="editor"
+                                    value={JSON.stringify(validationForm, null, 2) || ""}
+                                    height="100%"
+                                    theme={"dark"}
+                                    extensions={[json()]}
+                                    onChange={(val: any) => {
+                                        if (textareaTimeout) {
+                                            clearTimeout(textareaTimeout)
                                         }
-                                    },1000)
-
-
-                                }}
-                            />
+                                        textareaTimeout = setTimeout(() => {
+                                            try {
+                                                const validationJson = JSON.parse(val)
+                                                console.log('setValidationForm', validationJson)
+                                                setValidationForm(validationJson)
+                                            } catch (e) {
+                                                console.log('Unvalid json', val)
+                                            }
+                                        }, 1000)
+                                    }}
+                                />
+                            </div>
                         </>
                     </Col>
 
@@ -140,7 +140,7 @@ export const TestValidation: React.FC = () => {
                         (<Col
                             style={{
                                 maxWidth: 410,
-                                background: 'white',
+                                background: '#282c34',
                                 marginRight: -25,
                                 display: 'flex',
                                 flexDirection: 'column',
