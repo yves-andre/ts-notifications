@@ -61,6 +61,8 @@
     "node": "16.16.0"
   },
   "devDependencies": {
+    "@codemirror/lang-json": "^6.0.1",
+    "@uiw/react-codemirror": "^4.21.9",
     "dayjs": "^1.11.9",
     "dotenv-cli": "^7.1.0"
   }
