@@ -204,7 +204,9 @@ export const Explorer: React.FC = () => {
       })
     } else {
       notifications.forEach((notification: Notification) => {
-        addNotificationToGroup('OTHERS', notification)
+        if(!addedNotificationIds.has(notification._id)){
+          addNotificationToGroup('OTHERS', notification);
+        }
       })
     }
 
