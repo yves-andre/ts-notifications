@@ -64,7 +64,16 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
     setAlert(false);
     setIsPending(false);
     setTemplate(validationForm.template);
-    const items = updateItemsConfig(validationForm?.template?.items)
+
+    const pendingStatus = getNotificationIsPending(notification)
+    if (!pendingStatus.isPending && pendingStatus.isTimeout) {
+      setAlert(true)
+    }
+    if (pendingStatus.isPending) {
+      setIsPending(true)
+    }
+
+    const items = updateItemsConfig(validationForm?.template?.items, notification, pendingStatus);
     const header = items?.find((i) => i.type === 'headerBlock')
     const footer = items?.find((i) => i.type === 'footerBlock')
     const content = items?.filter(
@@ -80,17 +89,19 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
    * Update items config to add onValidate and onReject functions
    *
    * @param items
+   * @param notification
+   * @param pendingStatus
    * @returns {*[]|*}
    */
-  const updateItemsConfig = (items) => {
-    if (!items) return [];
+  const updateItemsConfig = (items, notification, pendingStatus) => {
+    if(!items) return [];
     return items.map((item) => {
-      const pendingStatus = getNotificationIsPending(notification)
-      if (!pendingStatus.isPending && pendingStatus.isTimeout) {
-        setAlert(true)
-      }
-      if (pendingStatus.isPending) {
-        setIsPending(true)
+      if (item.type === 'footerBlock') {
+        item.items = item.items.map((footerItem) => ({
+          ...footerItem,
+          notificationStatus: notification?.status,
+          notificationDetails: notification?.details,
+        }));
       }
       const updatedItem = { ...item }
       switch (item.type) {
@@ -105,8 +116,8 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
           break;
       }
 
-      if (item.items) {
-        updatedItem.items = updateItemsConfig(item.items)
+      if(item.items) {
+        updatedItem.items = updateItemsConfig(item.items, notification, pendingStatus)
       }
       return updatedItem;
     })
