@@ -30,8 +30,10 @@ export const Search: React.FC<{ stacked: boolean }> = ({ stacked }) => {
       deleteBtn={true}
       value={search}
       style={{
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
+        ...stacked && {
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
+        }
       }}
     />
   )
