@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
-import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom'
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Layout, Header, LocalNav, Flex, Col, IconButton } from '@trading/energies-ui'
 import mock from '../../components/NotificationDetail/_mock-nodata.json'
-
+import CodeMirror from "@uiw/react-codemirror";
+import { json } from "@codemirror/lang-json";
 
 
 import NotificationDetail from '../../components/NotificationDetail'
@@ -22,7 +23,7 @@ export const TestValidation: React.FC = () => {
 
     const totalLogo =
         process.env.NODE_ENV !== 'development'
-            ? APP_CONFIG.THEME_ASSETS.totalLogo
+            ? APP_CONFIG.THEME_ASSETS.totalLogo.replace("{0}", process.env.REACT_APP_API_SP_RESSOURCES_URL as string)
             : 'https://www.totalenergies.fr/typo3conf/ext/de_site_package/Resources/Public/Dist/Images/Logo/totalenergies--vertical.svg'
 
 
@@ -34,7 +35,7 @@ export const TestValidation: React.FC = () => {
 
 
     const onValidationClose = () => {
-        const resp = navigate({pathname: `/explorer`, search: location.search})
+        const resp = navigate({ pathname: `/explorer`, search: location.search })
     }
 
     return (
@@ -88,25 +89,47 @@ export const TestValidation: React.FC = () => {
                 <Flex style={{ padding: '0 25px', flex: 1 }}>
                     <Col style={{ flexDirection: 'column', display: 'flex' }}>
                         <>
-                            <textarea style={{height:'100%', margin:'20px'}} id={'json-field'} defaultValue={JSON.stringify(validationForm, null, 2)} onChange={(event) => {
+                            {/* <textarea style={{height:'100%', margin:'20px'}} id={'json-field'} defaultValue={JSON.stringify(validationForm, null, 2)} onChange={(event) => {
                                 if(textareaTimeout) {
                                     clearTimeout(textareaTimeout)
                                 }
                                 textareaTimeout = setTimeout(() => {
                                     try {
-                                        const validationJson =  JSON.parse(event.target.value)
+                                        const validationJson = JSON.parse(event.target.value)
                                         console.log('setValidationForm', validationJson)
                                         setValidationForm(validationJson)
                                     } catch (e) {
                                         console.log('Unvalid json', event.target.value)
                                     }
-                                },1000)
+                                }, 1000)
 
 
                             }
-                            }></textarea>
-
-
+                            }></textarea> */}
+                            <div style={{ marginRight: -20, marginLeft: -25 }}>
+                                <CodeMirror
+                                    className="CodeMirror"
+                                    id="editor"
+                                    value={JSON.stringify(validationForm, null, 2) || ""}
+                                    height="100%"
+                                    theme={"dark"}
+                                    extensions={[json()]}
+                                    onChange={(val: any) => {
+                                        if (textareaTimeout) {
+                                            clearTimeout(textareaTimeout)
+                                        }
+                                        textareaTimeout = setTimeout(() => {
+                                            try {
+                                                const validationJson = JSON.parse(val)
+                                                console.log('setValidationForm', validationJson)
+                                                setValidationForm(validationJson)
+                                            } catch (e) {
+                                                console.log('Unvalid json', val)
+                                            }
+                                        }, 1000)
+                                    }}
+                                />
+                            </div>
                         </>
                     </Col>
 
@@ -114,7 +137,7 @@ export const TestValidation: React.FC = () => {
                         (<Col
                             style={{
                                 maxWidth: 410,
-                                background: 'white',
+                                background: '#282c34',
                                 marginRight: -25,
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -125,7 +148,7 @@ export const TestValidation: React.FC = () => {
                                 zIndex: 5,
                             }}
                         >
-                            <NotificationDetail notification={{}} onClose={() => onValidationClose()} isDebug={true} validationJson={validationForm}/>
+                            <NotificationDetail notification={{}} onClose={() => onValidationClose()} isDebug={true} validationJson={validationForm} />
                         </Col>)
                     }
                 </Flex>

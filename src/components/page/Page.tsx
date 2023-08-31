@@ -57,7 +57,7 @@ export const Page: React.FC = () => {
 
   const totalLogo =
     process.env.NODE_ENV !== 'development'
-      ? APP_CONFIG.THEME_ASSETS.totalLogo
+      ? APP_CONFIG.THEME_ASSETS.totalLogo.replace("{0}", process.env.REACT_APP_API_SP_RESSOURCES_URL as string)
       : 'https://www.totalenergies.fr/typo3conf/ext/de_site_package/Resources/Public/Dist/Images/Logo/totalenergies--vertical.svg'
 
 
