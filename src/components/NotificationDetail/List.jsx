@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { Block, Error, Page } from './'
 
 import { Icon, BEM, colorCSS } from '@trading/energies-ui'
 
 import styles from './List.module.scss'
+import { ValidationContext } from './Panel'
 const b = BEM(styles)
 
 /*----------------------------------------------------------------------------*/
@@ -85,14 +86,48 @@ const b = BEM(styles)
 }
 */
 /*----------------------------------------------------------------------------*/
-const ListItem = ({ title, subtitle, status, image, icon, value, items }) => {
+const ListItem = ({ title, subtitle, status, image, icon, value, items, validationRules }) => {
   const [open, setOpen] = useState(false)
+  const [listItemValidationRules, setListItemValidationRules] = useState();
+  const [listItemStatus, setListItemStatus] = useState();
+  const {validation, setOpenValidationItem} = useContext(ValidationContext);
   const hasItems = items?.length !== 0
 
+  // setting the validation rules for the list item
+  useEffect(() => {  
+    if(validationRules && validation && validation[validationRules]){
+      setListItemValidationRules(validation[validationRules])
+    }
+  }, [validationRules,validation]);
+
+  // setting the status depending on the validation rules
+  useEffect(() => {
+    if (listItemValidationRules) {
+      const currentStatus = listItemValidationRules.value
+        ? listItemValidationRules.valid
+        : listItemValidationRules.invalid;
+      setListItemStatus(currentStatus);
+    }else{
+      setListItemStatus(status)
+    }
+  }, [listItemValidationRules]);
+
+
+  // We need to set the open validation item key in the context 
+  // because the RulesValidationButton component has no way
+  // of knowing where he comes from
   const onClickHandler = () => {
     if (hasItems) {
+      if(listItemValidationRules && validationRules){
+        setOpenValidationItem(validationRules);
+      }
       setOpen(true)
     }
+  }
+
+  const onCloseHandler = () => {
+    setOpenValidationItem(null);
+    setOpen(false);
   }
 
   return (
@@ -112,13 +147,13 @@ const ListItem = ({ title, subtitle, status, image, icon, value, items }) => {
       )}
       {icon && <Icon className={b('icon')} name={icon} />}
       <div className={b('content')}>
-        <div className={b('title')} style={{ color: colorCSS(status?.color) }}>
+        <div className={b('title')} style={{ color: colorCSS(listItemStatus?.color) }}>
           <span className={b('ellipsis')}>{title}</span>
-          {status && (
+          {listItemStatus && (
             <Icon
               className={b('status')}
-              name={status.icon}
-              color={status.color}
+              name={listItemStatus.icon}
+              color={listItemStatus.color}
               size='xs'
             />
           )}
@@ -131,7 +166,7 @@ const ListItem = ({ title, subtitle, status, image, icon, value, items }) => {
         <>
           <Icon className={b('chevron')} name='filled/angle-right' />
           {open && (
-            <Page onClose={() => setOpen(false)}>
+            <Page onClose={onCloseHandler}>
               {items.map((item, i) => (
                 <Block key={i} {...item} />
               ))}
@@ -144,7 +179,8 @@ const ListItem = ({ title, subtitle, status, image, icon, value, items }) => {
 }
 /*----------------------------------------------------------------------------*/
 
-export const List = ({ type, listItems, display }) => {
+export const List = ({ type, listItems, display }) => { 
+
   return (
     <ul className={b({}, [display])} data-type={type} data-display={display}>
       {listItems?.map((item, i) => (

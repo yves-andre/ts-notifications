@@ -4,7 +4,7 @@
   "validationRules": {
     "item1": {
       "isMandatory": true,
-      "errorMessage": "You must check the comment of 'Dinner' before approve this item.",
+      "errorMessage": "You must check the comment of 'Public Transport' before approving this item.",
       "value": false,
       "valid": {
         "color": "green",
@@ -100,6 +100,7 @@
                   "color": "purple",
                   "icon": "warning"
                 },
+                "validationRules": "item1",
                 "subtitle": "Transportation | 10 Oct 2022",
                 "image": "https://picsum.photos/id/1008/500/700",
                 "value": "4.55 CHF",
@@ -360,7 +361,7 @@
             "commentEnabled": true,
             "commentPlaceholder": "Comments",
             "validateButton": {
-              "commentMandatory": false
+              "commentMandatory": true
             },
             "rejectButton": {
               "commentMandatory": true
