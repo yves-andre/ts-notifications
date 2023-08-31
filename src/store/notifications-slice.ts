@@ -9,7 +9,6 @@ import {
   setNotificationIsRead as _setNotificationIsRead,
   dismissNotifications as _dismissNotifications,
   getNotificationCountByCategory,
-  getNotificationsLocal,
 } from "./../services/notification-service";
 import {
   createSlice,
@@ -181,10 +180,11 @@ export const selectNotificationById = (notificationId: any) =>
     )
   );
 
-const reFetchLoadedNotifications = async (dispatch: AppDispatch, getState: () => RootState) => {
+const reFetchLoadedNotifications = async (dispatch: AppDispatch, getState: () => RootState, category: null | number = null) => {
   const state = getState();
   const notificationsItemsByCategory = state.notifications.notificationsItemsByCategory;
-  const categories = Object.keys(notificationsItemsByCategory);
+  
+  const categories = category ? [category] : Object.keys(notificationsItemsByCategory);
 
   for (const category of categories) {
     const statuses = Object.keys(notificationsItemsByCategory[+category]);
@@ -309,7 +309,8 @@ export const setNotificationsIsSeen = (category: number) => {
 
       // call the reFetchLoadedNotifications to update the notifications
       // in the consumer components
-      reFetchLoadedNotifications(dispatch, getState);
+      reFetchLoadedNotifications(dispatch, getState, category);
+      fetchNotificationCounts();
     } catch (error) {
       console.error(error);
     }
@@ -339,6 +340,7 @@ export const dismissNotificationById = (id: string) => {
     try {
       await _dismissNotification(id);
       reFetchLoadedNotifications(dispatch, getState);
+      fetchNotificationCounts();
     } catch (error) {
       console.log(error);
     }
@@ -353,6 +355,7 @@ export const dismissNotifications = (notifications: Notification[]) => {
       console.log(error);
     } finally {
       reFetchLoadedNotifications(dispatch, getState);
+      fetchNotificationCounts();
     }
   };
 };
@@ -362,6 +365,7 @@ export const setNotificationIsReadById = (id: string) => {
     try {
       await _setNotificationIsRead(id, true);
       reFetchLoadedNotifications(dispatch, getState);
+      fetchNotificationCounts();
     } catch (error) {
       console.log(error);
     }
