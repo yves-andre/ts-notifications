@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   Picture,
@@ -28,8 +28,8 @@ import './Table.scss'
 import classNames from 'classnames'
 import NotificationGroup from '../../../data/interfaces/notification-group'
 import { getUserLogin } from "../../../services/auth-service";
-import {getNotificationIsPending, setNotificationIsSeen} from "../../../services/notification-service";
-import {redirect, useLocation, useNavigate, useParams} from 'react-router-dom'
+import { getNotificationIsPending, setNotificationIsSeen } from "../../../services/notification-service";
+import { redirect, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import NotificationItem from './../../../components/NotificationItem'
 
@@ -123,7 +123,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
 
   const openNotificationHandler = (notification: Notification) => {
     if (notification.hasValidationForm && notification.validationFormUrl) {
-      navigate({pathname: `/explorer/${notification._id}`, search: location.search})
+      navigate({ pathname: `/explorer/${notification._id}`, search: location.search })
     } else {
       const action = getNotificationDefaultAction(notification)
       action && action.call(this)
@@ -210,7 +210,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   }
 
   const onBadgeClickHandler = (notification: Notification) => {
-    switch(notification.category) {
+    switch (notification.category) {
       case CATEGORY.ACTION_FEED:
         if (notification.isManual) {
           dismissNotificationHandler(notification)
@@ -279,14 +279,14 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
             )}
           {selectedStatus !== STATUS.TREATED &&
             selectedCategory === CATEGORY.INFORMATION_FEED && (
-              <td align='right' width='100'>
+              <td align='right' width='100' style={{ paddingRight: 18 }}>
                 <Button
                   size='small'
-                  style={{ borderRadius: '10px' }}
+                  style={{ borderRadius: '10px', margin: 0 }}
                   onClick={dismissAllHandler}
-                  color={APP_CONFIG.DEFAULT_APPLICATION_COLOR}
+                  color="#0000001f"
                 >
-                  Clear all
+                  Clear All
                 </Button>
               </td>
             )}
@@ -308,6 +308,8 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 category={notification.category}
                 isRead={notification.isRead}
                 isImportant={notification.isImportant}
+                hasValidationForm={notification.hasValidationForm}
+                isManual={notification.isManual}
                 image={notification.image}
                 sourceName={notification.sourceName}
                 title={getHighlightedText(notification.title, search)}
@@ -472,19 +474,19 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
 }
 
 
-const SortIcon: React.FC<{ field: string, sortFilter?: any }> = ({field, sortFilter}) => {
+const SortIcon: React.FC<{ field: string, sortFilter?: any }> = ({ field, sortFilter }) => {
   if (sortFilter.field === field) {
     return sortFilter.asc ? (
       <Icon
         name='caretRoundedDown'
         size='small'
-        style={{minWidth: 0, minHeight: 0, width: 15, height: 0}}
+        style={{ minWidth: 0, minHeight: 0, width: 15, height: 0 }}
       />
     ) : (
       <Icon
         name='caretRoundedUp'
         size='small'
-        style={{minWidth: 0, minHeight: 0, width: 15, height: 0}}
+        style={{ minWidth: 0, minHeight: 0, width: 15, height: 0 }}
       />
     )
   } else {
@@ -502,7 +504,7 @@ const TD: React.FC<{
   style?: React.CSSProperties,
   sortFilter: any,
   sortColumnHandler: (fieldName: string) => void
-}> = ({field, children, align, start, end, style, sortColumnHandler, sortFilter}) => {
+}> = ({ field, children, align, start, end, style, sortColumnHandler, sortFilter }) => {
   const borderRadius = {
     borderBottomLeftRadius: start ? '0px' : undefined,
     borderBottomRightRadius: end ? '0px' : undefined,
@@ -511,11 +513,11 @@ const TD: React.FC<{
   return (
     <td
       onClick={() => sortColumnHandler(field)}
-      style={{cursor: 'pointer', ...borderRadius, ...style}}
+      style={{ cursor: 'pointer', ...borderRadius, ...style }}
       align={align}
     >
       <Text variant='current'>{children}</Text>&nbsp;
-      <SortIcon field={field} sortFilter={sortFilter}/>
+      <SortIcon field={field} sortFilter={sortFilter} />
     </td>
   )
 }

@@ -33,10 +33,13 @@ const b = BEM(styles)
 */
 /*----------------------------------------------------------------------------*/
 export const Header = ({ image, title, subtitle, total, buttons, type }) => {
+
+  const capitalized = (str) => str.charAt(0).toUpperCase() + str.slice(1)
+
   const actions = buttons.map((button) => ({
     icon: button.icon,
     color: button.color,
-    children: button.name,
+    children: capitalized(button.name),
     onClick: () => {
       console.log(button.name, button.url)
       window.open(button.url, '_blank')

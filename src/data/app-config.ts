@@ -13,5 +13,5 @@ export const APP_CONFIG: any = {
     '{0}/tsf/assets/fonts/opensans/opensans.css',
     '{0}/tsf/assets/fonts/nunito/nunito.css',
   ],
-  DEFAULT_APPLICATION_COLOR: '#0000006e',
+  DEFAULT_APPLICATION_COLOR: '#7098A7',
 }
