@@ -17,9 +17,12 @@ import NotificationDetail from '../../components/NotificationDetail'
 
 import './Page.scss'
 import { APP_CONFIG } from '../../data/app-config'
-import {fetchNotifications, selectNotificationById} from "../../store/notifications-slice";
+import {fetchNotificationCounts, fetchNotificationsByStatusAndCategory, selectNotificationById} from "../../store/notifications-slice";
 import {useSelector} from "react-redux";
 import {getTitleByCategory} from "../../pages/menu/menu-service";
+import { useRouteFilters } from '../../hooks/use-route-filters'
+import { FILTER } from '../../data/constants/filter'
+
 
 const userProfile = {}
 
@@ -30,20 +33,31 @@ export const Page: React.FC = () => {
   const dispatch = useAppDispatch();
   const [hasValidation, setHasValidation] = React.useState(false)
   const notification = useSelector(selectNotificationById(params.notificationId));
+  const searchParams = useRouteFilters();
 
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
   )
 
   useEffect(() => {
-    if (!notification) {
-      dispatch(fetchNotifications());
-    }
-  }, [dispatch, notification]);
+    // get the current category and status from the url
+    const selectedCategory = +(
+      searchParams?.get(FILTER.SELECTED_CATEGORY) || "0"
+    );
+    const selectedStatus = +(
+      searchParams?.get(FILTER.SELECTED_STATUS) || "1"
+    );
+    dispatch(fetchNotificationsByStatusAndCategory(selectedStatus, selectedCategory));
+  }, [dispatch, notification, searchParams]);
+
+  // fetch the counts only on startup. (other calls are made on WS update in App.tsx)
+  useEffect(() => {
+    dispatch(fetchNotificationCounts());
+  }, []);
 
   const totalLogo =
     process.env.NODE_ENV !== 'development'
-      ? APP_CONFIG.THEME_ASSETS.totalLogo
+      ? APP_CONFIG.THEME_ASSETS.totalLogo.replace("{0}", process.env.REACT_APP_API_SP_RESSOURCES_URL as string)
       : 'https://www.totalenergies.fr/typo3conf/ext/de_site_package/Resources/Public/Dist/Images/Logo/totalenergies--vertical.svg'
 
 

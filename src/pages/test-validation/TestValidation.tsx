@@ -10,9 +10,6 @@ import NotificationDetail from '../../components/NotificationDetail'
 
 import './../../components/page/Page.scss'
 import { APP_CONFIG } from '../../data/app-config'
-import Notification from "../../data/interfaces/notification";
-import { fetchNotifications, selectNotificationById, setNotificationIsReadById } from "../../store/notifications-slice";
-import { useSelector } from "react-redux";
 
 const userProfile = {}
 let textareaTimeout: any = null
@@ -26,7 +23,7 @@ export const TestValidation: React.FC = () => {
 
     const totalLogo =
         process.env.NODE_ENV !== 'development'
-            ? APP_CONFIG.THEME_ASSETS.totalLogo
+            ? APP_CONFIG.THEME_ASSETS.totalLogo.replace("{0}", process.env.REACT_APP_API_SP_RESSOURCES_URL as string)
             : 'https://www.totalenergies.fr/typo3conf/ext/de_site_package/Resources/Public/Dist/Images/Logo/totalenergies--vertical.svg'
 
 
