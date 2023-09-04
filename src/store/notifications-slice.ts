@@ -1,5 +1,5 @@
-import { formatDate } from './../utils/formatters';
-import { getUserNameFromLogin } from './../services/auth-service';
+import { formatDate } from "./../utils/formatters";
+import { getUserNameFromLogin } from "./../services/auth-service";
 import { CATEGORY } from "./../data/constants/category";
 import { NotificationCount } from "./../data/interfaces/notification-count";
 import {
@@ -10,10 +10,27 @@ import {
   dismissNotifications as _dismissNotifications,
   getNotificationCountByCategory,
 } from "./../services/notification-service";
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  PayloadAction,
+  createSelector,
+} from "@reduxjs/toolkit";
 import type { AppDispatch, RootState } from "./index";
 import Notification from "../data/interfaces/notification";
-import { FILTER } from '../data/constants/filter';
+
+interface StatusObject {
+  items: Notification[];
+  loaded: boolean;
+  error: number | null;
+}
+
+interface CategoryObject {
+  [key: number]: StatusObject;
+}
+
+type NotificationsItemsByCategory = {
+  [key: number]: CategoryObject;
+};
 
 interface NotificationToValidate {
   id: string;
@@ -22,57 +39,98 @@ interface NotificationToValidate {
 }
 
 const initialState = {
-  notificationItems: null as Notification[] | null,
   notificationCounts: [] as NotificationCount[],
-  notificationError: null as number | null,
-  notificationsToValidate: [] as NotificationToValidate[]
+  notificationsToValidate: [] as NotificationToValidate[],
+  notificationsItemsByCategory: {
+    0: {
+      1: {
+        items: [] as Notification[],
+        loaded: false as boolean,
+        error: null as number | null,
+      },
+      2: {
+        items: [] as Notification[],
+        loaded: false as boolean,
+        error: null as number | null,
+      },
+    },
+    1: {
+      1: {
+        items: [] as Notification[],
+        loaded: false as boolean,
+        error: null as number | null,
+      },
+      2: {
+        items: [] as Notification[],
+        loaded: false as boolean,
+        error: null as number | null,
+      },
+    },
+  } as NotificationsItemsByCategory,
 };
 
 const notificationSlice = createSlice({
   name: "notifications",
   initialState,
   reducers: {
-    reset(state){
-      state.notificationItems = null;
-    },
-    resetNotificationError(state) {
-      state.notificationError = null;
-    },
-    load(state, action: PayloadAction<Notification[]>) {
-      if(typeof action.payload === "number"){
-        const error = action.payload;
-        state.notificationError = error;
-      }else{
-        state.notificationItems = action.payload;
-      }
-    },
     getNotificationCount(state, action: PayloadAction<NotificationCount[]>) {
       state.notificationCounts = action.payload;
     },
-    append(state, action: PayloadAction<Notification[]>) {
-      if(typeof action.payload === "number"){
-        const error = action.payload;
-        state.notificationError = error;
-      }
-      else {
-        if (state.notificationItems) {
-          state.notificationItems.push(...action.payload);
-        } else {
-          state.notificationItems = action.payload;
-        }
-      }
+    setAllNotifications(state, action: PayloadAction<Notification[]>) {
+      const notifications = action.payload;
+      notifications.map((notification: Notification) => {
+        const newItems = {...state.notificationsItemsByCategory};
+        newItems[notification.category][notification.status] = {
+          items: [...newItems[notification.category][notification.status].items, notification],
+          loaded: true,
+          error: null
+        };
+        state.notificationsItemsByCategory = newItems;
+      })
     },
-    updatePendingStatus(state, action: PayloadAction<{ notificationId: string; isPending: boolean }>) {
-      const notification = state.notificationItems?.find(
-        (notification) => notification._id === action.payload.notificationId
-      );
-      if (notification) {
-        notification.isPending = action.payload.isPending;
-        notification.pendingFrom = new Date().toISOString();
+    setNotificationsItemsByCategory(
+      state,
+      action: PayloadAction<{
+        status: number;
+        category: number;
+        value: StatusObject;
+      }>
+    ) {
+      state.notificationsItemsByCategory[action.payload.category][
+        action.payload.status
+      ] = action.payload.value;
+    },
+    updatePendingStatus(
+      state,
+      action: PayloadAction<{ notificationId: string; isPending: boolean }>
+    ) {
+      // Iterate over each category object
+      Object.keys(state.notificationsItemsByCategory).forEach((categoryKey) => {
+        // Iterate over each status object inside a category
+        Object.keys(state.notificationsItemsByCategory[+categoryKey]).forEach((statusKey) => {
+          // Find the notification that matches the provided ID
+          const notificationIndex = state.notificationsItemsByCategory[+categoryKey][+statusKey].items.findIndex(
+            (notification) => notification._id === action.payload.notificationId
+          );
+    
+          // If a matching notification is found, update its properties
+          if (notificationIndex !== -1) {
+            const notification = state.notificationsItemsByCategory[+categoryKey][+statusKey].items[notificationIndex];
+            notification.isPending = action.payload.isPending;
+            notification.pendingFrom = new Date().toISOString();
+          }
+        });
+      });
+    },
+    resetLoaded(state, action: PayloadAction<{selectedStatus: number, selectedCategory: number}>) {
+      const { selectedStatus, selectedCategory } = action.payload;
+      
+      if (state.notificationsItemsByCategory[selectedCategory] &&
+          state.notificationsItemsByCategory[selectedCategory][selectedStatus]) {
+        state.notificationsItemsByCategory[selectedCategory][selectedStatus].loaded = false;
+      } else {
+        console.warn('Invalid category or status. Could not reset the "loaded" flag.');
       }
-      // replace the notificationItems array with a new array
-      // to trigger a re-render
-      state.notificationItems = [...state.notificationItems!];
     },
     setNotificationsToValidate(state, action: PayloadAction<{id: string, isPending: boolean}[]>){
       const notificationsToValidate = action.payload.map(
@@ -102,15 +160,56 @@ const notificationSlice = createSlice({
   },
 });
 
+const flattenNotificationItems = (state: typeof initialState): Notification[] => {
+  let notificationItems: Notification[] = [];
 
-const selectNotifications = (state: { notifications: { notificationItems: any; }; }) => {
-  return state.notifications.notificationItems;
+  Object.keys(state.notificationsItemsByCategory).forEach((outerKey: any) => {
+    const innerObj = state.notificationsItemsByCategory[outerKey];
+
+    Object.keys(innerObj).forEach((innerKey: any) => {
+      notificationItems = notificationItems.concat(innerObj[innerKey].items);
+    });
+  });
+
+  return notificationItems;
+};
+
+export const selectFlatNotificationItems = createSelector(
+  (state: { notifications: typeof initialState }) => state.notifications,
+  (state) => flattenNotificationItems(state)
+);
+
+// A simple selector to get the entire notificationsItemsByCategory object from the state
+const getNotificationsItemsByCategory = (state: any) =>
+  state.notifications.notificationsItemsByCategory;
+
+// A selector that takes the category number and status number and returns the relevant StatusObject
+export const getNotificationItemsByCategoryAndStatus = createSelector(
+  [
+    getNotificationsItemsByCategory,
+    (state: any, category: number, status: number) => ({ category, status }),
+  ],
+  (notificationsItemsByCategory, { category, status }) => {
+    // Check if the category exists in the state
+    if (notificationsItemsByCategory[category]) {
+      // Check if the status exists within that category
+      if (notificationsItemsByCategory[category][status]) {
+        return notificationsItemsByCategory[category][status];
+      }
+    }
+    return null;
+  }
+);
+
+const selectNotifications = (state: RootState) => {
+  return flattenNotificationItems(state.notifications);
 };
 
 export const selectNotificationById = (notificationId: any) =>
-  createSelector(
-    selectNotifications,
-    notifications => notifications?.find((notification: { _id: any; }) => notification._id === notificationId)
+  createSelector(selectNotifications, (notifications) =>
+    notifications?.find(
+      (notification: { _id: any }) => notification._id === notificationId
+    )
   );
 
 
@@ -149,52 +248,99 @@ export const closeNotificationToValidate = (
     }
   }
 }
+const reFetchLoadedNotifications = async (dispatch: AppDispatch, getState: () => RootState, category: null | number = null) => {
+  const state = getState();
+  const notificationsItemsByCategory = state.notifications.notificationsItemsByCategory;
+  
+  const categories = category ? [category] : Object.keys(notificationsItemsByCategory);
 
-export const fetchNotifications = (searchParams: URLSearchParams | null = null) => {
-  return async (dispatch: AppDispatch, getState: () => RootState) => {
-    try {
-      let notifications = null;
-      if (getState().notifications.notificationItems) {
-        const data = await getAllNotificationsLoad();
-        notifications = data.result;
-        if(!data.hasErrors) {
-          dispatch(notificationActions.resetNotificationError());
-        }
-      } else {
-        await getAllNotificationsAppend(dispatch, searchParams);
-        notifications = getState().notifications.notificationItems;
+  for (const category of categories) {
+    const statuses = Object.keys(notificationsItemsByCategory[+category]);
+    for (const status of statuses) {
+      if (notificationsItemsByCategory[+category][+status].loaded) {
+        await dispatch(fetchNotificationsByStatusAndCategory(Number(status), Number(category)));
       }
-      if (notifications) {
-        notifications = await Promise.all(
-          notifications.map(async (notification: Notification) => {
-            let updatedNotification = { ...notification }; // Create a shallow copy of the notification object
-            if (updatedNotification.treatedBy) {
-              updatedNotification.treatedBy = await getUserNameFromLogin(notification.treatedBy);
-              if (updatedNotification.treatedOn) {
-                updatedNotification.treatedOn = formatDate(updatedNotification.treatedOn);
+    }
+  }
+};
+
+
+export const fetchNotificationsByStatusAndCategory = (
+  selectedStatus: number,
+  selectedCategory: number,
+  resetLoadedState: boolean = false
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {      
+      if (resetLoadedState) {
+        dispatch(notificationActions.resetLoaded({selectedStatus, selectedCategory}));
+      }
+
+      let currentNotifications =
+        getState().notifications.notificationsItemsByCategory;
+      let currentNotification =
+        currentNotifications[selectedCategory][selectedStatus];
+
+      if (!currentNotification) {
+        throw new Error("Invalid status or category");
+      }
+
+      // fetch the notification if it hasn't been fetched yet
+      if (!currentNotification.loaded) {
+        const currentRouteNotifications = await getNotifications(
+          selectedStatus,
+          selectedCategory
+        );
+
+        // Create a new object based on currentNotification
+        let newNotification = {
+          ...currentNotification,
+        };
+
+        // if we have a network error, we save the error in the error field,
+        // else, we set the loaded value to true.
+        if (typeof currentRouteNotifications === "number") {
+          newNotification.loaded = false;
+          newNotification.error = currentRouteNotifications;
+        } else {
+          newNotification.loaded = true;
+          newNotification.error = null;
+          newNotification.items = currentRouteNotifications;
+        }
+
+        // set the treated by and treatedOn value
+        if (newNotification.items) {
+          newNotification.items = await Promise.all(
+            newNotification.items.map(async (notification: Notification) => {
+              let updatedNotification = { ...notification }; // Create a shallow copy of the notification object
+              if (updatedNotification.treatedBy) {
+                updatedNotification.treatedBy = await getUserNameFromLogin(
+                  notification.treatedBy
+                );
+                if (updatedNotification.treatedOn) {
+                  updatedNotification.treatedOn = formatDate(
+                    updatedNotification.treatedOn
+                  );
+                }
               }
-            }
-            return updatedNotification;
+              return updatedNotification;
+            })
+          );
+        }
+
+        dispatch(
+          notificationActions.setNotificationsItemsByCategory({
+            category: selectedCategory,
+            status: selectedStatus,
+            value: newNotification,
           })
         );
-        dispatch(notificationActions.load(notifications));
       }
     } catch (error) {
       console.error(error);
     }
   };
 };
-
-export const resetNotificationError = () => {
-  return async (dispatch: AppDispatch) => {
-    try {
-      dispatch(notificationActions.resetNotificationError());
-    } catch (error) {
-      console.error(error);
-    }
-  }
-}
-
 
 export const fetchNotificationCounts = () => {
   return async (dispatch: AppDispatch) => {
@@ -213,8 +359,8 @@ export const fetchNotificationCounts = () => {
 export const setNotificationsIsSeen = (category: number) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
-      const allNotifications: Notification[] | null = getState().notifications.notificationItems;
-
+      // Get the flattened state here
+      const allNotifications = selectFlatNotificationItems(getState());
       if (!allNotifications) return;
 
       // get the notifications by category, that have not been seen
@@ -229,9 +375,10 @@ export const setNotificationsIsSeen = (category: number) => {
         })
       );
 
-      // call the fetchNotifications to update the notifications
+      // call the reFetchLoadedNotifications to update the notifications
       // in the consumer components
-      dispatch(fetchNotifications());
+      reFetchLoadedNotifications(dispatch, getState, category);
+      fetchNotificationCounts();
     } catch (error) {
       console.error(error);
     }
@@ -239,24 +386,29 @@ export const setNotificationsIsSeen = (category: number) => {
 };
 
 export const setNotificationsIsSeenByIds = (ids: string[]) => {
-  return async (dispatch: AppDispatch) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
     const promisesList: any[] = [];
-    ids.forEach((notificationId ) => {
-      promisesList.push(_setNotificationIsSeen(notificationId, true))
-    })
-    Promise.all(promisesList).then(() => {
-      dispatch(fetchNotifications());
-    }, (error) => {
-      console.log(error);
-    })
+    ids.forEach((notificationId) => {
+      promisesList.push(_setNotificationIsSeen(notificationId, true));
+    });
+    Promise.all(promisesList).then(
+      () => {
+        reFetchLoadedNotifications(dispatch, getState);
+        fetchNotificationCounts();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
 };
 
 export const dismissNotificationById = (id: string) => {
-  return async (dispatch: AppDispatch) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       await _dismissNotification(id);
-      dispatch(fetchNotifications());
+      reFetchLoadedNotifications(dispatch, getState);
+      fetchNotificationCounts();
     } catch (error) {
       console.log(error);
     }
@@ -264,95 +416,28 @@ export const dismissNotificationById = (id: string) => {
 };
 
 export const dismissNotifications = (notifications: Notification[]) => {
-  return async (dispatch: AppDispatch) => {
-    dispatch(notificationActions.reset());
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       await _dismissNotifications();
     } catch (error) {
       console.log(error);
     } finally {
-      dispatch(fetchNotifications());
+      reFetchLoadedNotifications(dispatch, getState);
+      fetchNotificationCounts();
     }
   };
 };
 
 export const setNotificationIsReadById = (id: string) => {
-  return async (dispatch: AppDispatch) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       await _setNotificationIsRead(id, true);
-      dispatch(fetchNotifications());
+      reFetchLoadedNotifications(dispatch, getState);
+      fetchNotificationCounts();
     } catch (error) {
       console.log(error);
     }
   };
-};
-
-const getAllNotificationsLoad = async () => {
-  if(process.env.NODE_ENV === "local") {
-    return await getNotifications();
-  }
-
-  let hasErrors = false;
-
-  const promises = [
-    getNotifications(0, 0),
-    getNotifications(1, 0),
-    getNotifications(0, 1),
-    getNotifications(1, 1),
-    getNotifications(2, 0),
-    getNotifications(2, 1),
-  ].map((promise) =>
-    promise.then((result) => {
-      if (Array.isArray(result)) {
-        return result;
-      }
-      hasErrors = true;
-      return [];
-    })
-  );
-
-  const [n1, n2, n3, n4, n5, n6]: Notification[][] = await Promise.all(promises);
-  const result = [...n1, ...n2, ...n3, ...n4, ...n5, ...n6];
-  return {result: result, hasErrors: hasErrors};
-}
-
-
-const getAllNotificationsAppend = async (dispatch: AppDispatch, searchParams: URLSearchParams | null = null) => {
-  if (process.env.NODE_ENV === "local") {
-    const notifications = await getNotifications();
-    dispatch(notificationActions.append(notifications));
-    return;
-  };
-
-  // get the current category and status from the url
-  const selectedCategory = +(searchParams?.get(FILTER.SELECTED_CATEGORY) || "0");
-  const selectedStatus = +(searchParams?.get(FILTER.SELECTED_STATUS) || "1");
-
-  const priorityPromise = getNotifications(selectedStatus, selectedCategory);
-
-  const allCombinations = [
-    [0, 0],
-    [1, 0],
-    [0, 1],
-    [1, 1],
-    [2, 0],
-    [2, 1],
-  ];
-
-  // Remove the one matching selectedCategory and selectedStatus from allCombinations
-  const filteredCombinations = allCombinations.filter(
-    ([status, category]) => !(category === selectedCategory && status === selectedStatus)
-  );
-
-  // First await the priorityPromise
-  const priorityNotifications = await priorityPromise;
-  dispatch(notificationActions.append(priorityNotifications));
-
-  // Then await the other promises in the notificationPromises array
-  for (const [category, status] of filteredCombinations) {
-    const notifications = await getNotifications(category, status);
-    dispatch(notificationActions.append(notifications));
-  }
 };
 
 export const notificationActions = notificationSlice.actions;

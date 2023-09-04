@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react'
-import {BEM, IconButton, setGradient, setTheme} from '@trading/energies-ui'
-import {Alert, Block, Error} from './'
+import React, { useEffect, useRef, useState } from 'react'
+import { BEM, IconButton, setGradient, setTheme } from '@trading/energies-ui'
+import { Alert, Block, Error } from './'
 import styles from './Panel.module.scss'
 import {
   getNotificationIsPending,
@@ -8,7 +8,7 @@ import {
   validateFormById
 } from "../../services/notification-service";
 import { useAppDispatch } from "../../hooks/use-app-dispatch";
-import {notificationActions, openNotificationToValidate} from "../../store/notifications-slice";
+import { notificationActions, openNotificationToValidate } from "../../store/notifications-slice";
 import { useAppSelector } from '../../hooks/use-app-selector'
 
 const b = BEM(styles)
@@ -32,7 +32,7 @@ const PanelClose = ({ onClick, header }) => {
 }
 
 /*----------------------------------------------------------------------------*/
-export const Panel = ({notification, onClose, loading = false, isDebug = false, validationJson = null }) => {
+export const Panel = ({ notification, onClose, loading = false, isDebug = false, validationJson = null }) => {
 
   const [template, setTemplate] = useState(undefined);
   const [header, setHeader] = useState(undefined);
@@ -44,7 +44,7 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
   const [isPending, setIsPending] = useState(false);
 
   const theme = setTheme(template?.color || '')
-  const gradientStyles = setGradient(template?.gradient, 'background', true)
+  const gradientStyles = setGradient(template?.gradient || '', 'background', true)
   const currentValidationForm = useRef(null);
   const currentValidationFormJSON = useRef(null);
   const [alert, setAlert] = useState(true)
@@ -82,7 +82,6 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
     setHeader(header)
     setFooter(footer)
     setContent(content)
-
   }
 
   /**
@@ -103,8 +102,8 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
           notificationDetails: notification?.details,
         }));
       }
-      const updatedItem = {...item}
-      switch(item.type) {
+      const updatedItem = { ...item }
+      switch (item.type) {
         case 'hierarchyValidation':
           updatedItem.isDisabled = pendingStatus.isPending;
           updatedItem.onValidate = (comment) => {
@@ -129,7 +128,7 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
    * Load validation form
    */
   const loadNotificationForm = async () => {
-    if(currentAbortController) {
+    if (currentAbortController) {
       currentAbortController.abort()
     }
     currentAbortController = new AbortController();
@@ -146,7 +145,7 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
         displayValidationForm(validationJSON)
         setIsLoading(false);
       } catch (e) {
-        if(e?.name === 'AbortError') {
+        if (e?.name === 'AbortError') {
           return;
         } else {
           setIsLoading(false);
@@ -165,9 +164,9 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
     if (notification?.hasValidationForm && notification?._id !== currentValidationForm.current) {
       loadNotificationForm()
     } else {
-      if(notification?.hasValidationForm && notification?._id === currentValidationForm.current) {
+      if (notification?.hasValidationForm && notification?._id === currentValidationForm.current) {
         // If notification is the same, display the same form with updated status
-        if(currentValidationFormJSON.current) {
+        if (currentValidationFormJSON.current) {
           displayValidationForm(currentValidationFormJSON.current)
         }
       } else {
@@ -180,9 +179,9 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
    * Display validation form on debug mode
    */
   useEffect(() => {
-      if(validationJson && isDebug){
-          displayValidationForm(validationJson)
-      }
+    if (validationJson && isDebug) {
+      displayValidationForm(validationJson)
+    }
   }, [validationJson])
 
   const openNextNotificationToValidate = (notificationId) => {
@@ -220,7 +219,7 @@ export const Panel = ({notification, onClose, loading = false, isDebug = false, 
         isPending: true
       }));
 
-      const validationResult = await validateFormById(notification._id, {isValidated: isValidated, comment: comment});
+      const validationResult = await validateFormById(notification._id, { isValidated: isValidated, comment: comment });
       return validationResult;
     }
   }
