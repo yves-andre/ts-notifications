@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
 import ValidationForm from '../../components/validation-form/validation-form';
 import { ItemValidationTemplate } from '../../components/validation-form/validation-form-service';
 
 import Notification from '../../data/interfaces/notification'
-import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { getValidationFormById, updateFormPendingTimeout, validateFormById } from '../../services/notification-service';
+import { updateFormPendingTimeout, validateFormById } from '../../services/notification-service';
 
-import validationFormSample from './validation-form-sample.json';
 
 export const Validation: React.FC = () => {
   let { id } = useParams()
@@ -22,10 +20,18 @@ export const Validation: React.FC = () => {
   const [pendingTimeout, setPendingTimeout] = useState<NodeJS.Timeout>()
 
   const notifications = useAppSelector(
-    (state) => state.notifications.notificationItems
+    (state) => state.notifications.notificationsItemsByCategory
   )
+
+  const selectedStatus: number = useAppSelector(
+    (state) => state.filters.selectedStatus
+  )
+  const selectedCategory: number = useAppSelector(
+    (state) => state.filters.selectedCategory
+  )
+
   useEffect(() => {
-    const notif = notifications?.find((notif) => notif._id === id)
+    const notif = notifications[selectedCategory][selectedStatus].items?.find((notif) => notif._id === id)
     if (notif) {
       setNotification(notif);
     }

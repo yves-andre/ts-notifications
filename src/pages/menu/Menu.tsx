@@ -7,7 +7,7 @@ import { filtersActions } from "../../store/filters-slice";
 import { Nav, ThemeColor } from "@trading/energies-ui";
 import CategoryColor from "../../data/interfaces/category-color";
 
-import { getNotificationsCountByCategory, getTitleByCategory } from "./menu-service";
+import { getAllNotificationsCount, getTitleByCategory } from "./menu-service";
 
 import "./Menu.scss";
 import { NotificationCount } from "../../data/interfaces/notification-count";
@@ -36,7 +36,7 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   const dispatch = useAppDispatch();
 
   const getNotificationCountByCategory = (category: number): number | null => {
-   return getNotificationsCountByCategory(category, notificationCounts);
+   return getAllNotificationsCount(category, notificationCounts);
   };
 
   const selectCategoryHandler = (category: number): void => {
