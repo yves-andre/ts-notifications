@@ -1,19 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { BEM, IconButton, setGradient, setTheme } from '@trading/energies-ui'
 import { Alert, Block, Error } from './'
-import mock from './_mock.json'
 import styles from './Panel.module.scss'
 import {
   getNotificationIsPending,
   getValidationFormById,
-  NOTIFICATION_SERVICE_ERRORS,
   validateFormById
 } from "../../services/notification-service";
-import validationFormSample from "../../pages/validation/validation-form-sample.json";
-import { ItemValidationTemplate } from "../validation-form/validation-form-service";
-import error from "./Error";
 import { useAppDispatch } from "../../hooks/use-app-dispatch";
-import { notificationActions } from "../../store/notifications-slice";
+import { notificationActions, setOpenValidationForm } from "../../store/notifications-slice";
+import { useAppSelector } from '../../hooks/use-app-selector'
 
 const b = BEM(styles)
 
@@ -53,6 +49,15 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
   const currentValidationFormJSON = useRef(null);
   const [alert, setAlert] = useState(true)
   const dispatch = useAppDispatch();
+  const notificationsToValidate = useAppSelector(
+    (state) => state.notifications.notificationsToValidate
+  );
+
+  useEffect(() => {
+    if(notification){
+      dispatch(setOpenValidationForm(notification._id, false));
+    }
+  }, [notification])
 
 
 
@@ -108,9 +113,11 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
         case 'hierarchyValidation':
           updatedItem.isDisabled = pendingStatus.isPending;
           updatedItem.onValidate = (comment) => {
+            dispatch(setOpenValidationForm(notification._id, true));
             return updateFormStatus(true, comment)
           };
           updatedItem.onReject = (comment) => {
+            dispatch(setOpenValidationForm(notification._id, true));
             return updateFormStatus(false, comment)
           };
           break;
@@ -203,6 +210,10 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
     }
   }
 
+  const onCloseHandler = () => {
+    onClose(notification._id);
+  }
+
 
   return (
     <div
@@ -213,7 +224,7 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
       })}
       style={{ ...theme, ...gradientStyles }}
     >
-      {onClose && <PanelClose onClick={onClose} header={header} />}
+      {onClose && <PanelClose onClick={onCloseHandler} header={header} />}
 
       {header && <Block {...header} />}
 

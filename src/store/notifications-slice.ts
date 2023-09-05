@@ -32,8 +32,15 @@ type NotificationsItemsByCategory = {
   [key: number]: CategoryObject;
 };
 
+interface NotificationToValidate {
+  id: string;
+  opened: boolean;
+  pending: boolean;
+}
+
 const initialState = {
   notificationCounts: [] as NotificationCount[],
+  openValidationForm: null as {id: string, hasUserValidated: boolean} | null,
   notificationsItemsByCategory: {
     0: {
       1: {
@@ -125,6 +132,9 @@ const notificationSlice = createSlice({
         console.warn('Invalid category or status. Could not reset the "loaded" flag.');
       }
     },
+    setOpenValidationForm(state, action: PayloadAction<{id: string, hasUserValidated: boolean}>){
+      state.openValidationForm = action.payload;
+    }
   },
 });
 
@@ -180,6 +190,20 @@ export const selectNotificationById = (notificationId: any) =>
     )
   );
 
+
+export const setOpenValidationForm = (
+  id: string,
+  hasUserValidated: boolean
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      dispatch(notificationActions.setOpenValidationForm({id, hasUserValidated}));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+
 const reFetchLoadedNotifications = async (dispatch: AppDispatch, getState: () => RootState, category: null | number = null) => {
   const state = getState();
   const notificationsItemsByCategory = state.notifications.notificationsItemsByCategory;
@@ -195,7 +219,6 @@ const reFetchLoadedNotifications = async (dispatch: AppDispatch, getState: () =>
     }
   }
 };
-
 
 export const fetchNotificationsByStatusAndCategory = (
   selectedStatus: number,
