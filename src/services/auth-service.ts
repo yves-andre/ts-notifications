@@ -1,5 +1,6 @@
 import { httpGet } from "./_http-client";
 const sessionStorageKey = 'notification_login_usernames';
+let usernamePromise: { [key: string]: Promise<string> | null } = {};
 
 export const getUserLogin = async () => {
   const url = `${window.location.protocol}${process.env.REACT_APP_API_AUTH_URL}`;
@@ -45,27 +46,45 @@ export const getUserNameFromLogin = async (login: string) => {
     return savedUsernames[login];
   }
 
-  const loginEncoded = encodeURIComponent(login).replace('%5C', '\\');
-  const url = `${window.location.protocol}${process.env.REACT_APP_API_URL}/Web/siteusers(@v)?@v='${loginEncoded}'`;
-  const config = {
-    contentType: "application/json",
-    headers: {
-      Accept: 'application/json;odata=verbose'
+  if (usernamePromise[login]) {
+    // If there's an ongoing username request for this login, wait for it
+    return await usernamePromise[login];
+  }
+
+  // Start a new username request for this login and store the promise
+  usernamePromise[login] = (async () => {
+    const loginEncoded = encodeURIComponent(login).replace('%5C', '\\');
+    const url = `${window.location.protocol}${process.env.REACT_APP_API_URL}/Web/siteusers(@v)?@v='${loginEncoded}'`;
+    const config = {
+      contentType: "application/json",
+      headers: {
+        Accept: 'application/json;odata=verbose'
+      }
+    };
+    
+    try {
+      const response = await httpGet(url, config);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const username = response?.d?.Title;
+      saveUsername(login, username); // Save the username immediately after retrieving it
+      return username;
+    } catch (error) {
+      console.error(`Error when fetching username from login : ${login}`, error);
+      saveUsername(login, login);
+      return login || "";
     }
-  }
-  const username = await httpGet(url, config).then((response) => {
-    return response?.d?.Title;
-  }).catch(error => {
-    console.error(`Error when fetching username from login : ${login}`, error);
-    saveUsername(login, login);
-    return login || "";
-  })
+  })();
 
-  if (username) {
-    saveUsername(login, username);
+  try {
+    // Wait for the username request to finish
+    const username = await usernamePromise[login];
+    return username;
+  } finally {
+    // Clear the username promise for this login after the request is done
+    usernamePromise[login] = null;
   }
-
-  return username;
 }
 
 const saveUsername = (login: string, username: string | null) => {
