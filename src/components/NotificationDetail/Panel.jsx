@@ -100,7 +100,8 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
         item.items = item.items.map((footerItem) => ({
           ...footerItem,
           notificationStatus: notification?.status,
-          notificationDetails: notification?.details,
+          notificaitonTreatedBy: notification?.treatedBy,
+          notificaitonTreatedOn: notification?.treatedOn
         }));
       }
       const updatedItem = { ...item }
