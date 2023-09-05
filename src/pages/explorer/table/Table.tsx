@@ -14,10 +14,8 @@ import { filtersActions } from '../../../store/filters-slice'
 import {
   dismissNotificationById,
   dismissNotifications,
-  openNotificationToValidate,
   setNotificationIsReadById,
   setNotificationsIsSeenByIds,
-  setNotificationsToValidate,
 } from '../../../store/notifications-slice'
 import { CATEGORY } from '../../../data/constants/category'
 import { STATUS } from '../../../data/constants/status'
@@ -42,8 +40,9 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const search = useAppSelector((state) => state.filters.searchFilter)
   const sortFilter = useAppSelector((state) => state.filters.sortFilter)
   const [forceRender, setForceRender] = useState(false);
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch()
+  const location = useLocation();
   const params = useParams();
   const selectedStatus = useAppSelector((state) => state.filters.selectedStatus)
   const selectedCategory = useAppSelector(
@@ -55,6 +54,39 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const categoryColors: CategoryColor[] = useAppSelector(
     (state) => state.applications.categoryColors
   )
+  const openValidationForm = useAppSelector(
+    (state) => state.notifications.openValidationForm
+  )
+
+  // Open next notification validation form
+  useEffect(() => {
+    if (openValidationForm?.hasUserValidated) {
+        const notifications = notificationGroups
+            .flatMap(item => item.notifications)
+            .filter(n => n.hasValidationForm && !getNotificationIsPending(n).isPending);
+        if(notifications.length > 1){
+          const currentIndex = notifications.findIndex((n) => n._id === openValidationForm.id);
+
+          // Split the array into two parts: from the currentIndex to the end and from the start to the currentIndex
+          const firstPart = notifications.slice(currentIndex + 1);
+          const secondPart = notifications.slice(0, currentIndex + 1);
+  
+          // Combine these two arrays
+          const orderedNotifications = firstPart.concat(secondPart);
+  
+          // Find the first notification in this order to navigate to, 
+          // if none is found navigate to the explorer root.
+          const nextNotification = orderedNotifications[0];
+          if (nextNotification) {
+              navigate({ pathname: `/explorer/${nextNotification._id}`, search: location.search });
+          }
+        }else{
+          navigate({ pathname: `/explorer`, search: location.search });
+        }
+    }
+  }, [openValidationForm]);
+
+
 
   useEffect(() => {
     const updateInterval = 2 * 60 * 1000; // 2 minutes in milliseconds
@@ -80,27 +112,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
         dispatch(setNotificationsIsSeenByIds(notificationsIds))
       }
     });
-    const notificationsToValidate = getNotificationsToValidate(notificationGroups)
-    dispatch(setNotificationsToValidate(notificationsToValidate));
   }, [notificationGroups])
-
-
-  const getNotificationsToValidate = (notificationGroups: NotificationGroup[]) => {
-    let notificationsToValidate = [] as {id: string, isPending: boolean}[];
-    notificationGroups.forEach((notificationGroup: NotificationGroup) => {
-      const toValidateIds = notificationGroup.notifications
-        .filter((n: Notification) => n.hasValidationForm)
-        .map((n: Notification) => {
-          const isPending = getNotificationIsPending(n).isPending;
-          return {
-            id: n._id,
-            isPending: isPending
-          };
-        })
-      notificationsToValidate = [...notificationsToValidate,...toValidateIds]
-    })
-    return notificationsToValidate;
-  }
 
   const sortColumnHandler = (fieldName: string) => {
     // 1st click on column = order ascending,
@@ -141,7 +153,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
 
   const openNotificationHandler = (notification: Notification) => {
     if (notification.hasValidationForm && notification.validationFormUrl) {
-      dispatch(openNotificationToValidate(notification._id));
+      navigate({ pathname: `/explorer/${notification._id}`, search: location.search })
     } else {
       const action = getNotificationDefaultAction(notification)
       action && action.call(this)

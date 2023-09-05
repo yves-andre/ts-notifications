@@ -24,7 +24,7 @@ import NotificationDetail from "../../components/NotificationDetail";
 import "./Page.scss";
 import './Page.scss'
 import { APP_CONFIG } from '../../data/app-config'
-import {closeNotificationToValidate,fetchNotificationCounts, fetchNotificationsByStatusAndCategory, selectNotificationById} from "../../store/notifications-slice";
+import {fetchNotificationCounts, fetchNotificationsByStatusAndCategory, selectNotificationById} from "../../store/notifications-slice";
 import {useSelector} from "react-redux";
 import {getTitleByCategory} from "../../pages/menu/menu-service";
 import { useRouteFilters } from '../../hooks/use-route-filters'
@@ -79,23 +79,8 @@ export const Page: React.FC = () => {
   const categoryColors: CategoryColor[] = useAppSelector(
     (state) => state.applications.categoryColors
   );
-  const notificationsToValidate = useAppSelector(
-    (state) => state.notifications.notificationsToValidate
-  );
 
-  const previousNotificationsRef = useRef(notificationsToValidate);
-
-  useEffect(() => {
-    const previous = previousNotificationsRef.current;
-    const newlyOpened = notificationsToValidate.find(n => n.opened && !previous.find(pn => pn.id === n.id)?.opened);
-    previousNotificationsRef.current = notificationsToValidate;
-    if (newlyOpened) {
-      navigate({pathname: `/explorer/${newlyOpened.id}`, search: location.search});
-    }
-  }, [notificationsToValidate]);
-
-  const onValidationClose = (closedId: string) => {
-    dispatch(closeNotificationToValidate(closedId))
+  const onValidationClose = () => {
     navigate({ pathname: `/explorer`, search: location.search });
   };
 
@@ -225,7 +210,7 @@ export const Page: React.FC = () => {
             >
               <NotificationDetail
                 notification={notification}
-                onClose={(id: string) => onValidationClose(id)}
+                onClose={() => onValidationClose()}
               />
             </Col>
           )}

@@ -8,7 +8,7 @@ import {
   validateFormById
 } from "../../services/notification-service";
 import { useAppDispatch } from "../../hooks/use-app-dispatch";
-import { notificationActions, openNotificationToValidate } from "../../store/notifications-slice";
+import { notificationActions, setOpenValidationForm } from "../../store/notifications-slice";
 import { useAppSelector } from '../../hooks/use-app-selector'
 
 const b = BEM(styles)
@@ -52,6 +52,12 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
   const notificationsToValidate = useAppSelector(
     (state) => state.notifications.notificationsToValidate
   );
+
+  useEffect(() => {
+    if(notification){
+      dispatch(setOpenValidationForm(notification._id, false));
+    }
+  }, [notification])
 
 
 
@@ -107,11 +113,11 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
         case 'hierarchyValidation':
           updatedItem.isDisabled = pendingStatus.isPending;
           updatedItem.onValidate = (comment) => {
-            openNextNotificationToValidate(notification._id);
+            dispatch(setOpenValidationForm(notification._id, true));
             return updateFormStatus(true, comment)
           };
           updatedItem.onReject = (comment) => {
-            openNextNotificationToValidate(notification._id);
+            dispatch(setOpenValidationForm(notification._id, true));
             return updateFormStatus(false, comment)
           };
           break;
@@ -183,26 +189,6 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
       displayValidationForm(validationJson)
     }
   }, [validationJson])
-
-  const openNextNotificationToValidate = (notificationId) => {
-    // Find the index of the current notification
-    const currentIndex = notificationsToValidate.findIndex(
-      (n) => n.id === notificationId
-    );
-    // Find the next notification with opened set to false
-    // First, check the notifications after the current one
-    // If none is found, check the notifications before the current one
-    const nextItemWithOpenedFalse = notificationsToValidate
-      .slice(currentIndex + 1) // slice the array from the notification after the current one
-      .concat(notificationsToValidate.slice(0, currentIndex)) // concatenate with the slice of the array before the current one
-      .find((notification) => !notification.opened && !notification.pending); // find the first notification that is not opened or pending
-    // If such a notification is found, dispatch an action to open it
-    if (nextItemWithOpenedFalse) {
-      dispatch(openNotificationToValidate(nextItemWithOpenedFalse.id));
-    }else {
-      onClose(notificationId);
-    }
-  };
 
   /**
    * Update form status

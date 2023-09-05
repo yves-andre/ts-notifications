@@ -40,7 +40,7 @@ interface NotificationToValidate {
 
 const initialState = {
   notificationCounts: [] as NotificationCount[],
-  notificationsToValidate: [] as NotificationToValidate[],
+  openValidationForm: null as {id: string, hasUserValidated: boolean} | null,
   notificationsItemsByCategory: {
     0: {
       1: {
@@ -132,30 +132,8 @@ const notificationSlice = createSlice({
         console.warn('Invalid category or status. Could not reset the "loaded" flag.');
       }
     },
-    setNotificationsToValidate(state, action: PayloadAction<{id: string, isPending: boolean}[]>){
-      const notificationsToValidate = action.payload.map(
-        (validationNotification: {id: string, isPending: boolean}) => {
-          const stateNotificationToValidate = state.notificationsToValidate.find(n => n.id === validationNotification.id);
-          return {
-            id: validationNotification.id,
-            opened: stateNotificationToValidate ? stateNotificationToValidate.opened : false,
-            pending: validationNotification.isPending
-          }
-        }
-      );
-      state.notificationsToValidate = notificationsToValidate;
-    },
-    openNotificationToValidate(state, action: PayloadAction<string>){    
-      const openIndex = state.notificationsToValidate.findIndex(n => n.id === action.payload);
-      if(state.notificationsToValidate[openIndex]){
-        state.notificationsToValidate[openIndex].opened = true;
-      }
-    },
-    closeNotificationToValidate(state, action: PayloadAction<string>){    
-      const openIndex = state.notificationsToValidate.findIndex(n => n.id === action.payload);
-      if(state.notificationsToValidate[openIndex]){
-        state.notificationsToValidate[openIndex].opened = false;
-      }
+    setOpenValidationForm(state, action: PayloadAction<{id: string, hasUserValidated: boolean}>){
+      state.openValidationForm = action.payload;
     }
   },
 });
@@ -213,41 +191,19 @@ export const selectNotificationById = (notificationId: any) =>
   );
 
 
-export const setNotificationsToValidate = (
-  validationNotifications: {id: string, isPending: boolean}[]
+export const setOpenValidationForm = (
+  id: string,
+  hasUserValidated: boolean
 ) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
-      dispatch(notificationActions.setNotificationsToValidate(validationNotifications));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-};
-
-export const openNotificationToValidate = (
-  id: string
-) => {
-  return async (dispatch: AppDispatch, getState: () => RootState) => {
-    try {
-      dispatch(notificationActions.openNotificationToValidate(id));
+      dispatch(notificationActions.setOpenValidationForm({id, hasUserValidated}));
     } catch (error) {
       console.error(error);
     }
   }
 }
 
-export const closeNotificationToValidate = (
-  id: string
-) => {
-  return async (dispatch: AppDispatch, getState: () => RootState) => {
-    try {
-      dispatch(notificationActions.closeNotificationToValidate(id));
-    } catch (error) {
-      console.error(error);
-    }
-  }
-}
 const reFetchLoadedNotifications = async (dispatch: AppDispatch, getState: () => RootState, category: null | number = null) => {
   const state = getState();
   const notificationsItemsByCategory = state.notifications.notificationsItemsByCategory;
@@ -263,7 +219,6 @@ const reFetchLoadedNotifications = async (dispatch: AppDispatch, getState: () =>
     }
   }
 };
-
 
 export const fetchNotificationsByStatusAndCategory = (
   selectedStatus: number,
