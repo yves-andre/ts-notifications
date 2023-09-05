@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom'
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Layout, Header, LocalNav, Flex, Col, IconButton } from '@trading/energies-ui'
 import mock from '../../components/NotificationDetail/_mock-nodata.json'
 
@@ -10,8 +10,8 @@ import NotificationDetail from '../../components/NotificationDetail'
 import './../../components/page/Page.scss'
 import { APP_CONFIG } from '../../data/app-config'
 import Notification from "../../data/interfaces/notification";
-import {fetchNotifications, selectNotificationById, setNotificationIsReadById} from "../../store/notifications-slice";
-import {useSelector} from "react-redux";
+import { fetchNotifications, selectNotificationById, setNotificationIsReadById } from "../../store/notifications-slice";
+import { useSelector } from "react-redux";
 
 const userProfile = {}
 let textareaTimeout: any = null
@@ -37,7 +37,7 @@ export const TestValidation: React.FC = () => {
 
 
     const onValidationClose = () => {
-        const resp = navigate({pathname: `/explorer`, search: location.search})
+        const resp = navigate({ pathname: `/explorer`, search: location.search })
     }
 
     return (
@@ -91,19 +91,19 @@ export const TestValidation: React.FC = () => {
                 <Flex style={{ padding: '0 25px', flex: 1 }}>
                     <Col style={{ flexDirection: 'column', display: 'flex' }}>
                         <>
-                            <textarea style={{height:'100%', margin:'20px'}} id={'json-field'} defaultValue={JSON.stringify(validationForm, null, 2)} onChange={(event) => {
-                                if(textareaTimeout) {
+                            <textarea style={{ height: '100%', margin: '20px' }} id={'json-field'} defaultValue={JSON.stringify(validationForm, null, 2)} onChange={(event) => {
+                                if (textareaTimeout) {
                                     clearTimeout(textareaTimeout)
                                 }
                                 textareaTimeout = setTimeout(() => {
                                     try {
-                                        const validationJson =  JSON.parse(event.target.value)
+                                        const validationJson = JSON.parse(event.target.value)
                                         console.log('setValidationForm', validationJson)
                                         setValidationForm(validationJson)
                                     } catch (e) {
                                         console.log('Unvalid json', event.target.value)
                                     }
-                                },1000)
+                                }, 1000)
 
 
                             }
@@ -113,24 +113,22 @@ export const TestValidation: React.FC = () => {
                         </>
                     </Col>
 
-                    {
-                        (<Col
-                            style={{
-                                maxWidth: 410,
-                                background: 'white',
-                                marginRight: -25,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignSelf: 'flex-start',
-                                height: 'calc(100vh - 50px)',
-                                position: 'sticky',
-                                top: 0,
-                                zIndex: 5,
-                            }}
-                        >
-                            <NotificationDetail notification={{}} onClose={() => onValidationClose()} isDebug={true} validationJson={validationForm}/>
-                        </Col>)
-                    }
+                    <Col
+                        style={{
+                            maxWidth: 620,
+                            background: 'white',
+                            marginRight: -25,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignSelf: 'flex-start',
+                            height: 'calc(100vh - 50px)',
+                            position: 'sticky',
+                            top: 0,
+                            zIndex: 5,
+                        }}
+                    >
+                        <NotificationDetail notification={{}} onClose={() => onValidationClose()} isDebug={true} validationJson={validationForm} />
+                    </Col>
                 </Flex>
             </Layout>
         </>

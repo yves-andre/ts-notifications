@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom'
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Layout, Header, LocalNav, Flex, Col, IconButton } from '@trading/energies-ui'
 import { Topbar } from '../../pages/topbar/Topbar'
 import { Sidebar } from '../../pages/sidebar/Sidebar'
@@ -17,9 +17,9 @@ import NotificationDetail from '../../components/NotificationDetail'
 
 import './Page.scss'
 import { APP_CONFIG } from '../../data/app-config'
-import {fetchNotifications, selectNotificationById} from "../../store/notifications-slice";
-import {useSelector} from "react-redux";
-import {getTitleByCategory} from "../../pages/menu/menu-service";
+import { fetchNotifications, selectNotificationById } from "../../store/notifications-slice";
+import { useSelector } from "react-redux";
+import { getTitleByCategory } from "../../pages/menu/menu-service";
 
 const userProfile = {}
 
@@ -30,6 +30,8 @@ export const Page: React.FC = () => {
   const dispatch = useAppDispatch();
   const [hasValidation, setHasValidation] = React.useState(false)
   const notification = useSelector(selectNotificationById(params.notificationId));
+
+  const [sidebar, setSidebar] = React.useState(true)
 
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
@@ -74,7 +76,7 @@ export const Page: React.FC = () => {
   const menuIsReady = applications.length > 0 && !!categoryColors
 
   const onValidationClose = () => {
-    const resp = navigate({pathname: `/explorer`, search: location.search})
+    const resp = navigate({ pathname: `/explorer`, search: location.search })
   }
 
   return (
@@ -92,34 +94,34 @@ export const Page: React.FC = () => {
         {/* HEADER ----------------------------------------------------------*/}
         <Layout.Header>
           {<Header
-          userProfile={userProfile}
-          style={{
-            '--ts-global-theme': 'var(--ts-color-corporate-red)',
-            '--ts-global-theme-dark': 'var(--ts-color-corporate-red-dark)',
-            '--ts-global-gradient-button':
-              'var(--ts-gradient-corporate-red-button)',
-          } as React.CSSProperties}
-          logo={totalLogo}
-          variant='default'
-          active='notifications'
-          onChange={(key: any) => console.log(key)}
-          settingsAction={() => { }}
-          rainbow={true}
-          items={[
-            {
-              key: 'notifications',
-              title: 'Trading Notifications',
-              onClick: () => { },
-            },
-            {
-              key: 'dwp',
-              title: 'T&S Digital Workplace',
-              onClick: () => {
-                window.location.replace(window.location.origin)
+            userProfile={userProfile}
+            style={{
+              '--ts-global-theme': 'var(--ts-color-corporate-red)',
+              '--ts-global-theme-dark': 'var(--ts-color-corporate-red-dark)',
+              '--ts-global-gradient-button':
+                'var(--ts-gradient-corporate-red-button)',
+            } as React.CSSProperties}
+            logo={totalLogo}
+            variant='default'
+            active='notifications'
+            onChange={(key: any) => console.log(key)}
+            settingsAction={() => { }}
+            rainbow={true}
+            items={[
+              {
+                key: 'notifications',
+                title: 'Trading Notifications',
+                onClick: () => { },
               },
-            },
-          ]}
-        ></Header>}
+              {
+                key: 'dwp',
+                title: 'T&S Digital Workplace',
+                onClick: () => {
+                  window.location.replace(window.location.origin)
+                },
+              },
+            ]}
+          ></Header>}
         </Layout.Header>
 
 
@@ -129,7 +131,7 @@ export const Page: React.FC = () => {
           <LocalNav>
             <>
               {
-                menuIsReady && <Menu applications={applications} categoryColors={categoryColors} />
+                menuIsReady && <Menu applications={applications} categoryColors={categoryColors} sidebar={sidebar} onClick={() => { setSidebar(true) }} />
               }
             </>
           </LocalNav>
@@ -137,7 +139,7 @@ export const Page: React.FC = () => {
 
 
         {/* NAVIGATION 2nd LEVEL --------------------------------------------*/}
-        <Layout.Sidebar style={{ background: 'white' }}>
+        <Layout.Sidebar style={{ background: 'white' }} open={sidebar}>
           <Layout.SidebarHeader>
             <h3 style={{ textTransform: 'uppercase' }}>{getTitleByCategory(selectedCategory)}</h3>
             <IconButton
@@ -145,6 +147,7 @@ export const Page: React.FC = () => {
               round
               color='ultraLightGray'
               style={{ marginLeft: 'auto' }}
+              onClick={() => setSidebar(!sidebar)}
             >
               Close
             </IconButton>
@@ -165,7 +168,7 @@ export const Page: React.FC = () => {
           {
             hasValidation && (<Col
               style={{
-                maxWidth: 410,
+                maxWidth: 620,
                 background: 'white',
                 marginRight: -25,
                 display: 'flex',
@@ -177,7 +180,7 @@ export const Page: React.FC = () => {
                 zIndex: 5,
               }}
             >
-              <NotificationDetail notification={notification} onClose={() => onValidationClose()}/>
+              <NotificationDetail notification={notification} onClose={() => onValidationClose()} />
             </Col>)
           }
         </Flex>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   Picture,
@@ -28,8 +28,8 @@ import './Table.scss'
 import classNames from 'classnames'
 import NotificationGroup from '../../../data/interfaces/notification-group'
 import { getUserLogin } from "../../../services/auth-service";
-import {getNotificationIsPending, setNotificationIsSeen} from "../../../services/notification-service";
-import {redirect, useLocation, useNavigate, useParams} from 'react-router-dom'
+import { getNotificationIsPending, setNotificationIsSeen } from "../../../services/notification-service";
+import { redirect, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import NotificationItem from './../../../components/NotificationItem'
 
@@ -123,7 +123,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
 
   const openNotificationHandler = (notification: Notification) => {
     if (notification.hasValidationForm && notification.validationFormUrl) {
-      navigate({pathname: `/explorer/${notification._id}`, search: location.search})
+      navigate({ pathname: `/explorer/${notification._id}`, search: location.search })
     } else {
       const action = getNotificationDefaultAction(notification)
       action && action.call(this)
@@ -210,7 +210,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   }
 
   const onBadgeClickHandler = (notification: Notification) => {
-    switch(notification.category) {
+    switch (notification.category) {
       case CATEGORY.ACTION_FEED:
         if (notification.isManual) {
           dismissNotificationHandler(notification)
@@ -260,87 +260,88 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   }
 
   return (
-    <TableUI variant='feed' className='NotificationTable'>
-      <thead>
-        <tr>
-          <TD field='title' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} start>
-            Source
-          </TD>
-          <TD field='subtitle' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler}>Subject</TD>
-          <TD field='details' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} style={{ width: 250, maxWidth: 250 }}>Details</TD>
-          <TD field='date' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler}>
-            Date
-          </TD>
-          {
-            selectedCategory === CATEGORY.ACTION_FEED && (
-              <TD field='actions' align='right' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} end>
-                {selectedStatus !== STATUS.TREATED ? 'Actions' : ''}
-              </TD>
-            )}
-          {selectedStatus !== STATUS.TREATED &&
-            selectedCategory === CATEGORY.INFORMATION_FEED && (
-              <td align='right' width='100'>
-                <Button
-                  size='small'
-                  style={{ borderRadius: '10px' }}
-                  onClick={dismissAllHandler}
-                  color={APP_CONFIG.DEFAULT_APPLICATION_COLOR}
-                >
-                  Clear all
-                </Button>
-              </td>
-            )}
-        </tr>
-      </thead>
-      <tbody style={{ color: 'var(--ts-color-neutral-gray)' }}>
-        {notificationGroups.map((notificationGroup: NotificationGroup, i: number) => (
-          <React.Fragment key={i}>
-            {notificationGroups.length > 1 && (
-              <tr>
-                <th colSpan={5}>{notificationGroup.name}</th>
-              </tr>
-            )}
+    <div className='NotificationTable-wrapper'>
+      <TableUI variant='feed' className='NotificationTable'>
+        <thead>
+          <tr>
+            <TD field='title' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} start>
+              Source
+            </TD>
+            <TD field='subtitle' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler}>Subject</TD>
+            <TD field='details' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} style={{ width: 250, maxWidth: 250 }}>Details</TD>
+            <TD field='date' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler}>
+              Date
+            </TD>
+            {
+              selectedCategory === CATEGORY.ACTION_FEED && (
+                <TD field='actions' align='right' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} end>
+                  {selectedStatus !== STATUS.TREATED ? 'Actions' : ''}
+                </TD>
+              )}
+            {selectedStatus !== STATUS.TREATED &&
+              selectedCategory === CATEGORY.INFORMATION_FEED && (
+                <td align='right' width='100'>
+                  <Button
+                    size='small'
+                    style={{ borderRadius: '10px' }}
+                    onClick={dismissAllHandler}
+                    color={APP_CONFIG.DEFAULT_APPLICATION_COLOR}
+                  >
+                    Clear all
+                  </Button>
+                </td>
+              )}
+          </tr>
+        </thead>
+        <tbody style={{ color: 'var(--ts-color-neutral-gray)' }}>
+          {notificationGroups.map((notificationGroup: NotificationGroup, i: number) => (
+            <React.Fragment key={i}>
+              {notificationGroups.length > 1 && (
+                <tr>
+                  <th colSpan={5}>{notificationGroup.name}</th>
+                </tr>
+              )}
 
-            {notificationGroup.notifications.map((notification, index) => (
-              <NotificationItem
-                key={index}
-                forceRender={forceRender}
-                category={notification.category}
-                isRead={notification.isRead}
-                isImportant={notification.isImportant}
-                image={notification.image}
-                sourceName={notification.sourceName}
-                title={getHighlightedText(notification.title, search)}
-                subtitle={getHighlightedText(notification.subtitle, search)}
-                description={getHighlightedText(notification.description, search)}
-                onClick={() => openNotificationHandler(notification)}
-                details={
-                  <>
-                    {
-                      notification.details &&
-                      <>
-                        <span>{notification.details}</span>
-                        <br />
-                      </>
-                    }
-                    {selectedStatus === STATUS.TREATED &&
-                      notification.treatedBy &&
-                      notification.treatedOn &&
-                      <span>Marked as treated by  <span style={{ textDecoration: "underline" }}>{getHighlightedText(notification.treatedBy, search)}</span> on {getHighlightedText(notification.treatedOn, search)}</span>
-                    }
-                  </>
-                }
-                date={getHighlightedText(formatDate(notification.date), search)}
-                onBadgeClick={() => onBadgeClickHandler(notification)}
-                status={selectedStatus}
-                pendingStatus={getNotificationIsPending(notification)}
-                color={getColorApplication(notification.sourceName)}
-                active={params?.notificationId === notification._id}
-              />
-            ))}
+              {notificationGroup.notifications.map((notification, index) => (
+                <NotificationItem
+                  key={index}
+                  forceRender={forceRender}
+                  category={notification.category}
+                  isRead={notification.isRead}
+                  isImportant={notification.isImportant}
+                  image={notification.image}
+                  sourceName={notification.sourceName}
+                  title={getHighlightedText(notification.title, search)}
+                  subtitle={getHighlightedText(notification.subtitle, search)}
+                  description={getHighlightedText(notification.description, search)}
+                  onClick={() => openNotificationHandler(notification)}
+                  details={
+                    <>
+                      {
+                        notification.details &&
+                        <>
+                          <span>{notification.details}</span>
+                          <br />
+                        </>
+                      }
+                      {selectedStatus === STATUS.TREATED &&
+                        notification.treatedBy &&
+                        notification.treatedOn &&
+                        <span>Marked as treated by  <span style={{ textDecoration: "underline" }}>{getHighlightedText(notification.treatedBy, search)}</span> on {getHighlightedText(notification.treatedOn, search)}</span>
+                      }
+                    </>
+                  }
+                  date={getHighlightedText(formatDate(notification.date), search)}
+                  onBadgeClick={() => onBadgeClickHandler(notification)}
+                  status={selectedStatus}
+                  pendingStatus={getNotificationIsPending(notification)}
+                  color={getColorApplication(notification.sourceName)}
+                  active={params?.notificationId === notification._id}
+                />
+              ))}
 
 
-            {/*{notificationGroup.notifications.map((notification, index) => (
+              {/*{notificationGroup.notifications.map((notification, index) => (
               <tr
                 key={index}
                 onClick={() => openNotificationHandler(notification)}
@@ -464,27 +465,28 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 )}
               </tr>
             ))}*/}
-          </React.Fragment>
-        ))}
-      </tbody>
-    </TableUI>
+            </React.Fragment>
+          ))}
+        </tbody>
+      </TableUI>
+    </div>
   )
 }
 
 
-const SortIcon: React.FC<{ field: string, sortFilter?: any }> = ({field, sortFilter}) => {
+const SortIcon: React.FC<{ field: string, sortFilter?: any }> = ({ field, sortFilter }) => {
   if (sortFilter.field === field) {
     return sortFilter.asc ? (
       <Icon
         name='caretRoundedDown'
         size='small'
-        style={{minWidth: 0, minHeight: 0, width: 15, height: 0}}
+        style={{ minWidth: 0, minHeight: 0, width: 15, height: 0 }}
       />
     ) : (
       <Icon
         name='caretRoundedUp'
         size='small'
-        style={{minWidth: 0, minHeight: 0, width: 15, height: 0}}
+        style={{ minWidth: 0, minHeight: 0, width: 15, height: 0 }}
       />
     )
   } else {
@@ -502,7 +504,7 @@ const TD: React.FC<{
   style?: React.CSSProperties,
   sortFilter: any,
   sortColumnHandler: (fieldName: string) => void
-}> = ({field, children, align, start, end, style, sortColumnHandler, sortFilter}) => {
+}> = ({ field, children, align, start, end, style, sortColumnHandler, sortFilter }) => {
   const borderRadius = {
     borderBottomLeftRadius: start ? '0px' : undefined,
     borderBottomRightRadius: end ? '0px' : undefined,
@@ -511,11 +513,11 @@ const TD: React.FC<{
   return (
     <td
       onClick={() => sortColumnHandler(field)}
-      style={{cursor: 'pointer', ...borderRadius, ...style}}
+      style={{ cursor: 'pointer', ...borderRadius, ...style }}
       align={align}
     >
       <Text variant='current'>{children}</Text>&nbsp;
-      <SortIcon field={field} sortFilter={sortFilter}/>
+      <SortIcon field={field} sortFilter={sortFilter} />
     </td>
   )
 }

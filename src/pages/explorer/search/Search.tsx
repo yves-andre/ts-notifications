@@ -20,20 +20,22 @@ export const Search: React.FC<{ stacked: boolean }> = ({ stacked }) => {
   }
 
   return (
-    <Input
-      size='large'
-      placeholder='Quick search in this list...'
-      type='search'
-      icon={{ name: 'search', position: 'before' }}
-      stacked={stacked}
-      onChange={searchChangeHandler}
-      deleteBtn={true}
-      value={search}
-      style={{
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
-      }}
-    />
+    <div style={{ padding: '0 1px' }}>
+      <Input
+        size='large'
+        placeholder='Quick search in this list...'
+        type='search'
+        icon={{ name: 'search', position: 'before' }}
+        stacked={stacked}
+        onChange={searchChangeHandler}
+        deleteBtn={true}
+        value={search}
+        style={{
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
+        }}
+      />
+    </div>
   )
 }
 
