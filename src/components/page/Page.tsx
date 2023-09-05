@@ -24,9 +24,9 @@ import NotificationDetail from "../../components/NotificationDetail";
 import "./Page.scss";
 import './Page.scss'
 import { APP_CONFIG } from '../../data/app-config'
-import {fetchNotificationCounts, fetchNotificationsByStatusAndCategory, selectNotificationById} from "../../store/notifications-slice";
-import {useSelector} from "react-redux";
-import {getTitleByCategory} from "../../pages/menu/menu-service";
+import { fetchNotificationCounts, fetchNotificationsByStatusAndCategory, selectNotificationById } from "../../store/notifications-slice";
+import { useSelector } from "react-redux";
+import { getTitleByCategory } from "../../pages/menu/menu-service";
 import { useRouteFilters } from '../../hooks/use-route-filters'
 import { FILTER } from '../../data/constants/filter'
 
@@ -39,6 +39,7 @@ export const Page: React.FC = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const [hasValidation, setHasValidation] = React.useState(false)
+  const [sidebar, setSidebar] = React.useState(true)
   const notification = useSelector(selectNotificationById(params.notificationId));
   const searchParams = useRouteFilters();
 
@@ -127,13 +128,13 @@ export const Page: React.FC = () => {
               variant="default"
               active="notifications"
               onChange={(key: any) => console.log(key)}
-              settingsAction={() => {}}
+              settingsAction={() => { }}
               rainbow={true}
               items={[
                 {
                   key: "notifications",
                   title: "Trading Notifications",
-                  onClick: () => {},
+                  onClick: () => { },
                 },
                 {
                   key: "dwp",
@@ -155,6 +156,8 @@ export const Page: React.FC = () => {
                 <Menu
                   applications={applications}
                   categoryColors={categoryColors}
+                  sidebar={sidebar}
+                  onClick={() => { setSidebar(true) }}
                 />
               )}
             </>
@@ -162,7 +165,7 @@ export const Page: React.FC = () => {
         </Layout.Nav>
 
         {/* NAVIGATION 2nd LEVEL --------------------------------------------*/}
-        <Layout.Sidebar style={{ background: "white" }}>
+        <Layout.Sidebar style={{ background: "white" }} open={sidebar}>
           <Layout.SidebarHeader>
             <h3 style={{ textTransform: "uppercase" }}>
               {getTitleByCategory(selectedCategory)}
@@ -172,6 +175,7 @@ export const Page: React.FC = () => {
               round
               color="ultraLightGray"
               style={{ marginLeft: "auto" }}
+              onClick={() => setSidebar(!sidebar)}
             >
               Close
             </IconButton>
@@ -193,27 +197,32 @@ export const Page: React.FC = () => {
             </>
           </Col>
 
-          {hasValidation && (
-            <Col
-              style={{
-                maxWidth: 410,
-                background: "white",
-                marginRight: -25,
-                display: "flex",
-                flexDirection: "column",
-                alignSelf: "flex-start",
-                height: "calc(100vh - 50px)",
-                position: "sticky",
-                top: 0,
-                zIndex: 5,
-              }}
-            >
-              <NotificationDetail
-                notification={notification}
-                onClose={() => onValidationClose()}
-              />
-            </Col>
-          )}
+
+          <Col
+            style={{
+              maxWidth: 620,
+              background: "white",
+              marginRight: -25,
+              display: "flex",
+              flexDirection: "column",
+              alignSelf: "flex-start",
+              height: "calc(100vh - 50px)",
+              position: "sticky",
+              top: 0,
+              zIndex: 5,
+              flexGrow: hasValidation ? 1 : 0,
+              transition: 'flex 150ms ease-in-out'
+            }}
+          >
+            <>
+              {hasValidation && (
+                <NotificationDetail
+                  notification={notification}
+                  onClose={() => onValidationClose()}
+                />
+              )}
+            </>
+          </Col>
         </Flex>
       </Layout>
     </>

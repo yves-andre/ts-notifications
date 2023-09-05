@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import Application from "../../data/interfaces/application";
 import CategoryColor from "../../data/interfaces/category-color";
@@ -72,7 +72,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({
     if (
       selectedStatus === STATUS.TREATED
     ) {
-      await dispatch(fetchNotificationsByStatusAndCategory(STATUS.TO_BE_TREATED, selectedCategory));      
+      await dispatch(fetchNotificationsByStatusAndCategory(STATUS.TO_BE_TREATED, selectedCategory));
     }
 
     if (application) {
@@ -100,10 +100,9 @@ export const Sidebar: React.FC<ISidebarProps> = ({
     if (selectedApplication) {
       const filterValue =
         selectedCategory === ACTION_FEED ? "workflow" : "socialflow";
-      return `${
-        applications.find((app) => app.match === selectedApplication)
+      return `${applications.find((app) => app.match === selectedApplication)
           ?.sourceName
-      }_${applications.find((app) => app.type === filterValue)?.type}`;
+        }_${applications.find((app) => app.type === filterValue)?.type}`;
     }
     return selectedCategory;
   };
@@ -145,15 +144,15 @@ export const Sidebar: React.FC<ISidebarProps> = ({
       badge: await getNotificationCount(selectedCategory, app) || undefined,
       color: getColorByCategory(selectedCategory),
     }));
-  
+
     // Wait for all the promises in appPromises to be resolved, returning an array with each app's details
     const appCategories = await Promise.all(appPromises);
-  
+
     // Combine the category details with the app details and return the result
     return [
       {
         key: selectedCategory,
-        title: "ALL " + getTitleByCategory(selectedCategory),
+        title: "All Apps",
         icon: getIconByCategory(selectedCategory),
         badge, // the badge count from earlier
         color: getColorByCategory(selectedCategory),

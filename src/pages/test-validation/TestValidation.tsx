@@ -133,24 +133,22 @@ export const TestValidation: React.FC = () => {
                         </>
                     </Col>
 
-                    {
-                        (<Col
-                            style={{
-                                maxWidth: 410,
-                                background: '#282c34',
-                                marginRight: -25,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignSelf: 'flex-start',
-                                height: 'calc(100vh - 50px)',
-                                position: 'sticky',
-                                top: 0,
-                                zIndex: 5,
-                            }}
-                        >
-                            <NotificationDetail notification={{}} onClose={() => onValidationClose()} isDebug={true} validationJson={validationForm} />
-                        </Col>)
-                    }
+                    <Col
+                        style={{
+                            maxWidth: 620,
+                            background: '#282c34',
+                            marginRight: -25,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignSelf: 'flex-start',
+                            height: 'calc(100vh - 50px)',
+                            position: 'sticky',
+                            top: 0,
+                            zIndex: 5,
+                        }}
+                    >
+                        <NotificationDetail notification={{}} onClose={() => onValidationClose()} isDebug={true} validationJson={validationForm} />
+                    </Col>
                 </Flex>
             </Layout>
         </>

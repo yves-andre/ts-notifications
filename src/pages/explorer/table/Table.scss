@@ -27,5 +27,15 @@
 }
 
 .NotificationTable {
-  margin-bottom: 50px;
+
+  //margin-bottom: 50px;
+  &-wrapper {
+    overflow: auto;
+    padding: 0 1px;
+    /*-ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      opacity: 0
+    }*/
+  }
 }
