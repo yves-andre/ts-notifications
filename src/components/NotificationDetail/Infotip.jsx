@@ -51,7 +51,7 @@ export const Infotip = ({ open, closeButtonText, onClose, items }) => {
   }, [])
 
   return (
-    <div className={b({ isOpen: open })} onClick={onClose}>
+    <div className={b({ isOpen: open })} onClick={onClose} data-infotip-open={open}>
       <div className={b('content')} onClick={(e) => e.stopPropagation()}>
         {items.map((item, i) => {
           return (
