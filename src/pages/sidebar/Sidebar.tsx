@@ -15,9 +15,9 @@ import {
   getAllNotificationsCount,
   getNotificationCategorycount,
 } from "../menu/menu-service";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { STATUS } from "../../data/constants/status";
-import { fetchNotificationsByStatusAndCategory, getNotificationItemsByCategoryAndStatus } from "../../store/notifications-slice";
+import { fetchNotificationsByStatusAndCategory, getNotificationItemsByCategoryAndStatus, selectNotificationById } from "../../store/notifications-slice";
 import { useSelector } from "react-redux";
 
 /*----------------------------------------------------------------------------*/
@@ -29,6 +29,7 @@ interface ISidebarProps {
 
 /*----------------------------------------------------------------------------*/
 const ACTION_FEED = CATEGORY.ACTION_FEED;
+const ALL_NOTIFICATIONS_SOURCE_NAME = "AllNotifications";
 
 export const Sidebar: React.FC<ISidebarProps> = ({
   applications,
@@ -48,6 +49,8 @@ export const Sidebar: React.FC<ISidebarProps> = ({
     (state) => state.filters.selectedApplication
   );
   const toBeTreated = useSelector((state) => getNotificationItemsByCategoryAndStatus(state, selectedCategory, STATUS.TO_BE_TREATED));
+  const params = useParams();
+  const openNotification = useSelector(selectNotificationById(params.notificationId));
 
   useEffect(() => {
     (async () => {
@@ -139,6 +142,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({
     // Map over the apps in the selected category, returning an array of Promises representing each app's details
     const appPromises = getAppsByCategory(selectedCategory).map(async (app) => ({
       key: `${app.sourceName}_${app.type}`,
+      sourceName: app.sourceName,
       title: app.title,
       icon: app.image,
       // Get the notification count for each app, or set it to undefined if no count is returned
@@ -154,6 +158,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({
       {
         key: selectedCategory,
         title: "ALL " + getTitleByCategory(selectedCategory),
+        sourceName: ALL_NOTIFICATIONS_SOURCE_NAME,
         icon: getIconByCategory(selectedCategory),
         badge, // the badge count from earlier
         color: getColorByCategory(selectedCategory),
@@ -174,7 +179,11 @@ export const Sidebar: React.FC<ISidebarProps> = ({
         selectAppHandler(app?.match, selectedCategory);
       }
     }
-    navigate({ pathname: `/explorer`, search: location.search });
+    // if the clicked navitem has the same source as the currently open notification
+    // or if we go to the "ALL" item, then don't close the sidebar
+    if(item.sourceName !== openNotification?.sourceName && item.sourceName !== ALL_NOTIFICATIONS_SOURCE_NAME) {
+      navigate({ pathname: `/explorer`, search: location.search });
+    }
   };
 
   return (
