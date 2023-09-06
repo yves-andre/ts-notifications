@@ -39,7 +39,6 @@ interface Props {
 export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const search = useAppSelector((state) => state.filters.searchFilter)
   const sortFilter = useAppSelector((state) => state.filters.sortFilter)
-  const [forceRender, setForceRender] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch()
   const location = useLocation();
@@ -57,6 +56,9 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const openValidationForm = useAppSelector(
     (state) => state.notifications.openValidationForm
   )
+
+  // refresh on middleware update
+  useAppSelector((state) => state.notifications.lastUpdated);
 
   // Open next notification validation form
   useEffect(() => {
@@ -85,19 +87,6 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
         }
     }
   }, [openValidationForm]);
-
-
-
-  useEffect(() => {
-    const updateInterval = 2 * 60 * 1000; // 2 minutes in milliseconds
-    const intervalId = setInterval(() => {
-      setForceRender(prevValue => !prevValue); // Toggle the prop value
-    }, updateInterval);
-
-    return () => {
-      clearInterval(intervalId); // Clear the interval on component unmount
-    };
-  }, []);
 
   useEffect(() => {
     notificationGroups.forEach((notificationGroup: NotificationGroup) => {
@@ -334,7 +323,6 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
             {notificationGroup.notifications.map((notification, index) => (
               <NotificationItem
                 key={index}
-                forceRender={forceRender}
                 category={notification.category}
                 isRead={notification.isRead}
                 isImportant={notification.isImportant}
