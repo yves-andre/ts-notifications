@@ -10,13 +10,13 @@ import NotificationDetail from '../../components/NotificationDetail'
 
 import './../../components/page/Page.scss'
 import { APP_CONFIG } from '../../data/app-config'
+import { useNavigateToExplorer } from '../../hooks/use-navigate-to-explorer';
 
 const userProfile = {}
 let textareaTimeout: any = null
 
 export const TestValidation: React.FC = () => {
-    const navigate = useNavigate()
-    const location = useLocation();
+    const {navigateToExplorer} = useNavigateToExplorer();
 
 
     const [validationForm, setValidationForm] = React.useState<any>(mock)
@@ -35,7 +35,7 @@ export const TestValidation: React.FC = () => {
 
 
     const onValidationClose = () => {
-        const resp = navigate({ pathname: `/explorer`, search: location.search })
+        navigateToExplorer();   
     }
 
     return (
