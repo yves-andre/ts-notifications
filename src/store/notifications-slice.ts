@@ -219,7 +219,7 @@ const reFetchLoadedNotifications = async (dispatch: AppDispatch, getState: () =>
     const statuses = Object.keys(notificationsItemsByCategory[+category]);
     for (const status of statuses) {
       if (notificationsItemsByCategory[+category][+status].loaded) {
-        await dispatch(fetchNotificationsByStatusAndCategory(Number(status), Number(category)));
+        await dispatch(fetchNotificationsByStatusAndCategory(Number(status), Number(category), true));
       }
     }
   }
@@ -366,23 +366,30 @@ export const setNotificationsIsSeenByIds = (ids: string[]) => {
 export const dismissNotificationById = (id: string) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
+      const notificationCategory = selectNotifications(getState())
+        .find(n => n._id === id)?.category;
+      if (notificationCategory == null){
+        throw new Error(`Notification with id ${id} was not found`);
+      }
       await _dismissNotification(id);
-      reFetchLoadedNotifications(dispatch, getState);
-      fetchNotificationCounts();
+      // we only refetch the category of the dismissed notification
+      reFetchLoadedNotifications(dispatch, getState, notificationCategory);
     } catch (error) {
       console.log(error);
+    } finally {
+      fetchNotificationCounts();
     }
   };
 };
 
-export const dismissNotifications = (notifications: Notification[]) => {
+export const clearInformationFeed = () => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       await _dismissNotifications();
     } catch (error) {
       console.log(error);
     } finally {
-      reFetchLoadedNotifications(dispatch, getState);
+      reFetchLoadedNotifications(dispatch, getState, CATEGORY.INFORMATION_FEED);
       fetchNotificationCounts();
     }
   };
