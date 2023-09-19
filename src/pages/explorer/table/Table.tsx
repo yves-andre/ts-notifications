@@ -233,11 +233,13 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
       case CATEGORY.ACTION_FEED:
         if (notification.isManual) {
           dismissNotificationHandler(notification)
+        }else{
+          openNotificationHandler(notification)
         }
-        openNotificationHandler(notification)
         break
       case CATEGORY.INFORMATION_FEED:
         dismissNotificationHandler(notification)
+        break
     }
   }
 
