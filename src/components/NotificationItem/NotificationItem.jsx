@@ -30,7 +30,6 @@ export const NotificationItem = ({
   active,
   status,
   color,
-  forceRender
 }) => {
   const theme = setTheme(color)
 
