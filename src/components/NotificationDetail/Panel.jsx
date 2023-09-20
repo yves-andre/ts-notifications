@@ -49,9 +49,9 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
   const currentValidationFormJSON = useRef(null);
   const [alert, setAlert] = useState(true)
   const dispatch = useAppDispatch();
-  const notificationsToValidate = useAppSelector(
-    (state) => state.notifications.notificationsToValidate
-  );
+
+  // refresh on middleware update
+  const refreshPendingStatus = useAppSelector((state) => state.notifications.lastUpdated);
 
   useEffect(() => {
     if(notification){
@@ -59,24 +59,25 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
     }
   }, [notification])
 
+  useEffect(() => {
+    setPendingStatus();
+  }, [refreshPendingStatus])
 
+  const setPendingStatus = () => {
+    const { isPending, isTimeout } = getNotificationIsPending(notification);
+    setAlert(!isPending && isTimeout);
+    setIsPending(isPending);
+  }
 
   /**
    * Display validation form
    * @param validationForm
    */
   const displayValidationForm = (validationForm) => {
-    setAlert(false);
-    setIsPending(false);
+    setPendingStatus();
     setTemplate(validationForm.template);
 
     const pendingStatus = getNotificationIsPending(notification)
-    if (!pendingStatus.isPending && pendingStatus.isTimeout) {
-      setAlert(true)
-    }
-    if (pendingStatus.isPending) {
-      setIsPending(true)
-    }
 
     const items = updateItemsConfig(validationForm?.template?.items, notification, pendingStatus);
     const header = items?.find((i) => i.type === 'headerBlock')
@@ -105,7 +106,8 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
         item.items = item.items.map((footerItem) => ({
           ...footerItem,
           notificationStatus: notification?.status,
-          notificationDetails: notification?.details,
+          notificaitonTreatedBy: notification?.treatedBy,
+          notificaitonTreatedOn: notification?.treatedOn
         }));
       }
       const updatedItem = { ...item }
