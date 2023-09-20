@@ -209,6 +209,7 @@ export const Page: React.FC = () => {
               }}
             >
               <NotificationDetail
+                key={notification?._id}
                 notification={notification}
                 onClose={() => onValidationClose()}
               />
