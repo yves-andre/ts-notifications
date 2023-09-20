@@ -1,0 +1,43 @@
+.Section {
+  margin-bottom: 36px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &-header {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ts-color-neutral-night);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:empty {
+      display: none;
+    }
+  }
+  &-subtitle {
+    font-size: 11px;
+    opacity: 0.7;
+    letter-spacing: 0.06em;
+    font-weight: 300;
+    position: relative;
+    top: 1px;
+  }
+  &-content {
+    background-color: var(--ts-color-neutral-ultraLightGray);
+    border-radius: 10px;
+    overflow: hidden;
+    &:has(> [data-type='listBlock'][data-display='menu']) {
+      margin-left: -25px;
+      margin-right: -25px;
+      border-radius: 0;
+    }
+  }
+  &-info {
+    min-height: 0;
+    min-width: 0;
+    max-height: 20px;
+    max-width: 20px;
+    margin-left: auto;
+    cursor: pointer;
+  }
+}

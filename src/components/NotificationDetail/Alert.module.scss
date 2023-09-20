@@ -1,0 +1,49 @@
+.Alert {
+  display: flex;
+  align-items: center;
+  position: relative;
+  font-size: 15px;
+  line-height: 1.2;
+  padding: 22px 25px 17px;
+  gap: 10px;
+  z-index: 2;
+  &::before {
+    content: '';
+    background-color: currentColor;
+    opacity: 0.1;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(to bottom, white, rgba(white, 0));
+    z-index: 1;
+    pointer-events: none;
+  }
+  &-icon {
+    width: 50px;
+  }
+  &-close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: var(--ts-color-neutral-slate);
+    opacity: 0.3;
+    cursor: pointer;
+    z-index: 3;
+    pointer-events: all;
+    transition: opacity 200ms, transform 110ms ease-out;
+    &:hover {
+      opacity: 1;
+    }
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+}

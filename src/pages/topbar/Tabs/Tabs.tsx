@@ -5,8 +5,11 @@ import { useAppDispatch } from "../../../hooks/use-app-dispatch";
 import { useAppSelector } from "../../../hooks/use-app-selector";
 import { filtersActions } from "../../../store/filters-slice";
 
+import { Toggle } from '@trading/energies-ui'
+
 import "./Tabs.scss";
 import { CATEGORY } from "../../../data/constants/category";
+import { useNavigateToExplorer } from "../../../hooks/use-navigate-to-explorer";
 
 export const Tabs: React.FC = () => {
   const selectedStatus = useAppSelector(
@@ -16,35 +19,29 @@ export const Tabs: React.FC = () => {
     (state) => state.filters.selectedCategory
   );
   const dispatch = useAppDispatch();
+  const { navigateToExplorer } = useNavigateToExplorer();
 
   const tabClickHandler = (status: number) => {
     dispatch(filtersActions.setSelectedStatus(status));
+    navigateToExplorer();
   };
 
   return (
-    <div className="Tabs">
-      <div
-        onClick={() => tabClickHandler(STATUS.TO_BE_TREATED)}
-        className={classNames({
-          'Tab': true,
-          'Tab-active': selectedStatus === STATUS.TO_BE_TREATED,
-        })}
-      >
-        {selectedCategory === CATEGORY.ACTION_FEED && "TO BE TREATED"}
-        {selectedCategory === CATEGORY.INFORMATION_FEED && "LAST RECEIVED"}
-      </div>
-
-      <div
-        onClick={() => tabClickHandler(STATUS.TREATED)}
-        className={classNames({
-          'Tab': true,
-          'Tab-active': selectedStatus === STATUS.TREATED,
-        })}
-      >
-        {selectedCategory === CATEGORY.ACTION_FEED && "TREATED"}
-        {selectedCategory === CATEGORY.INFORMATION_FEED && "HISTORY"}
-      </div>
-    </div>
+    <Toggle
+      active={selectedStatus.toString()}
+      items={[
+        {
+          key: STATUS.TO_BE_TREATED.toString(),
+          title: selectedCategory === CATEGORY.ACTION_FEED ? "TO BE TREATED" : selectedCategory === CATEGORY.INFORMATION_FEED ? "LAST RECEIVED" : "",
+        },
+        {
+          key: STATUS.TREATED.toString(),
+          title: selectedCategory === CATEGORY.ACTION_FEED ? "TREATED" : selectedCategory === CATEGORY.INFORMATION_FEED ? "HISTORY" : "",
+        },
+      ]}
+      variant='pastel'
+      onChange={(e: string) => tabClickHandler(parseInt(e))}
+    />
   );
 };
 

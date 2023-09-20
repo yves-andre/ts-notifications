@@ -1,0 +1,11 @@
+.FromToDate {
+  display: flex;
+  &-from {
+    box-sizing: border-box;
+  }
+  &-to {
+    border-left: 1px solid var(--ts-global-border);
+    margin-left: -6px;
+    box-sizing: border-box;
+  }
+}

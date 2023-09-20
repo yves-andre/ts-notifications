@@ -25,6 +25,12 @@ export default interface Notification {
   delegates: string[];
   treatedBy: string;
   treatedOn: string;
+  hasValidationForm?: boolean;
+  validationFormUrl?: string;
+  updateValidationUrl?: string;
+  isPending?: boolean;
+  pendingFrom?: string;
+  updatedAt?: string;
 }
 
 interface Owner {
