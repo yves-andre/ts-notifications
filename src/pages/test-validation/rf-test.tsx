@@ -52,7 +52,7 @@ const mock = {
       },
       {
         "type": "sectionBlock",
-        "title": "Requisition Forms",
+        "title": "Requisition Form",
         "subtitle": "#RF-TOTSA-22-02345",
         "actions": [],
         "items": [
@@ -143,7 +143,7 @@ const mock = {
               },
               {
                 "title": "Validation History",
-                "subtitle": "3 Activities",
+                "subtitle": "2 Activities",
                 "icon": "history",
                 "items": [
                   {

@@ -13,6 +13,7 @@ import "./App.scss";
 import TestValidation from "./pages/test-validation/TestValidation";
 import RFTest from "./pages/test-validation/rf-test";
 import InvoiceTest from "./pages/test-validation/invoice-test";
+import ExpenseTest from "./pages/test-validation/expense-test";
 
 export const App: React.FC = () => {
   const searchParams = useRouteFilters();
@@ -82,6 +83,7 @@ export const App: React.FC = () => {
       <Route path="/test-validation" element={<TestValidation/>} />
       <Route path="/rf-test" element={<RFTest/>} />
       <Route path="/invoice-test" element={<InvoiceTest/>} />
+      <Route path="/expense-test" element={<ExpenseTest/>} />
 
     </Routes>
   );

@@ -52,7 +52,7 @@ const mock = {
       },
       {
         "type": "sectionBlock",
-        "title": "Requisition Forms",
+        "title": "Invoice",
         "subtitle": "#ARF-TOTSA-22-02663 - OI-TOTSA-22-4856",
         "actions": [],
         "items": [
@@ -78,16 +78,18 @@ const mock = {
               },
               {
                 "label": "Invoice Amount Exluding Taxes",
-                "value": "6 710 GBP"
+                "value": "6 710 GBP",
+                "color": "corporate/aqua"
               },
               {
                 "label": "Taxes",
                 "value": "510 GBP",
-                "color": "red"
+                "color": "corporate/aqua"
               },
               {
                 "label": "Invoice Amount Including Taxes",
-                "value": "6 200 GBP"
+                "value": "6 200 GBP",
+                "color": "corporate/aqua"
               }
             ]
           }
@@ -103,30 +105,26 @@ const mock = {
             "display": "block",
             "data": [
               {
-                "label": "Category:",
-                "value": "Hardware"
+                "label": "Supplier:",
+                "value": "WORLDSCALE ASSOCIATION - LONDON"
               },
               {
-                "label": "Sub Category:",
-                "value": "Various Hardware"
+                "label": "Analytic Code:",
+                "value": "C03"
               },
               {
-                "label": "Supplier",
-                "value": "BECHTLE Suisse Romande SA"
+                "label": "Specify",
+                "value": "TTQ : 100%"
               },
               {
-                "label": "Quantity",
-                "value": "2"
+                "label": "Reccurrence:",
+                "value": "No"
               },
               {
-                "label": "Comment",
-                "value": "For Innovation Lab Manager - JAN BAUR"
+                "label": "RF Estimate:",
+                "value": "6700 GBP",
+                "color": "corporate/aqua"
               },
-              {
-                "label": "Cost Estimated Comment",
-                "value": "NA",
-                "isEmpty": true
-              }
             ]
           }
         ]
@@ -173,7 +171,7 @@ const mock = {
               },
               {
                 "title": "Validation History",
-                "subtitle": "3 Activities",
+                "subtitle": "2 Activities",
                 "icon": "history",
                 "items": [
                   {

@@ -41,7 +41,7 @@ const b = BEM(styles)
 export const DataItem = ({ label, value, status, color, isEmpty, href }) => {
   const theme = setTheme(color) || {}
   return (
-    <li className={b('item', { isEmpty, hasHref: href })} style={theme}>
+    <li className={b('item', { isEmpty, hasHref: href, hasColor: color })} style={theme}>
       <span className={b('label')} style={{ color: colorCSS(status?.color) }}>
         <span className={b('ellipsis')}>{label}</span>
         {status && (

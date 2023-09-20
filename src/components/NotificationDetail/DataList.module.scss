@@ -23,6 +23,12 @@
         font-style: italic;
       }
     }
+
+    &.hasColor {
+      .DataList-value {
+        color: var(--theme);
+      }
+    }
   }
 
   &-label {
@@ -48,7 +54,7 @@
 
   &-value {
     font-size: 15px;
-    color: var(--theme, --ts-color-neutral-night);
+    color: var(--ts-color-neutral-night);
     text-overflow: ellipsis;
     overflow: hidden;
     //white-space: nowrap;
