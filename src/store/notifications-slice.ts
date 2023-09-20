@@ -36,6 +36,7 @@ interface NotificationToValidate {
   id: string;
   opened: boolean;
   pending: boolean;
+  lastUpdated: Date;
 }
 
 const initialState = {
@@ -67,12 +68,16 @@ const initialState = {
       },
     },
   } as NotificationsItemsByCategory,
+  lastUpdated: Date.now()
 };
 
 const notificationSlice = createSlice({
   name: "notifications",
   initialState,
   reducers: {
+    forceUpdate: (state) => {
+      state.lastUpdated = Date.now();
+    },
     getNotificationCount(state, action: PayloadAction<NotificationCount[]>) {
       state.notificationCounts = action.payload;
     },
