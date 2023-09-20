@@ -127,15 +127,9 @@ const notificationSlice = createSlice({
         });
       });
     },
-    resetLoaded(state, action: PayloadAction<{selectedStatus: number, selectedCategory: number}>) {
-      const { selectedStatus, selectedCategory } = action.payload;
-      
-      if (state.notificationsItemsByCategory[selectedCategory] &&
-          state.notificationsItemsByCategory[selectedCategory][selectedStatus]) {
-        state.notificationsItemsByCategory[selectedCategory][selectedStatus].loaded = false;
-      } else {
-        console.warn('Invalid category or status. Could not reset the "loaded" flag.');
-      }
+    resetLoaded(state) {
+      // reset every loaded state to false (used on WS message to update all states)
+      Object.values(state.notificationsItemsByCategory).forEach(cat => Object.values(cat).forEach(item => item.loaded = false));
     },
     setOpenValidationForm(state, action: PayloadAction<{id: string, hasUserValidated: boolean}>){
       state.openValidationForm = action.payload;
@@ -233,7 +227,7 @@ export const fetchNotificationsByStatusAndCategory = (
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {      
       if (resetLoadedState) {
-        dispatch(notificationActions.resetLoaded({selectedStatus, selectedCategory}));
+        dispatch(notificationActions.resetLoaded());
       }
 
       let currentNotifications =
