@@ -19,6 +19,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { STATUS } from "../../data/constants/status";
 import { fetchNotificationsByStatusAndCategory, getNotificationItemsByCategoryAndStatus } from "../../store/notifications-slice";
 import { useSelector } from "react-redux";
+import { useNavigateToExplorer } from "../../hooks/use-navigate-to-explorer";
 
 /*----------------------------------------------------------------------------*/
 
@@ -34,9 +35,6 @@ export const Sidebar: React.FC<ISidebarProps> = ({
   applications,
   categoryColors,
 }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
   const [navItems, setNavItems] = useState<any>([]);
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
@@ -57,6 +55,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({
   }, [toBeTreated]);
 
   const dispatch = useAppDispatch();
+  const { navigateToExplorer } = useNavigateToExplorer();
 
   const getAppsByCategory = (category: number): Application[] => {
     const filterValue = category === ACTION_FEED ? "workflow" : "socialflow";
@@ -174,7 +173,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({
         selectAppHandler(app?.match, selectedCategory);
       }
     }
-    navigate({ pathname: `/explorer`, search: location.search });
+    navigateToExplorer();
   };
 
   return (

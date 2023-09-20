@@ -29,18 +29,18 @@ import {useSelector} from "react-redux";
 import {getTitleByCategory} from "../../pages/menu/menu-service";
 import { useRouteFilters } from '../../hooks/use-route-filters'
 import { FILTER } from '../../data/constants/filter'
+import { useNavigateToExplorer } from "../../hooks/use-navigate-to-explorer";
 
 
 const userProfile = {}
 
 export const Page: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const params = useParams();
   const dispatch = useAppDispatch();
   const [hasValidation, setHasValidation] = React.useState(false)
   const notification = useSelector(selectNotificationById(params.notificationId));
   const searchParams = useRouteFilters();
+  const { navigateToExplorer } = useNavigateToExplorer(); 
 
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
@@ -81,7 +81,7 @@ export const Page: React.FC = () => {
   );
 
   const onValidationClose = () => {
-    navigate({ pathname: `/explorer`, search: location.search });
+    navigateToExplorer();
   };
 
   useEffect(() => {

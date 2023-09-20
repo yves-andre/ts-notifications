@@ -64,6 +64,7 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
   }, [refreshPendingStatus])
 
   const setPendingStatus = () => {
+    if (!notification) return;
     const { isPending, isTimeout } = getNotificationIsPending(notification);
     setAlert(!isPending && isTimeout);
     setIsPending(isPending);

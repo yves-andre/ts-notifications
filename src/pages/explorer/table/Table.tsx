@@ -30,6 +30,7 @@ import { getNotificationIsPending, setNotificationIsSeen } from "../../../servic
 import { redirect, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import NotificationItem from './../../../components/NotificationItem'
+import { useNavigateToExplorer } from '../../../hooks/use-navigate-to-explorer'
 
 
 interface Props {
@@ -41,7 +42,6 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const sortFilter = useAppSelector((state) => state.filters.sortFilter)
   const navigate = useNavigate();
   const dispatch = useAppDispatch()
-  const location = useLocation();
   const params = useParams();
   const selectedStatus = useAppSelector((state) => state.filters.selectedStatus)
   const selectedCategory = useAppSelector(
@@ -56,6 +56,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const openValidationForm = useAppSelector(
     (state) => state.notifications.openValidationForm
   )
+  const { navigateToExplorer } = useNavigateToExplorer(); 
 
   // refresh on middleware update
   useAppSelector((state) => state.notifications.lastUpdated);
@@ -80,10 +81,10 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
           // if none is found navigate to the explorer root.
           const nextNotification = orderedNotifications[0];
           if (nextNotification) {
-              navigate({ pathname: `/explorer/${nextNotification._id}`, search: location.search });
+              navigateToExplorer(nextNotification._id);
           }
         }else{
-          navigate({ pathname: `/explorer`, search: location.search });
+          navigateToExplorer();
         }
     }
   }, [openValidationForm]);
@@ -142,7 +143,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
 
   const openNotificationHandler = (notification: Notification) => {
     if (notification.hasValidationForm && notification.validationFormUrl) {
-      navigate({ pathname: `/explorer/${notification._id}`, search: location.search })
+      navigateToExplorer(notification._id)
     } else {
       const action = getNotificationDefaultAction(notification)
       action && action.call(this)
