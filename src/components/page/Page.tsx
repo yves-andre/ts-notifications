@@ -200,7 +200,7 @@ export const Page: React.FC = () => {
           {hasValidation && (
             <Col
               style={{
-                maxWidth: 410,
+                maxWidth: 620,
                 background: "white",
                 marginRight: -25,
                 display: "flex",
