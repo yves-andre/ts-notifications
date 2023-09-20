@@ -48,7 +48,7 @@
 
   &-value {
     font-size: 15px;
-    color: var(--ts-color-neutral-night);
+    color: var(--theme, --ts-color-neutral-night);
     text-overflow: ellipsis;
     overflow: hidden;
     //white-space: nowrap;
