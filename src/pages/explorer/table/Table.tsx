@@ -13,7 +13,7 @@ import { useAppDispatch } from '../../../hooks/use-app-dispatch'
 import { filtersActions } from '../../../store/filters-slice'
 import {
   dismissNotificationById,
-  dismissNotifications,
+  clearInformationFeed,
   setNotificationIsReadById,
   setNotificationsIsSeenByIds,
 } from '../../../store/notifications-slice'
@@ -39,7 +39,6 @@ interface Props {
 export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const search = useAppSelector((state) => state.filters.searchFilter)
   const sortFilter = useAppSelector((state) => state.filters.sortFilter)
-  const [forceRender, setForceRender] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch()
   const location = useLocation();
@@ -57,6 +56,9 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   const openValidationForm = useAppSelector(
     (state) => state.notifications.openValidationForm
   )
+
+  // refresh on middleware update
+  useAppSelector((state) => state.notifications.lastUpdated);
 
   // Open next notification validation form
   useEffect(() => {
@@ -85,19 +87,6 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
         }
     }
   }, [openValidationForm]);
-
-
-
-  useEffect(() => {
-    const updateInterval = 2 * 60 * 1000; // 2 minutes in milliseconds
-    const intervalId = setInterval(() => {
-      setForceRender(prevValue => !prevValue); // Toggle the prop value
-    }, updateInterval);
-
-    return () => {
-      clearInterval(intervalId); // Clear the interval on component unmount
-    };
-  }, []);
 
   useEffect(() => {
     notificationGroups.forEach((notificationGroup: NotificationGroup) => {
@@ -255,14 +244,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   }
 
   const dismissAllHandler = () => {
-    notificationGroups.forEach((notificationGroup) => {
-      const notificationsToDismiss = notificationGroup.notifications.filter(
-        (notification) =>
-          notification.category === CATEGORY.INFORMATION_FEED &&
-          notification.status === STATUS.TO_BE_TREATED
-      )
-      dispatch(dismissNotifications(notificationsToDismiss))
-    })
+    dispatch(clearInformationFeed())
   }
 
   const getHighlightedText = (text: string | undefined, highlight: string) => {
@@ -290,6 +272,31 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
       </span>
     )
   }
+
+  const getDetailsContent = (notification: Notification) => {
+    let detailsContent = [];
+    
+    if (selectedCategory === CATEGORY.INFORMATION_FEED || selectedStatus === STATUS.TO_BE_TREATED) {
+      notification.details && detailsContent.push(<span key="details">{notification.details}</span>, <br key="br" />);
+    }
+    
+    if (selectedStatus === STATUS.TREATED && selectedCategory === CATEGORY.ACTION_FEED && notification.treatedBy && notification.treatedOn) {
+      const treatedText = notification.isManual 
+        ? "Marked as treated by" 
+        : "Treated by";
+  
+      detailsContent.push(
+        <span key="treatedDetails">
+          {treatedText} <span style={{ textDecoration: "underline" }}>
+            {getHighlightedText(notification.treatedBy, search)}
+          </span> on {getHighlightedText(notification.treatedOn, search)}
+        </span>
+      );
+    }
+    
+    return detailsContent;
+  };
+  
 
   return (
     <TableUI variant='feed' className='NotificationTable'>
@@ -336,7 +343,6 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
             {notificationGroup.notifications.map((notification, index) => (
               <NotificationItem
                 key={index}
-                forceRender={forceRender}
                 category={notification.category}
                 isRead={notification.isRead}
                 isImportant={notification.isImportant}
@@ -348,21 +354,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 subtitle={getHighlightedText(notification.subtitle, search)}
                 description={getHighlightedText(notification.description, search)}
                 onClick={() => openNotificationHandler(notification)}
-                details={
-                  <>
-                    {
-                      notification.details &&
-                      <>
-                        <span>{notification.details}</span>
-                        <br />
-                      </>
-                    }
-                    {selectedStatus === STATUS.TREATED &&
-                      notification.treatedBy &&
-                      notification.treatedOn &&
-                      <span>Marked as treated by  <span style={{ textDecoration: "underline" }}>{getHighlightedText(notification.treatedBy, search)}</span> on {getHighlightedText(notification.treatedOn, search)}</span>
-                    }
-                  </>
+                details={getDetailsContent(notification)
                 }
                 date={getHighlightedText(formatDate(notification.date), search)}
                 onBadgeClick={() => onBadgeClickHandler(notification)}

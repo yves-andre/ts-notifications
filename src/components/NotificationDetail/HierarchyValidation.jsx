@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { IconButton, Input, BEM } from "@trading/energies-ui";
 import styles from "./HierarchyValidation.module.scss";
+import Infotip from "./Infotip";
 const b = BEM(styles);
 
 export const HierarchyValidationButtons = {
@@ -27,15 +28,6 @@ export const HierarchyValidationButtons = {
 */
 /*----------------------------------------------------------------------------*/
 
-const HierarchyValidationContainer = ({ children, validationErrorMessage }) => {
-  return (
-    <div className={styles.ValidationContainer}>
-      {validationErrorMessage && <p>{validationErrorMessage}</p>}
-      {children}
-    </div>
-  );
-};
-
 export const HierarchyValidation = ({
   type,
   commentEnabled,
@@ -46,7 +38,8 @@ export const HierarchyValidation = ({
   onReject,
   isDisabled,
   notificationStatus,
-  notificationDetails,
+  notificaitonTreatedBy,
+  notificaitonTreatedOn,
 }) => {
   const [comment, setComment] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
@@ -105,54 +98,69 @@ export const HierarchyValidation = ({
   };
 
   return (
-    <HierarchyValidationContainer
-      validationErrorMessage={validationErrorMessage}
-    >
-      {notificationStatus == 2 && <span>{notificationDetails}</span>}
-
-      {notificationStatus != 2 && (
-        <div
-          className={b({ isValidationError: !!validationErrorMessage })}
-          data-type={type}
-        >
-          <Input
-            placeholder={commentPlaceholder}
-            round
-            variant="gray"
-            margin={0}
-            type="text"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            style={{ flex: 1, lineHeight: 1 }}
-            disabled={!commentEnabled || isUpdating || isDisabled}
-          />
-          <div className={b("actions")}>
-            {validateButton && (
-              <IconButton
-                color="corporate/green"
-                icon="filled/check-circle"
-                size="xl"
-                disabled={isUpdating || isDisabled}
-                onClick={() => validate()}
-              >
-                Validate
-              </IconButton>
-            )}
-            {rejectButton && (
-              <IconButton
-                color="corporate/red"
-                icon="filled/times-circle"
-                size="xl"
-                disabled={isUpdating || isDisabled}
-                onClick={() => reject()}
-              >
-                Reject
-              </IconButton>
-            )}
-          </div>
+    <div className={b()} data-type={type}>
+      {notificationStatus === 2 && 
+        <div className={b("treated_info")}>
+          Treated by <b>{notificaitonTreatedBy}</b> on <b>{notificaitonTreatedOn}</b>
         </div>
+      }
+      {notificationStatus !== 2 && 
+        <>
+          {validationErrorMessage && (
+        <Infotip
+          icon="filled/info-circle"
+          color="gray"
+          tooltip="Caption"
+          closeButtonText="Ok, Got it"
+          items={[{
+            type: "text",
+            icon: "warning",
+            color: "red",
+            title: "Mandatory Comment",
+            text: validationErrorMessage,
+          }]}
+          open={validationErrorMessage}
+          onClose={() => {setValidationErrorMessage(null)}}
+        />
       )}
-    </HierarchyValidationContainer>
+      <Input
+        placeholder={commentPlaceholder}
+        round
+        variant="gray"
+        margin={0}
+        type="text"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        style={{ flex: 1, lineHeight: 1 }}
+        disabled={!commentEnabled || isUpdating || isDisabled}
+      />
+      <div className={b("actions")}>
+        {validateButton && (
+          <IconButton
+            color="corporate/green"
+            icon="filled/check-circle"
+            size="xl"
+            disabled={isUpdating || isDisabled}
+            onClick={() => validate()}
+          >
+            Validate
+          </IconButton>
+        )}
+        {rejectButton && (
+          <IconButton
+            color="corporate/red"
+            icon="filled/times-circle"
+            size="xl"
+            disabled={isUpdating || isDisabled}
+            onClick={() => reject()}
+          >
+            Reject
+          </IconButton>
+        )}
+      </div>
+        </>
+      }
+    </div>
   );
 };
 

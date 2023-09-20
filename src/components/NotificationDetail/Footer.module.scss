@@ -4,5 +4,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  z-index: 1;
+  &:has([data-infotip-open="true"]){
+    z-index: 4;
+  }
 }
