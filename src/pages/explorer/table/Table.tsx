@@ -344,7 +344,6 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
             {notificationGroup.notifications.map((notification, index) => (
               <NotificationItem
                 key={index}
-                forceRender={forceRender}
                 category={notification.category}
                 isRead={notification.isRead}
                 isImportant={notification.isImportant}
