@@ -13,7 +13,7 @@ import { useAppDispatch } from '../../../hooks/use-app-dispatch'
 import { filtersActions } from '../../../store/filters-slice'
 import {
   dismissNotificationById,
-  dismissNotifications,
+  clearInformationFeed,
   setNotificationIsReadById,
   setNotificationsIsSeenByIds,
 } from '../../../store/notifications-slice'
@@ -242,14 +242,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   }
 
   const dismissAllHandler = () => {
-    notificationGroups.forEach((notificationGroup) => {
-      const notificationsToDismiss = notificationGroup.notifications.filter(
-        (notification) =>
-          notification.category === CATEGORY.INFORMATION_FEED &&
-          notification.status === STATUS.TO_BE_TREATED
-      )
-      dispatch(dismissNotifications(notificationsToDismiss))
-    })
+    dispatch(clearInformationFeed())
   }
 
   const getHighlightedText = (text: string | undefined, highlight: string) => {
