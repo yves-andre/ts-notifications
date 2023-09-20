@@ -233,7 +233,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
       case CATEGORY.ACTION_FEED:
         if (notification.isManual) {
           dismissNotificationHandler(notification)
-        }else{
+        } else {
           openNotificationHandler(notification)
         }
         break
@@ -306,28 +306,38 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
             <TD field='title' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} start style={{ width: 210 }}>
               Source
             </TD>
-            <TD field='subtitle' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler}>Subject</TD>
-            <TD field='details' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} style={{ width: 250, maxWidth: 250 }}>Details</TD>
-            <TD field='date' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler}>
+            <TD field='subtitle' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} style={{ minWidth: 250 }}>Subject</TD>
+            <TD
+              field='details'
+              sortFilter={sortFilter}
+              sortColumnHandler={sortColumnHandler}
+              style={{
+                width: params?.notificationId ? 'auto' : 350,
+                maxWidth: 350
+              }}
+            >
+              Details
+            </TD>
+            <TD field='date' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} style={{ width: 140, maxWidth: 140 }}>
               Date
             </TD>
             {
               selectedCategory === CATEGORY.ACTION_FEED && (
-                <TD field='actions' align='right' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} end>
+                <TD field='actions' align='right' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} end style={{ width: 70, maxWidth: 70 }}>
                   {selectedStatus !== STATUS.TREATED ? 'Actions' : ''}
                 </TD>
               )}
-            {selectedStatus !== STATUS.TREATED &&
+            {
               selectedCategory === CATEGORY.INFORMATION_FEED && (
-                <td align='right' width='100' style={{ paddingRight: 18 }}>
-                  <Button
+                <td align='right' width='100' style={{ width: 100, maxWidth: 100, paddingRight: 18 }}>
+                  {selectedStatus !== STATUS.TREATED && <Button
                     size='small'
                     style={{ borderRadius: '10px', margin: 0 }}
                     onClick={dismissAllHandler}
                     color="#0000001f"
                   >
                     Clear All
-                  </Button>
+                  </Button>}
                 </td>
               )}
           </tr>
@@ -341,45 +351,44 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 </tr>
               )}
 
-            {notificationGroup.notifications.map((notification, index) => (
-              <NotificationItem
-                key={index}
-                forceRender={forceRender}
-                category={notification.category}
-                isRead={notification.isRead}
-                isImportant={notification.isImportant}
-                hasValidationForm={notification.hasValidationForm}
-                isManual={notification.isManual}
-                image={notification.image}
-                sourceName={notification.sourceName}
-                title={getHighlightedText(notification.title, search)}
-                subtitle={getHighlightedText(notification.subtitle, search)}
-                description={getHighlightedText(notification.description, search)}
-                onClick={() => openNotificationHandler(notification)}
-                details={
-                  <>
-                    {
-                      notification.details &&
-                      <>
-                        <span>{notification.details}</span>
-                        <br />
-                      </>
-                    }
-                    {selectedStatus === STATUS.TREATED &&
-                      notification.treatedBy &&
-                      notification.treatedOn &&
-                      <span>Marked as treated by  <span style={{ textDecoration: "underline" }}>{getHighlightedText(notification.treatedBy, search)}</span> on {getHighlightedText(notification.treatedOn, search)}</span>
-                    }
-                  </>
-                }
-                date={getHighlightedText(formatDate(notification.date), search)}
-                onBadgeClick={() => onBadgeClickHandler(notification)}
-                status={selectedStatus}
-                pendingStatus={getNotificationIsPending(notification)}
-                color={getColorApplication(notification.sourceName)}
-                active={params?.notificationId === notification._id}
-              />
-            ))}
+              {notificationGroup.notifications.map((notification, index) => (
+                <NotificationItem
+                  key={index}
+                  category={notification.category}
+                  isRead={notification.isRead}
+                  isImportant={notification.isImportant}
+                  hasValidationForm={notification.hasValidationForm}
+                  isManual={notification.isManual}
+                  image={notification.image}
+                  sourceName={notification.sourceName}
+                  title={getHighlightedText(notification.title, search)}
+                  subtitle={getHighlightedText(notification.subtitle, search)}
+                  description={getHighlightedText(notification.description, search)}
+                  onClick={() => openNotificationHandler(notification)}
+                  details={
+                    <>
+                      {
+                        notification.details &&
+                        <>
+                          <span>{notification.details}</span>
+                          <br />
+                        </>
+                      }
+                      {selectedStatus === STATUS.TREATED &&
+                        notification.treatedBy &&
+                        notification.treatedOn &&
+                        <span>Marked as treated by  <span style={{ textDecoration: "underline" }}>{getHighlightedText(notification.treatedBy, search)}</span> on {getHighlightedText(notification.treatedOn, search)}</span>
+                      }
+                    </>
+                  }
+                  date={getHighlightedText(formatDate(notification.date), search)}
+                  onBadgeClick={() => onBadgeClickHandler(notification)}
+                  status={selectedStatus}
+                  pendingStatus={getNotificationIsPending(notification)}
+                  color={getColorApplication(notification.sourceName)}
+                  active={params?.notificationId === notification._id}
+                />
+              ))}
 
 
               {/*{notificationGroup.notifications.map((notification, index) => (
