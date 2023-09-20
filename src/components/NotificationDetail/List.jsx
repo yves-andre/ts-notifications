@@ -22,8 +22,8 @@ const b = BEM(styles)
       "value": "{{item.total}} {{item.currency}}",
       "items": [
         {
-          "type": "slideshow",
-          "slides": "{{item.uploadedImages}}"
+          "type": "viewer",
+          "files": "{{item.uploadedImages}}"
         },
         {
           "type": "title",

@@ -11,10 +11,10 @@ import {
   List,
   RulesValidationButton,
   Section,
-  Slideshow,
   Text,
   Title,
   ValidationHistory,
+  Viewer,
 } from './'
 
 import { BEM } from '@trading/energies-ui'
@@ -31,6 +31,7 @@ const NotFoundView = ({ type }) => (
 /*----------------------------------------------------------------------------*/
 export const Block = ({ type, ...restProps }) => {
   const View = {
+    viewer: Viewer,
     dataList: DataList,
     date: Date,
     employeeCard: EmployeeCard,
@@ -45,7 +46,6 @@ export const Block = ({ type, ...restProps }) => {
     rulesValidationButton: RulesValidationButton,
     sectionBlock: Section,
     section: Section,
-    slideshow: Slideshow,
     text: Text,
     title: Title,
     validationHistory: ValidationHistory,

@@ -41,7 +41,7 @@ const b = BEM(styles)
 export const DataItem = ({ label, value, status, color, isEmpty, href }) => {
   const theme = setTheme(color) || {}
   return (
-    <li className={b('item', { isEmpty, hasHref: href })} style={theme}>
+    <li className={b('item', { isEmpty, hasHref: href, hasColor: color })} style={theme}>
       <span className={b('label')} style={{ color: colorCSS(status?.color) }}>
         <span className={b('ellipsis')}>{label}</span>
         {status && (
@@ -69,9 +69,9 @@ export const DataItem = ({ label, value, status, color, isEmpty, href }) => {
   )
 }
 /*----------------------------------------------------------------------------*/
-export const DataList = ({ type, display, data }) => {
+export const DataList = ({ type, display = 'inline', data }) => {
   return (
-    <ul className={b({}, ['inline'])} data-type={type}>
+    <ul className={b({}, [display])} data-type={type}>
       {data?.map((item, i) => (
         <DataItem key={i} {...item} />
       ))}

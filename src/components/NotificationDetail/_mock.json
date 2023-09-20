@@ -231,8 +231,8 @@
                 "value": "4.55 CHF",
                 "items": [
                   {
-                    "type": "slideshow",
-                    "slides": [
+                    "type": "viewer",
+                    "files": [
                       {
                         "title": "Image 1",
                         "url": "https://picsum.photos/id/1011/400/250"
@@ -272,6 +272,21 @@
                           {
                             "label": "Lorem ipsum dolor",
                             "value": "Ut sed faucibus eros"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "sectionBlock",
+                    "title": "Attachment (1)",
+                    "items": [
+                      {
+                        "type": "attachment",
+                        "files": [
+                          {
+                            "title": "File1",
+                            "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-16348197029/TS%20Forward_Dataviz_Juillet2021.pdf"
                           }
                         ]
                       }

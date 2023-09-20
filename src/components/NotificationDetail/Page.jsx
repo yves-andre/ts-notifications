@@ -69,7 +69,7 @@ export const Page = ({ className, children, type, onClose }) => {
       >
         Close
       </IconButton>
-      <div className={b('content')}>{children}</div>
+      <div className={b('content')} data-page>{children}</div>
     </div>
   )
 }

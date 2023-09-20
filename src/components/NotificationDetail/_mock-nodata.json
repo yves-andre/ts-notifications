@@ -16,9 +16,7 @@
       }
     }
   },
-  "data": {
-
-  },
+  "data": {},
   "template": {
     "color": "corporate/lightBlue",
     "gradient": "corporate/lightBlue",
@@ -49,7 +47,7 @@
       {
         "type": "sectionBlock",
         "title": "Expense",
-        "subtitle": "#EXPTS1234567",
+        "subtitle": "#RF-TOTSA-22—02345",
         "actions": [],
         "items": [
           {
@@ -105,8 +103,8 @@
                 "value": "4.55 CHF",
                 "items": [
                   {
-                    "type": "slideshow",
-                    "slides": [
+                    "type": "viewer",
+                    "files": [
                       {
                         "title": "Image 1",
                         "url": "https://picsum.photos/id/1011/400/250"
@@ -146,6 +144,42 @@
                           {
                             "label": "Lorem ipsum dolor",
                             "value": "Ut sed faucibus eros"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "sectionBlock",
+                    "title": "Attachment (1)",
+                    "items": [
+                      {
+                        "type": "viewer",
+                        "files": [
+                          {
+                            "title": "File1",
+                            "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-16348197029/TS%20Forward_Dataviz_Juillet2021.pdf",
+                            "ext": "pdf"
+                          },
+                          {
+                            "title": "File2",
+                            "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_10/dashboard_folder_2/ms-viewer-16901873974/TEMF%20DWP%20Admin%20Matters_Updated_26July2023.pdf",
+                            "ext": "pdf"
+                          },
+                          {
+                            "title": "Image 1",
+                            "url": "https://picsum.photos/id/1011/400/250",
+                            "ext": "jpg"
+                          },
+                          {
+                            "title": "Image 2",
+                            "url": "https://picsum.photos/id/1010/400/250",
+                            "ext": "jpg"
+                          },
+                          {
+                            "title": "Image 3",
+                            "url": "https://picsum.photos/id/1004/400/250",
+                            "ext": "jpg"
                           }
                         ]
                       }
