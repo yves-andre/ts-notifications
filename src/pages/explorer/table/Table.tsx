@@ -233,7 +233,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
       case CATEGORY.ACTION_FEED:
         if (notification.isManual) {
           dismissNotificationHandler(notification)
-        }else{
+        } else {
           openNotificationHandler(notification)
         }
         break
@@ -341,45 +341,44 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                 </tr>
               )}
 
-            {notificationGroup.notifications.map((notification, index) => (
-              <NotificationItem
-                key={index}
-                forceRender={forceRender}
-                category={notification.category}
-                isRead={notification.isRead}
-                isImportant={notification.isImportant}
-                hasValidationForm={notification.hasValidationForm}
-                isManual={notification.isManual}
-                image={notification.image}
-                sourceName={notification.sourceName}
-                title={getHighlightedText(notification.title, search)}
-                subtitle={getHighlightedText(notification.subtitle, search)}
-                description={getHighlightedText(notification.description, search)}
-                onClick={() => openNotificationHandler(notification)}
-                details={
-                  <>
-                    {
-                      notification.details &&
-                      <>
-                        <span>{notification.details}</span>
-                        <br />
-                      </>
-                    }
-                    {selectedStatus === STATUS.TREATED &&
-                      notification.treatedBy &&
-                      notification.treatedOn &&
-                      <span>Marked as treated by  <span style={{ textDecoration: "underline" }}>{getHighlightedText(notification.treatedBy, search)}</span> on {getHighlightedText(notification.treatedOn, search)}</span>
-                    }
-                  </>
-                }
-                date={getHighlightedText(formatDate(notification.date), search)}
-                onBadgeClick={() => onBadgeClickHandler(notification)}
-                status={selectedStatus}
-                pendingStatus={getNotificationIsPending(notification)}
-                color={getColorApplication(notification.sourceName)}
-                active={params?.notificationId === notification._id}
-              />
-            ))}
+              {notificationGroup.notifications.map((notification, index) => (
+                <NotificationItem
+                  key={index}
+                  category={notification.category}
+                  isRead={notification.isRead}
+                  isImportant={notification.isImportant}
+                  hasValidationForm={notification.hasValidationForm}
+                  isManual={notification.isManual}
+                  image={notification.image}
+                  sourceName={notification.sourceName}
+                  title={getHighlightedText(notification.title, search)}
+                  subtitle={getHighlightedText(notification.subtitle, search)}
+                  description={getHighlightedText(notification.description, search)}
+                  onClick={() => openNotificationHandler(notification)}
+                  details={
+                    <>
+                      {
+                        notification.details &&
+                        <>
+                          <span>{notification.details}</span>
+                          <br />
+                        </>
+                      }
+                      {selectedStatus === STATUS.TREATED &&
+                        notification.treatedBy &&
+                        notification.treatedOn &&
+                        <span>Marked as treated by  <span style={{ textDecoration: "underline" }}>{getHighlightedText(notification.treatedBy, search)}</span> on {getHighlightedText(notification.treatedOn, search)}</span>
+                      }
+                    </>
+                  }
+                  date={getHighlightedText(formatDate(notification.date), search)}
+                  onBadgeClick={() => onBadgeClickHandler(notification)}
+                  status={selectedStatus}
+                  pendingStatus={getNotificationIsPending(notification)}
+                  color={getColorApplication(notification.sourceName)}
+                  active={params?.notificationId === notification._id}
+                />
+              ))}
 
 
               {/*{notificationGroup.notifications.map((notification, index) => (
