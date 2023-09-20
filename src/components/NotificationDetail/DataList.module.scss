@@ -3,16 +3,20 @@
   list-style-position: outside;
   padding: 0;
   margin: 0;
+
   &:has(li) {
     padding: 2px 0;
   }
+
   &-item {
     padding: 8px 10px;
     margin: 0;
     position: relative;
+
     &:not(:last-child) {
       border-bottom: 1px solid var(--ts-global-border);
     }
+
     &.isEmpty {
       .DataList-value {
         color: var(--ts-color-neutral-gray);
@@ -20,6 +24,7 @@
       }
     }
   }
+
   &-label {
     font-size: 15px;
     color: var(--ts-color-neutral-gray);
@@ -28,25 +33,30 @@
     margin-bottom: 2px;
     overflow: hidden;
   }
+
   &-ellipsis {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
   }
+
   &-status {
     height: 0;
     min-height: 0;
     min-width: 20px;
   }
+
   &-value {
     font-size: 15px;
     color: var(--ts-color-neutral-night);
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    //white-space: nowrap;
     display: block;
+
     &[href] {
       transition: color 110ms ease-out;
+
       &::before {
         content: '';
         position: absolute;
@@ -56,8 +66,10 @@
         transition: opacity 110ms ease-out;
         z-index: 1;
       }
+
       &:hover {
         color: var(--theme);
+
         &::before {
           opacity: 0.05;
         }
@@ -65,14 +77,31 @@
     }
   }
 }
+
 /*----------------------------------------------------------------------------*/
 .DataList--inline {
   .DataList-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 10px;
     min-height: 40px;
     box-sizing: border-box;
+  }
+
+  .DataList-label {
+    white-space: normal;
+    max-width: calc(50% - 10px);
+    margin-bottom: 0;
+  }
+
+  .DataList-value {
+    white-space: normal;
+    max-width: 50%;
+    text-align: right;
+  }
+
+  .DataList-ellipsis {
+    white-space: normal;
   }
 }

@@ -9,6 +9,7 @@ import { Toggle } from '@trading/energies-ui'
 
 import "./Tabs.scss";
 import { CATEGORY } from "../../../data/constants/category";
+import { useNavigateToExplorer } from "../../../hooks/use-navigate-to-explorer";
 
 export const Tabs: React.FC = () => {
   const selectedStatus = useAppSelector(
@@ -18,9 +19,11 @@ export const Tabs: React.FC = () => {
     (state) => state.filters.selectedCategory
   );
   const dispatch = useAppDispatch();
+  const { navigateToExplorer } = useNavigateToExplorer();
 
   const tabClickHandler = (status: number) => {
     dispatch(filtersActions.setSelectedStatus(status));
+    navigateToExplorer();
   };
 
   return (

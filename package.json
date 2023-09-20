@@ -8,7 +8,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@trading/energies-ui": "bitbucket:empica/ts-ui-build#c00f022",
+    "@trading/energies-ui": "bitbucket:empica/ts-ui-build#b331910",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.62",
     "@types/react": "^18.0.21",
@@ -61,6 +61,8 @@
     "node": "16.16.0"
   },
   "devDependencies": {
+    "@codemirror/lang-json": "^6.0.1",
+    "@uiw/react-codemirror": "^4.21.9",
     "dayjs": "^1.11.9",
     "dotenv-cli": "^7.1.0"
   }

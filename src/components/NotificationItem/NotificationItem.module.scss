@@ -4,7 +4,8 @@
   td,
   th {
     table & {
-      padding: 17px 10px;
+      padding: 14px 10px;
+      font-size: 11px;
     }
   }
 
@@ -39,13 +40,13 @@
   }
 
   &.isError {
-    .NotificationItem-title {
+    .NotificationItem-subtitle {
       color: var(--ts-color-red);
     }
   }
 
   &.isUnread {
-    .NotificationItem-title {
+    .NotificationItem-subtitle {
       font-weight: 600;
     }
 
