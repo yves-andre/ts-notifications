@@ -30,6 +30,7 @@ export default interface Notification {
   updateValidationUrl?: string;
   isPending?: boolean;
   pendingFrom?: string;
+  updatedAt?: string;
 }
 
 interface Owner {
