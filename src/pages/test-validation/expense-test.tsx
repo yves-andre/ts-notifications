@@ -39,7 +39,6 @@ const mock = {
         "type": "sectionBlock",
         "title": "Expense",
         "subtitle": "#EXPTS1234567",
-        "actions": [],
         "items": [
           {
             "type": "fromToDate",
@@ -597,7 +596,7 @@ const mock = {
                 "value": "Business Excellence"
               },
               {
-                "label": "Mission Order Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vehicula ipsum ac finibus molestie. Nunc fermentum dictum aliquet. Phasellus scelerisque enim leo, sed tincidunt sem consequat vitae.",
+                "label": "Mission Order",
                 "value": "MO1234554432 - Marseille LNG Carrier Training",
                 "href": "https://applications.dts.corp.local/missionorder/123456789"
               },

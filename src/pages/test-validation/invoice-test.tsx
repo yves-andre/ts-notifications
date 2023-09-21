@@ -6,23 +6,8 @@ import { json } from "@codemirror/lang-json";
 
 const mock = {
   "version": "1.0",
-  "type": "RequisitionFormValidationTemplate",
-  "validationRules": {
-    "item1": {
-      "isMandatory": true,
-      "errorMessage": "You must check the comment of 'Dinner' before approve this item.",
-      "value": false,
-      "valid": {
-        "color": "green",
-        "icon": "check"
-      },
-      "invalid": {
-        "color": "orange",
-        "icon": "warning"
-      }
-    }
-  },
-  "data": {},
+  "type": "InvoiceValidationTemplate",
+  "validationRules": {},
   "template": {
     "color": "corporate/aqua",
     "gradient": "secondary/green2",
@@ -54,11 +39,10 @@ const mock = {
         "type": "sectionBlock",
         "title": "Invoice",
         "subtitle": "#ARF-TOTSA-22-02663 - OI-TOTSA-22-4856",
-        "actions": [],
         "items": [
           {
             "type": "date",
-            "label": "RF Date",
+            "label": "Invoice Date",
             "value": "14 Oct. 2022"
           }
         ]
@@ -111,6 +95,10 @@ const mock = {
               {
                 "label": "Analytic Code:",
                 "value": "C03"
+              },
+              {
+                "label": "Reinvoicing:",
+                "value": "Non standard"
               },
               {
                 "label": "Specify",

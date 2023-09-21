@@ -7,22 +7,7 @@ import { json } from "@codemirror/lang-json";
 const mock = {
   "version": "1.0",
   "type": "RequisitionFormValidationTemplate",
-  "validationRules": {
-    "item1": {
-      "isMandatory": true,
-      "errorMessage": "You must check the comment of 'Dinner' before approve this item.",
-      "value": false,
-      "valid": {
-        "color": "green",
-        "icon": "check"
-      },
-      "invalid": {
-        "color": "orange",
-        "icon": "warning"
-      }
-    }
-  },
-  "data": {},
+  "validationRules": {},
   "template": {
     "color": "corporate/aqua",
     "gradient": "secondary/green2",
@@ -54,7 +39,6 @@ const mock = {
         "type": "sectionBlock",
         "title": "Requisition Form",
         "subtitle": "#RF-TOTSA-22-02345",
-        "actions": [],
         "items": [
           {
             "type": "date",
