@@ -4,6 +4,11 @@ import { Layout, Header, LocalNav, Flex, Col, IconButton } from '@trading/energi
 import CodeMirror from "@uiw/react-codemirror";
 import { json } from "@codemirror/lang-json";
 
+import NotificationDetail from '../../components/NotificationDetail'
+
+import './../../components/page/Page.scss'
+import { APP_CONFIG } from '../../data/app-config'
+
 const mock = {
   "version": "1.0",
   "type": "itemValidationTemplate",
@@ -711,11 +716,6 @@ const mock = {
     ]
   }
 }
-
-import NotificationDetail from '../../components/NotificationDetail'
-
-import './../../components/page/Page.scss'
-import { APP_CONFIG } from '../../data/app-config'
 
 const userProfile = {}
 let textareaTimeout: any = null
