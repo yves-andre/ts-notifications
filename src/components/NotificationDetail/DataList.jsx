@@ -71,7 +71,7 @@ export const DataItem = ({ label, value, status, color, isEmpty, href }) => {
 /*----------------------------------------------------------------------------*/
 export const DataList = ({ type, display, data }) => {
   return (
-    <ul className={b({}, [display])} data-type={type}>
+    <ul className={b({}, ['inline'])} data-type={type}>
       {data?.map((item, i) => (
         <DataItem key={i} {...item} />
       ))}
