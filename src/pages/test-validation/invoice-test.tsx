@@ -30,14 +30,14 @@ const mock = {
             "icon": "filled/arrow-export",
             "color": "blue",
             "type": "web_url",
-            "url": "{{expense.expenseURL}}"
+            "url": "www.example.com"
           },
           {
             "name": "Edit",
             "icon": "filled/pen",
             "color": "orange",
             "type": "web_url",
-            "url": "{{expense.expenseURL}}"
+            "url": "www.example.com"
           }
         ]
       },
@@ -351,7 +351,7 @@ export const InvoiceTest: React.FC = () => {
                     {
                         (<Col
                             style={{
-                                maxWidth: 410,
+                                maxWidth: 620,
                                 background: '#282c34',
                                 marginRight: -25,
                                 display: 'flex',

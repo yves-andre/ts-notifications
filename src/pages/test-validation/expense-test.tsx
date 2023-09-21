@@ -29,14 +29,14 @@ const mock = {
             "icon": "filled/arrow-export",
             "color": "blue",
             "type": "web_url",
-            "url": "{{expense.expenseURL}}"
+            "url": "www.example.com"
           },
           {
             "name": "Edit",
             "icon": "filled/pen",
             "color": "orange",
             "type": "web_url",
-            "url": "{{expense.expenseURL}}"
+            "url": "www.example.com"
           }
         ]
       },
@@ -88,7 +88,7 @@ const mock = {
                   },
                   {
                     "type": "title",
-                    "title": "{{item.Title}}"
+                    "title": "Item Title"
                   },
                   {
                     "type": "sectionBlock",
@@ -96,7 +96,7 @@ const mock = {
                       {
                         "type": "date",
                         "label": "Date",
-                        "value": "{{item.date}}"
+                        "value": "21 Oct. 2022"
                       }
                     ]
                   },
@@ -149,7 +149,6 @@ const mock = {
                   },
                   {
                     "type": "footerBlock",
-                    "displayedIf": "{{validation[item.key]}}",
                     "items": [
                       {
                         "type": "rulesValidationButton",
@@ -192,7 +191,7 @@ const mock = {
                   },
                   {
                     "type": "title",
-                    "title": "{{item.Title}}"
+                    "title": "Item title"
                   },
                   {
                     "type": "sectionBlock",
@@ -200,7 +199,7 @@ const mock = {
                       {
                         "type": "date",
                         "label": "Date",
-                        "value": "{{item.date}}"
+                        "value": "21 Oct. 2022"
                       }
                     ]
                   },
@@ -253,7 +252,6 @@ const mock = {
                   },
                   {
                     "type": "footerBlock",
-                    "displayedIf": "{{validation[item.key]}}",
                     "items": [
                       {
                         "type": "rulesValidationButton",
@@ -296,7 +294,7 @@ const mock = {
                   },
                   {
                     "type": "title",
-                    "title": "{{item.Title}}"
+                    "title": "Item title"
                   },
                   {
                     "type": "sectionBlock",
@@ -304,7 +302,7 @@ const mock = {
                       {
                         "type": "date",
                         "label": "Date",
-                        "value": "{{item.date}}"
+                        "value": "21 Oct. 2022"
                       }
                     ]
                   },
@@ -356,8 +354,6 @@ const mock = {
                     ]
                   },
                   {
-                    "type": "footerBlock",
-                    "displayedIf": "{{validation[item.key]}}",
                     "items": [
                       {
                         "type": "rulesValidationButton",
@@ -400,7 +396,7 @@ const mock = {
                   },
                   {
                     "type": "title",
-                    "title": "{{item.Title}}"
+                    "title": "Item Title"
                   },
                   {
                     "type": "sectionBlock",
@@ -408,7 +404,7 @@ const mock = {
                       {
                         "type": "date",
                         "label": "Date",
-                        "value": "{{item.date}}"
+                        "value": "21 Oct. 2022"
                       }
                     ]
                   },
@@ -461,7 +457,6 @@ const mock = {
                   },
                   {
                     "type": "footerBlock",
-                    "displayedIf": "{{validation[item.key]}}",
                     "items": [
                       {
                         "type": "rulesValidationButton",
@@ -504,7 +499,7 @@ const mock = {
                   },
                   {
                     "type": "title",
-                    "title": "{{item.Title}}"
+                    "title": "Item title"
                   },
                   {
                     "type": "sectionBlock",
@@ -512,7 +507,7 @@ const mock = {
                       {
                         "type": "date",
                         "label": "Date",
-                        "value": "{{item.date}}"
+                        "value": "21 Oct. 2022"
                       }
                     ]
                   },
@@ -565,7 +560,6 @@ const mock = {
                   },
                   {
                     "type": "footerBlock",
-                    "displayedIf": "{{validation[item.key]}}",
                     "items": [
                       {
                         "type": "rulesValidationButton",
@@ -842,7 +836,7 @@ export const ExpenseTest: React.FC = () => {
                     {
                         (<Col
                             style={{
-                                maxWidth: 410,
+                                maxWidth: 620,
                                 background: '#282c34',
                                 marginRight: -25,
                                 display: 'flex',
