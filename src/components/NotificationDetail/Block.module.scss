@@ -1,0 +1,50 @@
+.Block {
+  font-size: 13px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ts-color-red);
+  background-color: var(--ts-color-white);
+  position: relative;
+  padding: 5px 10px;
+  font-weight: 300;
+  box-sizing: border-box;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--ts-color-red);
+    opacity: 0.05;
+    z-index: 0;
+  }
+  &-type {
+    margin-left: 1ch;
+    font-weight: 600;
+  }
+}
+
+/*----------------------------------------------------------------------------*/
+.Block--headerBlock {
+  min-height: 240px;
+}
+/*----------------------------------------------------------------------------*/
+.Block--footerBlock {
+  min-height: 82px;
+}
+/*----------------------------------------------------------------------------*/
+.Block--title,
+.Block--text {
+  min-height: 0;
+}
+/*----------------------------------------------------------------------------*/
+.Block--rulesValidationButton,
+.Block--hierarchyValidation,
+.Block--date {
+  flex: 1;
+}
+/*----------------------------------------------------------------------------*/
+.Block--sectionBlock {
+  margin-bottom: 15px;
+}
+/*----------------------------------------------------------------------------*/

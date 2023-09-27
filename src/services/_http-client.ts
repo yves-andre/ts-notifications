@@ -57,22 +57,53 @@ export const httpGetAuth = async (
     GETConfig.headers.Authorization = `Bearer ${access_token}`;
   }
 
-  // Try the GET request
-  let response = await fetch(route, GETConfig);
+  try {
+    // Try the GET request
+    let response = await fetch(route, GETConfig);
 
-  // If the response is a 401, try to get a new token and retry the request
-  while (response.status === 401 && authRequired) {
-    // Get a new token
-    const newToken = await getNewToken();
+    let currentRetry = 1;
+    let totalDelay = 0; // Keep track of the total delay so far in milliseconds
+    const MAX_DELAY_MS = 30000; // 5 minutes
+    const BASE_DELAY_MS = 200;
+    const MAX_WAIT_TIME_MS = 5 * 60 * 1000; // 5 minutes 
+    
+    // If the response is a 401, try to get a new token and retry the request
+    while (response.status === 401 && authRequired && totalDelay < MAX_WAIT_TIME_MS) {
+      // Get a new token
+      const newToken = await getNewToken();
+    
+      // Update the Authorization header and retry the request
+      GETConfig.headers.Authorization = `Bearer ${newToken}`;
+      window.localStorage.setItem("token", newToken);
+    
+      // The formula is 200 x 2^(i-1) ms and we add as a maximum delay of 30 seconds
+      // so with a base of 200ms and for the 6 first retry we have 200, 400, 800, 1600, 3200, 6400, until 30000
+      let delayForThisRetry = Math.min(MAX_DELAY_MS, BASE_DELAY_MS * Math.pow(2, currentRetry - 1));
+      await new Promise(resolve => setTimeout(resolve, delayForThisRetry));
+      console.log("WAITED " + delayForThisRetry);
+      response = await fetch(route, GETConfig); // Re-fetch after the delay
+    
+      totalDelay += delayForThisRetry; // Update the total delay so far
+      currentRetry++;
+    
+      // Check if total delay has exceeded maximum waiting time
+      if (totalDelay >= MAX_WAIT_TIME_MS) {
+        throw new Error('Could not authenticate the user within the maximum waiting time');
+      }
+    }
 
-    // Update the Authorization header and retry the request
-    GETConfig.headers.Authorization = `Bearer ${newToken}`;
-    window.localStorage.setItem("token", newToken);
-    response = await fetch(route, GETConfig);
+    if (!response.ok) {
+      console.error(`Could not fetch data for url ${route}, error ${response.status}`);
+      return response.status;
+    }
+
+    return await response.json();
+    
+  } catch(error:any) {
+    console.error(`An error occurred: ${error.message}, status code: ${error.status}`);
+    // also handle failed requests where there is no status code
+    return error.message == "Failed to fetch" ? 1 : error.status;
   }
-
-  if (!response.ok) throw new Error(`could not fetch data for url ${route}`);
-  return await response.json();
 };
 
 export const httpPutAuth = async (

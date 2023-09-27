@@ -1,0 +1,44 @@
+.ValidationHistory {
+  box-sizing: border-box;
+  &-item {
+    background-color: var(--ts-color-neutral-ultraLightGray);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+  }
+  &-title {
+    color: var(--ts-color-neutral-gray);
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+  &-status {
+    margin-left: auto;
+    font-size: 11px;
+  }
+  &-user {
+    color: var(--ts-color-neutral-night);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.1;
+    display: block;
+  }
+  &-comment {
+    border-top: 1px solid var(--ts-global-border);
+    margin: 15px -15px -15px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ts-color-corporate-lightPearl);
+    display: flex;
+    align-items: center;
+    padding: 10px 5px;
+    line-height: 1.1;
+  }
+  &-commentIcon {
+    flex-shrink: 0;
+    align-self: start;
+    height: 20px;
+    min-height: 0;
+  }
+}

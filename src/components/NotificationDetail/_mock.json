@@ -1,0 +1,499 @@
+{
+  "version": "1.0",
+  "type": "itemValidationTemplate",
+  "validationRules": {
+    "item1": {
+      "isMandatory": true,
+      "errorMessage": "You must check the comment of 'Dinner' before approve this item.",
+      "value": false,
+      "valid": {
+        "color": "green",
+        "icon": "check"
+      },
+      "invalid": {
+        "color": "orange",
+        "icon": "warning"
+      }
+    }
+  },
+  "data": {
+    "item": {
+      "id": 3221,
+      "itemId": "#EXPTS1234567",
+      "itemURL": "https://applications.dts.corp.local/....",
+      "title": "Alexandra DE LA VILLARDIERE",
+      "subtitle": "2022.10.10 - Marseille - LNG Carrier Training",
+      "user": {
+        "image": "https://picsum.photos/id/1005/40/40"
+      },
+      "startDate": "2022-10-10T08:00:00.000Z",
+      "endDate": "2022-10-11T18:00:00.000Z",
+      "total": "590.00 CHF",
+      "items": [
+        {
+          "key": "item1",
+          "title": "Public Transport",
+          "image": "path/to/image.png",
+          "subtitle": "Transportation | 10 oct 2022",
+          "amount": "4.55",
+          "currency": "CHF",
+          "date": "2022-10-10T08:00:00.000Z",
+          "status": {
+            "color": "purple",
+            "icon": "warning"
+          },
+          "detailsData": [
+            {
+              "label": "Category",
+              "value": "Hotel"
+            },
+            {
+              "label": "E-Register Declaration",
+              "value": "NA",
+              "isEmpty": true
+            },
+            {
+              "label": "Receipt Date",
+              "value": "14 Oct. 2022"
+            },
+            {
+              "label": "Comment",
+              "value": "Registration Fee",
+              "status": "{{validation.item1}}"
+            }
+          ],
+          "priceDetailsDataList": [
+            {
+              "label": "Amount",
+              "value": "30",
+              "color": "blue"
+            },
+            {
+              "label": "Currency",
+              "value": "CHF"
+            },
+            {
+              "label": "Exchange Rate",
+              "value": "1.0000",
+              "color": "blue"
+            },
+            {
+              "label": "Price per participant (CHF)",
+              "value": "15.00",
+              "color": "blue"
+            }
+          ],
+          "uploadedImages": [
+            {
+              "title": "",
+              "url": "path/to/image.png"
+            },
+            {
+              "title": "",
+              "url": "path/to/image2.png"
+            }
+          ]
+        }
+      ],
+      "employee": {
+        "fullName": "Alexandra DE LA VILLARDIERE",
+        "image": "path/to/image.png",
+        "jobTitle": "General Manager Trading Ops and Logistics",
+        "branch": "TS",
+        "department": "Trading",
+        "site": "Geneva",
+        "service": "Trading Ops and Logistics",
+        "hierarchy": [
+          {
+            "level": "N+1",
+            "name": "Billie Jean"
+          },
+          {
+            "level": "N+2",
+            "name": "Jeanne DELANOE, John DOE, Elodie YGREK"
+          }
+        ]
+      },
+      "validationHistory": {
+        "history": [
+          {
+            "title": "30 Oct 2022 | Hierarchy Validation",
+            "user": "Bille Jean, Jeanne DELANOE, John DOE, Elodie YGREK",
+            "status": {
+              "color": "orange",
+              "label": "Pending"
+            }
+          },
+          {
+            "title": "30 Oct 2022 | Employee Validation",
+            "user": "Alexandra DE LA VILLARDIERE",
+            "status": {
+              "color": "green",
+              "label": "Validated"
+            }
+          },
+          {
+            "title": "29 Oct 2022 | Secretary Validation",
+            "user": "Elena CORDOVA",
+            "status": {
+              "color": "green",
+              "label": "Validated"
+            },
+            "comment": "Ajouter le reçu du Taxi Uber svp"
+          }
+        ]
+      }
+    }
+  },
+  "template": {
+    "color": "corporate/lightBlue",
+    "gradient": "corporate/lightBlue",
+    "items": [
+      {
+        "type": "headerBlock",
+        "title": "Alexandra DE LA VILLARDIERE",
+        "subtitle": "2022.10.10 - Marseille - LNG Carrier Training",
+        "image": "https://picsum.photos/id/1005/40/40",
+        "total": "590.00 CHF",
+        "buttons": [
+          {
+            "name": "Open",
+            "icon": "filled/arrow-export",
+            "color": "blue",
+            "type": "web_url",
+            "url": "{{expense.expenseURL}}"
+          },
+          {
+            "name": "Edit",
+            "icon": "filled/pen",
+            "color": "orange",
+            "type": "web_url",
+            "url": "{{expense.expenseURL}}"
+          }
+        ]
+      },
+      {
+        "type": "sectionBlock",
+        "title": "Expense",
+        "subtitle": "#EXPTS1234567",
+        "actions": [],
+        "items": [
+          {
+            "type": "fromToDate",
+            "labelFrom": "From",
+            "labelTo": "To",
+            "dateFormat": "DD MMM. YYYY",
+            "fromDate": "10 Oct. 2022",
+            "toDate": "11 Oct. 2022"
+          }
+        ]
+      },
+      {
+        "type": "sectionBlock",
+        "title": "Details",
+        "subtitle": "",
+        "infotip": {
+          "icon": "filled/info-circle",
+          "color": "gray",
+          "tooltip": "Caption",
+          "closeButtonText": "Ok, Got it",
+          "items": [
+            {
+              "type": "text",
+              "icon": "warning",
+              "color": "orange",
+              "title": "Mandatory Check",
+              "subtitle": "",
+              "text": "You have to check this line if you want to validate this item."
+            },
+            {
+              "type": "text",
+              "icon": "warning",
+              "color": "purple",
+              "title": "With beneficiary company",
+              "subtitle": "",
+              "text": "There is a beneficiary company in this expense line."
+            }
+          ]
+        },
+        "items": [
+          {
+            "type": "listBlock",
+            "listItems": [
+              {
+                "title": "Public Transport",
+                "status": {
+                  "color": "purple",
+                  "icon": "warning"
+                },
+                "subtitle": "Transportation | 10 Oct 2022",
+                "image": "https://picsum.photos/id/1008/500/700",
+                "value": "4.55 CHF",
+                "items": [
+                  {
+                    "type": "slideshow",
+                    "slides": [
+                      {
+                        "title": "Image 1",
+                        "url": "https://picsum.photos/id/1011/400/250"
+                      },
+                      {
+                        "title": "Image 2",
+                        "url": "https://picsum.photos/id/1010/700/250"
+                      },
+                      {
+                        "title": "Image 3",
+                        "url": "https://picsum.photos/id/1012/500/450"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "title",
+                    "title": "{{item.Title}}"
+                  },
+                  {
+                    "type": "sectionBlock",
+                    "items": [
+                      {
+                        "type": "date",
+                        "label": "Date",
+                        "value": "{{item.date}}"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "sectionBlock",
+                    "title": "Details",
+                    "items": [
+                      {
+                        "type": "dataList",
+                        "display": "block",
+                        "data": [
+                          {
+                            "label": "Lorem ipsum dolor",
+                            "value": "Ut sed faucibus eros"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "sectionBlock",
+                    "title": "Price Details",
+                    "items": [
+                      {
+                        "type": "dataList",
+                        "display": "inline",
+                        "data": [
+                          {
+                            "label": "Amount",
+                            "value": "30",
+                            "color": "blue"
+                          },
+                          {
+                            "label": "Currency",
+                            "value": "CHF"
+                          },
+                          {
+                            "label": "Exchange Rate",
+                            "value": "1.0000",
+                            "color": "blue"
+                          },
+                          {
+                            "label": "Price per participant (CHF)",
+                            "value": "15.00",
+                            "color": "blue"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "footerBlock",
+                    "displayedIf": "{{validation[item.key]}}",
+                    "items": [
+                      {
+                        "type": "rulesValidationButton",
+                        "label": "Comment Check",
+                        "color": "orange",
+                        "icon": "outline/stop",
+                        "validationValue": false,
+                        "validatedConfig": {
+                          "label": "Comment checked",
+                          "icon": "filled/check-square",
+                          "color": "green"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Dinner",
+                "status": {
+                  "color": "orange",
+                  "icon": "warning"
+                },
+                "subtitle": "Subsistance | 10 Oct 2022",
+                "image": "https://picsum.photos/id/1009/40/40",
+                "value": "52.00 CHF",
+                "items": []
+              },
+              {
+                "title": "Taxi",
+                "subtitle": "Transportation | 10 Oct 2022",
+                "image": "https://picsum.photos/id/1010/40/40",
+                "value": "31.00 CHF",
+                "items": []
+              },
+              {
+                "title": "Hotel Golden Tulio Villa",
+                "subtitle": "Hotel | 10 Oct 2022",
+                "image": "https://picsum.photos/id/1011/40/40",
+                "value": "210.00 CHF",
+                "items": []
+              },
+              {
+                "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vehicula ipsum ac finibus molestie. Nunc fermentum dictum aliquet. Phasellus scelerisque enim leo, sed tincidunt sem consequat vitae.",
+                "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vehicula ipsum ac finibus molestie. Nunc fermentum dictum aliquet. Phasellus scelerisque enim leo, sed tincidunt sem consequat vitae.",
+                "image": "https://picsum.photos/id/1012/60/40",
+                "value": "6.55 CHF",
+                "items": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "sectionBlock",
+        "title": "Information",
+        "subtitle": "",
+        "items": [
+          {
+            "type": "dataList",
+            "display": "block",
+            "data": [
+              {
+                "label": "Projet",
+                "value": "Business Excellence",
+                "status": {
+                  "color": "orange",
+                  "icon": "warning"
+                }
+              },
+              {
+                "label": "Mission Order Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vehicula ipsum ac finibus molestie. Nunc fermentum dictum aliquet. Phasellus scelerisque enim leo, sed tincidunt sem consequat vitae.",
+                "value": "MO1234554432 - Marseille LNG Carrier Training Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vehicula ipsum ac finibus molestie. Nunc fermentum dictum aliquet. Phasellus scelerisque enim leo, sed tincidunt sem consequat vitae.",
+                "href": "https://applications.dts.corp.local/missionorder/123456789"
+              },
+              {
+                "label": "Training",
+                "value": "NA",
+                "isEmpty": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "sectionBlock",
+        "title": "More",
+        "subtitle": "",
+        "items": [
+          {
+            "type": "listBlock",
+            "display": "menu",
+            "listItems": [
+              {
+                "title": "Employee Details",
+                "subtitle": "Alexandra DE LA VILLARDIERE",
+                "icon": "user",
+                "items": [
+                  {
+                    "type": "employeeCard",
+                    "data": {
+                      "employee": {
+                        "fullName": "Alexandra DE LA VILLARDIERE",
+                        "image": "https://picsum.photos/id/1005/40/40",
+                        "jobTitle": "General Manager Trading Ops and Logistics",
+                        "branch": "TS",
+                        "department": "Trading",
+                        "site": "Geneva",
+                        "service": "Trading Ops and Logistics",
+                        "hierarchy": [
+                          {
+                            "level": "N+1",
+                            "name": "Billie Jean"
+                          },
+                          {
+                            "level": "N+2",
+                            "name": "Jeanne DELANOE, John DOE, Elodie YGREK"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "title": "Validation History",
+                "subtitle": "3 Activities",
+                "icon": "history",
+                "items": [
+                  {
+                    "type": "validationHistory",
+                    "data": {
+                      "history": [
+                        {
+                          "title": "30 Oct 2022 | Hierarchy Validation",
+                          "user": "Bille Jean, Jeanne DELANOE, John DOE, Elodie YGREK",
+                          "status": {
+                            "color": "orange",
+                            "label": "Pending"
+                          }
+                        },
+                        {
+                          "title": "30 Oct 2022 | Employee Validation",
+                          "user": "Alexandra DE LA VILLARDIERE",
+                          "status": {
+                            "color": "green",
+                            "label": "Validated"
+                          }
+                        },
+                        {
+                          "title": "29 Oct 2022 | Secretary Validation",
+                          "user": "Elena CORDOVA",
+                          "status": {
+                            "color": "green",
+                            "label": "Validated"
+                          },
+                          "comment": "Ajouter le reçu du Taxi Uber svp"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "footerBlock",
+        "items": [
+          {
+            "type": "hierarchyValidation",
+            "commentEnabled": true,
+            "commentPlaceholder": "Comments",
+            "validateButton": {
+              "commentMandatory": false
+            },
+            "rejectButton": {
+              "commentMandatory": true
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

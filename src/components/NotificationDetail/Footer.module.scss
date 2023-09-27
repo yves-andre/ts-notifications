@@ -1,0 +1,10 @@
+.Footer {
+  background-color: var(--ts-color-white);
+  box-shadow: 0 -4px 3px rgba(black, 0.02);
+  display: flex;
+  align-items: center;
+  position: relative;
+  &:has([data-infotip-open="true"]){
+    z-index: 4;
+  }
+}

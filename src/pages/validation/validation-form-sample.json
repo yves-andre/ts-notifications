@@ -1,0 +1,160 @@
+{
+  "version": "1.0",
+  "type": "AbsenceValidationTemplate",
+  "validationRules": {},
+  "data": {},
+  "template": {
+    "color": "corporate/green",
+    "gradient": "corporate/green",
+    "items": [
+      {
+        "title": "Telework",
+        "subtitle": "Sptest MANAGER 1",
+        "image": "https://mysite.dts.corp.local/User%20Photos/Profile%20Pictures/mtest.jpg",
+        "total": "1 day",
+        "buttons": [],
+        "type": "headerBlock"
+      },
+      {
+        "title": "Telework",
+        "subtitle": "ABS230000527",
+        "items": [
+          {
+            "labelFrom": "From",
+            "labelTo": "To",
+            "dateFormat": "",
+            "fromDate": "08/09/2023",
+            "toDate": "08/09/2023",
+            "type": "fromToDate"
+          }
+        ],
+        "type": "sectionBlock"
+      },
+      {
+        "title": "Details",
+        "subtitle": "",
+        "items": [
+          {
+            "display": "block",
+            "data": [
+              {
+                "label": "Home/Not Home",
+                "value": "Home",
+                "isEmpty": false
+              },
+              {
+                "label": "Country",
+                "value": "Switzerland",
+                "isEmpty": false
+              },
+              {
+                "label": "Comment",
+                "value": "Aymen_test_lvl_hierarchy_employeeCard",
+                "isEmpty": false
+              },
+              {
+                "label": "Region",
+                "value": "CH - Geneva",
+                "isEmpty": false
+              }
+            ],
+            "type": "dataList"
+          }
+        ],
+        "type": "sectionBlock"
+      },
+      {
+        "title": "More",
+        "subtitle": "",
+        "items": [
+          {
+            "display": "menu",
+            "listItems": [
+              {
+                "title": "Employee Details",
+                "subtitle": "Sptest MANAGER 1",
+                "icon": "user",
+                "items": [
+                  {
+                    "data": {
+                      "employee": {
+                        "fullName": "Sptest MANAGER 1",
+                        "image": "https://mysite.dts.corp.local/User%20Photos/Profile%20Pictures/mtest.jpg",
+                        "jobTitle": "",
+                        "branch": "TS",
+                        "site": "Geneva",
+                        "department": "SPTEST Informatique",
+                        "service": "Test",
+                        "hierarchy": [
+                          {
+                            "level": "N+1",
+                            "name": "Sptest MANAGER 2, Sptest MANAGER DELEGATION PERM"
+                          },
+                          {
+                            "level": "N+2",
+                            "name": "Sptest MANAGER 3, Sptest MANAGER DELEGATION PERM"
+                          }
+                        ]
+                      }
+                    },
+                    "type": "employeeCard"
+                  }
+                ]
+              },
+              {
+                "title": "Validation History",
+                "subtitle": "2 activities",
+                "icon": "history",
+                "items": [
+                  {
+                    "data": {
+                      "history": [
+                        {
+                          "title": "11 Aug 2023 | Employee Validation",
+                          "user": "Sptest MANAGER 1",
+                          "status": {
+                            "color": "green",
+                            "label": "Validated"
+                          },
+                          "comment": ""
+                        },
+                        {
+                          "title": "11 Aug 2023 | Hierarchy Validation",
+                          "user": "Sptest MANAGER 2, Sptest MANAGER DELEGATION PERM",
+                          "status": {
+                            "color": "orange",
+                            "label": "Pending"
+                          },
+                          "comment": ""
+                        }
+                      ]
+                    },
+                    "type": "validationHistory"
+                  }
+                ]
+              }
+            ],
+            "type": "listBlock"
+          }
+        ],
+        "type": "sectionBlock"
+      },
+      {
+        "items": [
+          {
+            "commentEnabled": true,
+            "commentPlaceholder": "Comments",
+            "validateButton": {
+              "commentMandatory": false
+            },
+            "rejectButton": {
+              "commentMandatory": true
+            },
+            "type": "hierarchyValidation"
+          }
+        ],
+        "type": "footerBlock"
+      }
+    ]
+  }
+}

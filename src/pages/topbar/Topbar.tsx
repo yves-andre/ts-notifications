@@ -5,6 +5,8 @@ import DelegationToggle from './DelegationToggle/DelegationToggle'
 import { useAppSelector } from '../../hooks/use-app-selector'
 import { CATEGORY } from '../../data/constants/category'
 
+import { Toolbar } from '@trading/energies-ui'
+
 export const Topbar: React.FC = () => {
   const selectedCategory = useAppSelector(
     (state) => state.filters.selectedCategory
@@ -30,13 +32,23 @@ export const Topbar: React.FC = () => {
   }
 
   return (
-    <div className='Topbar'>
-      <div className='Topbar-title'>{getTitleByCategory(selectedCategory)}</div>
-      <div className='Topbar-actions'>
+    <Toolbar
+      style={{
+        height: 'var(--height)',
+        margin: '0 -25px 20px',
+        background: 'white',
+        position: 'sticky',
+        top: 0,
+        zIndex: 4,
+      }}
+    >
+      <Toolbar.Left>
         <Tabs />
+      </Toolbar.Left>
+      <Toolbar.Right>
         <DelegationToggle />
-      </div>
-    </div>
+      </Toolbar.Right>
+    </Toolbar>
   )
 }
 

@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useAppDispatch } from '../../../hooks/use-app-dispatch'
 import { useAppSelector } from '../../../hooks/use-app-selector'
 import { filtersActions } from '../../../store/filters-slice'
+
+
+import { Checkbox } from '@trading/energies-ui'
+
+
 import './DelegationToggle.scss'
 
 export const DelegationToggle: React.FC = () => {
@@ -17,21 +22,14 @@ export const DelegationToggle: React.FC = () => {
 
   if (showDelegations !== undefined) {
     return (
-      <label className="DelegationToggle">
-        Show delegations:
-        <div className="DelegationToggle-switch">
-          <input
-            className="DelegationToggle-input"
-            type="checkbox"
-            onChange={toggleHandler}
-            checked={showDelegations}
-            defaultChecked={showDelegations}
-          />
-          <span className="DelegationToggle-label">
-            <span></span>
-          </span>
-        </div>
-      </label>
+      <Checkbox
+        label='Show Delegations'
+        margin={0}
+        variant='switch'
+        style={{ flexDirection: 'row-reverse' }}
+        defaultChecked={showDelegations}
+        onChange={toggleHandler}
+      />
     );
   }
 
