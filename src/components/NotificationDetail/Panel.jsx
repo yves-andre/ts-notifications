@@ -1,19 +1,15 @@
 import React, { useEffect, useRef, useState, createContext } from 'react'
 import { BEM, IconButton, setGradient, setTheme } from '@trading/energies-ui'
 import { Alert, Block, Error } from './'
-import mock from './_mock.json'
 import styles from './Panel.module.scss'
 import {
   getNotificationIsPending,
   getValidationFormById,
-  NOTIFICATION_SERVICE_ERRORS,
   validateFormById
 } from "../../services/notification-service";
-import validationFormSample from "../../pages/validation/validation-form-sample.json";
-import { ItemValidationTemplate } from "../validation-form/validation-form-service";
-import error from "./Error";
 import { useAppDispatch } from "../../hooks/use-app-dispatch";
-import { notificationActions } from "../../store/notifications-slice";
+import { notificationActions, setOpenValidationForm } from "../../store/notifications-slice";
+import { useAppSelector } from '../../hooks/use-app-selector'
 
 const b = BEM(styles)
 
@@ -123,24 +119,35 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
   const [alert, setAlert] = useState(true)
   const dispatch = useAppDispatch();
 
+  // refresh on middleware update
+  const refreshPendingStatus = useAppSelector((state) => state.notifications.lastUpdated);
 
+  useEffect(() => {
+    if(notification){
+      dispatch(setOpenValidationForm(notification._id, false));
+    }
+  }, [notification])
+
+  useEffect(() => {
+    setPendingStatus();
+  }, [refreshPendingStatus])
+
+  const setPendingStatus = () => {
+    if (!notification) return;
+    const { isPending, isTimeout } = getNotificationIsPending(notification);
+    setAlert(!isPending && isTimeout);
+    setIsPending(isPending);
+  }
 
   /**
    * Display validation form
    * @param validationForm
    */
   const displayValidationForm = (validationForm) => {
-    setAlert(false);
-    setIsPending(false);
+    setPendingStatus();
     setTemplate(validationForm.template);
 
     const pendingStatus = getNotificationIsPending(notification)
-    if (!pendingStatus.isPending && pendingStatus.isTimeout) {
-      setAlert(true)
-    }
-    if (pendingStatus.isPending) {
-      setIsPending(true)
-    }
 
     const items = updateItemsConfig(validationForm?.template?.items, notification, pendingStatus);
     const header = items?.find((i) => i.type === 'headerBlock')
@@ -169,7 +176,8 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
         item.items = item.items.map((footerItem) => ({
           ...footerItem,
           notificationStatus: notification?.status,
-          notificationDetails: notification?.details,
+          notificaitonTreatedBy: notification?.treatedBy,
+          notificaitonTreatedOn: notification?.treatedOn
         }));
       }
       const updatedItem = { ...item }
@@ -177,9 +185,11 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
         case 'hierarchyValidation':
           updatedItem.isDisabled = pendingStatus.isPending;
           updatedItem.onValidate = (comment) => {
+            dispatch(setOpenValidationForm(notification._id, true));
             return updateFormStatus(true, comment)
           };
           updatedItem.onReject = (comment) => {
+            dispatch(setOpenValidationForm(notification._id, true));
             return updateFormStatus(false, comment)
           };
           break;
@@ -272,6 +282,10 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
     }
   }
 
+  const onCloseHandler = () => {
+    onClose(notification._id);
+  }
+
 
   return (
     <ValidationContextProvider validationRules={currentValidationFormJSON.current?.validationRules}>
@@ -280,10 +294,10 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
           hasHeader: header,
           isLoading: isLoading
 
-        })}
-        style={{ ...theme, ...gradientStyles }}
-      >
-        {onClose && <PanelClose onClick={onClose} header={header} />}
+      })}
+      style={{ ...theme, ...gradientStyles }}
+    >
+      {onClose && <PanelClose onClick={onCloseHandler} header={header} />}
 
         {header && <Block {...header} />}
 

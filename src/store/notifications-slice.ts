@@ -32,8 +32,16 @@ type NotificationsItemsByCategory = {
   [key: number]: CategoryObject;
 };
 
+interface NotificationToValidate {
+  id: string;
+  opened: boolean;
+  pending: boolean;
+  lastUpdated: Date;
+}
+
 const initialState = {
   notificationCounts: [] as NotificationCount[],
+  openValidationForm: null as {id: string, hasUserValidated: boolean} | null,
   notificationsItemsByCategory: {
     0: {
       1: {
@@ -60,12 +68,16 @@ const initialState = {
       },
     },
   } as NotificationsItemsByCategory,
+  lastUpdated: Date.now()
 };
 
 const notificationSlice = createSlice({
   name: "notifications",
   initialState,
   reducers: {
+    forceUpdate: (state) => {
+      state.lastUpdated = Date.now();
+    },
     getNotificationCount(state, action: PayloadAction<NotificationCount[]>) {
       state.notificationCounts = action.payload;
     },
@@ -115,16 +127,13 @@ const notificationSlice = createSlice({
         });
       });
     },
-    resetLoaded(state, action: PayloadAction<{selectedStatus: number, selectedCategory: number}>) {
-      const { selectedStatus, selectedCategory } = action.payload;
-      
-      if (state.notificationsItemsByCategory[selectedCategory] &&
-          state.notificationsItemsByCategory[selectedCategory][selectedStatus]) {
-        state.notificationsItemsByCategory[selectedCategory][selectedStatus].loaded = false;
-      } else {
-        console.warn('Invalid category or status. Could not reset the "loaded" flag.');
-      }
+    resetLoaded(state) {
+      // reset every loaded state to false (used on WS message to update all states)
+      Object.values(state.notificationsItemsByCategory).forEach(cat => Object.values(cat).forEach(item => item.loaded = false));
     },
+    setOpenValidationForm(state, action: PayloadAction<{id: string, hasUserValidated: boolean}>){
+      state.openValidationForm = action.payload;
+    }
   },
 });
 
@@ -180,6 +189,20 @@ export const selectNotificationById = (notificationId: any) =>
     )
   );
 
+
+export const setOpenValidationForm = (
+  id: string,
+  hasUserValidated: boolean
+) => {
+  return async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      dispatch(notificationActions.setOpenValidationForm({id, hasUserValidated}));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+
 const reFetchLoadedNotifications = async (dispatch: AppDispatch, getState: () => RootState, category: null | number = null) => {
   const state = getState();
   const notificationsItemsByCategory = state.notifications.notificationsItemsByCategory;
@@ -190,12 +213,11 @@ const reFetchLoadedNotifications = async (dispatch: AppDispatch, getState: () =>
     const statuses = Object.keys(notificationsItemsByCategory[+category]);
     for (const status of statuses) {
       if (notificationsItemsByCategory[+category][+status].loaded) {
-        await dispatch(fetchNotificationsByStatusAndCategory(Number(status), Number(category)));
+        await dispatch(fetchNotificationsByStatusAndCategory(Number(status), Number(category), true));
       }
     }
   }
 };
-
 
 export const fetchNotificationsByStatusAndCategory = (
   selectedStatus: number,
@@ -205,7 +227,7 @@ export const fetchNotificationsByStatusAndCategory = (
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {      
       if (resetLoadedState) {
-        dispatch(notificationActions.resetLoaded({selectedStatus, selectedCategory}));
+        dispatch(notificationActions.resetLoaded());
       }
 
       let currentNotifications =
@@ -338,23 +360,30 @@ export const setNotificationsIsSeenByIds = (ids: string[]) => {
 export const dismissNotificationById = (id: string) => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
+      const notificationCategory = selectNotifications(getState())
+        .find(n => n._id === id)?.category;
+      if (notificationCategory == null){
+        throw new Error(`Notification with id ${id} was not found`);
+      }
       await _dismissNotification(id);
-      reFetchLoadedNotifications(dispatch, getState);
-      fetchNotificationCounts();
+      // we only refetch the category of the dismissed notification
+      reFetchLoadedNotifications(dispatch, getState, notificationCategory);
     } catch (error) {
       console.log(error);
+    } finally {
+      fetchNotificationCounts();
     }
   };
 };
 
-export const dismissNotifications = (notifications: Notification[]) => {
+export const clearInformationFeed = () => {
   return async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       await _dismissNotifications();
     } catch (error) {
       console.log(error);
     } finally {
-      reFetchLoadedNotifications(dispatch, getState);
+      reFetchLoadedNotifications(dispatch, getState, CATEGORY.INFORMATION_FEED);
       fetchNotificationCounts();
     }
   };

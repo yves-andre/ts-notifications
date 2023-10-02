@@ -64,7 +64,8 @@ export const HierarchyValidation = ({
   onReject,
   isDisabled,
   notificationStatus,
-  notificationDetails,
+  notificaitonTreatedBy,
+  notificaitonTreatedOn,
 }) => {
   const [comment, setComment] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
@@ -132,7 +133,11 @@ export const HierarchyValidation = ({
 
   return (
     <div className={b()} data-type={type}>
-      {notificationStatus == 2 && <span>{notificationDetails}</span>}
+      {notificationStatus === 2 && 
+        <div className={b("treated_info")}>
+          Treated by <b>{notificaitonTreatedBy}</b> on <b>{notificaitonTreatedOn}</b>
+        </div>
+      }
       {notificationStatus != 2 && (
         <>
           {validationErrorMessages?.length > 0 && showValidationPopup && (
