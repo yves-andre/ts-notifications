@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { Block, Error, Page } from './'
 
 import { Icon, BEM, colorCSS } from '@trading/energies-ui'
 
 import styles from './List.module.scss'
+import { ValidationContext } from './Panel'
 const b = BEM(styles)
 
 /*----------------------------------------------------------------------------*/
@@ -85,18 +86,38 @@ const b = BEM(styles)
 }
 */
 /*----------------------------------------------------------------------------*/
-const ListItem = ({ title, subtitle, status, image, icon, value, items }) => {
+const ListItem = ({ title, subtitle, status, image, icon, value, items, validationKey }) => {
   const [open, setOpen] = useState(false)
+  const [listItemValidationRules, setListItemValidationRules] = useState();
+  const [listItemStatus, setListItemStatus] = useState();
+  const {validation} = useContext(ValidationContext);
   const hasItems = items?.length !== 0
 
-  const onClickHandler = () => {
-    if (hasItems) {
-      setOpen(true)
+  // setting the validation rules for the list item
+  useEffect(() => {  
+    if(validationKey && validation && validation[validationKey]){
+      setListItemValidationRules(validation[validationKey])
     }
+  }, [validationKey, validation]);
+
+  // setting the status depending on the validation rules
+  useEffect(() => {
+    if (listItemValidationRules) {
+      const currentStatus = listItemValidationRules.value
+        ? listItemValidationRules.valid
+        : listItemValidationRules.invalid;
+      setListItemStatus(currentStatus);
+    }else{
+      setListItemStatus(status)
+    }
+  }, [listItemValidationRules]);
+
+  const onCloseHandler = () => {
+    setOpen(false);
   }
 
   return (
-    <li className={b('item', { hasItems })} onClick={onClickHandler}>
+    <li className={b('item', { hasItems })} onClick={() => setOpen(true)}>
       {image && (
         <picture className={b('picture')}>
           <img
@@ -112,13 +133,13 @@ const ListItem = ({ title, subtitle, status, image, icon, value, items }) => {
       )}
       {icon && <Icon className={b('icon')} name={icon} />}
       <div className={b('content')}>
-        <div className={b('title')} style={{ color: colorCSS(status?.color) }}>
+        <div className={b('title')} style={{ color: colorCSS(listItemStatus?.color) }}>
           <span className={b('ellipsis')}>{title}</span>
-          {status && (
+          {listItemStatus && (
             <Icon
               className={b('status')}
-              name={status.icon}
-              color={status.color}
+              name={listItemStatus.icon}
+              color={listItemStatus.color}
               size='xs'
             />
           )}
@@ -131,7 +152,7 @@ const ListItem = ({ title, subtitle, status, image, icon, value, items }) => {
         <>
           <Icon className={b('chevron')} name='filled/angle-right' />
           {open && (
-            <Page onClose={() => setOpen(false)}>
+            <Page onClose={onCloseHandler}>
               {items.map((item, i) => (
                 <Block key={i} {...item} />
               ))}
@@ -144,7 +165,8 @@ const ListItem = ({ title, subtitle, status, image, icon, value, items }) => {
 }
 /*----------------------------------------------------------------------------*/
 
-export const List = ({ type, listItems, display }) => {
+export const List = ({ type, listItems, display }) => { 
+
   return (
     <ul className={b({}, [display])} data-type={type} data-display={display}>
       {listItems?.map((item, i) => (

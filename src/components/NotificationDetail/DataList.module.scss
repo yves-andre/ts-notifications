@@ -23,6 +23,12 @@
         font-style: italic;
       }
     }
+
+    &.hasColor {
+      .DataList-value {
+        color: var(--theme);
+      }
+    }
   }
 
   &-label {
