@@ -12,7 +12,21 @@ import { APP_CONFIG } from '../../data/app-config'
 const mock = {
   "version": "1.0",
   "type": "itemValidationTemplate",
-  "validationRules": {},
+  "validationRules": {
+    "item1": {
+      "isMandatory": true,
+      "errorMessage": "You must check the comment of 'Public Transport' before approving this item.",
+      "value": false,
+      "valid": {
+        "color": "green",
+        "icon": "check"
+      },
+      "invalid": {
+        "color": "orange",
+        "icon": "warning"
+      }
+    }
+  },
   "template": {
     "color": "corporate/lightBlue",
     "gradient": "corporate/lightBlue",
@@ -65,6 +79,7 @@ const mock = {
             "listItems": [
               {
                 "title": "Public Transport",
+                "validationKey": "item1",
                 "subtitle": "Transportation | 10 Oct 2022",
                 "image": "https://picsum.photos/id/1008/500/700",
                 "value": "4.55 CHF",
@@ -155,6 +170,7 @@ const mock = {
                         "label": "Comment Check",
                         "color": "orange",
                         "icon": "outline/stop",
+                        "validationKey": "item1",
                         "validationValue": false,
                         "validatedConfig": {
                           "label": "Comment checked",
@@ -699,7 +715,7 @@ const mock = {
             "commentEnabled": true,
             "commentPlaceholder": "Comments",
             "validateButton": {
-              "commentMandatory": false
+              "commentMandatory": true
             },
             "rejectButton": {
               "commentMandatory": true
