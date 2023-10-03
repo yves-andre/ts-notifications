@@ -100,7 +100,7 @@
                   "color": "purple",
                   "icon": "warning"
                 },
-                "validationRules": "item1",
+                "validationKey": "item1",
                 "subtitle": "Transportation | 10 Oct 2022",
                 "image": "https://picsum.photos/id/1008/500/700",
                 "value": "4.55 CHF",
@@ -191,6 +191,7 @@
                         "type": "rulesValidationButton",
                         "label": "Comment Check",
                         "color": "orange",
+                        "validationKey": "item1",
                         "icon": "outline/stop",
                         "validationValue": false,
                         "validatedConfig": {

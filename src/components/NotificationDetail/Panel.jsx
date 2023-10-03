@@ -43,25 +43,18 @@ const PanelClose = ({ onClick, header }) => {
 // Create a context with a default value
 export const ValidationContext = createContext({
   validation: {},
-  currentOpenValidationItem: null ,
-  setOpenValidationItem: () => {},
   setValidationRuleValue: () => {},
   getValidationErrors: () => {}
 });
 
 export const ValidationContextProvider = ({ validationRules, children }) => {
   const [validation, setValidation] = useState();
-  const [currentOpenValidationItem, setCurrentOpenValidationItem] = useState();
 
   useEffect(() => {
     if(validationRules){
       setValidation(validationRules);
     }
   }, [validationRules])
-
-  const setOpenValidationItem = (validationItemId) => {
-    setCurrentOpenValidationItem(validationItemId);
-  }
 
   const setValidationRuleValue = (validationItemId, value) => {
     if(validation && validation[validationItemId]){
@@ -90,8 +83,6 @@ export const ValidationContextProvider = ({ validationRules, children }) => {
 
   const providerValue = {
     validation,
-    currentOpenValidationItem,
-    setOpenValidationItem,
     setValidationRuleValue,
     getValidationErrors
   }
@@ -235,6 +226,7 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
       if (notification?.hasValidationForm && notification?._id === currentValidationForm.current) {
         // If notification is the same, display the same form with updated status
         if (currentValidationFormJSON.current) {
+          debugger;
           displayValidationForm(currentValidationFormJSON.current)
         }
       } else {
@@ -248,6 +240,7 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
    */
   useEffect(() => {
     if (validationJson && isDebug) {
+      currentValidationFormJSON.current = validationJson;
       displayValidationForm(validationJson)
     }
   }, [validationJson])

@@ -12,7 +12,7 @@ const b = BEM(styles)
   "label": "Comment Check",
   "color": "orange",
   "icon": "outline/check-square'",
-  "validationValue": "{{validation[item.key]}}",
+  "validationKey": "item1"
   "validatedConfig": {
     "label": "Comment checked",
     "icon": "filled/check-square'",
@@ -28,23 +28,23 @@ export const RulesValidationButton = ({
   color,
   icon,
   validatedConfig,
+  validationKey,
 }) => {
-  const { validation, currentOpenValidationItem, setValidationRuleValue } =
-    useContext(ValidationContext);
+  const { validation, setValidationRuleValue } = useContext(ValidationContext);
   const [checked, setChecked] = useState();
 
   useEffect(() => {
-    if (validation && currentOpenValidationItem) {
-      const currentValue = validation[currentOpenValidationItem]?.value;
+    if (validation && validationKey) {
+      const currentValue = validation[validationKey]?.value;
       if (currentValue !== undefined) {
         setChecked(currentValue);
       }
     }
-  }, [validation, currentOpenValidationItem]);
+  }, [validation, validationKey]);
 
   const onCheckHandler = () => {
     const newCheckedValue = !checked;
-    setValidationRuleValue(currentOpenValidationItem, newCheckedValue);
+    setValidationRuleValue(validationKey, newCheckedValue);
     setChecked(newCheckedValue);
   };
 
