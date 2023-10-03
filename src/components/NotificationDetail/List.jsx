@@ -86,19 +86,19 @@ const b = BEM(styles)
 }
 */
 /*----------------------------------------------------------------------------*/
-const ListItem = ({ title, subtitle, status, image, icon, value, items, validationRules }) => {
+const ListItem = ({ title, subtitle, status, image, icon, value, items, validationKey }) => {
   const [open, setOpen] = useState(false)
   const [listItemValidationRules, setListItemValidationRules] = useState();
   const [listItemStatus, setListItemStatus] = useState();
-  const {validation, setOpenValidationItem} = useContext(ValidationContext);
+  const {validation} = useContext(ValidationContext);
   const hasItems = items?.length !== 0
 
   // setting the validation rules for the list item
   useEffect(() => {  
-    if(validationRules && validation && validation[validationRules]){
-      setListItemValidationRules(validation[validationRules])
+    if(validationKey && validation && validation[validationKey]){
+      setListItemValidationRules(validation[validationKey])
     }
-  }, [validationRules,validation]);
+  }, [validationKey, validation]);
 
   // setting the status depending on the validation rules
   useEffect(() => {
@@ -112,26 +112,12 @@ const ListItem = ({ title, subtitle, status, image, icon, value, items, validati
     }
   }, [listItemValidationRules]);
 
-
-  // We need to set the open validation item key in the context 
-  // because the RulesValidationButton component has no way
-  // of knowing where he comes from
-  const onClickHandler = () => {
-    if (hasItems) {
-      if(listItemValidationRules && validationRules){
-        setOpenValidationItem(validationRules);
-      }
-      setOpen(true)
-    }
-  }
-
   const onCloseHandler = () => {
-    setOpenValidationItem(null);
     setOpen(false);
   }
 
   return (
-    <li className={b('item', { hasItems })} onClick={onClickHandler}>
+    <li className={b('item', { hasItems })} onClick={() => setOpen(true)}>
       {image && (
         <picture className={b('picture')}>
           <img
