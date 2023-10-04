@@ -45,6 +45,9 @@ export const Sidebar: React.FC<ISidebarProps> = ({
   const selectedApplication = useAppSelector(
     (state) => state.filters.selectedApplication
   );
+  const notificationCounts: NotificationCount[] = useAppSelector(
+    (state) => state.notifications.notificationCounts
+  );
   const toBeTreated = useSelector((state) => getNotificationItemsByCategoryAndStatus(state, selectedCategory, STATUS.TO_BE_TREATED));
 
   useEffect(() => {
@@ -52,7 +55,7 @@ export const Sidebar: React.FC<ISidebarProps> = ({
       const navItems = await getSubnavCategories();
       setNavItems(navItems);
     })()
-  }, [toBeTreated]);
+  }, [toBeTreated, notificationCounts]);
 
   const dispatch = useAppDispatch();
   const { navigateToExplorer } = useNavigateToExplorer();
@@ -127,9 +130,6 @@ export const Sidebar: React.FC<ISidebarProps> = ({
         return undefined;
     }
   };
-  const notificationCounts: NotificationCount[] = useAppSelector(
-    (state) => state.notifications.notificationCounts
-  );
 
   const getSubnavCategories = async () => {
     // Get the badge count for the selected category, or set it to undefined if no count is returned
