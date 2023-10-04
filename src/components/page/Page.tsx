@@ -63,12 +63,6 @@ export const Page: React.FC = () => {
     dispatch(fetchNotificationCounts());
   }, []);
 
-
-  // fetch the counts only on startup. (other calls are made on WS update in App.tsx)
-  useEffect(() => {
-    dispatch(fetchNotificationCounts());
-  }, [])
-  
   const totalLogo =
     process.env.NODE_ENV !== 'development'
       ? APP_CONFIG.THEME_ASSETS.totalLogo.replace("{0}", process.env.REACT_APP_API_SP_RESSOURCES_URL as string)
