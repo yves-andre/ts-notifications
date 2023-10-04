@@ -57,6 +57,11 @@ export const getNotificationCountByCategory = async (category: number) => {
   return notificationCount;
 };
 
+export const getNotificationCounts = async () => {
+  const response = await httpGet(process.env.REACT_APP_API_COUNT as string, defaultRequestConfig, true);
+  return response;
+};
+
 export const setNotificationIsSeen = async (id: string, isSeen: boolean) => {
   const result = httpPut(
     process.env.REACT_APP_API_UPDATE_NOTIFICATION?.replace(

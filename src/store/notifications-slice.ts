@@ -8,7 +8,7 @@ import {
   dismissNotification as _dismissNotification,
   setNotificationIsRead as _setNotificationIsRead,
   dismissNotifications as _dismissNotifications,
-  getNotificationCountByCategory,
+  getNotificationCounts,
 } from "./../services/notification-service";
 import {
   createSlice,
@@ -299,11 +299,8 @@ export const fetchNotificationsByStatusAndCategory = (
 export const fetchNotificationCounts = () => {
   return async (dispatch: AppDispatch) => {
     try {
-      const notificationCounts = await Promise.all([
-        getNotificationCountByCategory(CATEGORY.ACTION_FEED),
-        getNotificationCountByCategory(CATEGORY.INFORMATION_FEED),
-      ]);
-      dispatch(notificationActions.getNotificationCount(notificationCounts));
+      const counts = await getNotificationCounts();
+      dispatch(notificationActions.getNotificationCount(counts));
     } catch (error) {
       console.error(error);
     }
