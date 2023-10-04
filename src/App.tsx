@@ -37,6 +37,7 @@ export const App: React.FC = () => {
         // reset loaded state
         dispatch(fetchNotificationsByStatusAndCategory(selectedStatus, selectedCategory, true));
       }
+      dispatch(fetchNotificationCounts());
       //dispatch(setNotificationsIsSeen(CATEGORY.INFORMATION_FEED));
     }
   }, [lastMessage]);
