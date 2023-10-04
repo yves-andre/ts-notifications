@@ -1,5 +1,5 @@
 import React from "react";
-import { CATEGORY, CATEGORY_NAME} from "../../data/constants/category";
+import { CATEGORY, CATEGORY_NAME } from "../../data/constants/category";
 import Application from "../../data/interfaces/application";
 import { useAppDispatch } from "../../hooks/use-app-dispatch";
 import { useAppSelector } from "../../hooks/use-app-selector";
@@ -7,22 +7,24 @@ import { filtersActions } from "../../store/filters-slice";
 import { Nav, ThemeColor } from "@trading/energies-ui";
 import CategoryColor from "../../data/interfaces/category-color";
 
-import { getNotificationsCountByCategory, getTitleByCategory } from "./menu-service";
+import { getAllNotificationsCount, getTitleByCategory } from "./menu-service";
 
 import "./Menu.scss";
 import { NotificationCount } from "../../data/interfaces/notification-count";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 interface Props {
   applications: Application[];
   categoryColors: CategoryColor[];
+  onClick?: () => void
+  sidebar: boolean
 }
 
 const ACTION_FEED = CATEGORY.ACTION_FEED;
 const INFORMATION_FEED = CATEGORY.INFORMATION_FEED;
 const CATEGORIES = [ACTION_FEED, INFORMATION_FEED];
 
-export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
+export const Menu: React.FC<Props> = ({ applications, categoryColors, onClick, sidebar }) => {
   const navigate = useNavigate()
   const location = useLocation();
 
@@ -36,13 +38,14 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
   const dispatch = useAppDispatch();
 
   const getNotificationCountByCategory = (category: number): number | null => {
-   return getNotificationsCountByCategory(category, notificationCounts);
+    return getAllNotificationsCount(category, notificationCounts);
   };
 
   const selectCategoryHandler = (category: number): void => {
     dispatch(filtersActions.setSelectedCategory(category));
     dispatch(filtersActions.setSelectedApplication(""));
-    navigate({pathname: `/explorer`, search: location.search})
+    navigate({ pathname: `/explorer`, search: location.search })
+    onClick?.()
   };
 
 
@@ -87,7 +90,7 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors }) => {
     icon: getIconByCategory(category),
     title: getTitleByCategory(category),
     badge: getNotificationCountByCategory(category) || undefined,
-    selected: selectedCategory === category
+    selected: sidebar && selectedCategory === category
   }));
 
   return (

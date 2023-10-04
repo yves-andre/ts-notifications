@@ -11,13 +11,21 @@ const defaultRequestConfig = {
   }
 };
 
+export const getNotificationsLocal = async () => {
+  const url = "/notifications.json";
+  const notifications = await httpGet(
+    url,
+    defaultRequestConfig,
+    true
+  );
+  return notifications;
+}
+
 export const getNotifications = async (category?: number, status?: number) => {
-  let url = "";
   if (process.env.NODE_ENV === "local") {
-    url = "/notifications.json"
-  } else {
-    url = `/${category}/${status}`;
+    return await getNotificationsLocal();
   }
+  const url = `/${category}/${status}`;
   const notifications = await httpGet(
     url,
     defaultRequestConfig,
