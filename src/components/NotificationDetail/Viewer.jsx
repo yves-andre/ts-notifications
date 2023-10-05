@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 import { Page, Error } from '.'
 
-import { BEM } from '@trading/energies-ui'
+import { Icon, BEM } from '@trading/energies-ui'
 
 import styles from './Viewer.module.scss'
 const b = BEM(styles)
@@ -15,36 +15,35 @@ const b = BEM(styles)
    {
       "title": "File1",
       "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-16348197029/TS%20Forward_Dataviz_Juillet2021.pdf",
-      "ext": "pdf"
+      "type": "pdf"
     },
     {
       "title": "File2",
       "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_10/dashboard_folder_2/ms-viewer-16901873974/TEMF%20DWP%20Admin%20Matters_Updated_26July2023.pdf",
-      "ext": "pdf"
+      "type": "pdf"
     },
     {
       "title": "Image 1",
       "url": "https://picsum.photos/id/1011/400/250",
-      "ext": "jpg"
+      "type": "image"
     },
     {
       "title": "Image 2",
       "url": "https://picsum.photos/id/1010/400/250",
-      "ext": "jpg"
+      "type": "image"
     },
     {
       "title": "Image 3",
       "url": "https://picsum.photos/id/1004/400/250",
-      "ext": "jpg"
+      "type": "image"
     }
   ]
 }
 */
-
 /*----------------------------------------------------------------------------*/
 export const ViewerImage = ({ title, url }) => {
     return (
-        <figure className={b('figure')}>
+        <figure className={b('figure')} data-viewer="img">
             <img className={b('image')} src={url} alt={title} />
             {title && (
                 <figcaption className={b('title')}>{title}</figcaption>
@@ -53,16 +52,19 @@ export const ViewerImage = ({ title, url }) => {
     )
 }
 /*----------------------------------------------------------------------------*/
-export const ViewerFile = ({ title, url, ext, zoom = false }) => {
+export const ViewerDoc = ({ title, url, type, zoom = false }) => {
 
     const getViewer = () => {
-        if (ext === 'pdf') return zoom === true ? url : `/Style%20Library/apps/viewer/simple.html#${url}`
+        if (type === 'pdf') return zoom === true ? `${url}#toolbar=0&view=Fit` : `/Style%20Library/apps/viewer/simple.html#${url}`
+        //if (type === 'office') return `/_layouts/15/WopiFrame2.aspx?sourcedoc=${url}&action=embedview&ClientRender=1`
+        if (type === 'office') return `https://home-dev.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BEC6AA48D-5D1A-4DD7-A2F9-B0620F0E15C3%7D&file=Document.docx&action=embedview`
+
         return `/_layouts/15/WopiFrame2.aspx?sourcedoc=${url}&action=embedview&ClientRender=1`
     }
 
     return (
         <iframe
-            className={b('file')}
+            className={b('doc')}
             src={getViewer()}
             title={title}
         >
@@ -70,42 +72,117 @@ export const ViewerFile = ({ title, url, ext, zoom = false }) => {
     )
 }
 
+
 /*----------------------------------------------------------------------------*/
-export const ViewerItem = (file, zoom = false) => {
-    switch (file.ext?.toLowerCase()) {
-        case 'pdf':
-        case 'xls':
-        case 'doc':
-            return <ViewerFile {...file} zoom={zoom} />
-        default:
-            return <ViewerImage {...file} />
+export const ViewerPlaceholder = (file) => (
+    <span className={b('placeholder')}>
+        <Icon name="outline/file-ban" size="xxl" />
+        <span className={b('message')}>
+            This file is not supported
+            {file.title && <>: <b>{file.title}</b></>}
+        </span>
+    </span>
+)
+/*----------------------------------------------------------------------------*/
+export const ViewerItem = React.forwardRef((file, ref) => {
+
+    const doc = file.type === 'office' || file.type === 'pdf'
+    const image = file.type === 'image'
+    const placeholder = !doc && !image
+
+    const onClickHandler = () => {
+        !placeholder && file?.onClick()
     }
-}
+
+    return (
+        <div
+            ref={ref}
+            className={b('item', { hasCursor: !placeholder })}
+            onClick={onClickHandler}
+        >
+            {doc && <ViewerDoc {...file} />}
+            {image && <ViewerImage {...file} />}
+            {placeholder && <ViewerPlaceholder {...file} />}
+        </div >
+    )
+});
+
 /*----------------------------------------------------------------------------*/
 export const Viewer = ({ type, files }) => {
-    const [zoom, setZoom] = useState(false)
+    const refs = useRef(new Array())
+
+    const [select, setSelected] = useState(false)
+    const [active, setActive] = useState(0)
+
+    const goTo = (index) => {
+        let i = index
+        if (index === files.length) i = 0
+        if (index === -1) i = files.length - 1
+        setActive(i)
+        refs.current[i]?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'start'
+        })
+    }
+
     return (
-        <>
-            <div className={b()} data-type={type}>
-                <div className={b('inner')}>
-                    {files?.map((file, i) => (
-                        <div className={b('item')} key={i} onClick={() => setZoom(file)}>
-                            <ViewerItem key={i} {...file} />
-                        </div>
-                    ))}
-                    {(!files || files.length === 0) && (
-                        <Error variable='files' value={files} />
-                    )}
-                </div>
-                {zoom && (
-                    <Page onClose={() => setZoom(false)}>
-                        <div className={b('zoom')}>
-                            <ViewerItem {...zoom} />
-                        </div>
-                    </Page>
+        <div className={b()} data-type={type}>
+            <span
+                className={b('prev')}
+                onClick={() => goTo(active - 1)}
+            >
+                <Icon name="outline/angle-left" size="large" />
+            </span>
+            <div className={b('inner')}>
+                {files?.map((file, i) => (
+                    <ViewerItem
+                        {...file}
+                        key={i}
+                        onClick={() => setSelected(file)}
+                        setActive={() => setActive(i)}
+                        ref={(el) => refs?.current?.push(el)}
+                    />
+                ))}
+                {(!files || files.length === 0) && (
+                    <Error variable='files' value={files} />
                 )}
             </div>
-        </>
+            <span
+                className={b('next')}
+                onClick={() => goTo(active + 1)}
+            >
+                <Icon name="outline/angle-right" size="large" />
+            </span>
+            {files.length > 1 && <>
+                <ul className={b('dots')}>
+                    {files?.map((_, i) => {
+                        return (
+                            <li
+                                key={i}
+                                className={b('dot', { isActive: active === i })}
+                                onClick={() => goTo(i)}
+                            ></li>
+                        )
+                    })}
+                </ul>
+                <span className={b('count')}>
+                    <Icon name="outline/file" size="small" style={{ width: 30 }} />
+                    {active + 1} / {files.length}
+                </span>
+            </>}
+            {select && (
+                <Page
+                    className={b('fullscreen')}
+                    lightClose={select.type === 'image'}
+                    onClose={() => setSelected(false)}
+                >
+                    <div className={b('zoom')}>
+                        <ViewerItem {...select} zoom={true} />
+                    </div>
+                </Page>
+            )}
+        </div>
 
     )
 }

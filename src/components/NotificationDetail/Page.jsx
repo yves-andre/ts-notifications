@@ -29,7 +29,7 @@ export const PageHeader = ({ icon, image, title, subtitle }) => (
 )
 
 /*----------------------------------------------------------------------------*/
-export const Page = ({ className, children, type, onClose }) => {
+export const Page = ({ className, children, type, onClose, lightClose = false }) => {
   const [closing, setClosing] = useState(false)
 
   const handleClose = () => {
@@ -61,10 +61,10 @@ export const Page = ({ className, children, type, onClose }) => {
       onClick={(e) => e.stopPropagation()}
     >
       <IconButton
-        className={b('back')}
+        className={b('back', { isLight: lightClose })}
         icon='arrowLeft'
         round={true}
-        color='rgba(0,0,0,.4)'
+        color={lightClose ? 'rgba(255,255,255,.4)' : 'rgba(0,0,0,.4)'}
         onClick={handleClose}
       >
         Close
