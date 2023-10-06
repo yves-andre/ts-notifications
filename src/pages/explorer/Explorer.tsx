@@ -130,7 +130,7 @@ export const Explorer: React.FC = () => {
       filterNotifications = filterNotifications.filter(n => !n.isDelegate)
     }
     // sort the notifications to be displayed in the Table
-    if (filters.sortFilter.field === 'date') {
+    if (filters.sortFilter.field === 'date' || filters.sortFilter.field === 'treatedOn') {
       filterNotifications = sortArrayByDateStringField(
         filterNotifications,
         filters.sortFilter.field,

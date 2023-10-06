@@ -57,6 +57,12 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
   )
   const { navigateToExplorer } = useNavigateToExplorer();
 
+  useEffect(() => {
+    if(selectedStatus === STATUS.TREATED){
+      dispatch(filtersActions.setSortFilter({ field: "treatedOn", asc: false }))
+    }
+  }, [selectedStatus])
+
   // refresh on middleware update
   useAppSelector((state) => state.notifications.lastUpdated);
 
@@ -308,7 +314,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
             </TD>
             <TD field='subtitle' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} style={{ minWidth: 250 }}>Subject</TD>
             <TD
-              field='details'
+              field='treatedOn'
               sortFilter={sortFilter}
               sortColumnHandler={sortColumnHandler}
               style={{

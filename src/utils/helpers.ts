@@ -22,18 +22,42 @@ export const sortArrayByStringField = (
   );
 };
 
-// sorts an array of objects by a given string field representing a date
+export const dateStringtoDate = (dateStr: string): Date => {
+  // Try parsing with default Date constructor first (for ISO strings)
+  const isoDate = new Date(dateStr);
+  if (!isNaN(isoDate.getTime())) {
+    return isoDate;
+  }
+
+  // Custom format parsing for "28 Sept 2023 at 10:48"
+  const [, day, month, year, hour, minute] = /(\d+) (\w+) (\d+) at (\d+):(\d+)/.exec(dateStr) || [];
+  
+  // Map for month names
+  const monthNames: { [key: string]: number } = {
+    Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
+    Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11
+  };
+
+  // Convert the month name to a number
+  const monthNumber = monthNames[month.substr(0, 3)];
+  
+  // Return a new Date object
+  return new Date(Number(year), monthNumber, Number(day), Number(hour), Number(minute));
+};
+
+// Your existing function with a minor modification to use dateStringtoDate
 export const sortArrayByDateStringField = (
   array: any[],
   fieldName: string,
   ascending: boolean
 ) => {
-  if (ascending) {
-    return array.sort((a, b) => Number(new Date(a[fieldName])) - Number(new Date(b[fieldName])));
-    // return array.sort(function(a,b){return new Date(a[fieldName]).getTime() - new Date(b[fieldName]).getTime()});
-  }
-  return array.sort((a, b) => Number(new Date(b[fieldName])) - Number(new Date(a[fieldName])));
-  // return array.sort(function(a,b){return new Date(a[fieldName]).getTime() + new Date(b[fieldName]).getTime()});
+  return array.sort((a, b) => {
+    const dateA = dateStringtoDate(a[fieldName]);
+    const dateB = dateStringtoDate(b[fieldName]);
+    return ascending
+      ? dateA.getTime() - dateB.getTime()
+      : dateB.getTime() - dateA.getTime();
+  });
 };
 
 // sorting an array by a string property, with a secondary sort on a string-date format
