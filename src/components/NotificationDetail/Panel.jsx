@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, createContext } from 'react'
 import { BEM, IconButton, setGradient, setTheme } from '@trading/energies-ui'
 import { Alert, Block, Error } from './'
 import styles from './Panel.module.scss'
@@ -14,6 +14,7 @@ import { useAppSelector } from '../../hooks/use-app-selector'
 const b = BEM(styles)
 
 let currentAbortController = null;
+
 
 /*----------------------------------------------------------------------------*/
 
@@ -32,6 +33,65 @@ const PanelClose = ({ onClick, header }) => {
 }
 
 /*----------------------------------------------------------------------------*/
+
+
+
+// Create a context with a default value
+export const ValidationContext = createContext({
+  validation: {},
+  setValidationRuleValue: () => {},
+  getValidationErrors: () => {}
+});
+
+export const ValidationContextProvider = ({ validationRules, children }) => {
+  const [validation, setValidation] = useState();
+
+  useEffect(() => {
+    if(validationRules){
+      setValidation(validationRules);
+    }
+  }, [validationRules])
+
+  const setValidationRuleValue = (validationItemId, value) => {
+    if(validation && validation[validationItemId]){
+      setValidation((prevValidation) => {
+        return {
+          ...prevValidation,
+          [validationItemId]: {
+            ...prevValidation[validationItemId],
+            value: value,
+          },
+        };
+      });
+    }
+  }
+
+  const getValidationErrors = () => {
+    const errors = [];
+    for (let key in validation) {
+        if (validation[key].value === false) {
+            errors.push(validation[key].errorMessage);
+        }
+    }
+    return errors;
+  }
+  
+
+  const providerValue = {
+    validation,
+    setValidationRuleValue,
+    getValidationErrors
+  }
+
+
+  return (
+    <ValidationContext.Provider value={providerValue}>
+      {children}
+    </ValidationContext.Provider>
+  );
+};
+
+
 export const Panel = ({ notification, onClose, loading = false, isDebug = false, validationJson = null }) => {
 
   const [template, setTemplate] = useState(undefined);
@@ -64,6 +124,7 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
   }, [refreshPendingStatus])
 
   const setPendingStatus = () => {
+    if (!notification) return;
     const { isPending, isTimeout } = getNotificationIsPending(notification);
     setAlert(!isPending && isTimeout);
     setIsPending(isPending);
@@ -175,6 +236,7 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
       if (notification?.hasValidationForm && notification?._id === currentValidationForm.current) {
         // If notification is the same, display the same form with updated status
         if (currentValidationFormJSON.current) {
+          debugger;
           displayValidationForm(currentValidationFormJSON.current)
         }
       } else {
@@ -188,6 +250,7 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
    */
   useEffect(() => {
     if (validationJson && isDebug) {
+      currentValidationFormJSON.current = validationJson;
       displayValidationForm(validationJson)
     }
   }, [validationJson])
@@ -218,50 +281,52 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
 
 
   return (
-    <div
-      className={b({
-        hasHeader: header,
-        isLoading: isLoading
+    <ValidationContextProvider validationRules={currentValidationFormJSON.current?.validationRules}>
+      <div
+        className={b({
+          hasHeader: header,
+          isLoading: isLoading
 
       })}
       style={{ ...theme, ...gradientStyles }}
     >
       {onClose && <PanelClose onClick={onCloseHandler} header={header} />}
 
-      {header && <Block {...header} />}
+        {header && <Block {...header} />}
 
-      {alert && (
-        <Alert
-          color='corporate/red'
-          icon='filled/exclamation-circle'
-          onClose={() => setAlert(false)}
-        >
-          Sorry, the validation of this item does not succeed. Please try again.
-        </Alert>
-      )}
-      {isPending && (
-        <Alert
-          color='secondary/orange'
-          icon='filled/info-circle'
-          onClose={() => setIsPending(false)}
-        >
-          The validation for this item is currently underway. You are free to proceed with other tasks while this validation is in progress.
-        </Alert>
-      )}
-
-      <div className={
-        b('content')
-      }>
-        {content?.map((block, i) => (
-          <Block key={i} {...block} />
-        ))}
-        {(!items || items.length === 0) && (
-          <Error variable='items' value={items} />
+        {alert && (
+          <Alert
+            color='corporate/red'
+            icon='filled/exclamation-circle'
+            onClose={() => setAlert(false)}
+          >
+            Sorry, the validation of this item does not succeed. Please try again.
+          </Alert>
         )}
-      </div>
+        {isPending && (
+          <Alert
+            color='secondary/orange'
+            icon='filled/info-circle'
+            onClose={() => setIsPending(false)}
+          >
+            The validation for this item is currently underway. You are free to proceed with other tasks while this validation is in progress.
+          </Alert>
+        )}
 
-      {footer && <Block {...footer} />}
-    </div>
+        <div className={
+          b('content')
+        }>
+          {content?.map((block, i) => (
+            <Block key={i} {...block} />
+          ))}
+          {(!items || items.length === 0) && (
+            <Error variable='items' value={items} />
+          )}
+        </div>
+
+        {footer && <Block {...footer} />}
+      </div>
+    </ValidationContextProvider>
   )
 }
 

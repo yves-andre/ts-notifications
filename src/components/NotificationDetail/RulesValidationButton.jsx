@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, BEM } from '@trading/energies-ui'
 import styles from './RulesValidationButton.module.scss'
+import { ValidationContext } from './Panel'
 const b = BEM(styles)
 
 /*----------------------------------------------------------------------------*/
@@ -11,7 +12,7 @@ const b = BEM(styles)
   "label": "Comment Check",
   "color": "orange",
   "icon": "outline/check-square'",
-  "validationValue": "{{validation[item.key]}}",
+  "validationKey": "item1"
   "validatedConfig": {
     "label": "Comment checked",
     "icon": "filled/check-square'",
@@ -27,19 +28,37 @@ export const RulesValidationButton = ({
   color,
   icon,
   validatedConfig,
-  validationValue,
+  validationKey,
 }) => {
-  const [checked, setChecked] = useState(validationValue)
+  const { validation, setValidationRuleValue } = useContext(ValidationContext);
+  const [checked, setChecked] = useState();
+
+  useEffect(() => {
+    if (validation && validationKey) {
+      const currentValue = validation[validationKey]?.value;
+      if (currentValue !== undefined) {
+        setChecked(currentValue);
+      }
+    }
+  }, [validation, validationKey]);
+
+  const onCheckHandler = () => {
+    const newCheckedValue = !checked;
+    setValidationRuleValue(validationKey, newCheckedValue);
+    setChecked(newCheckedValue);
+  };
+
+  const currentConfig = checked ? validatedConfig : { label, color, icon };
 
   return (
     <div className={b()} data-type={type}>
       <Button
         className={b('button')}
-        color={checked ? validatedConfig?.color : color}
-        icon={checked ? validatedConfig?.icon : icon}
-        onClick={() => setChecked(!checked)}
+        color={currentConfig.color}
+        icon={currentConfig.icon}
+        onClick={onCheckHandler}
       >
-        {checked ? validatedConfig?.label : label}
+        {currentConfig.label}
       </Button>
     </div>
   )

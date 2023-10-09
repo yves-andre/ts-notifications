@@ -197,32 +197,30 @@ export const Page: React.FC = () => {
             </>
           </Col>
 
-
-          <Col
-            style={{
-              maxWidth: 620,
-              background: "white",
-              marginRight: -25,
-              display: "flex",
-              flexDirection: "column",
-              alignSelf: "flex-start",
-              height: "calc(100vh - 50px)",
-              position: "sticky",
-              top: 0,
-              zIndex: 5,
-              flexGrow: hasValidation ? 1 : 0,
-              transition: 'flex 150ms ease-in-out'
-            }}
-          >
-            <>
-              {hasValidation && (
-                <NotificationDetail
-                  notification={notification}
-                  onClose={() => onValidationClose()}
-                />
-              )}
-            </>
-          </Col>
+          {hasValidation && (
+            <Col
+              style={{
+                maxWidth: 620,
+                background: "white",
+                marginRight: -25,
+                display: "flex",
+                flexDirection: "column",
+                alignSelf: "flex-start",
+                height: "calc(100vh - 50px)",
+                position: "sticky",
+                top: 0,
+                zIndex: 5,
+                flexGrow: hasValidation ? 1 : 0,
+                transition: 'flex 150ms ease-in-out'
+              }}
+            >
+              <NotificationDetail
+                key={notification?._id}
+                notification={notification}
+                onClose={() => onValidationClose()}
+              />
+            </Col>
+          )}
         </Flex>
       </Layout>
     </>

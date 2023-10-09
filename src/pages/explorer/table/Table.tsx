@@ -306,28 +306,38 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
             <TD field='title' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} start style={{ width: 210 }}>
               Source
             </TD>
-            <TD field='subtitle' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler}>Subject</TD>
-            <TD field='details' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} style={{ width: 250, maxWidth: 250 }}>Details</TD>
-            <TD field='date' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler}>
+            <TD field='subtitle' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} style={{ minWidth: 250 }}>Subject</TD>
+            <TD
+              field='details'
+              sortFilter={sortFilter}
+              sortColumnHandler={sortColumnHandler}
+              style={{
+                width: params?.notificationId ? 'auto' : 350,
+                maxWidth: 350
+              }}
+            >
+              Details
+            </TD>
+            <TD field='date' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} style={{ width: 140, maxWidth: 140 }}>
               Date
             </TD>
             {
               selectedCategory === CATEGORY.ACTION_FEED && (
-                <TD field='actions' align='right' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} end>
+                <TD field='actions' align='right' sortFilter={sortFilter} sortColumnHandler={sortColumnHandler} end style={{ width: 70, maxWidth: 70 }}>
                   {selectedStatus !== STATUS.TREATED ? 'Actions' : ''}
                 </TD>
               )}
-            {selectedStatus !== STATUS.TREATED &&
+            {
               selectedCategory === CATEGORY.INFORMATION_FEED && (
-                <td align='right' width='100' style={{ paddingRight: 18 }}>
-                  <Button
+                <td align='right' width='100' style={{ width: 100, maxWidth: 100, paddingRight: 18 }}>
+                  {selectedStatus !== STATUS.TREATED && <Button
                     size='small'
                     style={{ borderRadius: '10px', margin: 0 }}
                     onClick={dismissAllHandler}
                     color="#0000001f"
                   >
                     Clear All
-                  </Button>
+                  </Button>}
                 </td>
               )}
           </tr>
