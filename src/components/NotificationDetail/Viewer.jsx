@@ -52,20 +52,23 @@ export const ViewerImage = ({ title, url }) => {
     )
 }
 /*----------------------------------------------------------------------------*/
-export const ViewerDoc = ({ title, url, type, zoom = false }) => {
+export const ViewerDoc = (file) => {
+
+    const { title, type, zoom, url, iframe } = file
 
     const getViewer = () => {
+        if (iframe) return iframe
         if (type === 'pdf') return zoom === true ? `${url}#toolbar=0&view=Fit` : `/Style%20Library/apps/viewer/simple.html#${url}`
-        //if (type === 'office') return `/_layouts/15/WopiFrame2.aspx?sourcedoc=${url}&action=embedview&ClientRender=1`
-        if (type === 'office') return `https://home-dev.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BEC6AA48D-5D1A-4DD7-A2F9-B0620F0E15C3%7D&file=Document.docx&action=embedview`
-
-        return `/_layouts/15/WopiFrame2.aspx?sourcedoc=${url}&action=embedview&ClientRender=1`
+        // return `https://home-dev.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BEC6AA48D-5D1A-4DD7-A2F9-B0620F0E15C3%7D&file=Document.docx&action=embedview`
     }
+
+    const viewer = getViewer()
+    if (!viewer) return <ViewerPlaceholder {...file} />
 
     return (
         <iframe
             className={b('doc')}
-            src={getViewer()}
+            src={viewer}
             title={title}
         >
         </iframe>
