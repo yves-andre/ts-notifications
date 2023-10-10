@@ -85,19 +85,22 @@ const mock = {
                 "value": "4.55 CHF",
                 "items": [
                   {
-                    "type": "slideshow",
-                    "slides": [
+                    "type": "viewer",
+                    "files": [
                       {
                         "title": "Image 1",
-                        "url": "https://picsum.photos/id/1011/400/250"
+                        "url": "https://picsum.photos/id/1011/400/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250"
+                        "url": "https://picsum.photos/id/1010/700/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450"
+                        "url": "https://picsum.photos/id/1012/500/450",
+                        "type": "image",
                       }
                     ]
                   },
@@ -189,19 +192,22 @@ const mock = {
                 "value": "52.00 CHF",
                 "items": [
                   {
-                    "type": "slideshow",
-                    "slides": [
+                    "type": "viewer",
+                    "files": [
                       {
                         "title": "Image 1",
-                        "url": "https://picsum.photos/id/1011/400/250"
+                        "url": "https://picsum.photos/id/1011/400/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250"
+                        "url": "https://picsum.photos/id/1010/700/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450"
+                        "url": "https://picsum.photos/id/1012/500/450",
+                        "type": "image",
                       }
                     ]
                   },
@@ -292,19 +298,22 @@ const mock = {
                 "value": "31.00 CHF",
                 "items": [
                   {
-                    "type": "slideshow",
-                    "slides": [
+                    "type": "viewer",
+                    "files": [
                       {
                         "title": "Image 1",
-                        "url": "https://picsum.photos/id/1011/400/250"
+                        "url": "https://picsum.photos/id/1011/400/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250"
+                        "url": "https://picsum.photos/id/1010/700/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450"
+                        "url": "https://picsum.photos/id/1012/500/450",
+                        "type": "image",
                       }
                     ]
                   },
@@ -394,19 +403,22 @@ const mock = {
                 "value": "210.00 CHF",
                 "items": [
                   {
-                    "type": "slideshow",
-                    "slides": [
+                    "type": "viewer",
+                    "files": [
                       {
                         "title": "Image 1",
-                        "url": "https://picsum.photos/id/1011/400/250"
+                        "url": "https://picsum.photos/id/1011/400/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250"
+                        "url": "https://picsum.photos/id/1010/700/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450"
+                        "url": "https://picsum.photos/id/1012/500/450",
+                        "type": "image",
                       }
                     ]
                   },
@@ -497,19 +509,22 @@ const mock = {
                 "value": "6.55 CHF",
                 "items": [
                   {
-                    "type": "slideshow",
-                    "slides": [
+                    "type": "viewer",
+                    "files": [
                       {
                         "title": "Image 1",
-                        "url": "https://picsum.photos/id/1011/400/250"
+                        "url": "https://picsum.photos/id/1011/400/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250"
+                        "url": "https://picsum.photos/id/1010/700/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450"
+                        "url": "https://picsum.photos/id/1012/500/450",
+                        "type": "image",
                       }
                     ]
                   },

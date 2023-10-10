@@ -69,19 +69,22 @@ const mock = {
                 "value": "498 USD",
                 "items": [
                   {
-                    "type": "slideshow",
-                    "slides": [
+                    "type": "viewer",
+                    "files": [
                       {
                         "title": "Image 1",
-                        "url": "https://picsum.photos/id/1011/400/250"
+                        "url": "https://picsum.photos/id/1011/400/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250"
+                        "url": "https://picsum.photos/id/1010/700/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450"
+                        "url": "https://picsum.photos/id/1012/500/450",
+                        "type": "image",
                       }
                     ]
                   },
@@ -171,19 +174,22 @@ const mock = {
                 "value": "52.00 USD",
                 "items": [
                   {
-                    "type": "slideshow",
-                    "slides": [
+                    "type": "viewer",
+                    "files": [
                       {
                         "title": "Image 1",
-                        "url": "https://picsum.photos/id/1011/400/250"
+                        "url": "https://picsum.photos/id/1011/400/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250"
+                        "url": "https://picsum.photos/id/1010/700/250",
+                        "type": "image",
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450"
+                        "url": "https://picsum.photos/id/1012/500/450",
+                        "type": "image",
                       }
                     ]
                   },
