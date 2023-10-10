@@ -96,7 +96,7 @@ export const Explorer: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if(notifications.loaded){
+    if (notifications.loaded) {
       setFilterNotifications(filterAndSortNotifications(notifications.items));
       setLoading(false);
     }
@@ -192,7 +192,7 @@ export const Explorer: React.FC = () => {
       })
     } else {
       notifications.forEach((notification: Notification) => {
-        if(!addedNotificationIds.has(notification._id)){
+        if (!addedNotificationIds.has(notification._id)) {
           addNotificationToGroup('OTHERS', notification);
         }
       })
@@ -229,7 +229,7 @@ export const Explorer: React.FC = () => {
           <Placeholder
             title={`Sorry something went wrong. (Error ${notifications.error})`}
             image='error'
-            theme='dark'
+            theme='white'
             style={{ minHeight: 0 }}
           />
         )
@@ -240,7 +240,7 @@ export const Explorer: React.FC = () => {
           <Placeholder
             title={`Sorry something went wrong. (Timeout)`}
             image='error'
-            theme='dark'
+            theme='white'
             style={{ minHeight: 0 }}
           />
         )
@@ -250,7 +250,7 @@ export const Explorer: React.FC = () => {
           <Placeholder
             title="Sorry something went wrong"
             image='error'
-            theme='dark'
+            theme='white'
             style={{ minHeight: 0 }}
           />
         )

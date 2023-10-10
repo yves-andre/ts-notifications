@@ -26,18 +26,19 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "npm run start-ws && react-scripts start",
-    "start:local": "dotenv -e .env.local -- react-scripts start",
-    "start:development": "dotenv -e .env.development --host 0.0.0.0 react-scripts start",
-    "start:staging": "dotenv -e .env.staging -- react-scripts start",
-    "build": "react-scripts build",
-    "build:development": "dotenv -e .env.development -- react-scripts build",
-    "build:staging": "dotenv -e .env.staging -- react-scripts build",
-    "build:production": "dotenv -e .env.production -- react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "npm run start-ws && craco start",
+    "start:local": "dotenv -e .env.local -- craco start",
+    "start:development": "dotenv -e .env.development --host 0.0.0.0craco start",
+    "start:staging": "dotenv -e .env.staging -- craco start",
+    "build": "craco build",
+    "build:development": "dotenv -e .env.development -- craco build && npm run order-css",
+    "build:staging": "dotenv -e .env.staging -- craco build && npm run order-css",
+    "build:production": "dotenv -e .env.production -- craco build && npm run order-css",
+    "test": "craco test",
+    "eject": "craco eject",
     "update-energies-ui": "npm i @trading/energies-ui",
-    "start-ws": "node ws-server.js &"
+    "start-ws": "node ws-server.js &",
+    "order-css": "node build-order-css.js"
   },
   "eslintConfig": {
     "extends": [
@@ -62,8 +63,11 @@
   },
   "devDependencies": {
     "@codemirror/lang-json": "^6.0.1",
+    "@craco/craco": "^7.1.0",
     "@uiw/react-codemirror": "^4.21.9",
     "dayjs": "^1.11.9",
-    "dotenv-cli": "^7.1.0"
+    "dotenv-cli": "^7.1.0",
+    "jsdom": "^17.0.0",
+    "mini-css-extract-plugin": "^2.7.6"
   }
 }
