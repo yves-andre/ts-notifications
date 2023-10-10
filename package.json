@@ -28,7 +28,7 @@
   "scripts": {
     "start": "npm run start-ws && craco start",
     "start:local": "dotenv -e .env.local -- craco start",
-    "start:development": "dotenv -e .env.development --host 0.0.0.0craco start",
+    "start:development": "dotenv -e .env.development --host 0.0.0.0 craco start",
     "start:staging": "dotenv -e .env.staging -- craco start",
     "build": "craco build",
     "build:development": "dotenv -e .env.development -- craco build && npm run order-css",

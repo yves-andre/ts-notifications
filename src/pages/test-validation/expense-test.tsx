@@ -599,6 +599,48 @@ const mock = {
       },
       {
         "type": "sectionBlock",
+        "title": "Attachment (1)",
+        "items": [
+          {
+            "type": "viewer",
+            "files": [
+              {
+                "title": "Word 1",
+                "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/lib_220912_636539b/TGP%20Files/Document.docx?d=wec6aa48d5d1a4dd7a2f9b0620f0e15c3",
+                "iframe": "https://home-dev.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BEC6AA48D-5D1A-4DD7-A2F9-B0620F0E15C3%7D&file=Document.docx&action=embedview",
+                "type": "office"
+              },
+              {
+                "title": "File1",
+                "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-16348197029/TS%20Forward_Dataviz_Juillet2021.pdf",
+                "type": "pdf"
+              },
+              {
+                "title": "File2",
+                "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-1677668086c/TS_TRADING_NLPrint_202304-v0.6-pages.pdf",
+                "type": "pdf"
+              },
+              {
+                "title": "Image 1",
+                "url": "https://picsum.photos/id/1011/400/250",
+                "type": "image"
+              },
+              {
+                "title": "Image 2",
+                "url": "https://picsum.photos/id/1010/400/250",
+                "type": "image"
+              },
+              {
+                "title": "Image 3",
+                "url": "https://picsum.photos/id/1004/400/250",
+                "type": "image"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "sectionBlock",
         "title": "Information",
         "subtitle": "",
         "items": [
