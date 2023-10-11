@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
   Button,
   Icon,
@@ -25,9 +25,8 @@ import CategoryColor from '../../../data/interfaces/category-color'
 import './Table.scss'
 import classNames from 'classnames'
 import NotificationGroup from '../../../data/interfaces/notification-group'
-import { getUserLogin } from "../../../services/auth-service";
-import { getNotificationIsPending, setNotificationIsSeen } from "../../../services/notification-service";
-import { redirect, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { getNotificationIsPending } from "../../../services/notification-service";
+import { useParams } from 'react-router-dom'
 
 import NotificationItem from './../../../components/NotificationItem'
 import { useNavigateToExplorer } from '../../../hooks/use-navigate-to-explorer'
@@ -81,6 +80,7 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
         const nextNotification = orderedNotifications[0];
         if (nextNotification) {
           navigateToExplorer(nextNotification._id);
+          dispatch(setNotificationIsReadById(nextNotification._id))
         }
       } else {
         navigateToExplorer();
@@ -172,62 +172,6 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
     return applicationColor || APP_CONFIG.DEFAULT_APPLICATION_COLOR
   }
 
-  const getColorIsReadStatus = (sourceName: string) => {
-    const applicationColor = getColorApplication(sourceName)
-    if (applicationColor === APP_CONFIG.DEFAULT_APPLICATION_COLOR) {
-      const filterValue =
-        selectedCategory === CATEGORY.ACTION_FEED ? 'workflow' : 'socialflow'
-      return categoryColors.find((c) => c.title === filterValue)?.color
-    }
-    return applicationColor
-  }
-
-  const renderActionButtons = (notification: Notification) => {
-    switch (notification.category) {
-      case CATEGORY.ACTION_FEED:
-        if (notification.isManual) {
-          return (
-            <Tooltip title='Mark as Treated' placement='left'>
-              <Button
-                size='small'
-                icon='tick'
-                iconOnly
-                color='#161719'
-                style={{ borderRadius: '50%' }}
-                onClick={() => dismissNotificationHandler(notification)}
-              />
-            </Tooltip>
-          )
-        } else {
-          return (
-            <Tooltip title='Open to Treat' placement='left'>
-              <Button
-                size='small'
-                icon='preview'
-                iconOnly
-                color='#161719'
-                style={{ borderRadius: '50%' }}
-                onClick={() => openNotificationHandler(notification)}
-              />
-            </Tooltip>
-          )
-        }
-      case CATEGORY.INFORMATION_FEED:
-        return (
-          <Tooltip title='Clear' placement='left'>
-            <Button
-              size='small'
-              icon='close'
-              iconOnly
-              color='#161719'
-              style={{ borderRadius: '50%' }}
-              onClick={() => dismissNotificationHandler(notification)}
-            />
-          </Tooltip>
-        )
-    }
-  }
-
   const onBadgeClickHandler = (notification: Notification) => {
     switch (notification.category) {
       case CATEGORY.ACTION_FEED:
@@ -272,31 +216,6 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
       </span>
     )
   }
-
-  const getDetailsContent = (notification: Notification) => {
-    let detailsContent = [];
-
-    if (selectedCategory === CATEGORY.INFORMATION_FEED || selectedStatus === STATUS.TO_BE_TREATED) {
-      notification.details && detailsContent.push(<span key="details">{notification.details}</span>, <br key="br" />);
-    }
-
-    if (selectedStatus === STATUS.TREATED && selectedCategory === CATEGORY.ACTION_FEED && notification.treatedBy && notification.treatedOn) {
-      const treatedText = notification.isManual
-        ? "Marked as treated by"
-        : "Treated by";
-
-      detailsContent.push(
-        <span key="treatedDetails">
-          {treatedText} <span style={{ textDecoration: "underline" }}>
-            {getHighlightedText(notification.treatedBy, search)}
-          </span> on {getHighlightedText(notification.treatedOn, search)}
-        </span>
-      );
-    }
-
-    return detailsContent;
-  };
-
 
   return (
     <div className='NotificationTable-wrapper'>
@@ -389,132 +308,6 @@ export const Table: React.FC<Props> = ({ notificationGroups }) => {
                   active={params?.notificationId === notification._id}
                 />
               ))}
-
-
-              {/*{notificationGroup.notifications.map((notification, index) => (
-              <tr
-                key={index}
-                onClick={() => openNotificationHandler(notification)}
-              >
-                <th style={{ whiteSpace: 'nowrap' }}>
-                  {!notification.isRead && (
-                    <Status
-                      variant='badge'
-                      color={getColorIsReadStatus(notification.sourceName)}
-                      style={{ marginLeft: -2, marginRight: 6 }}
-                    ></Status>
-                  )}
-                  {notification.image && (
-                    <Picture
-                      person
-                      round
-                      color={getColorApplication(notification.sourceName)}
-                      size='small'
-                      icon={notification.image}
-                      style={{
-                        marginRight: 10,
-                        marginLeft: notification.isRead ? 10 : 0,
-                      }}
-                    />
-                  )}
-                  <Text
-                    size='small'
-                    uppercase
-                    light
-                    style={{ letterSpacing: '0.065em' }}
-                  >
-                    <>
-                      {search && (
-                        <span>
-                          {getHighlightedText(notification.title, search)}
-                        </span>
-                      )}
-                      {!search && <span>{notification.title}</span>}
-                    </>
-                  </Text>
-                </th>
-
-                <th>
-                  {search && (
-                    <span>
-                      {getHighlightedText(notification.subtitle, search)}
-                    </span>
-                  )}
-                  {!search && (
-                    <span>
-                      {notification.isImportant ? (
-                        <span className='important-explamation'>! </span>
-                      ) : (
-                        ''
-                      )}
-                      {notification.subtitle}
-                    </span>
-                  )}
-                  <br />
-                  <Text light>
-                    <>
-                      {search && (
-                        <span>
-                          {getHighlightedText(notification.description, search)}
-                        </span>
-                      )}
-                      {!search && <span>{notification.description}</span>}
-                    </>
-                  </Text>
-                </th>
-
-                <th>
-                  <Text italic light size='small'>
-                    <>
-                      {
-                        notification.details &&
-                        <>
-                          <span>{notification.details}</span>
-                          <br />
-                        </>
-                      }
-                      {selectedStatus === STATUS.TREATED &&
-                        notification.treatedBy &&
-                        notification.treatedOn &&
-                        search &&
-                        <span>Marked as treated by  <span style={{ textDecoration: "underline" }}>{getHighlightedText(notification.treatedBy, search)}</span> on {getHighlightedText(notification.treatedOn, search)}</span>
-                      }
-                      {selectedStatus === STATUS.TREATED &&
-                        notification.treatedBy &&
-                        notification.treatedOn &&
-                        !search &&
-                        <span>Marked as treated by <span style={{ textDecoration: "underline" }}>{notification.treatedBy}</span> on {notification.treatedOn}</span>
-                      }
-                    </>
-                  </Text>
-                </th>
-
-                <th>
-                  <Text italic light size='small'>
-                    <>
-                      {search && (
-                        <span>
-                          {getHighlightedText(
-                            formatDate(notification.date),
-                            search
-                          )}
-                        </span>
-                      )}
-                      {!search && <span>{formatDate(notification.date)}</span>}
-                    </>
-                  </Text>
-                </th>
-                {selectedStatus !== STATUS.TREATED && (
-                  <th
-                    align='right'
-                    style={{ paddingRight: 5 }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {renderActionButtons(notification)}
-                  </th>
-                )}
-              </tr>
-            ))}*/}
             </React.Fragment>
           ))}
         </tbody>
