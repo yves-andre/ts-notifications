@@ -236,7 +236,6 @@ export const Panel = ({ notification, onClose, loading = false, isDebug = false,
       if (notification?.hasValidationForm && notification?._id === currentValidationForm.current) {
         // If notification is the same, display the same form with updated status
         if (currentValidationFormJSON.current) {
-          debugger;
           displayValidationForm(currentValidationFormJSON.current)
         }
       } else {
