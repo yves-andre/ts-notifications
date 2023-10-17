@@ -19,7 +19,7 @@ const mock = {
       "value": false,
       "valid": {
         "color": "green",
-        "icon": "check"
+        "icon": "filled/check-circle"
       },
       "invalid": {
         "color": "orange",
@@ -35,7 +35,7 @@ const mock = {
         "type": "headerBlock",
         "title": "Alexandra DE LA VILLARDIERE",
         "subtitle": "2022.10.10 - Marseille - LNG Carrier Training",
-        "image": "https://picsum.photos/id/1005/40/40",
+        "image": "https://home.dts.corp.local/Style%20Library/TSImg/Charts/Delve/capucine.viviani@totsa.com.jpg",
         "total": "590.00 CHF",
         "buttons": [
           {
@@ -73,6 +73,30 @@ const mock = {
         "type": "sectionBlock",
         "title": "Details",
         "subtitle": "",
+        "infotip": {
+          "icon": "filled/info-circle",
+          "color": "gray",
+          "tooltip": "Caption",
+          "closeButtonText": "Ok, Got it",
+          "items": [
+            {
+              "type": "text",
+              "icon": "warning",
+              "color": "orange",
+              "title": "Mandatory Check",
+              "subtitle": "",
+              "text": "You have to check this line if you want to validate this item."
+            },
+            {
+              "type": "text",
+              "icon": "warning",
+              "color": "purple",
+              "title": "With beneficiary company",
+              "subtitle": "",
+              "text": "There is a beneficiary company in this expense line."
+            }
+          ]
+        },
         "items": [
           {
             "type": "listBlock",
@@ -88,19 +112,35 @@ const mock = {
                     "type": "viewer",
                     "files": [
                       {
+                        "title": "Word 1",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/lib_220912_636539b/TGP%20Files/Document.docx?d=wec6aa48d5d1a4dd7a2f9b0620f0e15c3",
+                        "iframe": "https://home-dev.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BEC6AA48D-5D1A-4DD7-A2F9-B0620F0E15C3%7D&file=Document.docx&action=embedview",
+                        "type": "office"
+                      },
+                      {
+                        "title": "File1",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-16348197029/TS%20Forward_Dataviz_Juillet2021.pdf",
+                        "type": "pdf"
+                      },
+                      {
+                        "title": "File2",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-1677668086c/TS_TRADING_NLPrint_202304-v0.6-pages.pdf",
+                        "type": "pdf"
+                      },
+                      {
                         "title": "Image 1",
                         "url": "https://picsum.photos/id/1011/400/250",
-                        "type": "image",
+                        "type": "image"
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250",
-                        "type": "image",
+                        "url": "https://picsum.photos/id/1010/400/250",
+                        "type": "image"
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450",
-                        "type": "image",
+                        "url": "https://picsum.photos/id/1004/400/250",
+                        "type": "image"
                       }
                     ]
                   },
@@ -112,9 +152,12 @@ const mock = {
                     "type": "sectionBlock",
                     "items": [
                       {
-                        "type": "date",
-                        "label": "Date",
-                        "value": "21 Oct. 2022"
+                        "type": "fromToDate",
+                        "labelFrom": "From",
+                        "labelTo": "To",
+                        "dateFormat": "DD MMM. YYYY",
+                        "fromDate": "10 Oct. 2022",
+                        "toDate": "11 Oct. 2022"
                       }
                     ]
                   },
@@ -173,7 +216,6 @@ const mock = {
                         "label": "Comment Check",
                         "color": "orange",
                         "icon": "outline/stop",
-                        "validationKey": "item1",
                         "validationValue": false,
                         "validatedConfig": {
                           "label": "Comment checked",
@@ -195,19 +237,35 @@ const mock = {
                     "type": "viewer",
                     "files": [
                       {
+                        "title": "Word 1",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/lib_220912_636539b/TGP%20Files/Document.docx?d=wec6aa48d5d1a4dd7a2f9b0620f0e15c3",
+                        "iframe": "https://home-dev.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BEC6AA48D-5D1A-4DD7-A2F9-B0620F0E15C3%7D&file=Document.docx&action=embedview",
+                        "type": "office"
+                      },
+                      {
+                        "title": "File1",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-16348197029/TS%20Forward_Dataviz_Juillet2021.pdf",
+                        "type": "pdf"
+                      },
+                      {
+                        "title": "File2",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-1677668086c/TS_TRADING_NLPrint_202304-v0.6-pages.pdf",
+                        "type": "pdf"
+                      },
+                      {
                         "title": "Image 1",
                         "url": "https://picsum.photos/id/1011/400/250",
-                        "type": "image",
+                        "type": "image"
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250",
-                        "type": "image",
+                        "url": "https://picsum.photos/id/1010/400/250",
+                        "type": "image"
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450",
-                        "type": "image",
+                        "url": "https://picsum.photos/id/1004/400/250",
+                        "type": "image"
                       }
                     ]
                   },
@@ -219,9 +277,12 @@ const mock = {
                     "type": "sectionBlock",
                     "items": [
                       {
-                        "type": "date",
-                        "label": "Date",
-                        "value": "21 Oct. 2022"
+                        "type": "fromToDate",
+                        "labelFrom": "From",
+                        "labelTo": "To",
+                        "dateFormat": "DD MMM. YYYY",
+                        "fromDate": "10 Oct. 2022",
+                        "toDate": "11 Oct. 2022"
                       }
                     ]
                   },
@@ -301,19 +362,35 @@ const mock = {
                     "type": "viewer",
                     "files": [
                       {
+                        "title": "Word 1",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/lib_220912_636539b/TGP%20Files/Document.docx?d=wec6aa48d5d1a4dd7a2f9b0620f0e15c3",
+                        "iframe": "https://home-dev.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BEC6AA48D-5D1A-4DD7-A2F9-B0620F0E15C3%7D&file=Document.docx&action=embedview",
+                        "type": "office"
+                      },
+                      {
+                        "title": "File1",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-16348197029/TS%20Forward_Dataviz_Juillet2021.pdf",
+                        "type": "pdf"
+                      },
+                      {
+                        "title": "File2",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-1677668086c/TS_TRADING_NLPrint_202304-v0.6-pages.pdf",
+                        "type": "pdf"
+                      },
+                      {
                         "title": "Image 1",
                         "url": "https://picsum.photos/id/1011/400/250",
-                        "type": "image",
+                        "type": "image"
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250",
-                        "type": "image",
+                        "url": "https://picsum.photos/id/1010/400/250",
+                        "type": "image"
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450",
-                        "type": "image",
+                        "url": "https://picsum.photos/id/1004/400/250",
+                        "type": "image"
                       }
                     ]
                   },
@@ -325,9 +402,12 @@ const mock = {
                     "type": "sectionBlock",
                     "items": [
                       {
-                        "type": "date",
-                        "label": "Date",
-                        "value": "21 Oct. 2022"
+                        "type": "fromToDate",
+                        "labelFrom": "From",
+                        "labelTo": "To",
+                        "dateFormat": "DD MMM. YYYY",
+                        "fromDate": "10 Oct. 2022",
+                        "toDate": "11 Oct. 2022"
                       }
                     ]
                   },
@@ -406,19 +486,35 @@ const mock = {
                     "type": "viewer",
                     "files": [
                       {
+                        "title": "Word 1",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/lib_220912_636539b/TGP%20Files/Document.docx?d=wec6aa48d5d1a4dd7a2f9b0620f0e15c3",
+                        "iframe": "https://home-dev.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BEC6AA48D-5D1A-4DD7-A2F9-B0620F0E15C3%7D&file=Document.docx&action=embedview",
+                        "type": "office"
+                      },
+                      {
+                        "title": "File1",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-16348197029/TS%20Forward_Dataviz_Juillet2021.pdf",
+                        "type": "pdf"
+                      },
+                      {
+                        "title": "File2",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-1677668086c/TS_TRADING_NLPrint_202304-v0.6-pages.pdf",
+                        "type": "pdf"
+                      },
+                      {
                         "title": "Image 1",
                         "url": "https://picsum.photos/id/1011/400/250",
-                        "type": "image",
+                        "type": "image"
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250",
-                        "type": "image",
+                        "url": "https://picsum.photos/id/1010/400/250",
+                        "type": "image"
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450",
-                        "type": "image",
+                        "url": "https://picsum.photos/id/1004/400/250",
+                        "type": "image"
                       }
                     ]
                   },
@@ -430,9 +526,12 @@ const mock = {
                     "type": "sectionBlock",
                     "items": [
                       {
-                        "type": "date",
-                        "label": "Date",
-                        "value": "21 Oct. 2022"
+                        "type": "fromToDate",
+                        "labelFrom": "From",
+                        "labelTo": "To",
+                        "dateFormat": "DD MMM. YYYY",
+                        "fromDate": "10 Oct. 2022",
+                        "toDate": "11 Oct. 2022"
                       }
                     ]
                   },
@@ -507,24 +606,44 @@ const mock = {
                 "subtitle": "Subsistance | 10 Oct 2022",
                 "image": "https://picsum.photos/id/1012/60/40",
                 "value": "6.55 CHF",
+                "status": {
+                  "color": "purple",
+                  "icon": "warning"
+                },
                 "items": [
                   {
                     "type": "viewer",
                     "files": [
                       {
+                        "title": "Word 1",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/lib_220912_636539b/TGP%20Files/Document.docx?d=wec6aa48d5d1a4dd7a2f9b0620f0e15c3",
+                        "iframe": "https://home-dev.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BEC6AA48D-5D1A-4DD7-A2F9-B0620F0E15C3%7D&file=Document.docx&action=embedview",
+                        "type": "office"
+                      },
+                      {
+                        "title": "File1",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-16348197029/TS%20Forward_Dataviz_Juillet2021.pdf",
+                        "type": "pdf"
+                      },
+                      {
+                        "title": "File2",
+                        "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-1677668086c/TS_TRADING_NLPrint_202304-v0.6-pages.pdf",
+                        "type": "pdf"
+                      },
+                      {
                         "title": "Image 1",
                         "url": "https://picsum.photos/id/1011/400/250",
-                        "type": "image",
+                        "type": "image"
                       },
                       {
                         "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250",
-                        "type": "image",
+                        "url": "https://picsum.photos/id/1010/400/250",
+                        "type": "image"
                       },
                       {
                         "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450",
-                        "type": "image",
+                        "url": "https://picsum.photos/id/1004/400/250",
+                        "type": "image"
                       }
                     ]
                   },
@@ -536,9 +655,12 @@ const mock = {
                     "type": "sectionBlock",
                     "items": [
                       {
-                        "type": "date",
-                        "label": "Date",
-                        "value": "21 Oct. 2022"
+                        "type": "fromToDate",
+                        "labelFrom": "From",
+                        "labelTo": "To",
+                        "dateFormat": "DD MMM. YYYY",
+                        "fromDate": "10 Oct. 2022",
+                        "toDate": "11 Oct. 2022"
                       }
                     ]
                   },
@@ -614,48 +736,6 @@ const mock = {
       },
       {
         "type": "sectionBlock",
-        "title": "Attachment (1)",
-        "items": [
-          {
-            "type": "viewer",
-            "files": [
-              {
-                "title": "Word 1",
-                "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/lib_220912_636539b/TGP%20Files/Document.docx?d=wec6aa48d5d1a4dd7a2f9b0620f0e15c3",
-                "iframe": "https://home-dev.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BEC6AA48D-5D1A-4DD7-A2F9-B0620F0E15C3%7D&file=Document.docx&action=embedview",
-                "type": "office"
-              },
-              {
-                "title": "File1",
-                "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-16348197029/TS%20Forward_Dataviz_Juillet2021.pdf",
-                "type": "pdf"
-              },
-              {
-                "title": "File2",
-                "url": "https://home-dev.dts.corp.local/dashboarddocuments/dashboard_libraries_0/dwp_db_lib_20200325_163945_2c333da/ms-viewer-1677668086c/TS_TRADING_NLPrint_202304-v0.6-pages.pdf",
-                "type": "pdf"
-              },
-              {
-                "title": "Image 1",
-                "url": "https://picsum.photos/id/1011/400/250",
-                "type": "image"
-              },
-              {
-                "title": "Image 2",
-                "url": "https://picsum.photos/id/1010/400/250",
-                "type": "image"
-              },
-              {
-                "title": "Image 3",
-                "url": "https://picsum.photos/id/1004/400/250",
-                "type": "image"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "sectionBlock",
         "title": "Information",
         "subtitle": "",
         "items": [
@@ -700,7 +780,7 @@ const mock = {
                     "data": {
                       "employee": {
                         "fullName": "Alexandra DE LA VILLARDIERE",
-                        "image": "https://picsum.photos/id/1005/40/40",
+                        "image": "https://home.dts.corp.local/Style%20Library/TSImg/Charts/Delve/capucine.viviani@totsa.com.jpg",
                         "jobTitle": "General Manager Trading Ops and Logistics",
                         "branch": "TS",
                         "department": "Trading",
@@ -772,7 +852,7 @@ const mock = {
             "commentEnabled": true,
             "commentPlaceholder": "Comments",
             "validateButton": {
-              "commentMandatory": true
+              "commentMandatory": false
             },
             "rejectButton": {
               "commentMandatory": true

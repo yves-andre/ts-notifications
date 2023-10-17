@@ -70,7 +70,10 @@ export const ValidationContextProvider = ({ validationRules, children }) => {
     const errors = [];
     for (let key in validation) {
         if (validation[key].value === false) {
-            errors.push(validation[key].errorMessage);
+          errors.push({
+            title: "Mandatory Check",
+            message: validation[key].errorMessage,
+          });
         }
     }
     return errors;

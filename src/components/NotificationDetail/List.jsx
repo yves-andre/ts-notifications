@@ -110,7 +110,7 @@ const ListItem = ({ title, subtitle, status, image, icon, value, items, validati
     }else{
       setListItemStatus(status)
     }
-  }, [listItemValidationRules]);
+  }, [listItemValidationRules, status]);
 
   const onCloseHandler = () => {
     setOpen(false);

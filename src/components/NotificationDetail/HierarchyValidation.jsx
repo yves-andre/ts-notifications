@@ -36,8 +36,8 @@ const ValidationErrorsPopup = ({ errors, isOpen, onClose }) => {
       type: "text",
       icon: "warning",
       color: "orange",
-      title: "Mandatory Check",
-      text: error,
+      title: error.title,
+      text: error.message,
     }
   });
 
@@ -108,7 +108,10 @@ export const HierarchyValidation = ({
       setIsUpdating(false);
     } else {
       const validationErrorMessages = [];
-      !hierarchyValid && validationErrorMessages.push("Comment is mandatory when validating");
+      !hierarchyValid && validationErrorMessages.push({
+        title: "Mandatory Comment",
+        message: "Comment is mandatory when validating"
+      });
       validationRulesErrors.length && validationErrorMessages.push(...validationRulesErrors);
       setValidationErrors(validationErrorMessages);
       setShowValidationPopup(true);
@@ -126,7 +129,10 @@ export const HierarchyValidation = ({
       }
       setIsUpdating(false);
     } else {
-      setValidationErrors(["Comment is mandatory when rejecting"]);
+      setValidationErrors([{
+        title: "Mandatory Comment",
+        message: "Comment is mandatory when rejecting"
+      }]);
       setShowValidationPopup(true);
     }
   };
