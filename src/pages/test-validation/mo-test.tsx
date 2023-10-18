@@ -21,7 +21,7 @@ const mock = {
         "type": "headerBlock",
         "title": "Elena CORMIER",
         "subtitle": "HMC Oil Transportation Mesurement Comitee Meeting at Exxomobil Spring Texas",
-        "image": "https://picsum.photos/id/1005/40/40",
+        "image": "https://home.dts.corp.local/Style%20Library/TSImg/Charts/Delve/capucine.viviani@totsa.com.jpg",
         "total": "USD.- 1'044.00",
         "buttons": [
           {
@@ -427,7 +427,7 @@ const mock = {
                     "data": {
                       "employee": {
                         "fullName": "Alexandra DE LA VILLARDIERE",
-                        "image": "https://picsum.photos/id/1005/40/40",
+                        "image": "https://home.dts.corp.local/Style%20Library/TSImg/Charts/Delve/capucine.viviani@totsa.com.jpg",
                         "jobTitle": "General Manager Trading Ops and Logistics",
                         "branch": "TS",
                         "department": "Trading",
@@ -458,7 +458,7 @@ const mock = {
                     "data": {
                       "employee": {
                         "fullName": "Alexandra DE LA VILLARDIERE",
-                        "image": "https://picsum.photos/id/1005/40/40",
+                        "image": "https://home.dts.corp.local/Style%20Library/TSImg/Charts/Delve/capucine.viviani@totsa.com.jpg",
                         "jobTitle": "General Manager Trading Ops and Logistics",
                         "branch": "TS",
                         "department": "Trading",
