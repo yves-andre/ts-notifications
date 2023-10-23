@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import { Page, Error } from '.'
 
@@ -41,38 +41,58 @@ const b = BEM(styles)
 }
 */
 /*----------------------------------------------------------------------------*/
-export const ViewerImage = ({ title, url }) => {
+export const ViewerImage = (file) => {
+    const { title, url } = file
     return (
-        <figure className={b('figure')} data-viewer="img">
-            <img className={b('image')} src={url} alt={title} />
-            {title && (
-                <figcaption className={b('title')}>{title}</figcaption>
-            )}
-        </figure>
+        <>
+            <ViewerPlaceholder {...file} />
+            <figure className={b('figure')} data-viewer="img">
+                <img className={b('image')} src={url} alt={title} onError={(e) => {
+                    e.currentTarget.onerror = null
+                    e.currentTarget.style.display = "none"
+                    }}/>
+                {title && (
+                    <figcaption className={b('title')}>{title}</figcaption>
+                )}
+            </figure>
+        </>
     )
 }
 /*----------------------------------------------------------------------------*/
 export const ViewerDoc = (file) => {
+    const { title, type, zoom, url, iframe } = file;
 
-    const { title, type, zoom, url, iframe } = file
+    const [placeholder, setPlaceholder] = useState(false);
+    const [loaded, seLoaded] = useState(false);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setPlaceholder(!loaded);
+        }, 300);
+
+        return () => clearTimeout(timeoutId); // Cleanup timeout if the component is unmounted
+    }, []);
 
     const getViewer = () => {
-        if (iframe) return iframe
-        if (type === 'pdf') return zoom === true ? `${url}#toolbar=0&view=Fit` : `/Style%20Library/apps/viewer/simple.html#${url}`
-        // return `https://home-dev.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BEC6AA48D-5D1A-4DD7-A2F9-B0620F0E15C3%7D&file=Document.docx&action=embedview`
+        if (iframe) return iframe;
+        if (type === 'pdf') return zoom === true ? `${url}#toolbar=0&view=Fit` : `/Style%20Library/apps/viewer/simple.html#${url}`;
     }
 
-    const viewer = getViewer()
-    if (!viewer) return <ViewerPlaceholder {...file} />
+    const viewer = getViewer();
 
     return (
-        <iframe
-            className={b('doc')}
-            src={viewer}
-            title={title}
-        >
-        </iframe>
-    )
+        <>
+            {placeholder && <ViewerPlaceholder {...file} />}
+            <iframe
+                sandbox="allow-scripts allow-same-origin allow-presentation allow-forms"
+                className={b('doc')}
+                src={viewer}
+                title={title}
+                onLoad={(e) => seLoaded(true)}
+            >
+            </iframe>
+        </>
+    );
 }
 
 
