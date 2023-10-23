@@ -72,20 +72,33 @@ const mock = {
                     "type": "viewer",
                     "files": [
                       {
-                        "title": "Image 1",
-                        "url": "https://picsum.photos/id/1011/400/250",
-                        "type": "image",
+                        "title": "",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Fil<es-001fecc9/Fonctionnel%20-%20Specs%20v3.pdf?d=w1b44c46848194a65aff5727f77643d9f",
+                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B1B44C468-4819-4A65-AFF5-727F77643D9F%7D&file=Fonctionnel%20-%20Specs%20v3.pdf&action=embedview",
+                        "type": "office"
                       },
                       {
-                        "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250",
-                        "type": "image",
+                        "title": "Image",
+                        "url": "https://images.freeimages.com/images/large-previews/913/sea-3-1188161.jpg",
+                        "type": "image"
                       },
                       {
-                        "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450",
-                        "type": "image",
-                      }
+                        "title": "Doc",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-b99c4f1d/Release%20Note%20NOTIFIER.docx?d=w997674f7bb694ec9b3128627044cabbd",
+                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B997674F7-BB69-4EC9-B312-8627044CABBD%7D&file=Release%20Note%20NOTIFIER.docx&action=embedview",
+                        "type": "office"
+                      },
+                      {
+                        "title": "EML",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Notifier V2.0 (Kerberos).eml",
+                        "type": "office"
+                      },
+                      {
+                        "title": "XSLX",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Workbook.xlsx?d=we41fb685b22c43beb1a8e22ae5b53c9d",
+                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7BE41FB685-B22C-43BE-B1A8-E22AE5B53C9D%7D&file=Workbook.xlsx&action=embedview",
+                        "type": "office"
+                      },
                     ]
                   },
                   {
@@ -96,9 +109,12 @@ const mock = {
                     "type": "sectionBlock",
                     "items": [
                       {
-                        "type": "date",
-                        "label": "Date",
-                        "value": "21 Oct. 2022"
+                        "type": "fromToDate",
+                        "labelFrom": "From",
+                        "labelTo": "To",
+                        "dateFormat": "DD MMM. YYYY",
+                        "fromDate": "10 Oct. 2022",
+                        "toDate": "11 Oct. 2022"
                       }
                     ]
                   },
@@ -146,23 +162,6 @@ const mock = {
                             "color": "blue"
                           }
                         ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "footerBlock",
-                    "items": [
-                      {
-                        "type": "rulesValidationButton",
-                        "label": "Comment Check",
-                        "color": "orange",
-                        "icon": "outline/stop",
-                        "validationValue": false,
-                        "validatedConfig": {
-                          "label": "Comment checked",
-                          "icon": "filled/check-square",
-                          "color": "green"
-                        }
                       }
                     ]
                   }
@@ -177,20 +176,33 @@ const mock = {
                     "type": "viewer",
                     "files": [
                       {
-                        "title": "Image 1",
-                        "url": "https://picsum.photos/id/1011/400/250",
-                        "type": "image",
+                        "title": "",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Fil<es-001fecc9/Fonctionnel%20-%20Specs%20v3.pdf?d=w1b44c46848194a65aff5727f77643d9f",
+                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B1B44C468-4819-4A65-AFF5-727F77643D9F%7D&file=Fonctionnel%20-%20Specs%20v3.pdf&action=embedview",
+                        "type": "office"
                       },
                       {
-                        "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250",
-                        "type": "image",
+                        "title": "Image",
+                        "url": "https://images.freeimages.com/images/large-previews/913/sea-3-1188161.jpg",
+                        "type": "image"
                       },
                       {
-                        "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450",
-                        "type": "image",
-                      }
+                        "title": "Doc",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-b99c4f1d/Release%20Note%20NOTIFIER.docx?d=w997674f7bb694ec9b3128627044cabbd",
+                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B997674F7-BB69-4EC9-B312-8627044CABBD%7D&file=Release%20Note%20NOTIFIER.docx&action=embedview",
+                        "type": "office"
+                      },
+                      {
+                        "title": "EML",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Notifier V2.0 (Kerberos).eml",
+                        "type": "office"
+                      },
+                      {
+                        "title": "XSLX",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Workbook.xlsx?d=we41fb685b22c43beb1a8e22ae5b53c9d",
+                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7BE41FB685-B22C-43BE-B1A8-E22AE5B53C9D%7D&file=Workbook.xlsx&action=embedview",
+                        "type": "office"
+                      },
                     ]
                   },
                   {
@@ -201,9 +213,12 @@ const mock = {
                     "type": "sectionBlock",
                     "items": [
                       {
-                        "type": "date",
-                        "label": "Date",
-                        "value": "21 Oct. 2022"
+                        "type": "fromToDate",
+                        "labelFrom": "From",
+                        "labelTo": "To",
+                        "dateFormat": "DD MMM. YYYY",
+                        "fromDate": "10 Oct. 2022",
+                        "toDate": "11 Oct. 2022"
                       }
                     ]
                   },
@@ -251,23 +266,6 @@ const mock = {
                             "color": "blue"
                           }
                         ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "footerBlock",
-                    "items": [
-                      {
-                        "type": "rulesValidationButton",
-                        "label": "Comment Check",
-                        "color": "orange",
-                        "icon": "outline/stop",
-                        "validationValue": false,
-                        "validatedConfig": {
-                          "label": "Comment checked",
-                          "icon": "filled/check-square",
-                          "color": "green"
-                        }
                       }
                     ]
                   }
@@ -279,20 +277,36 @@ const mock = {
                 "value": "31.00 USD",
                 "items": [
                   {
-                    "type": "slideshow",
-                    "slides": [
+                    "type": "viewer",
+                    "files": [
                       {
-                        "title": "Image 1",
-                        "url": "https://picsum.photos/id/1011/400/250"
+                        "title": "",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Fil<es-001fecc9/Fonctionnel%20-%20Specs%20v3.pdf?d=w1b44c46848194a65aff5727f77643d9f",
+                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B1B44C468-4819-4A65-AFF5-727F77643D9F%7D&file=Fonctionnel%20-%20Specs%20v3.pdf&action=embedview",
+                        "type": "office"
                       },
                       {
-                        "title": "Image 2",
-                        "url": "https://picsum.photos/id/1010/700/250"
+                        "title": "Image",
+                        "url": "https://images.freeimages.com/images/large-previews/913/sea-3-1188161.jpg",
+                        "type": "image"
                       },
                       {
-                        "title": "Image 3",
-                        "url": "https://picsum.photos/id/1012/500/450"
-                      }
+                        "title": "Doc",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-b99c4f1d/Release%20Note%20NOTIFIER.docx?d=w997674f7bb694ec9b3128627044cabbd",
+                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B997674F7-BB69-4EC9-B312-8627044CABBD%7D&file=Release%20Note%20NOTIFIER.docx&action=embedview",
+                        "type": "office"
+                      },
+                      {
+                        "title": "EML",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Notifier V2.0 (Kerberos).eml",
+                        "type": "office"
+                      },
+                      {
+                        "title": "XSLX",
+                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Workbook.xlsx?d=we41fb685b22c43beb1a8e22ae5b53c9d",
+                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7BE41FB685-B22C-43BE-B1A8-E22AE5B53C9D%7D&file=Workbook.xlsx&action=embedview",
+                        "type": "office"
+                      },
                     ]
                   },
                   {
@@ -303,9 +317,12 @@ const mock = {
                     "type": "sectionBlock",
                     "items": [
                       {
-                        "type": "date",
-                        "label": "Date",
-                        "value": "21 Oct. 2022"
+                        "type": "fromToDate",
+                        "labelFrom": "From",
+                        "labelTo": "To",
+                        "dateFormat": "DD MMM. YYYY",
+                        "fromDate": "10 Oct. 2022",
+                        "toDate": "11 Oct. 2022"
                       }
                     ]
                   },
@@ -353,22 +370,6 @@ const mock = {
                             "color": "blue"
                           }
                         ]
-                      }
-                    ]
-                  },
-                  {
-                    "items": [
-                      {
-                        "type": "rulesValidationButton",
-                        "label": "Comment Check",
-                        "color": "orange",
-                        "icon": "outline/stop",
-                        "validationValue": false,
-                        "validatedConfig": {
-                          "label": "Comment checked",
-                          "icon": "filled/check-square",
-                          "color": "green"
-                        }
                       }
                     ]
                   }
