@@ -20,6 +20,7 @@ import {
 import { BEM } from '@trading/energies-ui'
 
 import styles from './Block.module.scss'
+import PageHeader from './PageHeader'
 const b = BEM(styles)
 /*----------------------------------------------------------------------------*/
 
@@ -49,6 +50,7 @@ export const Block = ({ type, ...restProps }) => {
     text: Text,
     title: Title,
     validationHistory: ValidationHistory,
+    pageHeader: PageHeader,
   }
   const CurrentView = View[type] ?? NotFoundView
   return <CurrentView type={type} {...restProps} />
