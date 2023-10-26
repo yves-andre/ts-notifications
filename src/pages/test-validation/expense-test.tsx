@@ -105,40 +105,39 @@ const mock = {
                 "title": "Public Transport",
                 "validationKey": "item1",
                 "subtitle": "Transportation | 10 Oct 2022",
-                "image": "https://picsum.photos/id/1008/500/700",
+                "image": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-1.jpg",
                 "value": "4.55 CHF",
                 "items": [
                   {
                     "type": "viewer",
                     "files": [
                       {
-                        "title": "",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Fil<es-001fecc9/Fonctionnel%20-%20Specs%20v3.pdf?d=w1b44c46848194a65aff5727f77643d9f",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B1B44C468-4819-4A65-AFF5-727F77643D9F%7D&file=Fonctionnel%20-%20Specs%20v3.pdf&action=embedview",
-                        "type": "office"
+                        "title": "Image 1",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Slides.pdf",
+                        "type": "pdf"
                       },
                       {
                         "title": "Image",
-                        "url": "https://images.freeimages.com/images/large-previews/913/sea-3-1188161.jpg",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-1.jpg",
                         "type": "image"
                       },
                       {
                         "title": "Doc",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-b99c4f1d/Release%20Note%20NOTIFIER.docx?d=w997674f7bb694ec9b3128627044cabbd",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B997674F7-BB69-4EC9-B312-8627044CABBD%7D&file=Release%20Note%20NOTIFIER.docx&action=embedview",
+                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=default",
+                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=embedview",
                         "type": "office"
                       },
                       {
                         "title": "EML",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Notifier V2.0 (Kerberos).eml",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Email.msg",
                         "type": "office"
                       },
                       {
                         "title": "XSLX",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Workbook.xlsx?d=we41fb685b22c43beb1a8e22ae5b53c9d",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7BE41FB685-B22C-43BE-B1A8-E22AE5B53C9D%7D&file=Workbook.xlsx&action=embedview",
+                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=default",
+                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=embedview",
                         "type": "office"
-                      },
+                      }
                     ]
                   },
                   {
@@ -212,6 +211,7 @@ const mock = {
                         "type": "rulesValidationButton",
                         "label": "Comment Check",
                         "color": "orange",
+                        "validationKey": "item1",
                         "icon": "outline/stop",
                         "validationValue": false,
                         "validatedConfig": {
@@ -227,40 +227,39 @@ const mock = {
               {
                 "title": "Dinner",
                 "subtitle": "Subsistance | 10 Oct 2022",
-                "image": "https://picsum.photos/id/1009/40/40",
+                "image": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-2.jpg",
                 "value": "52.00 CHF",
                 "items": [
                   {
                     "type": "viewer",
                     "files": [
                       {
-                        "title": "",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Fil<es-001fecc9/Fonctionnel%20-%20Specs%20v3.pdf?d=w1b44c46848194a65aff5727f77643d9f",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B1B44C468-4819-4A65-AFF5-727F77643D9F%7D&file=Fonctionnel%20-%20Specs%20v3.pdf&action=embedview",
-                        "type": "office"
+                        "title": "Image 1",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Slides.pdf",
+                        "type": "pdf"
                       },
                       {
                         "title": "Image",
-                        "url": "https://images.freeimages.com/images/large-previews/913/sea-3-1188161.jpg",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-1.jpg",
                         "type": "image"
                       },
                       {
                         "title": "Doc",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-b99c4f1d/Release%20Note%20NOTIFIER.docx?d=w997674f7bb694ec9b3128627044cabbd",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B997674F7-BB69-4EC9-B312-8627044CABBD%7D&file=Release%20Note%20NOTIFIER.docx&action=embedview",
+                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=default",
+                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=embedview",
                         "type": "office"
                       },
                       {
                         "title": "EML",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Notifier V2.0 (Kerberos).eml",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Email.msg",
                         "type": "office"
                       },
                       {
                         "title": "XSLX",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Workbook.xlsx?d=we41fb685b22c43beb1a8e22ae5b53c9d",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7BE41FB685-B22C-43BE-B1A8-E22AE5B53C9D%7D&file=Workbook.xlsx&action=embedview",
+                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=default",
+                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=embedview",
                         "type": "office"
-                      },
+                      }
                     ]
                   },
                   {
@@ -349,40 +348,39 @@ const mock = {
               {
                 "title": "Taxi",
                 "subtitle": "Transportation | 10 Oct 2022",
-                "image": "https://picsum.photos/id/1010/40/40",
+                "image": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-3.jpg",
                 "value": "31.00 CHF",
                 "items": [
                   {
                     "type": "viewer",
                     "files": [
                       {
-                        "title": "",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Fil<es-001fecc9/Fonctionnel%20-%20Specs%20v3.pdf?d=w1b44c46848194a65aff5727f77643d9f",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B1B44C468-4819-4A65-AFF5-727F77643D9F%7D&file=Fonctionnel%20-%20Specs%20v3.pdf&action=embedview",
-                        "type": "office"
+                        "title": "Image 1",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Slides.pdf",
+                        "type": "pdf"
                       },
                       {
                         "title": "Image",
-                        "url": "https://images.freeimages.com/images/large-previews/913/sea-3-1188161.jpg",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-1.jpg",
                         "type": "image"
                       },
                       {
                         "title": "Doc",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-b99c4f1d/Release%20Note%20NOTIFIER.docx?d=w997674f7bb694ec9b3128627044cabbd",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B997674F7-BB69-4EC9-B312-8627044CABBD%7D&file=Release%20Note%20NOTIFIER.docx&action=embedview",
+                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=default",
+                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=embedview",
                         "type": "office"
                       },
                       {
                         "title": "EML",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Notifier V2.0 (Kerberos).eml",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Email.msg",
                         "type": "office"
                       },
                       {
                         "title": "XSLX",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Workbook.xlsx?d=we41fb685b22c43beb1a8e22ae5b53c9d",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7BE41FB685-B22C-43BE-B1A8-E22AE5B53C9D%7D&file=Workbook.xlsx&action=embedview",
+                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=default",
+                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=embedview",
                         "type": "office"
-                      },
+                      }
                     ]
                   },
                   {
@@ -470,40 +468,39 @@ const mock = {
               {
                 "title": "Hotel Golden Tulio Villa",
                 "subtitle": "Hotel | 10 Oct 2022",
-                "image": "https://picsum.photos/id/1011/40/40",
+                "image": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-4.jpg",
                 "value": "210.00 CHF",
                 "items": [
                   {
                     "type": "viewer",
                     "files": [
                       {
-                        "title": "",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Fil<es-001fecc9/Fonctionnel%20-%20Specs%20v3.pdf?d=w1b44c46848194a65aff5727f77643d9f",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B1B44C468-4819-4A65-AFF5-727F77643D9F%7D&file=Fonctionnel%20-%20Specs%20v3.pdf&action=embedview",
-                        "type": "office"
+                        "title": "Image 1",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Slides.pdf",
+                        "type": "pdf"
                       },
                       {
                         "title": "Image",
-                        "url": "https://images.freeimages.com/images/large-previews/913/sea-3-1188161.jpg",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-1.jpg",
                         "type": "image"
                       },
                       {
                         "title": "Doc",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-b99c4f1d/Release%20Note%20NOTIFIER.docx?d=w997674f7bb694ec9b3128627044cabbd",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B997674F7-BB69-4EC9-B312-8627044CABBD%7D&file=Release%20Note%20NOTIFIER.docx&action=embedview",
+                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=default",
+                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=embedview",
                         "type": "office"
                       },
                       {
                         "title": "EML",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Notifier V2.0 (Kerberos).eml",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Email.msg",
                         "type": "office"
                       },
                       {
                         "title": "XSLX",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Workbook.xlsx?d=we41fb685b22c43beb1a8e22ae5b53c9d",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7BE41FB685-B22C-43BE-B1A8-E22AE5B53C9D%7D&file=Workbook.xlsx&action=embedview",
+                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=default",
+                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=embedview",
                         "type": "office"
-                      },
+                      }
                     ]
                   },
                   {
@@ -592,7 +589,7 @@ const mock = {
               {
                 "title": "Coffee",
                 "subtitle": "Subsistance | 10 Oct 2022",
-                "image": "https://picsum.photos/id/1012/60/40",
+                "image": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-5.jpg",
                 "value": "6.55 CHF",
                 "status": {
                   "color": "purple",
@@ -603,33 +600,32 @@ const mock = {
                     "type": "viewer",
                     "files": [
                       {
-                        "title": "",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Fil<es-001fecc9/Fonctionnel%20-%20Specs%20v3.pdf?d=w1b44c46848194a65aff5727f77643d9f",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B1B44C468-4819-4A65-AFF5-727F77643D9F%7D&file=Fonctionnel%20-%20Specs%20v3.pdf&action=embedview",
-                        "type": "office"
+                        "title": "Image 1",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Slides.pdf",
+                        "type": "pdf"
                       },
                       {
                         "title": "Image",
-                        "url": "https://images.freeimages.com/images/large-previews/913/sea-3-1188161.jpg",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-1.jpg",
                         "type": "image"
                       },
                       {
                         "title": "Doc",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-b99c4f1d/Release%20Note%20NOTIFIER.docx?d=w997674f7bb694ec9b3128627044cabbd",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7B997674F7-BB69-4EC9-B312-8627044CABBD%7D&file=Release%20Note%20NOTIFIER.docx&action=embedview",
+                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=default",
+                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=embedview",
                         "type": "office"
                       },
                       {
                         "title": "EML",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Notifier V2.0 (Kerberos).eml",
+                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Email.msg",
                         "type": "office"
                       },
                       {
                         "title": "XSLX",
-                        "url": "https://home.dts.corp.local/dashboarddocuments/dashboard_libraries_10/lib_221019_f8a16e6/Files-001fecc9/Old/Workbook.xlsx?d=we41fb685b22c43beb1a8e22ae5b53c9d",
-                        "iframe": "https://home.dts.corp.local/dashboarddocuments/_layouts/15/WopiFrame.aspx?sourcedoc=%7BE41FB685-B22C-43BE-B1A8-E22AE5B53C9D%7D&file=Workbook.xlsx&action=embedview",
+                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=default",
+                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=embedview",
                         "type": "office"
-                      },
+                      }
                     ]
                   },
                   {
