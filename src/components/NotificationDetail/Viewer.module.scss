@@ -77,6 +77,10 @@
         &.hasCursor {
             cursor: pointer;
         }
+
+        &:has(.isBlocked) {
+            pointer-events: none;
+        }
     }
 
     &-intersectionObserver {
