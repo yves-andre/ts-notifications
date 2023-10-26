@@ -42,10 +42,10 @@ const b = BEM(styles)
 */
 /*----------------------------------------------------------------------------*/
 export const ViewerImage = (file) => {
-    const { title, url } = file
+    const { title, url, zoom } = file
     return (
         <>
-            <ViewerPlaceholder {...file} />
+            {!zoom && <ViewerPlaceholder {...file} />}
             <figure className={b('figure')} data-viewer="img">
                 <img className={b('image')} src={url} alt={title} onError={(e) => {
                     e.currentTarget.onerror = null
@@ -84,8 +84,8 @@ export const ViewerDoc = (file) => {
         <>
             {placeholder && <ViewerPlaceholder {...file} />}
             <iframe
-                sandbox="allow-scripts allow-same-origin allow-presentation allow-forms"
-                className={b('doc')}
+                sandbox={zoom ? undefined : "allow-scripts allow-same-origin allow-presentation allow-forms"}
+                className={b('doc', {isBlocked : !loaded})}
                 src={viewer}
                 title={title}
                 onLoad={(e) => seLoaded(true)}
