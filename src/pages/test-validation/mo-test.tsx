@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { Layout, Header, LocalNav, Flex, Col, IconButton } from '@trading/energies-ui'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { Layout, Header, Flex, Col } from '@trading/energies-ui'
 import CodeMirror from "@uiw/react-codemirror";
 import { json } from "@codemirror/lang-json";
 
@@ -57,8 +57,8 @@ const mock = {
       },
       {
         "type": "sectionBlock",
-        "title": "Other Information",
-        "subtitle": "",
+        "title": "Travel Details",
+        "subtitle": "Travel Details",
         "items": [
           {
             "type": "listBlock",
@@ -68,40 +68,12 @@ const mock = {
                 "subtitle": "09 Nov. 2023 - 08:35",
                 "items": [
                   {
-                    "type": "viewer",
-                    "files": [
-                      {
-                        "title": "Image 1",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Slides.pdf",
-                        "type": "pdf"
-                      },
-                      {
-                        "title": "Image",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-1.jpg",
-                        "type": "image"
-                      },
-                      {
-                        "title": "Doc",
-                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=default",
-                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=embedview",
-                        "type": "office"
-                      },
-                      {
-                        "title": "EML",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Email.msg",
-                        "type": "office"
-                      },
-                      {
-                        "title": "XSLX",
-                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=default",
-                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=embedview",
-                        "type": "office"
-                      }
-                    ]
+                    "type": "pageHeader",
+                    "title": "Line Details"
                   },
                   {
                     "type": "title",
-                    "title": "Flight Genève Bruxelle"
+                    "title": "Flight Genève Bruxelles"
                   },
                   {
                     "type": "sectionBlock",
@@ -152,44 +124,16 @@ const mock = {
                 ]
               },
               {
-                "title": "Flight Genève Bruxelles",
+                "title": "Flight Bruxelles Genève",
                 "subtitle": "10 Nov. 2023 - 07:05",
                 "items": [
                   {
-                    "type": "viewer",
-                    "files": [
-                      {
-                        "title": "Image 1",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Slides.pdf",
-                        "type": "pdf"
-                      },
-                      {
-                        "title": "Image",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-1.jpg",
-                        "type": "image"
-                      },
-                      {
-                        "title": "Doc",
-                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=default",
-                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=embedview",
-                        "type": "office"
-                      },
-                      {
-                        "title": "EML",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Email.msg",
-                        "type": "office"
-                      },
-                      {
-                        "title": "XSLX",
-                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=default",
-                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=embedview",
-                        "type": "office"
-                      }
-                    ]
+                    "type": "pageHeader",
+                    "title": "Line Details"
                   },
                   {
                     "type": "title",
-                    "title": "Flight Genève Bruxelle"
+                    "title": "Flight Bruxelles Genève"
                   },
                   {
                     "type": "sectionBlock",
@@ -283,7 +227,7 @@ const mock = {
             "display": "menu",
             "listItems": [
               {
-                "title": "Travel Details",
+                "title": "Other Informations",
                 "subtitle": "Travel Agent, ...",
                 "icon": "missionOrder",
                 "items": [
@@ -294,7 +238,7 @@ const mock = {
                   },
                   {
                     "type": "sectionBlock",
-                    "title": "Travel Agent",
+                    "title": "Informations",
                     "display": "inline",
                     "subtitle": "",
                     "items": [
@@ -422,7 +366,6 @@ const mock = {
     ]
   }
 }
-
 
 const userProfile = {}
 let textareaTimeout: any = null
