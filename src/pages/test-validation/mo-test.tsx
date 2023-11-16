@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { Layout, Header, LocalNav, Flex, Col, IconButton } from '@trading/energies-ui'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { Layout, Header, Flex, Col } from '@trading/energies-ui'
 import CodeMirror from "@uiw/react-codemirror";
 import { json } from "@codemirror/lang-json";
 
@@ -43,77 +43,48 @@ const mock = {
       {
         "type": "sectionBlock",
         "title": "Mission Order",
-        "subtitle": "#EXPTS1234567",
+        "subtitle": "#MO02992011",
         "items": [
           {
             "type": "fromToDate",
-            "labelFrom": "From",
-            "labelTo": "To",
+            "labelFrom": "Leaving",
+            "labelTo": "Returning",
             "dateFormat": "DD MMM. YYYY",
-            "fromDate": "10 Oct. 2022",
-            "toDate": "11 Oct. 2022"
+            "fromDate": "09 Nov. 2023",
+            "toDate": "10 Nov. 2023"
           }
         ]
       },
       {
         "type": "sectionBlock",
-        "title": "Travel details",
-        "subtitle": "",
+        "title": "Travel Details",
+        "subtitle": "Travel Details",
         "items": [
           {
             "type": "listBlock",
             "listItems": [
               {
-                "title": "Flight",
-                "subtitle": "10 Oct 2022",
-                "value": "498 USD",
+                "title": "Flight Genève Bruxelles",
+                "subtitle": "09 Nov. 2023 - 08:35",
                 "items": [
                   {
-                    "type": "viewer",
-                    "files": [
-                      {
-                        "title": "Image 1",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Slides.pdf",
-                        "type": "pdf"
-                      },
-                      {
-                        "title": "Image",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-1.jpg",
-                        "type": "image"
-                      },
-                      {
-                        "title": "Doc",
-                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=default",
-                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=embedview",
-                        "type": "office"
-                      },
-                      {
-                        "title": "EML",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Email.msg",
-                        "type": "office"
-                      },
-                      {
-                        "title": "XSLX",
-                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=default",
-                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=embedview",
-                        "type": "office"
-                      }
-                    ]
+                    "type": "pageHeader",
+                    "title": "Line Details"
                   },
                   {
                     "type": "title",
-                    "title": "Item Title"
+                    "title": "Flight Genève Bruxelles"
                   },
                   {
                     "type": "sectionBlock",
                     "items": [
                       {
                         "type": "fromToDate",
-                        "labelFrom": "From",
-                        "labelTo": "To",
-                        "dateFormat": "DD MMM. YYYY",
-                        "fromDate": "10 Oct. 2022",
-                        "toDate": "11 Oct. 2022"
+                        "labelFrom": "Departure",
+                        "labelTo": "Arrival",
+                        "dateFormat": "DD MMM. YYYY - HH:mm",
+                        "fromDate": "09 Nov. 2023 - 08:35",
+                        "toDate": "09 Nov. 2023 - 10:00"
                       }
                     ]
                   },
@@ -126,39 +97,25 @@ const mock = {
                         "display": "block",
                         "data": [
                           {
-                            "label": "Lorem ipsum dolor",
-                            "value": "Ut sed faucibus eros"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "sectionBlock",
-                    "title": "Price Details",
-                    "items": [
-                      {
-                        "type": "dataList",
-                        "display": "inline",
-                        "data": [
-                          {
-                            "label": "Amount",
-                            "value": "30",
-                            "color": "blue"
+                            "label": "Company / Airline",
+                            "value": "SN"
                           },
                           {
-                            "label": "Currency",
-                            "value": "CHF"
+                            "label": "Flight / Train Number",
+                            "value": "2712"
                           },
                           {
-                            "label": "Exchange Rate",
-                            "value": "1.0000",
-                            "color": "blue"
+                            "label": "Accommodation",
+                            "value": "Sofitel"
                           },
                           {
-                            "label": "Price per participant (CHF)",
-                            "value": "15.00",
-                            "color": "blue"
+                            "label": "Accommodation Cost",
+                            "value": "249 CHF"
+                          },
+                          {
+                            "label": "Comment",
+                            "value": "NA",
+                            "isEmpty": true
                           }
                         ]
                       }
@@ -167,56 +124,27 @@ const mock = {
                 ]
               },
               {
-                "title": "Flight",
-                "subtitle": "10 Oct 2022",
-                "value": "52.00 USD",
+                "title": "Flight Bruxelles Genève",
+                "subtitle": "10 Nov. 2023 - 07:05",
                 "items": [
                   {
-                    "type": "viewer",
-                    "files": [
-                      {
-                        "title": "Image 1",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Slides.pdf",
-                        "type": "pdf"
-                      },
-                      {
-                        "title": "Image",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-1.jpg",
-                        "type": "image"
-                      },
-                      {
-                        "title": "Doc",
-                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=default",
-                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=embedview",
-                        "type": "office"
-                      },
-                      {
-                        "title": "EML",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Email.msg",
-                        "type": "office"
-                      },
-                      {
-                        "title": "XSLX",
-                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=default",
-                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=embedview",
-                        "type": "office"
-                      }
-                    ]
+                    "type": "pageHeader",
+                    "title": "Line Details"
                   },
                   {
                     "type": "title",
-                    "title": "Item title"
+                    "title": "Flight Bruxelles Genève"
                   },
                   {
                     "type": "sectionBlock",
                     "items": [
                       {
                         "type": "fromToDate",
-                        "labelFrom": "From",
-                        "labelTo": "To",
-                        "dateFormat": "DD MMM. YYYY",
-                        "fromDate": "10 Oct. 2022",
-                        "toDate": "11 Oct. 2022"
+                        "labelFrom": "Departure",
+                        "labelTo": "Arrival",
+                        "dateFormat": "DD MMM. YYYY - HH:mm",
+                        "fromDate": "09 Nov. 2023 - 08:35",
+                        "toDate": "09 Nov. 2023 - 10:00"
                       }
                     ]
                   },
@@ -229,142 +157,25 @@ const mock = {
                         "display": "block",
                         "data": [
                           {
-                            "label": "Lorem ipsum dolor",
-                            "value": "Ut sed faucibus eros"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "sectionBlock",
-                    "title": "Price Details",
-                    "items": [
-                      {
-                        "type": "dataList",
-                        "display": "inline",
-                        "data": [
-                          {
-                            "label": "Amount",
-                            "value": "30",
-                            "color": "blue"
+                            "label": "Company / Airline",
+                            "value": "SN"
                           },
                           {
-                            "label": "Currency",
-                            "value": "CHF"
+                            "label": "Flight / Train Number",
+                            "value": "2712"
                           },
                           {
-                            "label": "Exchange Rate",
-                            "value": "1.0000",
-                            "color": "blue"
+                            "label": "Accommodation",
+                            "value": "Sofitel"
                           },
                           {
-                            "label": "Price per participant (CHF)",
-                            "value": "15.00",
-                            "color": "blue"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "title": "Rent Car",
-                "subtitle": "10 Oct 2022",
-                "value": "31.00 USD",
-                "items": [
-                  {
-                    "type": "viewer",
-                    "files": [
-                      {
-                        "title": "Image 1",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Slides.pdf",
-                        "type": "pdf"
-                      },
-                      {
-                        "title": "Image",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/image-1.jpg",
-                        "type": "image"
-                      },
-                      {
-                        "title": "Doc",
-                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=default",
-                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame2.aspx?sourcedoc=%7BDE8E1610-17FF-4F68-8A45-637828CA6FB8%7D&file=Document.docx&action=embedview",
-                        "type": "office"
-                      },
-                      {
-                        "title": "EML",
-                        "url": "https://home-dev.dts.corp.local/Shared%20Documents/Public%20Test%20Documents/Email.msg",
-                        "type": "office"
-                      },
-                      {
-                        "title": "XSLX",
-                        "url": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=default",
-                        "iframe": "https://home-dev.dts.corp.local/_layouts/15/WopiFrame.aspx?sourcedoc=%7B10AA94A8-C39B-4854-AF0E-35A4C080A885%7D&file=Book.xlsx&action=embedview",
-                        "type": "office"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "title",
-                    "title": "Item title"
-                  },
-                  {
-                    "type": "sectionBlock",
-                    "items": [
-                      {
-                        "type": "fromToDate",
-                        "labelFrom": "From",
-                        "labelTo": "To",
-                        "dateFormat": "DD MMM. YYYY",
-                        "fromDate": "10 Oct. 2022",
-                        "toDate": "11 Oct. 2022"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "sectionBlock",
-                    "title": "Details",
-                    "items": [
-                      {
-                        "type": "dataList",
-                        "display": "block",
-                        "data": [
-                          {
-                            "label": "Lorem ipsum dolor",
-                            "value": "Ut sed faucibus eros"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "sectionBlock",
-                    "title": "Price Details",
-                    "items": [
-                      {
-                        "type": "dataList",
-                        "display": "inline",
-                        "data": [
-                          {
-                            "label": "Amount",
-                            "value": "30",
-                            "color": "blue"
+                            "label": "Accommodation Cost",
+                            "value": "249 CHF"
                           },
                           {
-                            "label": "Currency",
-                            "value": "CHF"
-                          },
-                          {
-                            "label": "Exchange Rate",
-                            "value": "1.0000",
-                            "color": "blue"
-                          },
-                          {
-                            "label": "Price per participant (CHF)",
-                            "value": "15.00",
-                            "color": "blue"
+                            "label": "Comment",
+                            "value": "NA",
+                            "isEmpty": true
                           }
                         ]
                       }
@@ -391,12 +202,12 @@ const mock = {
               },
               {
                 "label": "Event",
-                "value": "Meeting"
-              },
-              {
-                "label": "Counterparties",
                 "value": "NA",
                 "isEmpty": true
+              },
+              {
+                "label": "Counterparty(ies)",
+                "value": "Empica; MetaFactory"
               },
               {
                 "label": "General Comment",
@@ -416,18 +227,18 @@ const mock = {
             "display": "menu",
             "listItems": [
               {
-                "title": "Travel Details",
+                "title": "Other Informations",
                 "subtitle": "Travel Agent, ...",
                 "icon": "missionOrder",
                 "items": [
                   {
                     "type": "pageHeader",
                     "icon": "missionOrder",
-                    "title": "Travel Details",
+                    "title": "Travel Details"
                   },
                   {
                     "type": "sectionBlock",
-                    "title": "Travel Agent",
+                    "title": "Informations",
                     "display": "inline",
                     "subtitle": "",
                     "items": [
@@ -436,25 +247,30 @@ const mock = {
                         "display": "block",
                         "data": [
                           {
-                            "label": "Label",
-                            "value": "Value"
+                            "label": "Travel Agent",
+                            "value": "Value",
+                            "isEmpty": true
                           },
                           {
-                            "label": "Label",
-                            "value": "Value"
+                            "label": "External ID",
+                            "value": "1426961121"
                           },
                           {
-                            "label": "Label",
-                            "value": "Value"
+                            "label": "Transport Cost Comment",
+                            "value": "Lorem Ipsum Hello"
                           },
                           {
-                            "label": "Label",
-                            "value": "Value"
+                            "label": "Related to an expatriation",
+                            "value": "No"
+                          },
+                          {
+                            "label": "Created by",
+                            "value": "Alain PROBST"
                           }
                         ]
                       }
                     ]
-                  },
+                  }
                 ]
               },
               {
@@ -490,7 +306,7 @@ const mock = {
               },
               {
                 "title": "Validation History",
-                "subtitle": "2 Activities",
+                "subtitle": "3 Activities",
                 "icon": "history",
                 "items": [
                   {
@@ -550,7 +366,6 @@ const mock = {
     ]
   }
 }
-
 
 const userProfile = {}
 let textareaTimeout: any = null
