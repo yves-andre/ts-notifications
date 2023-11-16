@@ -12,6 +12,7 @@ import { getAllNotificationsCount, getTitleByCategory } from "./menu-service";
 import "./Menu.scss";
 import { NotificationCount } from "../../data/interfaces/notification-count";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useTabNotifications } from "../../hooks/use-tab-notification";
 
 interface Props {
   applications: Application[];
@@ -40,6 +41,10 @@ export const Menu: React.FC<Props> = ({ applications, categoryColors, onClick, s
   const getNotificationCountByCategory = (category: number): number | null => {
     return getAllNotificationsCount(category, notificationCounts);
   };
+
+  const actionCount = getNotificationCountByCategory(CATEGORY.ACTION_FEED)
+  const informationCount = getNotificationCountByCategory(CATEGORY.INFORMATION_FEED)
+  useTabNotifications(actionCount!, informationCount!);
 
   const selectCategoryHandler = (category: number): void => {
     dispatch(filtersActions.setSelectedCategory(category));
